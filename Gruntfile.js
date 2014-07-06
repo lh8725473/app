@@ -3,7 +3,16 @@ module.exports = function (grunt) {
     less: {
       compile: {
         files: {
-          'build/index.css': 'src/index.less'
+          'build/default/app.css': 'src/app.less'
+        }
+      }
+    },
+    watch: {
+      less: {
+        files: ['src/**/*.less'],
+        tasks: ['less'],
+        options: {
+          atBegin: true
         }
       }
     }
