@@ -13,12 +13,36 @@
   <link rel="stylesheet" type="text/css" href="build/default/app.css">
 </head>
 <body>
-  <header ng-include="'src/header/template.html'"></header>
-
+  <header ng-include="'src/app/header/template.html'"></header>
+  <section class="container">
+    <div class="row">
+      <sidebar class="col-md-3" ng-include="'src/app/sidebar/template.html'"></sidebar>
+      <div class="col-md-9" ng-view></div>
+      </div>
+    </div>
+  </section>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="src/header/module.js"></script>
-  <script type="text/javascript" src="src/header/controller.js"></script>
-  <script type="text/javascript" src="src/app.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+
+  <script type="text/javascript" src="src/app/header/module.js"></script>
+  <script type="text/javascript" src="src/app/header/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/sidebar/module.js"></script>
+  <script type="text/javascript" src="src/app/sidebar/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/overview/module.js"></script>
+  <script type="text/javascript" src="src/app/overview/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/users/module.js"></script>
+  <script type="text/javascript" src="src/app/users/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/reports/module.js"></script>
+  <script type="text/javascript" src="src/app/reports/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/settings/module.js"></script>
+  <script type="text/javascript" src="src/app/settings/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/app.js"></script>
 </body>
 </html>

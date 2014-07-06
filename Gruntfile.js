@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     less: {
       compile: {
         files: {
-          'build/default/app.css': 'src/app.less'
+          'build/default/app.css': 'src/app/app.less'
         }
       }
     },
