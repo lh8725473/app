@@ -1,6 +1,6 @@
 angular.module('App', [
   // Libs
-  'ngRoute',
+  'ui.router',
 
   // Components
   'App.Header',
@@ -10,18 +10,23 @@ angular.module('App', [
   'App.Reports',
   'App.Settings'
   
-]).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-  $routeProvider.when('/', {
-    templateUrl: 'src/app/overview/template.html'
-  }).when('/overview', {
-    templateUrl: 'src/app/overview/template.html'
-  }).when('/users', {
-    templateUrl: 'src/app/users/template.html'
-  }).when('/reports', {
-    templateUrl: 'src/app/reports/template.html'
-  }).when('/settings', {
-    templateUrl: 'src/app/settings/template.html'
-  });
-
-  // $locationProvider.html5Mode(true);
+]).config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/overview')
+  $stateProvider
+    .state('overview', {
+      url:'/overview',
+      templateUrl: 'src/app/overview/template.html'
+    })
+    .state('users', {
+      url: '/users',
+      templateUrl: 'src/app/users/template.html'
+    })
+    .state('reports', {
+      url: '/users',
+      templateUrl: 'src/app/reports/template.html'
+    })
+    .state('settings', {
+      url: '/users',
+      templateUrl: 'src/app/settings/template.html'
+    })
 }])

@@ -17,13 +17,14 @@
   <section class="container">
     <div class="row">
       <sidebar class="col-md-3" ng-include="'src/app/sidebar/template.html'"></sidebar>
-      <div class="col-md-9" ng-view></div>
+      <div class="col-md-9" ui-view></div>
       </div>
     </div>
   </section>
+
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
   <script type="text/javascript" src="src/app/header/module.js"></script>
   <script type="text/javascript" src="src/app/header/controller.js"></script>
@@ -44,5 +45,6 @@
   <script type="text/javascript" src="src/app/settings/controller.js"></script>
 
   <script type="text/javascript" src="src/app/app.js"></script>
+  
 </body>
 </html>
