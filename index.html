@@ -9,8 +9,12 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- build:css css/app.css -->
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="build/default/app.css">
+  <!-- endbuild -->
+  
 </head>
 <body>
   <header ng-include="'src/app/header/template.html'"></header>
@@ -22,6 +26,7 @@
     </div>
   </section>
 
+  <!-- build:js js/app.js -->
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
 
@@ -50,6 +55,6 @@
   <script type="text/javascript" src="src/app/settings/controller.js"></script>
 
   <script type="text/javascript" src="src/app/app.js"></script>
-  
+  <!-- endbuild -->
 </body>
 </html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html ng-app="App" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="App" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="App" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="App" class=""> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Console of Act</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/app.1e6c8425.css">
+  
+</head>
+<body>
+
+<!-- Begin Templates -->
+<script type="text/ng-template" id="src/app/header/template.html">
+<div class="navbar header-view" role="navigation" ng-controller="App.Header.Controller">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Admin Console Of Act</a>
+    </div>
+    <div>
+      <form class="navbar-form" role="form">
+        <div class="form-group">
+          <input type="search" placeholder="Search" class="form-control">
+        </div>
+        <div class="pull-right">
+          <a href="#">Back to my account</a>
+          <span class="glyphicon glyphicon-cog"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/overview/template.html">
+<div class="overview-view" ng-controller="App.Overview.Controller">
+  overview
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/reports/template.html">
+<div class="reports-view" ng-controller="App.Reports.Controller">
+  reports
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/settings/template.html">
+<div class="settings-view" ng-controller="App.Settings.Controller">
+  settings
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/sidebar/template.html">
+<div class="sidebar-view" ng-controller="App.Sidebar.Controller">
+  <ul class="nav nav-sidebar">
+    <li class="active">
+      <a ui-sref="overview">
+        <span class="glyphicon glyphicon-hdd"></span>
+        Overview
+      </a>
+    </li>
+    <li>
+      <a ui-sref="users">
+        <span class="glyphicon glyphicon-user"></span>
+        Users&Groups
+      </a>
+    </li>
+    <li>
+      <a ui-sref="reports">
+        <span class="glyphicon glyphicon-stats"></span>
+        Reports
+      </a>
+    </li>
+    <li>
+      <a ui-sref="settings">
+        <span class="glyphicon glyphicon-cog"></span>
+        Settings
+      </a>
+    </li>
+  </ul>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/users/template.html">
+<div class="users-view" ng-controller="App.Users.Controller">
+  users
+</div>
+</script>
+<!-- End Templates -->
+
+
+  <header ng-include="&apos;src/app/header/template.html&apos;"></header>
+  <section class="container">
+    <div class="row">
+      <sidebar class="col-md-3" ng-include="&apos;src/app/sidebar/template.html&apos;"></sidebar>
+      <div class="col-md-9" ui-view=""></div>
+      </div>
+    
+  </section>
+
+  <script src="js/app.19e575b0.js"></script>
+</body>
+</html>

@@ -1,6 +1,9 @@
-@import "../themes/default/config";
-@import "../themes/default/colors";
-@import "../themes/default/variables";
+@theme: "default";
+
+@import "../themes/@{theme}/colors";
+@import "../themes/@{theme}/variables";
+
+@import "./global";
 
 @import "./header/style";
 @import "./sidebar/style";
