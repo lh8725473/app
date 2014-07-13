@@ -3,7 +3,8 @@ angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
         query: {
             params: {
                 action: 'list'
-            }
+            },
+            isArray: true
         }
     })
 })

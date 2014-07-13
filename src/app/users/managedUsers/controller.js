@@ -1,7 +1,7 @@
 angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, Users) {
     $scope.userList = Users.query()
     $scope.gridOptions = {
-        data: 'userList.result',
+        data: 'userList',
         selectedItems: [],
         showSelectionCheckbox: true
     };

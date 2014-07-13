@@ -21,6 +21,9 @@ angular.module('App', [
     function($q) {
         return {
             response: function(response) {
+                if (response.data.result) {
+                    response.data = response.data.result
+                }
                 return response
             },
             responseError: function(rejection) {
