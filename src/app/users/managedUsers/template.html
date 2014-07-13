@@ -1,3 +1,24 @@
 <div class="users-view" ng-controller="App.Users.ManagedUers.Controller">
-  ManagedUers
+	<div class="buttonGrounp">
+		<button ng-click='addUser()' class="btn">addUser</button>
+		<button ng-click='bulkEdit()' class="btn">bulkEdit</button>
+		<button ng-click='bulkadd()' class="btn">bulkadd</button>
+		<button ng-click='exportUser()' class="btn">exportUser</button>
+	</div>
+  	<div class="gridStyle" ng-grid="gridOptions"></div>
+</div>
+
+<div class="addUser">	
+	<script type="text/ng-template" id="adduser.html">
+        <div class="modal-header">
+            <h3 class="modal-title">AddUser</h3>
+        </div>
+        <div class="modal-body">
+            AddUserForm
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>

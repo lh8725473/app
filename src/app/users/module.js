@@ -1,1 +1,1 @@
-angular.module('App.Users', ['App.Users.UserHeader','App.Users.ManagedUers','App.Users.ExternalUers','App.Users.Groups']);
+angular.module('App.Users', ['App.Users.UserHeader','App.Users.ManagedUers','App.Users.ExternalUsers','App.Users.Groups']);
