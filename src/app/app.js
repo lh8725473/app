@@ -21,8 +21,8 @@ angular.module('App', [
     function($q) {
         return {
             response: function(response) {
-                if (response.result) {
-                    return response.result
+                if (response.data.result) {
+                    return response.data.result
                 } else {
                     // For template request
                     return response
@@ -31,9 +31,9 @@ angular.module('App', [
             responseError: function(rejection) {
                 // Handle Request error
                 if (response.status === 401) {
-                    return $q.reject(response.result)
+                    return $q.reject(response)
                 } else {
-                    return $q.reject(response.result)
+                    return $q.reject(response)
                 }
             }
         }

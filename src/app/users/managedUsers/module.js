@@ -1,1 +1,1 @@
-angular.module('App.Users.ManagedUers', ['ngGrid', 'ModalDemoCtrl']);
+angular.module('App.Users.ManagedUsers', ['ngGrid']);

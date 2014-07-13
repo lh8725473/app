@@ -1,11 +1,14 @@
-<div class="users-view" ng-controller="App.Users.ManagedUers.Controller">
+<div class="managedUsers-view" ng-controller="App.Users.ManagedUsers.Controller">
 	<div class="buttonGrounp">
 		<button ng-click='addUser()' class="btn">addUser</button>
 		<button ng-click='bulkEdit()' class="btn">bulkEdit</button>
 		<button ng-click='bulkadd()' class="btn">bulkadd</button>
 		<button ng-click='exportUser()' class="btn">exportUser</button>
 	</div>
-  	<div class="gridStyle" ng-grid="gridOptions"></div>
+	<div ng-repeat="user in userList">
+		<div>{{user.user_name}}</div>
+	</div>
+  	<!--<div class="gridStyle" ng-grid="gridOptions"></div>-->
 </div>
 
 <div class="addUser">	
