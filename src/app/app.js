@@ -16,6 +16,28 @@ angular.module('App', [
     // Resources
     'App.Resources'
 
+    // Http Interceptor
+]).factory('httpInterceptor', ['$q',
+    function($q) {
+        return {
+            response: function(response) {
+                if (response.result) {
+                    return response.result
+                } else {
+                    // For template request
+                    return response
+                }
+            },
+            responseError: function(rejection) {
+                // Handle Request error
+                if (response.status === 401) {
+                    return $q.reject(response.result)
+                } else {
+                    return $q.reject(response.result)
+                }
+            }
+        }
+    }
 ]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function($stateProvider, $urlRouterProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/overview')
@@ -53,5 +75,6 @@ angular.module('App', [
         })
 
         $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = 'f9ddda3d733345001511a8825e6c9f4f'
+        $httpProvider.interceptors.push('httpInterceptor')
     }
 ])
