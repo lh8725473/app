@@ -2,6 +2,9 @@ angular.module('App', [
     // Libs
     'ui.router',
 
+    // Config
+    'App.Config',
+
     // Components
     'App.Header',
     'App.Sidebar',
@@ -13,22 +16,22 @@ angular.module('App', [
     // Resources
     'App.Resources'
 
-]).config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
+    function($stateProvider, $urlRouterProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/overview')
         $stateProvider
             .state('overview', {
                 url: '/overview',
                 templateUrl: 'src/app/overview/template.html'
             })
-            
-            .state('users', {
-                url: '/users',
-                templateUrl: 'src/app/users/template.html'
-            })           
-            .state('users.managedUers', {
-                url: '/managedUers',
-                templateUrl: 'src/app/users/managedUers/template.html'
+
+        .state('users', {
+            url: '/users',
+            templateUrl: 'src/app/users/template.html'
+        })
+            .state('users.managedUsers', {
+                url: '/managedUsers',
+                templateUrl: 'src/app/users/managedUsers/template.html'
             })
             .state('users.externalUers', {
                 url: '/externalUers',
@@ -38,15 +41,17 @@ angular.module('App', [
                 url: '/groups',
                 templateUrl: 'src/app/users/groups/template.html'
             })
-            
-            .state('reports', {
-                url: '/users',
-                templateUrl: 'src/app/reports/template.html'
-            })
-            
-            .state('settings', {
-                url: '/users',
-                templateUrl: 'src/app/settings/template.html'
-            })
+
+        .state('reports', {
+            url: '/users',
+            templateUrl: 'src/app/reports/template.html'
+        })
+
+        .state('settings', {
+            url: '/users',
+            templateUrl: 'src/app/settings/template.html'
+        })
+
+        $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = 'f9ddda3d733345001511a8825e6c9f4f'
     }
 ])

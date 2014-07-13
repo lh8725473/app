@@ -1,5 +1,9 @@
-angular.module('App.Resources').factory('Users', function($resource) {
-    return $resource('/users/:userId', {
-        userId: '@id'
+angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
+    return $resource(CONFIG.API_ROOT + '/user/:action', {}, {
+        query: {
+            params: {
+                action: 'list'
+            }
+        }
     })
 })
