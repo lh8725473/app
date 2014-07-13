@@ -1,24 +1,23 @@
-angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function ($scope, Users) {
-	$scope.userList = Users.query();
-//  $scope.gridOptions = { 
-//  	data: 'userList',
-//  	selectedItems: [],
-//  	showSelectionCheckbox: true
-//  };
-//  
-    $scope.addUser = function(){ 
-    	alert("addUser");
+angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, Users) {
+    $scope.userList = Users.query()
+    $scope.gridOptions = {
+        data: 'userList.result',
+        selectedItems: [],
+        showSelectionCheckbox: true
     };
-    
-    $scope.bulkEdit = function(){ 
-    	alert("bulkEdit");
+    $scope.addUser = function() {
+        alert("addUser");
     };
-    
-    $scope.bulkadd = function(){ 
-    	alert("bulkadd");
+
+    $scope.bulkEdit = function() {
+        alert("bulkEdit");
     };
-    
-    $scope.exportUser = function(){ 
-    	alert("exportUser");
+
+    $scope.bulkadd = function() {
+        alert("bulkadd");
+    };
+
+    $scope.exportUser = function() {
+        alert("exportUser");
     };
 })

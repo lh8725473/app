@@ -17,16 +17,11 @@ angular.module('App', [
     'App.Resources'
 
     // Http Interceptor
-]).factory('httpInterceptor', ['$q',
+]).factory('httpInterceptor',
     function($q) {
         return {
             response: function(response) {
-                if (response.data.result) {
-                    return response.data.result
-                } else {
-                    // For template request
-                    return response
-                }
+                return response
             },
             responseError: function(rejection) {
                 // Handle Request error
@@ -38,8 +33,8 @@ angular.module('App', [
             }
         }
     }
-]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
-    function($stateProvider, $urlRouterProvider, $httpProvider) {
+).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'CONFIG',
+    function($stateProvider, $urlRouterProvider, $httpProvider, CONFIG) {
         $urlRouterProvider.otherwise('/overview')
         $stateProvider
             .state('overview', {
@@ -74,7 +69,7 @@ angular.module('App', [
             templateUrl: 'src/app/settings/template.html'
         })
 
-        $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = 'f9ddda3d733345001511a8825e6c9f4f'
+        $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = CONFIG.token
         $httpProvider.interceptors.push('httpInterceptor')
     }
 ])
