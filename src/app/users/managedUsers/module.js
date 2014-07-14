@@ -1,1 +1,1 @@
-angular.module('App.Users.ManagedUsers', ['ngGrid']);
+angular.module('App.Users.ManagedUsers', []);

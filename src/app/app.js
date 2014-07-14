@@ -1,6 +1,8 @@
 angular.module('App', [
     // Libs
     'ui.router',
+    'ngGrid', 
+    'ui.bootstrap',
 
     // Config
     'App.Config',
@@ -28,11 +30,11 @@ angular.module('App', [
             },
             responseError: function(rejection) {
                 // Handle Request error
-                if (response.status === 401) {
-                    return $q.reject(response)
-                } else {
-                    return $q.reject(response)
-                }
+//              if (response.status === 401) {
+//                  return $q.reject(response)
+//              } else {
+//                  return $q.reject(response)
+//              }
             }
         }
     }
@@ -55,7 +57,7 @@ angular.module('App', [
             })
             .state('users.externalUers', {
                 url: '/externalUers',
-                templateUrl: 'src/app/users/externalUers/template.html'
+                templateUrl: 'src/app/users/externalUsers/template.html'
             })
             .state('users.groups', {
                 url: '/groups',
