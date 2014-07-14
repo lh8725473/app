@@ -1,5 +1,5 @@
-angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
-    return $resource(CONFIG.API_ROOT + '/user/:action/:id', {}, {
+angular.module('App.Resources').factory('Group', function($resource, CONFIG) {
+    return $resource(CONFIG.API_ROOT + '/group/:action/:id', {}, {
         query: {
         	method: "GET",
             params: {

@@ -1,4 +1,4 @@
-angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) {
+angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) { 	
     $scope.userList = Users.query()
     $scope.gridOptions = {
         data: 'userList.result',
@@ -43,9 +43,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 			$modalInstance.dismiss('cancel');
 		};
 	}; 
-
-
-
+	
     $scope.bulkEdit = function() {
         alert("bulkEdit");
     };
@@ -57,4 +55,38 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.exportUser = function() {
         alert("exportUser");
     };
+    
+	//create user
+	$scope.createUser = function(json) {
+//      var json = {
+//			"user_name" : "test1123212697897813",
+//			"real_name" : "测试",
+//			"phone" : "13516251452",
+//			"email" : "test1123213211267821@gmail.com",
+//			"password" : "12345612312312321",
+//			"group_id" : "1"
+//		}
+
+		Users.create({},json);
+    };
+    
+    //update user
+	$scope.updateUser = function(userId, json) {      
+//		var json = {
+//			"real_name" : "姓名",
+//			"phone" : "13512345678",
+//			"total_space" : "20",
+//			"password" : "123456",
+//			"role_id" : "1",
+//			"group_id" : "2"
+//		}
+
+		Users.update({id : userId},json);
+    };
+    
+    //delete user
+	$scope.deleteUser = function(userId) {      
+		Users.delete({id : userId});
+    };
+    
 })

@@ -1,5 +1,5 @@
-angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
-    return $resource(CONFIG.API_ROOT + '/user/:action/:id', {}, {
+angular.module('App.Resources').factory('ExternalUsers', function($resource, CONFIG) {
+    return $resource(CONFIG.API_ROOT + '/externalUsers/:action/:id', {}, {
         query: {
         	method: "GET",
             params: {
