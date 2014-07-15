@@ -30,11 +30,7 @@ angular.module('App', [
             },
             responseError: function(rejection) {
                 // Handle Request error
-//              if (response.status === 401) {
-//                  return $q.reject(response)
-//              } else {
-//                  return $q.reject(response)
-//              }
+                console.log(JSON.stringify(rejection.data))
             }
         }
     }
