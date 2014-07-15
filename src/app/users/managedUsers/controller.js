@@ -1,49 +1,36 @@
 angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) { 	
-    $scope.userList = Users.query()
+    var that = $scope;
+    
+    //userList data
+    $scope.userList = Users.query();
+    
+    //userListGird
     $scope.gridOptions = {
         data: 'userList',
         selectedItems: [],
         showSelectionCheckbox: true
     };
 	
-	$scope.items = ['item1', 'item2', 'item3'];
-	
-	$scope.addUser = function(size) {
+	//addUser window
+	$scope.addUser = function() {
 		var modalInstance = $modal.open({
 			templateUrl : 'src/app/users/managedUsers/add-user-modal.html',
-			controller : ModalInstanceCtrl,
-			size : size,
-			resolve : {
-				items : function() {
-					return $scope.items;
-				}
-			}
-		});
-
-		modalInstance.result.then(function(selectedItem) {
-			$scope.selected = selectedItem;
-		}, function() {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
+			controller : ModalInstanceCtrl
+		});	
 	};
 	
-	
-	var ModalInstanceCtrl = function($scope, $modalInstance, items) {
-
-		$scope.items = items;
-		$scope.selected = {
-			item : $scope.items[0]
-		};
-
-		$scope.ok = function() {
-			$modalInstance.close($scope.selected.item);
+	//addUser window ctrl
+	var ModalInstanceCtrl = function($scope, $modalInstance) {
+		$scope.ok = function(user) {
+			that.createUser(user);
+			$modalInstance.close();
 		};
 
 		$scope.cancel = function() {
 			$modalInstance.dismiss('cancel');
 		};
-	}; 
-	
+	};
+
     $scope.bulkEdit = function() {
         alert("bulkEdit");
     };
@@ -56,35 +43,17 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         alert("exportUser");
     };
     
-	//create user
+	//create user server
 	$scope.createUser = function(json) {
-//      var json = {
-//			"user_name" : "test1123212697897813",
-//			"real_name" : "测试",
-//			"phone" : "13516251452",
-//			"email" : "test1123213211267821@gmail.com",
-//			"password" : "12345612312312321",
-//			"group_id" : "1"
-//		}
-
 		Users.create({},json);
     };
     
-    //update user
-	$scope.updateUser = function(userId, json) {      
-//		var json = {
-//			"real_name" : "姓名",
-//			"phone" : "13512345678",
-//			"total_space" : "20",
-//			"password" : "123456",
-//			"role_id" : "1",
-//			"group_id" : "2"
-//		}
-
+    //update user server
+	$scope.updateUser = function(userId, json) {
 		Users.update({id : userId},json);
     };
     
-    //delete user
+    //delete user server
 	$scope.deleteUser = function(userId) {      
 		Users.delete({id : userId});
     };
