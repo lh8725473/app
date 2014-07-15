@@ -75,6 +75,7 @@ angular.module('App', [
         })
 
         $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = CONFIG.token
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
         $httpProvider.interceptors.push('httpInterceptor')
     }
 ])

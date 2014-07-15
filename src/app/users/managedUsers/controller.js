@@ -1,35 +1,37 @@
-angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) { 	
-    var that = $scope;
-    
+angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) {
+
     //userList data
     $scope.userList = Users.query();
-    
+
     //userListGird
     $scope.gridOptions = {
         data: 'userList',
         selectedItems: [],
         showSelectionCheckbox: true
     };
-	
-	//addUser window
-	$scope.addUser = function() {
-		var modalInstance = $modal.open({
-			templateUrl : 'src/app/users/managedUsers/add-user-modal.html',
-			controller : ModalInstanceCtrl
-		});	
-	};
-	
-	//addUser window ctrl
-	var ModalInstanceCtrl = function($scope, $modalInstance) {
-		$scope.ok = function(user) {
-			that.createUser(user);
-			$modalInstance.close();
-		};
 
-		$scope.cancel = function() {
-			$modalInstance.dismiss('cancel');
-		};
-	};
+    //addUser window
+    $scope.addUser = function() {
+        var modalInstance = $modal.open({
+            templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
+            controller: ModalInstanceCtrl
+        });
+
+        modalInstance.result.then(function(user) {
+            Users.create({}, user);
+        })
+    };
+
+    //addUser window ctrl
+    var ModalInstanceCtrl = function($scope, $modalInstance) {
+        $scope.ok = function(user) {
+            $modalInstance.close(user);
+        };
+
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        };
+    };
 
     $scope.bulkEdit = function() {
         alert("bulkEdit");
@@ -42,20 +44,19 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.exportUser = function() {
         alert("exportUser");
     };
-    
-	//create user server
-	$scope.createUser = function(json) {
-		Users.create({},json);
-    };
-    
+
     //update user server
-	$scope.updateUser = function(userId, json) {
-		Users.update({id : userId},json);
+    $scope.updateUser = function(userId, user) {
+        Users.update({
+            id: userId
+        }, user);
     };
-    
+
     //delete user server
-	$scope.deleteUser = function(userId) {      
-		Users.delete({id : userId});
+    $scope.deleteUser = function(userId) {
+        Users.delete({
+            id: userId
+        });
     };
-    
+
 })
