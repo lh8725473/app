@@ -12,18 +12,18 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
     //addUser window
     $scope.addUser = function() {
-        var modalInstance = $modal.open({
+        var addUserModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
-            controller: ModalInstanceCtrl
+            controller: addUserModalController
         });
 
-        modalInstance.result.then(function(user) {
+        addUserModal.result.then(function(user) {
             Users.create({}, user);
         })
     };
 
     //addUser window ctrl
-    var ModalInstanceCtrl = function($scope, $modalInstance) {
+    var addUserModalController = function($scope, $modalInstance) {
         $scope.ok = function(user) {
             $modalInstance.close(user);
         };
