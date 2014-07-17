@@ -1,75 +1,31 @@
 angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) {
 
-    //userList data
-    $scope.userList = Users.query();
+    //addUser window
+    $scope.addUser = function() {
+        var addUserModal = $modal.open({
+            templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
+            controller: addUserModalController
+        })
 
-    //userListGird action
-    $scope.actionInPopup = '<button id="editBtn" type="button" class="btn btn-primary" ng-click="edit(row)" >Edit</button> '+
-    						'<button id="deleteBtn" type="button" class="btn btn-primary" ng-click="delete(row)" >Delete</button>'
-	
-	//deleteUser
-	$scope.delete = function (row){
-		console.log("Here I need to know which row was selected " + row.entity.user_id);
-		var deleteUserModal = $modal.open({
-            templateUrl: 'src/app/users/managedUsers/delete-user-modal.html',
-            controller: deleteModalController
-        });
-		
-		deleteUserModal.result.then(function() {
-            Users.delete({id:row.entity.user_id});
-			for(var i = 0; i < $scope.userList.length; ++i){
-				if($scope.userList[i].user_id == row.entity.user_id) break;
-			}
-			$scope.userList.splice(i, 1);
-        })	
-	}
-	
-	//delete window ctrl
-	var deleteModalController = function($scope, $modalInstance) {  	
-        $scope.ok = function(user_id) {
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-    };
-	
-	//editUser
-    $scope.edit = function edit(row){
-        console.log("Here I need to know which row was selected " + row.entity.user_id);
-		$scope.updateuser = {
-        	real_name : ''
-        }
-        $scope.updateuser.real_name = row.entity.real_name;
-    	var updateUserModal = $modal.open({
-            templateUrl: 'src/app/users/managedUsers/update-user-modal.html',
-            controller: updateModalController,
-            resolve: {
-        		updateuser: function () {
-         			return $scope.updateuser;
-       			}
-     		}
-        });
-
-        updateUserModal.result.then(function(updateuser) {
-            Users.update({id:row.entity.user_id}, updateuser);
+        addUserModal.result.then(function(user) {
+            Users.create({}, user)
         })
     }
-    
-    //edit window ctrl
-    var updateModalController = function($scope, $modalInstance, updateuser) {
-    	$scope.updateuser = updateuser;
-    	
-        $scope.ok = function(updateuser) {
-            $modalInstance.close(updateuser);
-        };
+
+    //addUser window ctrl
+    var addUserModalController = function($scope, $modalInstance) {
+        $scope.ok = function(user) {
+            $modalInstance.close(user)
+        }
 
         $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-    };
-    
+            $modalInstance.dismiss('cancel')
+        }
+    }
+
+    //userList data
+    $scope.userList = Users.query()
+
     $scope.gridOptions = {
         data: 'userList',
         selectedItems: [],
@@ -86,57 +42,86 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
             displayName : 'realName'
         }, {
             displayName : 'action',
-            cellTemplate : $scope.actionInPopup
+            cellTemplate : 'src/app/users/managedUsers/user-table-action-cell.html'
         } ]
-    };
-
-    //addUser window
-    $scope.addUser = function() {
-        var addUserModal = $modal.open({
-            templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
-            controller: addUserModalController
-        });
-
-        addUserModal.result.then(function(user) {
-            Users.create({}, user);
+    }
+	
+	//deleteUser
+	$scope.delete = function (row){
+		console.log("Here I need to know which row was selected " + row.entity.user_id)
+		var deleteUserModal = $modal.open({
+            templateUrl: 'src/app/users/managedUsers/delete-user-modal.html',
+            controller: deleteModalController,
+            resolve: {
+                userId: function () {
+                    return row.entity.user_id
+                }
+            }
         })
-    };
-
-    //addUser window ctrl
-    var addUserModalController = function($scope, $modalInstance) {
-        $scope.ok = function(user) {
-            $modalInstance.close(user);
-        };
+		
+		deleteUserModal.result.then(function(userId) {
+            Users.delete({id:userId})
+			for(var i = 0; i < $scope.userList.length; ++i){
+				if($scope.userList[i].user_id == userId) break
+			}
+			$scope.userList.splice(i, 1)
+        })	
+	}
+	
+	//delete window ctrl
+	var deleteModalController = function($scope, $modalInstance, userId) {  	
+        $scope.ok = function() {
+            $modalInstance.close(userId)
+        }
 
         $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-    };
+            $modalInstance.dismiss('cancel')
+        }
+    }
+	
+	//editUser
+    $scope.edit = function edit(row){
+        console.log("Here I need to know which row was selected " + row.entity.user_id)
+    	var editUserModal = $modal.open({
+            templateUrl: 'src/app/users/managedUsers/update-user-modal.html',
+            controller: editModalController,
+            resolve: {
+        		editUser: function () {
+                    // Past the ref to the modal
+                    return angular.copy(row.entity)
+       			}
+     		}
+        })
+
+        editUserModal.result.then(function(editUser) {
+            Users.update({id:editUser.user_id}, editUser)
+            angular.extend(row.entity, editUser)
+        })
+    }
+    
+    //edit window ctrl
+    var editModalController = function($scope, $modalInstance, editUser) {
+    	$scope.editUser = editUser
+    	
+        $scope.ok = function() {
+            $modalInstance.close($scope.editUser)
+        }
+
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel')
+        }
+    }
 
     $scope.bulkEdit = function() {
-        alert("bulkEdit");
-    };
+        alert("bulkEdit")
+    }
 
     $scope.bulkadd = function() {
-        alert("bulkadd");
-    };
+        alert("bulkadd")
+    }
 
     $scope.exportUser = function() {
-        alert("exportUser");
-    };
-
-    //update user server
-    $scope.updateUser = function(userId, user) {
-        Users.update({
-            id: userId
-        }, user);
-    };
-
-    //delete user server
-    $scope.deleteUser = function(userId) {
-        Users.delete({
-            id: userId
-        });
-    };
+        alert("exportUser")
+    }
 
 })
