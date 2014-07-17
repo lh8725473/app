@@ -61,12 +61,12 @@ angular.module('App', [
             })
 
         .state('reports', {
-            url: '/users',
+            url: '/reports',
             templateUrl: 'src/app/reports/template.html'
         })
 
         .state('settings', {
-            url: '/users',
+            url: '/settings',
             templateUrl: 'src/app/settings/template.html'
         })
 
