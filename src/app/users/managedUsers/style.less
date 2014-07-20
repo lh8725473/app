@@ -13,11 +13,18 @@
 }
 
 .add-user-modal-view {
-  .account-admin {
+  .account-admin.ng-hide-remove {
+    .opacity(0);
+    .transition(all linear 0.5s);
+  }
+  .account-admin.ng-hide-remove-active {
+    .opacity(100);
+  }
+  .account-admin.ng-hide-add {
     .opacity(100);
     .transition(all linear 0.5s);
   }
-  .account-admin.ng-hide {
+  .account-admin.ng-hide-add-active {
     .opacity(0);
   }
 }
