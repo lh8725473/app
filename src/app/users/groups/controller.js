@@ -1,2 +1,3 @@
-angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', function ($scope) {
+angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', function ($scope, $modal, Group) {
+	
 })

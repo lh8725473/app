@@ -4,7 +4,8 @@ angular.module('App.Resources').factory('Group', function($resource, CONFIG) {
         	method: "GET",
             params: {
                 action: 'list'
-            }
+            },
+            isArray: true
         },
         delete: {
         	method: "DELETE",

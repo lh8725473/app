@@ -1,10 +1,16 @@
-angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users) {
+angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users, Group) {
 
     //addUser window
     $scope.addUser = function() {
+    	$scope.groupList = Group.query()
         var addUserModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
-            controller: addUserModalController
+            controller: addUserModalController,
+            resolve: {
+                groupList: function () {
+                    return $scope.groupList
+                }
+            }
         })
 
         addUserModal.result.then(function(user) {
@@ -13,7 +19,27 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     }
 
     //addUser window ctrl
-    var addUserModalController = function($scope, $modalInstance) {
+    var addUserModalController = function($scope, $modalInstance, groupList) {
+    	$scope.groupList = groupList;
+    	$scope.groupList.menueRoll = false;
+    	$scope.show = false;
+    	
+    	$scope.menueShow = function(){
+    		if($scope.show == false){
+    			$scope.show = true;
+    		}else{
+    			$scope.show = false;
+    		}
+    	};
+    	
+    	$scope.menueRollShow = function(){
+    		if($scope.menueRoll == false){
+    			$scope.menueRoll = true;
+    		}else{
+    			$scope.menueRoll = false;
+    		}
+    	};
+    	
         $scope.ok = function(user) {
             $modalInstance.close(user)
         }
@@ -31,10 +57,12 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         selectedItems: [],
 //      enableRowSelection : false,
         showSelectionCheckbox: true,
-        columnDefs : [ {
-            field : 'user_id',
-            displayName : 'userId'
-        }, {
+        columnDefs : [ 
+//      {
+//          field : 'user_id',
+//          displayName : 'userId'
+//      }, 
+        {
             field : 'user_name',
             displayName : 'userName'
         }, {
