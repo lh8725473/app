@@ -113,7 +113,8 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="seach">选择该用户所属的群组</label>
 			<div class="col-sm-5">
-				<input type="" placeholder="查询群组" id="seach" class="form-control">
+				<!--<input type="text" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>-->
+				<input type="text" placeholder="查询群组" id="seach" class="form-control" ng-model= "seachGroupsValue" ng-change="seachGroups()">
 			</div>
 		</div>
 		<div class="form-group">
@@ -122,13 +123,13 @@
 				<table id="group_table" class="table table-hover">
 					<thead>
 						<tr>
-							<th>群组名称</th><th>成员数</th><th>权限</th>
+							<th>群组名称</th><th>成员数</th><th class="tdroll">权限</th>
 						</tr>
 					</thead>
 					<tbody ng-repeat="group in groupList">
 						<tr>
 							<td>
-								<input type="checkbox" name="checkbox" id="checkbox" ng-click="switchRoleMenu(group)">
+								<input type="checkbox" name="checkbox"  ng-click="switchRoleMenu(group)">
 								{{group.group_name}}
 							</td>
 							<td>
@@ -136,7 +137,7 @@
 							</td>
 							<td class="rolltd" ng-show = "group.showRoleMenu">
 							<div class="roll" style="display: block;">
-								<select id="roll" class="">
+								<select id="roll" ng-model="group.groupRole" class="">
 									<option value="1">群组成员</option>
 									<option value="2">群组管理员</option>
 								</select>
