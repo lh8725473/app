@@ -3,6 +3,7 @@ angular.module('App', [
     'ui.router',
     'ngGrid', 
     'ui.bootstrap',
+    'ngAnimate',
 
     // Config
     'App.Config',

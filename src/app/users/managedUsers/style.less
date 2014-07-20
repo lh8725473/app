@@ -1,32 +1,23 @@
 .managedUsers-view {
   color: red;
- 
-    .gridStyle {
-        border: 1px solid rgb(212,212,212);
-        width: 600px; 
-        height: 300px;
-    }
-    
-    button {
-        background-color: #4a9afd;
-        color: #ffffff;
-    }
+  .gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 600px; 
+    height: 300px;
+  }
+  
+  button {
+      background-color: #4a9afd;
+      color: #ffffff;
+  }
 }
 
-.ng-hide-add-active {
-  display: block!important;
-  -webkit-transition: 0.5s linear all;
-  transition: 0.5s linear all;
-}
-
-.ng-hide-remove-active {
-  display: block!important;
-  -webkit-transition: 0.5s linear all;
-  transition: 0.5s linear all;
-  -webkit-transition-delay: 0.5s;
-  transition-delay: 0.5s;
-}
-
-.ng-hide {
-  opacity: 0;
+.add-user-modal-view {
+  .account-admin {
+    .opacity(100);
+    .transition(all linear 0.5s);
+  }
+  .account-admin.ng-hide {
+    .opacity(0);
+  }
 }

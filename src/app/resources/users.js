@@ -11,7 +11,7 @@ angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
         	method: "DELETE",
             params: {
                 action: 'delete',
-                id : 0
+                id : ''
             }
         },
         create: {
@@ -24,7 +24,7 @@ angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
         	method: "PUT",
             params: {
                 action: 'update',
-                id : 0
+                id : ''
             }
         }
     })
