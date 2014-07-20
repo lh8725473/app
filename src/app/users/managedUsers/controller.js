@@ -22,9 +22,20 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
     //addUser window ctrl
     var addUserModalController = function($scope, $modalInstance, groupList) {
+    	$scope.seachGroupsValue = 'aaa';
+    	$scope.seachGroups = function(){
+//  		$scope.groupList = $(groupList).map(function(i, v) {
+//				if (v.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
+//					return v
+//				}
+//			}).get();
+    		alert($scope.seachGroupsValue);
+    	}
+    	
         groupList.$promise.then(function() {
             angular.forEach(groupList, function(group) {
                 group.showRoleMenu = false;
+                group.groupRole = 1;
             });
         });
         $scope.groupList = groupList;
@@ -39,6 +50,16 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         };
 
         $scope.ok = function(user) {
+        	var groups = []
+        	angular.forEach(groupList, function (group) {
+        		if (group.showRoleMenu) {
+        			groups.push({
+        				group_id: group.group_id,
+        				group_role: group.groupRole
+        			})
+        		}
+        	})
+        	user.groups = groups;
             $modalInstance.close(user)
         }
 
