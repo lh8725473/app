@@ -5,6 +5,8 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     Users,
     Group) {
 
+    window.Notification = Notification
+
     //addUser window
     $scope.addUser = function() {
         var addUserModal = $modal.open({
@@ -24,13 +26,15 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
                 Notification.show({
                     title: '成功',
                     type: 'success',
-                    msg: '添加用户成功'
+                    msg: '添加用户成功',
+                    closeable: true
                 })
             }, function (error) {
                 Notification.show({
                     title: '失败',
                     type: 'danger',
-                    msg: error.data.result
+                    msg: error.data.result,
+                    closeable: false
                 })
             })
         })

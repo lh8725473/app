@@ -1,13 +1,20 @@
 angular.module('App.Widgets').service('Notification', function($modal) {
-    var notificationModalController = function($scope, $modalInstance, notification) {
+    var notificationModalController = function($scope, $modalInstance, $timeout, notification) {
         $scope.notification = notification
-        $scope.ok = function() {
-            $modalInstance.close()
+        if (notification.closeable) {
+            $scope.close = function() {
+                $modalInstance.close()
+            }
+        } else {
+            $timeout(function () {
+                $modalInstance.close()
+            }, 2000)
         }
     }
     return {
         show: function(notification) {
             var notificationModal = $modal.open({
+                backdrop: false,
                 templateUrl: 'src/app/widgets/notification/template.html',
                 windowClass: 'notification-modal-view',
                 controller: notificationModalController,
