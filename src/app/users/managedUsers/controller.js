@@ -1,4 +1,9 @@
-angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function($scope, $modal, Users, Group) {
+angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', function(
+    $scope,
+    $modal,
+    Notification,
+    Users,
+    Group) {
 
     //addUser window
     $scope.addUser = function() {
@@ -16,6 +21,17 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         addUserModal.result.then(function(user) {
             Users.create({}, user).$promise.then(function(resUser) {
                 $scope.userList.push(resUser)
+                Notification.show({
+                    title: '成功',
+                    type: 'success',
+                    msg: '添加用户成功'
+                })
+            }, function (error) {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result
+                })
             })
         })
     }

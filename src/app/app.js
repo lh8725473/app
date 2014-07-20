@@ -8,6 +8,9 @@ angular.module('App', [
     // Config
     'App.Config',
 
+    // Widget
+    'App.Widgets',
+
     // Components
     'App.Header',
     'App.Sidebar',
@@ -31,7 +34,8 @@ angular.module('App', [
             },
             responseError: function(rejection) {
                 // Handle Request error
-                console.log(JSON.stringify(rejection.data))
+                console.log(JSON.stringify(rejection))
+                return $q.reject(rejection)
             }
         }
     }
