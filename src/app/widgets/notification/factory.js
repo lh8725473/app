@@ -1,4 +1,4 @@
-angular.module('App.Widgets').service('Notification', function($modal) {
+angular.module('App.Widgets').factory('Notification', function($modal) {
     var notificationModalController = function($scope, $modalInstance, $timeout, notification) {
         $scope.notification = notification
         if (notification.closeable) {

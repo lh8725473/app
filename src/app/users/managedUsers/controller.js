@@ -5,8 +5,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     Users,
     Group) {
 
-    window.Notification = Notification
-
     //addUser window
     $scope.addUser = function() {
         var addUserModal = $modal.open({
