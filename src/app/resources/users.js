@@ -26,6 +26,12 @@ angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
                 action: 'update',
                 id : ''
             }
+        },
+        getSpaceinfo: {
+        	method: "GET",
+        	params: {
+                action: 'spaceinfo'
+            }
         }
     })
 })

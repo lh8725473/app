@@ -1,1 +1,1 @@
-angular.module('App.Overview', []);
+angular.module('App.Overview', ['angularCharts']);
