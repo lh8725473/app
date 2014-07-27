@@ -5,6 +5,9 @@ angular.module('App.Widgets').factory('Notification', function($modal) {
             $scope.close = function() {
                 $modalInstance.close()
             }
+            $timeout(function () {
+                $modalInstance.close()
+            }, 2000)
         } else {
             $timeout(function () {
                 $modalInstance.close()
