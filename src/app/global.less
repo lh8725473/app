@@ -1,3 +1,31 @@
-body {
-  background-color: @body-background-color;
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: @body-background-color;
+    height: 100%;
+    width: 100%;
+}
+
+.main{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 71px;
+    width: 100%;
+}
+
+.sidebar{
+    height: 100%;
+    float: left;
+    width: 160px;
+    position: relative;
+}
+
+.right-main{
+    bottom: 0;
+    float: left;
+    left: 160px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
