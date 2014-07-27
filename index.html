@@ -2,18 +2,50 @@
 <!--[if lt IE 7]>      <html ng-app="App" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html ng-app="App" class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html ng-app="App" class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html ng-app="App" class=""> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Console of Act</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--[if gt IE 8]><!-->
+<html ng-app="App" class="">
+	<!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Admin Console of Act</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- build:css css/app.css -->
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bower_components/ng-grid/ng-grid.css">
+		<link rel="stylesheet" type="text/css" href="build/default/app.css">
+		<!-- endbuild -->
+
+	</head>
+	<body>
+		<div class="header" ng-include="'src/app/header/template.html'"></div>
+		<div class="main">
+			<div class="sidebar" class="col-md-3" ng-include="'src/app/sidebar/template.html'"></div>
+			<div class="right-main" ui-view></div>
+		</div>
+
+		<!-- build:js js/app.js -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+		<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="bower_components/ng-grid/build/ng-grid.js"></script>
+		<script type="text/javascript" src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
+		<script type="text/javascript" src="bower_components/es5-shim/es5-shim.js"></script>
+		<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+
+		<script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+		<script type="text/javascript" src="src/app/widgets/widgets.js"></script>
+		<script type="text/javascript" src="src/app/widgets/notification/factory.js"></script>
 
   <!-- build:css css/app.css -->
-  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<script type="text/javascript" src="src/app/resources/resources.js"></script>
   <link rel="stylesheet" type="text/css" href="bower_components/ng-grid/ng-grid.css">
-  <link rel="stylesheet" type="text/css" href="build/default/app.css">
+		<script type="text/javascript" src="src/app/resources/users.js"></script>
   <!-- endbuild -->
   
 </head>
@@ -21,16 +53,13 @@
   <div class="header" ng-include="'src/app/header/template.html'"></div>
   <div class="container">
     <div class="row">
-      <div class="sidebar" class="col-md-3" ng-include="'src/app/sidebar/template.html'"></div>
+		<script type="text/javascript" src="src/app/resources/group.js"></script>
       <div class="col-md-9" ui-view></div>
     </div>
   </div>
 
-  <!-- build:js js/app.js -->
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
-  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="src/app/header/module.js"></script>
+		<script type="text/javascript" src="src/app/header/controller.js"></script>
   <script type="text/javascript" src="bower_components/ng-grid/build/ng-grid.js"></script>
   <script type="text/javascript" src="bower_components/angular-charts/dist/angular-charts.min.js"></script>
   <script type="text/javascript" src="bower_components/es5-shim/es5-shim.js"></script>
@@ -39,49 +68,34 @@
   <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
   
-  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
-  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript" src="src/app/sidebar/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/widgets/widgets.js"></script>
-  <script type="text/javascript" src="src/app/widgets/notification/factory.js"></script>
+		<script type="text/javascript" src="src/app/overview/module.js"></script>
+		<script type="text/javascript" src="src/app/overview/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/resources/resources.js"></script>
-  <script type="text/javascript" src="src/app/resources/users.js"></script>
-  <script type="text/javascript" src="src/app/resources/group.js"></script>
+		<script type="text/javascript" src="src/app/users/userHeader/module.js"></script>
+		<script type="text/javascript" src="src/app/users/userHeader/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/header/module.js"></script>
-  <script type="text/javascript" src="src/app/header/controller.js"></script>
+		<script type="text/javascript" src="src/app/users/managedUsers/module.js"></script>
+		<script type="text/javascript" src="src/app/users/managedUsers/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/sidebar/module.js"></script>
-  <script type="text/javascript" src="src/app/sidebar/controller.js"></script>
+		<script type="text/javascript" src="src/app/users/externalUsers/module.js"></script>
+		<script type="text/javascript" src="src/app/users/externalUsers/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/overview/module.js"></script>
-  <script type="text/javascript" src="src/app/overview/controller.js"></script>
+		<script type="text/javascript" src="src/app/users/groups/module.js"></script>
+		<script type="text/javascript" src="src/app/users/groups/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/users/userHeader/module.js"></script>
-  <script type="text/javascript" src="src/app/users/userHeader/controller.js"></script>
-  
-  <script type="text/javascript" src="src/app/users/managedUsers/module.js"></script>
-  <script type="text/javascript" src="src/app/users/managedUsers/controller.js"></script>
-  
-  <script type="text/javascript" src="src/app/users/externalUsers/module.js"></script>
-  <script type="text/javascript" src="src/app/users/externalUsers/controller.js"></script>
-  
-  <script type="text/javascript" src="src/app/users/groups/module.js"></script>
-  <script type="text/javascript" src="src/app/users/groups/controller.js"></script>
-  
-  <script type="text/javascript" src="src/app/users/module.js"></script>
-  <script type="text/javascript" src="src/app/users/controller.js"></script>
-  
+		<script type="text/javascript" src="src/app/users/module.js"></script>
+		<script type="text/javascript" src="src/app/users/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/reports/module.js"></script>
-  <script type="text/javascript" src="src/app/reports/controller.js"></script>
+		<script type="text/javascript" src="src/app/reports/module.js"></script>
+		<script type="text/javascript" src="src/app/reports/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/settings/module.js"></script>
-  <script type="text/javascript" src="src/app/settings/controller.js"></script>
+		<script type="text/javascript" src="src/app/settings/module.js"></script>
+		<script type="text/javascript" src="src/app/settings/controller.js"></script>
 
-  <script type="text/javascript" src="src/app/config.js"></script>
-  <script type="text/javascript" src="src/app/app.js"></script>
-  <!-- endbuild -->
-</body>
+		<script type="text/javascript" src="src/app/config.js"></script>
+		<script type="text/javascript" src="src/app/app.js"></script>
+		<!-- endbuild -->
+	</body>
 </html>
