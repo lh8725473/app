@@ -16,6 +16,9 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
 		}, {
 			displayName : 'action',
 			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
+		},{
+			displayName : 'img',
+			cellTemplate : 'src/app/users/groups/group-table-img-cell.html'
 		}]
 	}
 	
@@ -28,7 +31,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
         })
 
         addGroupModal.result.then(function(group) {
-            Group.create({}, group).$promise.then(function(resUser) {
+            Group.create({}, group).$promise.then(function(group) {
                 $scope.groupList.push(group)
                 Notification.show({
                     title: '成功',
@@ -48,7 +51,13 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
     }
     
     //addGroup window ctrl
-    var addGroupModalController = function($scope, $modalInstance) {  	
+    var addGroupModalController = function($scope, $modalInstance) {
+    	$scope.showAddMember = false;
+    	
+    	$scope.switchAddMember = function() {
+            $scope.showAddMember = !$scope.showAddMember;
+        };
+    	
         $scope.ok = function(group) {
             $modalInstance.close(group)
         }

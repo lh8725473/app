@@ -10,6 +10,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         var addUserModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/add-user-modal.html',
             windowClass: 'add-user-modal-view',
+            backdrop : 'static',
             controller: addUserModalController,
             resolve: {
                 groupList: function() {
@@ -40,14 +41,14 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
     //addUser window ctrl
     var addUserModalController = function($scope, $modalInstance, groupList) {
-    	$scope.seachGroupsValue = 'aaa';
-    	$scope.seachGroups = function(){
-//  		$scope.groupList = $(groupList).map(function(i, v) {
-//				if (v.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
-//					return v
-//				}
-//			}).get();
-    		alert($scope.seachGroupsValue);
+//  	$scope.seachGroupsValue = 'aaa';
+    	$scope.seachGroups = function(seachGroupsValue){
+    		$scope.groupList = $(groupList).map(function(i, v) {
+				if (v.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
+					return v
+				}
+			}).get();
+//  		alert($scope.seachGroupsValue);
     	}
     	
         groupList.$promise.then(function() {
@@ -133,6 +134,12 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
                     if ($scope.userList[i].user_id == userId) break
                 }
                 $scope.userList.splice(i, 1)
+                Notification.show({
+                    title: '成功',
+                    type: 'success',
+                    msg: '删除用户成功',
+                    closeable: true
+                })
             })
         })
     }
@@ -165,8 +172,22 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         editUserModal.result.then(function(editUser) {
             Users.update({
                 id: editUser.user_id
-            }, editUser)
-            angular.extend(row.entity, editUser)
+            }, editUser).$promise.then(function() {
+                angular.extend(row.entity, editUser)
+                Notification.show({
+                    title: '成功',
+                    type: 'success',
+                    msg: '修改用户成功',
+                    closeable: true
+                })
+            }, function (error) {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result,
+                    closeable: true
+                })
+            })
         })
     }
 

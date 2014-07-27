@@ -1,5 +1,4 @@
 .externalUers-view {
-    
     .groupGridStyle {
         border: 1px solid rgb(212,212,212);
         width: 600px; 
@@ -10,4 +9,38 @@
       background-color: #4a9afd;
       color: #ffffff;
     }
+}
+
+.add-group-modal-view {
+  .search.ng-hide-remove, .addMember.ng-hide-remove {
+    .opacity(0);
+    .transition(all linear 0.5s);
+  }
+  .search.ng-hide-remove-active, .addMember.ng-hide-remove-active {
+    .opacity(100);
+  }
+  .search.ng-hide-add, .addMember.ng-hide-add {
+    .opacity(100);
+    .transition(all linear 0.5s);
+  }
+  .search.ng-hide-add-active .addMember.ng-hide-add-active {
+    .opacity(0);
+  }
+  
+  .tooltip-inner{
+      background-color: #1f69ba;
+  }
+  
+  .tooltip.in {
+    filter: alpha(opacity=100);
+    opacity: 1;
+   }
+   
+   .tooltip-arrow{
+       
+   }
+  
+  .tdroll{
+      width: 140px;
+  }
 }
