@@ -18,7 +18,9 @@
     "angular-bootstrap": "~0.11.0",
     "angular-animate": "~1.2.20",
     "angular-charts": "~0.2.4",
-    "es5-shim": "~4.0.1"
+    "es5-shim": "~4.0.1",
+    "angular-translate": "~2.2.0",
+    "angular-translate-loader-partial": "~2.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.19"
