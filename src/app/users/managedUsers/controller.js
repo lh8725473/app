@@ -113,7 +113,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     }
 
     //deleteUser
-    $scope.delete = function(row) {
+    $scope['delete'] = function(row) {
         console.log("Here I need to know which row was selected " + row.entity.user_id)
         var deleteUserModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/delete-user-modal.html',
@@ -126,7 +126,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         })
 
         deleteUserModal.result.then(function(userId) {
-            Users.delete({
+            Users['delete']({
                 id: userId
             }).$promise.then(function() {
                 for (var i = 0; i < $scope.userList.length; ++i) {

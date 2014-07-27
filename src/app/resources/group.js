@@ -7,7 +7,7 @@ angular.module('App.Resources').factory('Group', function($resource, CONFIG) {
             },
             isArray: true
         },
-        delete: {
+        'delete': {
         	method: "DELETE",
             params: {
                 action: 'delete',
@@ -17,7 +17,7 @@ angular.module('App.Resources').factory('Group', function($resource, CONFIG) {
         create: {
         	method: "POST",
             params: {
-                action: 'create',
+                action: 'create'
             }
         },
         update: {

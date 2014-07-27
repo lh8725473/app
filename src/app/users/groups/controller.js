@@ -59,7 +59,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
     }
 	
 	//delete group
-    $scope.delete = function(row) {
+    $scope['delete'] = function(row) {
         var deleteUserModal = $modal.open({
             templateUrl: 'src/app/users/groups/delete-group-modal.html',
             controller: deleteModalController,
@@ -71,7 +71,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
         })
 
         deleteUserModal.result.then(function(group_id) {
-            Group.delete({
+            Group['delete']({
                 id: group_id
             }).$promise.then(function() {
                 for (var i = 0; i < $scope.groupList.length; ++i) {
