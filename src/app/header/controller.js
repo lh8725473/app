@@ -1,2 +1,3 @@
-angular.module('App.Header').controller('App.Header.Controller', function ($scope) {
+angular.module('App.Header').controller('App.Header.Controller', function($scope, $translatePartialLoader) {
+  $translatePartialLoader.addPart('app/header');
 })
