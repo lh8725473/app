@@ -2,6 +2,12 @@
     float: left;
     width: 260px;
     height: 100%;
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #d6dce2;
+    }
+    
     .overview{
         padding-left: 45px;
     }
@@ -26,7 +32,7 @@
         padding-left: 45px;
     }
     .reports-img{
-        background: url("../../src/images/icon_overview.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        background: url("../../src/images/icon_report.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
         height:19px;
         width: 19px;
         left: 20px;
@@ -44,5 +50,7 @@
     }
     .active{
         background-color: #d6dce2;
+        border-left: 5px solid #1f69ba;
+        
     }
 }

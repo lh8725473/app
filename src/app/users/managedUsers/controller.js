@@ -93,22 +93,26 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.gridOptions = {
         data: 'userList',
         selectedItems: [],
-        //      enableRowSelection : false,
-        showSelectionCheckbox: true,
-        columnDefs: [
-            //      {
-            //          field : 'user_id',
-            //          displayName : 'userId'
-            //      }, 
-            {
-                field: 'user_name',
-                displayName: 'userName'
+        headerRowHeight: 36,
+        rowHeight: 60,
+        enableRowSelection : false,
+//      showSelectionCheckbox: true,
+        columnDefs: [{
+                displayName : '用户',
+                cellTemplate: 'src/app/users/managedUsers/row-user-name.html',
+                cellClass: 'grid-align'
+            }, {
+                field: 'email',
+                displayName: '邮箱'
             }, {
                 field: 'real_name',
-                displayName: 'realName'
+                displayName: '用量'
             }, {
-                displayName: 'action',
-                cellTemplate: 'src/app/users/managedUsers/user-table-action-cell.html'
+                cellTemplate: 'src/app/users/managedUsers/row-user-activety.html',
+                displayName: '活动'
+            }, {
+                cellTemplate: 'src/app/users/managedUsers/user-table-action-cell.html',
+                displayName: '更多'
             }
         ]
     }
