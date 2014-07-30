@@ -1,22 +1,50 @@
 .managedUsers-view {
-  color: red;
   height: 100%;
+  .buttonGrounp{
+      padding-left: 57px;
+      padding-top: 9px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid #afafaf;
+  }
   .gridStyle {
-    border: 1px solid rgb(212,212,212);
-    bottom: 0;
+    bottom: 40px;
     left: 0;
     position: absolute;
     right: 0;
-    top: 34px;
+    top: 53px;
+    width: 100%;
+    padding-left: 57px;
     .ngVerticalBarVisible{
         width: 0;
     }
+    .ngCellText{
+        border-bottom: 1px solid #cfcfcf;
+        padding-top: 20px;
+     }
+     .ngHeaderCell{
+         border-bottom: 1px solid #afafaf;
+     }
+     .user-name{
+         padding-top: 10px;
+     }
+     .action img{
+         cursor: pointer;
+         padding-left: 20px;
+     }
+     .action img:first-child{
+         padding-left: 0px;
+     }
+//   .grid-align {
+//       text-align: center;
+//   }
   }
   
-  button {
-      background-color: #4a9afd;
-      color: #ffffff;
-  }
+   button {
+       margin-left: 12px;
+   }
+   .btn.btn-default:first-child{
+       margin-left: 0px;
+   }
 }
 
 .add-user-modal-view {
@@ -37,5 +65,23 @@
   
   .tdroll{
       width: 140px;
+  }
+  
+  h4{
+      border-bottom: 1px solid #e5e5e5;
+      padding-bottom: 5px;
+  }
+  
+  .permission-form{
+      padding-left: 20px;
+  }
+  
+  .unit{
+      padding-top: 6px;
+      padding-left: 0px;
+  }
+  
+  .gridStyle{
+      height: 130px;
   }
 }

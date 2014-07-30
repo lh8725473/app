@@ -1,27 +1,27 @@
 <div class="sidebar-view" ng-controller="App.Sidebar.Controller">
   <ul class="nav nav-sidebar">
-    <li class="active">
-      <a ui-sref="overview">
-        <span class="glyphicon glyphicon-hdd"></span>
-        Overview
+    <li ng-class="{ active: $state.includes('overview') }">
+      <a ui-sref="overview" class="overview">
+        <span class="overview-img"></span>
+        	概况
       </a>
     </li>
-    <li>
-      <a ui-sref="users.managedUsers">
-        <span class="glyphicon glyphicon-user"></span>
-        Users&Groups
+    <li ng-class="{ active: $state.includes('users') }">
+      <a ui-sref="users.managedUsers" class="users">
+        <span class="users-img"></span>
+        	用户与群组
       </a>
     </li>
-    <li>
-      <a ui-sref="reports">
-        <span class="glyphicon glyphicon-stats"></span>
-        Reports
+    <li ng-class="{ active: $state.includes('reports') }">
+      <a ui-sref="reports" class="reports">
+        <span class="reports-img"></span>
+        	报告
       </a>
     </li>
-    <li>
-      <a ui-sref="settings">
-        <span class="glyphicon glyphicon-cog"></span>
-        Settings
+    <li ng-class="{ active: $state.includes('settings') }">
+      <a ui-sref="settings" class="settings">
+        <span class="settings-img"></span>
+       		设置
       </a>
     </li>
   </ul>

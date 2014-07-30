@@ -1,21 +1,18 @@
 <div class="user-header-view" ng-controller="App.Users.UserHeader.Controller">
   <ul class="nav nav-sidebar">
-    <li class="active">
+    <li ui-sref-active="active">
       <a ui-sref="users.managedUsers">
-        <span class="glyphicon glyphicon-hdd"></span>
-        ManagerUser
+        	内部用户
       </a>
     </li>
-    <li>
-      <a ui-sref="users.externalUers">
-        <span class="glyphicon glyphicon-user"></span>
-        ExternalUsers
-      </a>
-    </li>
-    <li>
+    <li ui-sref-active="active">
       <a ui-sref="users.groups">
-        <span class="glyphicon glyphicon-stats"></span>
-        Groups
+       		群组
+      </a>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="users.externalUers">
+        	外部用户
       </a>
     </li>
   </ul>

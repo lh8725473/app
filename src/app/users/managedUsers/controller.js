@@ -41,14 +41,52 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
     //addUser window ctrl
     var addUserModalController = function($scope, $modalInstance, groupList) {
-//  	$scope.seachGroupsValue = 'aaa';
+    	$scope.groupList = groupList;
+    	$scope.selectedData = [];
+    	$scope.gridGroup = {
+        	data: 'groupList',
+        	selectedItems: $scope.selectedData,
+//      	enableRowSelection : false,
+        	showSelectionCheckbox: true,
+        	selectWithCheckboxOnly: true,
+    		showSelectionCheckbox: true,
+        	afterSelectionChange: function(data) {
+        		if(data.entity.showRoleMenu == true){
+        			data.entity.showRoleMenu = false;
+        		}else{
+        			data.entity.showRoleMenu = true;
+        		}
+			},
+        	columnDefs: [{
+                	field: 'group_name',
+                	displayName: '群组名称'
+            	}, {
+                	field: 'group_desc',
+                	displayName: '人数'
+            	}, {
+                	displayName: '组内权限',
+                	cellTemplate: 'src/app/users/managedUsers/row-group-role.html',
+            	}         	
+        	]
+   	 	}
+
     	$scope.seachGroups = function(seachGroupsValue){
     		$scope.groupList = $(groupList).map(function(i, v) {
 				if (v.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
 					return v
 				}
 			}).get();
-//  		alert($scope.seachGroupsValue);
+			//add selected element 
+			var temGroupList = $scope.groupList;
+			angular.forEach($scope.selectedData, function (selectedGroup) {
+				angular.forEach(temGroupList, function (group) {
+        			if (group.group_id != selectedGroup.group_id) {
+        				$scope.groupList.push(selectedGroup)
+        			}
+        		})
+        	})
+			//remove repeat element
+			$scope.groupList = $.unique($scope.groupList);
     	}
     	
         groupList.$promise.then(function() {
@@ -93,22 +131,26 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.gridOptions = {
         data: 'userList',
         selectedItems: [],
-        //      enableRowSelection : false,
-        showSelectionCheckbox: true,
-        columnDefs: [
-            //      {
-            //          field : 'user_id',
-            //          displayName : 'userId'
-            //      }, 
-            {
-                field: 'user_name',
-                displayName: 'userName'
+        headerRowHeight: 36,
+        rowHeight: 60,
+        enableRowSelection : false,
+//      showSelectionCheckbox: true,
+        columnDefs: [{
+                displayName : '用户',
+                cellTemplate: 'src/app/users/managedUsers/row-user-name.html',
+                cellClass: 'grid-align'
+            }, {
+                field: 'email',
+                displayName: '邮箱'
             }, {
                 field: 'real_name',
-                displayName: 'realName'
+                displayName: '用量'
             }, {
-                displayName: 'action',
-                cellTemplate: 'src/app/users/managedUsers/user-table-action-cell.html'
+                cellTemplate: 'src/app/users/managedUsers/row-user-activety.html',
+                displayName: '活动'
+            }, {
+                cellTemplate: 'src/app/users/managedUsers/user-table-action-cell.html',
+                displayName: '更多'
             }
         ]
     }
