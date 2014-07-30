@@ -4,12 +4,22 @@
     padding-bottom: 8px;
     padding-left: 40px;
     height: 60px;
-    .nav-sidebar li {
-        width: 140px;
-        float: left;           
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #1F69BA;
+        color: white;
     }
+    .nav-sidebar li {
+        width: 105px;
+        float: left;
+        text-align: center;           
+    }    
     .active {
         background-color: #1F69BA;
+        color: white;
+    }
+    .active a{
         color: white;
     } 
 }

@@ -1,40 +1,40 @@
 <div class="modal-header">
 	<button class="bootbox-close-button close" type="button" ng-click="cancel()">×</button>
-	<h3 class="modal-title">AddUser</h3>
+	<h3 class="modal-title">添加内部人员</h3>
 </div>
 <div class="modal-body">
 	<form id="" role="form" class="form-horizontal userDetail">
 		<h4>新用户账户信息</h4>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">姓名</label>
-			<div class="col-sm-5">
-				<input type="name" placeholder="" id="inputEmail3" class="form-control">
+			<label class="col-sm-2 control-label" for="username">用户名</label>
+			<div class="col-sm-8">
+				<input type="name" placeholder="请填写用户的真实姓名以便管理" class="form-control" ng-model="user.user_name">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">Email</label>
-			<div class="col-sm-5">
-				<input type="email" placeholder="" id="inputEmail3" class="form-control">
-			</div><label class="col-sm-4 forEmailtip">这会成为ta的登录名</label>
+			<label class="col-sm-2 control-label" for="inputEmail">邮箱</label>
+			<div class="col-sm-8">
+				<input type="email" placeholder="此邮箱将作为登录名使用，请准确填写" class="form-control" ng-model="user.email">
+			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">空间分配（GoB）</label>
-			<div class="col-sm-5">
-				<input type="" placeholder="" id="inputGoB" class="form-control">
+			<label class="col-sm-2 control-label">容量</label>
+			<div class="col-sm-2">
+				<input type="" placeholder="" class="form-control" value="5">
 			</div>
-			<div class="col-sm-4">
+			<label class="unit col-sm-1">GB</label>
+			<div class="col-sm-3">
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="checkbox">
-						不限空间</label>
+						无限制</label>
 				</div>
 			</div>
 		</div>
 	</form>
 	<form role="form" class="form-horizontal accessPermissions">
 		<h4>访问权限</h4>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">分享联系人</label>
+		<div class="permission-form form-group">
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
@@ -43,8 +43,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">允许同步</label>
+		<div class="permission-form form-group">
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
@@ -53,8 +52,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">限制外部协作</label>
+		<div class="permission-form form-group">
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
@@ -63,17 +61,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">协同管理员</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						授予该用户管理员权限&nbsp;</label><span title="不能管理主要管理员 " class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
+		<!--<div class="form-group">
 			<label class="col-sm-2 control-label">账号管理员</label>
 			<div id="changeco-admin" class="col-sm-4">
 				<div class="checkbox">
@@ -110,16 +98,17 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		</div>-->
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">选择该用户所属的群组</label>
+			<label class="col-sm-4 control-label" for="seach">选择该用户所属的群组</label>
 			<div class="col-sm-5">
-				<input type="text" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
-				<!--<input type="text" placeholder="查询群组" id="seach" class="form-control" ng-model= "seachGroupsValue" ng-change="seachGroups()">-->
+				<input type="name" placeholder="输入群组名称" class="form-control" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">aaa</label>
+			<div class="gridStyle col-sm-12" ng-grid="gridGroup"></div>
+		</div>
+		<!--<div class="form-group">
 			<div class="col-sm-9">
 				<table id="group_table" class="table table-hover">
 					<thead>
@@ -148,28 +137,9 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">选择该用户可以访问的协作文件夹</label>
-			<div class="col-sm-5">
-				<input type="" placeholder="" id="seach" class="form-control">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">aaa</label>
-			<div class="col-sm-6">
-				<table id="file_table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>文件夹名</th><th>拥有者</th><th>文件数</th><th>权限</th>
-						</tr>
-					</thead>
-					<!-- <tbody data-bind="foreach: filedataArray"></tbody> -->
-				</table>
-			</div>
-		</div>
+		</div>-->
 	</form>
-	<div>
+	<!--<div>
 		<label>USERNAME:</label>
 		<input type="text" ng-model="user.user_name"/>
 	</div>
@@ -184,7 +154,7 @@
 	<div>
 		<label>GROUNPID:</label>
 		<input type="text" ng-model="user.group_id"/>
-	</div>
+	</div>-->
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" ng-click="ok(user)">
