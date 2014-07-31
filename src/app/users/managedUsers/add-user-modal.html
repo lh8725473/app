@@ -1,18 +1,20 @@
 <div class="modal-header">
-	<button class="bootbox-close-button close" type="button" ng-click="cancel()">×</button>
+	<button class="bootbox-close-button close" type="button" ng-click="cancel()">
+		×
+	</button>
 	<h3 class="modal-title">添加内部人员</h3>
 </div>
 <div class="modal-body">
 	<form id="" role="form" class="form-horizontal userDetail">
 		<h4>新用户账户信息</h4>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="username">用户名</label>
+			<label class="col-sm-2 control-label" for="username" >用户名</label>
 			<div class="col-sm-8">
-				<input type="name" placeholder="请填写用户的真实姓名以便管理" class="form-control" ng-model="user.user_name">
+				<input type="name" placeholder="请填写用户的真实姓名以便管理" ng-claas="{empty : true}" class="form-control" ng-model="user.user_name">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail">邮箱</label>
+			<label class="col-sm-2 control-label">邮箱</label>
 			<div class="col-sm-8">
 				<input type="email" placeholder="此邮箱将作为登录名使用，请准确填写" class="form-control" ng-model="user.email">
 			</div>
@@ -20,7 +22,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">容量</label>
 			<div class="col-sm-2">
-				<input type="" placeholder="" class="form-control" value="5">
+				<input type="" placeholder="" class="form-control" value="5" ng-model="user.user_space">
 			</div>
 			<label class="unit col-sm-1">GB</label>
 			<div class="col-sm-3">
@@ -31,15 +33,14 @@
 				</div>
 			</div>
 		</div>
-	</form>
-	<form role="form" class="form-horizontal accessPermissions">
+
 		<h4>访问权限</h4>
 		<div class="permission-form form-group">
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="checkbox">
-						允许该用户查看所有的内部用户&nbsp;</label><span title="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
+						允许该用户查看所有的内部用户&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 		</div>
@@ -48,7 +49,7 @@
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="checkbox">
-						允许该用户在全携通与桌面端间同步文件&nbsp;</label><span title="如果选中，则允许该用户在全携通网页端与桌面客户端之间双向同步文件。" class="glyphicon glyphicon-info-sign"></span>
+						允许该用户在全携通与桌面端间同步文件&nbsp;</label><span tooltip="如果选中，则允许该用户在全携通网页端与桌面客户端之间双向同步文件。" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 		</div>
@@ -57,47 +58,47 @@
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="checkbox">
-						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span title="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" class="glyphicon glyphicon-info-sign"></span>
+						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span tooltip="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 		</div>
 		<!--<div class="form-group">
-			<label class="col-sm-2 control-label">账号管理员</label>
-			<div id="changeco-admin" class="col-sm-4">
-				<div class="checkbox">
-					<div class="downmune" ng-click="switchAccountAdmin()">
-						<a>
-							更改账号管理员&nbsp;
-						</a><span class="glyphicon glyphicon-circle-arrow-down"></span>
-					</div>
-				</div>
-			</div>
+		<label class="col-sm-2 control-label">账号管理员</label>
+		<div id="changeco-admin" class="col-sm-4">
+		<div class="checkbox">
+		<div class="downmune" ng-click="switchAccountAdmin()">
+		<a>
+		更改账号管理员&nbsp;
+		</a><span class="glyphicon glyphicon-circle-arrow-down"></span>
+		</div>
+		</div>
+		</div>
 		</div>
 		<div class="account-admin" ng-show='showAccountAdmin'>
-			<div class="form-group">
-				<label for="newadmin" class="col-sm-2 control-label">新管理员</label>
-				<div class="col-sm-10">
-					<input type="newadmin" class="form-control" id="newadmin" placeholder="newadmin">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="newroll" class="col-sm-2 control-label">你的新角色</label>
-				<div class="col-sm-10">
-					<select class="form-control">
-						<option>协作管理员</option><option>普通用户</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">
-						确定
-					</button>
-					<button type="cancle" class="btn btn-default col-sm-offset-1">
-						取消
-					</button>
-				</div>
-			</div>
+		<div class="form-group">
+		<label for="newadmin" class="col-sm-2 control-label">新管理员</label>
+		<div class="col-sm-10">
+		<input type="newadmin" class="form-control" id="newadmin" placeholder="newadmin">
+		</div>
+		</div>
+		<div class="form-group">
+		<label for="newroll" class="col-sm-2 control-label">你的新角色</label>
+		<div class="col-sm-10">
+		<select class="form-control">
+		<option>协作管理员</option><option>普通用户</option>
+		</select>
+		</div>
+		</div>
+		<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-default">
+		确定
+		</button>
+		<button type="cancle" class="btn btn-default col-sm-offset-1">
+		取消
+		</button>
+		</div>
+		</div>
 		</div>-->
 		<div class="form-group">
 			<label class="col-sm-4 control-label" for="seach">选择该用户所属的群组</label>
@@ -108,59 +109,15 @@
 		<div class="form-group">
 			<div class="gridStyle col-sm-12" ng-grid="gridGroup"></div>
 		</div>
-		<!--<div class="form-group">
-			<div class="col-sm-9">
-				<table id="group_table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>群组名称</th><th>成员数</th><th class="tdroll">权限</th>
-						</tr>
-					</thead>
-					<tbody ng-repeat="group in groupList">
-						<tr>
-							<td>
-								<input type="checkbox" name="checkbox"  ng-click="switchRoleMenu(group)">
-								{{group.group_name}}
-							</td>
-							<td>
-								{{group.group_desc}}
-							</td>
-							<td class="rolltd" ng-show = "group.showRoleMenu">
-							<div class="roll" style="display: block;">
-								<select id="roll" ng-model="group.groupRole" class="">
-									<option value="1">群组成员</option>
-									<option value="2">群组管理员</option>
-								</select>
-							</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>-->
+
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="submit" >
+				OK
+			</button>
+			<button class="btn btn-warning" ng-click="cancel()">
+				Cancel
+			</button>
+		</div>
 	</form>
-	<!--<div>
-		<label>USERNAME:</label>
-		<input type="text" ng-model="user.user_name"/>
-	</div>
-	<div>
-		<label>EMAIL:</label>
-		<input type="text" ng-model="user.email"/>
-	</div>
-	<div>
-		<label>PASSWORD:</label>
-		<input type="text" ng-model="user.password"/>
-	</div>
-	<div>
-		<label>GROUNPID:</label>
-		<input type="text" ng-model="user.group_id"/>
-	</div>-->
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(user)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
+
 </div>

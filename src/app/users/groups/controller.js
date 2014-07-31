@@ -6,19 +6,21 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
 	$scope.groupGridOptions = {
 		data : 'groupList',
 		selectedItems : [],
-		showSelectionCheckbox : true,
+		headerRowHeight: 36,
+		enableRowSelection : false,
+        rowHeight: 60,
 		columnDefs : [{
 			field : 'group_name',
-			displayName : 'group_name'
+			displayName : '群组名称'
 		}, {
 			field : 'group_desc',
-			displayName : 'group_desc'
+			displayName : '组员'
 		}, {
-			displayName : 'action',
-			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
+			field : 'group_name',
+			displayName : '动态'
 		},{
-			displayName : 'img',
-			cellTemplate : 'src/app/users/groups/group-table-img-cell.html'
+			displayName : '操作',
+			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
 		}]
 	}
 	

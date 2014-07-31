@@ -1,46 +1,64 @@
-.externalUers-view {
-    .groupGridStyle {
-        border: 1px solid rgb(212,212,212);
-        width: 600px; 
-        height: 300px;
+.group-view {
+  height: 100%;
+  .buttonGroup{
+      padding-left: 57px;
+      padding-top: 9px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid #afafaf;
+  }
+  .groupGridStyle {
+    bottom: 40px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 53px;
+    width: 100%;
+    padding-left: 57px;
+    .ngVerticalBarVisible{
+        width: 0;
     }
-    
-    button {
-      background-color: #4a9afd;
-      color: #ffffff;
+    .ngCellText{
+        border-bottom: 1px solid #cfcfcf;
+        padding-top: 20px;
+     }
+     .ngHeaderCell{
+         border-bottom: 1px solid #afafaf;
+     }
+     .user-name{
+         padding-top: 10px;
+     }
+     .action img{
+         cursor: pointer;
+         padding-left: 20px;
+     }
+     .action img:first-child{
+         padding-left: 0px;
+     }
+//   .grid-align {
+//       text-align: center;
+//   }
+  }
+  
+   button {
+       margin-left: 12px;
+   }
+   .btn.btn-default:first-child{
+       margin-left: 0px;
+   }
+}
+
+.add-group-modal-view{
+    .tooltip-inner{  
+        background-color: #1f69ba;
+    }
+
+    .tooltip.in {
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+   
+    .tooltip-arrow{
+        background-color: #1f69ba;
     }
 }
 
-.add-group-modal-view {
-  .search.ng-hide-remove, .addMember.ng-hide-remove {
-    .opacity(0);
-    .transition(all linear 0.5s);
-  }
-  .search.ng-hide-remove-active, .addMember.ng-hide-remove-active {
-    .opacity(100);
-  }
-  .search.ng-hide-add, .addMember.ng-hide-add {
-    .opacity(100);
-    .transition(all linear 0.5s);
-  }
-  .search.ng-hide-add-active .addMember.ng-hide-add-active {
-    .opacity(0);
-  }
-  
-  .tooltip-inner{
-      background-color: #1f69ba;
-  }
-  
-  .tooltip.in {
-    filter: alpha(opacity=100);
-    opacity: 1;
-   }
-   
-   .tooltip-arrow{
-       background-color: #1f69ba;
-   }
-  
-  .tdroll{
-      width: 140px;
-  }
-}

@@ -143,7 +143,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
                 field: 'email',
                 displayName: '邮箱'
             }, {
-                field: 'real_name',
+                field: 'space',
                 displayName: '用量'
             }, {
                 cellTemplate: 'src/app/users/managedUsers/row-user-activety.html',
