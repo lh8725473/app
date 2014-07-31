@@ -4,6 +4,7 @@ angular.module('App', [
   'ngGrid',
   'ui.bootstrap',
   'ngAnimate',
+  'mb-scrollbar',
   'pascalprecht.translate',
 
   // Config
