@@ -15,32 +15,28 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
       resolve: {
         groupList: function() {
           return Group.query()
+        },
+        userList: function() {
+          return $scope.userList
         }
       }
-    })
-
-    addUserModal.result.then(function(user) {
-      Users.create({}, user).$promise.then(function(resUser) {
-        $scope.userList.push(resUser)
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: '添加用户成功',
-          closeable: true
-        })
-      }, function(error) {
-        Notification.show({
-          title: '失败',
-          type: 'danger',
-          msg: error.data.result,
-          closeable: false
-        })
-      })
     })
   }
 
   //addUser window ctrl
-  var addUserModalController = function($scope, $modalInstance, groupList) {
+  var addUserModalController = function($scope, $modalInstance, groupList, userList) {
+    $scope.userList = userList;
+
+  	//增加window 用户默认值
+  	$scope.user = {
+      total_space : 5,
+      config:{
+        show_member : true,
+        allow_sync : true,
+        inner_share : false
+      }
+  	}
+  	
     $scope.groupList = groupList;
     // 过滤后的数据
     $scope.shownData = [];
@@ -99,7 +95,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     groupList.$promise.then(function() {
       angular.forEach(groupList, function(group) {
         group.showRoleMenu = false;
-        group.groupRole = 1;
+        group.role_id = 0;
         // 获取数据之后，全部填充到显示的数据中
         $scope.shownData.push(group);
       });
@@ -129,7 +125,23 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         }
       })
       user.groups = groups;
-      $modalInstance.close(user)
+      Users.create({}, user).$promise.then(function(resUser) {
+        $scope.userList.push(resUser)
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '添加用户成功',
+          closeable: true
+        })
+        $modalInstance.close()
+      }, function(error) {
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: error.data.result,
+          closeable: false
+        })
+      })
     }
 
     $scope.cancel = function() {
