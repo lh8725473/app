@@ -1,117 +1,53 @@
 <div class="modal-header">
-	<h3 class="modal-title">AddGroup</h3>
+	<h3 class="modal-title">创建新群组</h3>
 </div>
 <div class="modal-body">
 	<form role="form" class="form-horizontal">
+		<h4 class="">创建新群组</h4>
 		<div class="form-group">
-			<label class="col-sm-3 control-label" for="inputEmail3">群组名称</label>
+			<label class="col-sm-2 control-label">群组名称</label>
 			<div class="col-sm-5">
-				<input type="name" placeholder="" id="inputEmail3" class="form-control">
+				<input type="name" placeholder="" class="form-control" ng-model="group.group_name"></input>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label">分享联系人</label>
+			<label class="col-sm-2 control-label">群组成员</label>
+			<div class="col-sm-5">
+				<input type="button" class="btn btn-default" ng-click="addMemberWindow()" value="添加成员"></input>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-10">
+				<div class="gridStyle col-sm-12" ng-grid="addMemberGridOptions"></div>
+			</div>
+		</div>
+		<h4 class="">设置群组用户权限</h4>
+		<div class="form-group">
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" ng-model="group.shareAllMember">
-						允许该用户查看所有的内部用户&nbsp;</label><span tooltip = "如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
+						<input type="checkbox" ng-model="group.config.show_member">
+						允许该用户查看所有的内部用户&nbsp;</label><span tooltip = "如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label">分享群组</label>
 			<div class="col-sm-8">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" id="checkbox">
-						允许此群组所有用户查看所有群组&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
+						<input type="checkbox" ng-model="group.config.desktop_sync">
+						允许此群组所有用户同步到全协同步文件&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label">允许同步</label>
-			<div class="col-sm-8">
+			<div class="col-sm-11">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" id="checkbox">
-						允许此群组所有用户同步到全协同&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
+						<input type="checkbox" ng-model="group.config.inner_share">
+						限定该群组中的用户在自己的的问佳佳中只能邀请内部用户进行写作&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
 				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">限制外部合作</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						此用户的文件夹拥有者允许协作&nbsp;</label><span title="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">群组成员</label>
-			<div class="col-sm-9">
-				<div>
-					<button class="btn btn-primary" ng-click="switchAddMember()">
-						增加群组成员
-					</button>
-					<button class="btn btn-warning" ng-click="">
-						批量增加群组成员
-					</button>
-					<input type="name" placeholder="搜索成员" class="" ng-show = "showAddMember">
-				</div>
-				<div class="addMember" ng-show = "showAddMember">
-					<div class="form-group">
-						<label class="col-sm-3 control-label">增加</label>
-						<div class="col-sm-8">
-							<input type="name" placeholder="" class="form-control">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label">权限等级</label>
-						<div class="col-sm-8">
-							<select class="form-control">
-								<option>协作管理员</option>
-								<option>普通用户</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-10">
-							<button type="submit" class="btn btn-default">
-								确定
-							</button>
-							<button type="cancle" class="btn btn-default col-sm-offset-1">
-								取消
-							</button>
-						</div>
-					</div>
-				</div>
-				<table id="group_table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>成员名字</th>
-							<th>邮件</th>
-							<th class="tdroll">权限</th>
-						</tr>
-					</thead>
-					<tbody >
-						<tr>
-							<td>
-							<input type="checkbox" name="checkbox"  ng-click="switchRoleMenu(group)">
-							aaaa </td>
-							<td> 222 </td>
-							<td class="rolltd">
-							<div class="roll" style="display: block;">
-								<select id="roll" class="">
-									<option value="1">群组成员</option>
-									<option value="2">群组管理员</option>
-								</select>
-							</div></td>
-						</tr>
-					</tbody>
-				</table>
 			</div>
 		</div>
 	</form>
