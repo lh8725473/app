@@ -1,4 +1,4 @@
-angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', function($scope, $modal, Notification, Group) {
+angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', function($scope, $modal, $timeout, Notification, Group, Users) {
 	//groupList data
 	$scope.groupList = Group.query()
 	
@@ -6,19 +6,21 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
 	$scope.groupGridOptions = {
 		data : 'groupList',
 		selectedItems : [],
-		showSelectionCheckbox : true,
+		headerRowHeight: 36,
+		enableRowSelection : false,
+        rowHeight: 60,
 		columnDefs : [{
+			displayName : '群组名称',
+			cellTemplate : 'src/app/users/groups/row-groups-name.html'		
+		}, {
+			field : 'user_count',
+			displayName : '组员'
+		}, {
 			field : 'group_name',
-			displayName : 'group_name'
-		}, {
-			field : 'group_desc',
-			displayName : 'group_desc'
-		}, {
-			displayName : 'action',
-			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
+			displayName : '动态'
 		},{
-			displayName : 'img',
-			cellTemplate : 'src/app/users/groups/group-table-img-cell.html'
+			displayName : '操作',
+			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
 		}]
 	}
 	
@@ -52,13 +54,118 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
     
     //addGroup window ctrl
     var addGroupModalController = function($scope, $modalInstance) {
-    	$scope.showAddMember = false;
-    	
-    	$scope.switchAddMember = function() {
-            $scope.showAddMember = !$scope.showAddMember;
-        };
+        $scope.addMembers = {}
+
+        //addMember grid
+        $scope.addMemberGridOptions = {
+            data : 'addMembers',
+            selectedItems : [],
+            enableRowSelection : false,
+            columnDefs : [{
+                field : 'user_name',
+                displayName : '成员'
+            }, {
+                field : 'email',
+                displayName : '邮件地址'
+            },{
+                displayName : '组内权限',
+                cellTemplate : 'src/app/users/groups/row-member-role.html'
+            }]
+        }
+        
+        $scope.addMemberWindow = function(){
+        	var addMemberWindowModal = $modal.open({
+            	   templateUrl: 'src/app/users/groups/add-member-window-modal.html',
+            	   windowClass: 'add-member-window-modal',
+            	   controller: addMemberWindowController,
+                   resolve: {
+                        addMembers: function() {
+                            return $scope.addMembers
+                        },
+                        userList : function(){
+                            return Users.query()
+                        }
+                    }           
+        	})
+
+            addMemberWindowModal.result.then(function(selectedData) {
+                $scope.addMembers = selectedData;
+            })
+        }
+
+        var addMemberWindowController = function($scope, $modalInstance, addMembers, userList) {
+        	//userList data
+            $scope.selectedData = [];
+            angular.forEach(addMembers, function(addMember) {
+                $scope.selectedData.push(addMember)
+            })
+            $scope.userList = userList
+            // 过滤后的数据
+            $scope.shownData = [];
+           
+        	$scope.selectedMemberGridOptions = {
+            	data : 'shownData',
+            	selectedItems : $scope.selectedData,
+                rowHeight: 40,
+                showSelectionCheckbox: true,
+                selectWithCheckboxOnly: true,
+            	columnDefs : [{
+      				displayName: '姓名',
+                    cellTemplate: 'src/app/users/groups/row-user-name.html'
+            	}, {
+                	field: 'email',
+      				displayName: '邮件地址',
+                    cellClass: 'gruop-add-email-row'
+            	}]
+        	}
+
+            $scope.seachGroups = function(seachMembersValue) {
+                // 清空显示的user
+                $scope.shownData = []
+                // 重新计算
+                $scope.shownData = $($scope.userList).filter(function(index, user) {
+                    if (!seachMembersValue || seachMembersValue.trim() === '') {
+                        return true
+                    } else if (user.user_name.toLowerCase().indexOf(seachMembersValue.toLowerCase()) != -1) {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+            }
+
+            userList.$promise.then(function() {
+                angular.forEach(userList, function(user) {
+                    // 获取数据之后，全部填充到显示的数据中
+                    $scope.shownData.push(user);
+                });
+            });
+
+            $timeout(function(){
+                angular.forEach($scope.userList, function(data, index) {
+                    angular.forEach($scope.selectedData, function(addMember) {
+                        if (data.user_id == addMember.user_id) {
+                            $scope.selectedMemberGridOptions.selectItem(index, true);
+                        }
+                    })
+                })
+            }, 500)
+
+            $scope.ok = function() {
+                $modalInstance.close($scope.selectedData)
+            }
+
+            $scope.cancel = function() {
+                $modalInstance.dismiss('cancel')
+            }
+        }
     	
         $scope.ok = function(group) {
+            var addMembers = $scope.addMembers
+            group.user = addMembers;
+            // angular.forEach($scope.addMembers, function(addMember,group){
+            //     group.user.push(addMember)
+            // })
             $modalInstance.close(group)
         }
 

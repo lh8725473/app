@@ -4,6 +4,7 @@ angular.module('App', [
   'ngGrid',
   'ui.bootstrap',
   'ngAnimate',
+  'mb-scrollbar',
   'pascalprecht.translate',
 
   // Config
@@ -56,6 +57,10 @@ angular.module('App', [
       .state('users.managedUsers', {
         url: '/managedUsers',
         templateUrl: 'src/app/users/managedUsers/template.html'
+      })
+      .state('editUser', {
+        url: '/editeditUser/:id',
+        templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
       })
       .state('users.externalUers', {
         url: '/externalUers',
