@@ -58,9 +58,9 @@ angular.module('App', [
         url: '/managedUsers',
         templateUrl: 'src/app/users/managedUsers/template.html'
       })
-      .state('users.edit', {
-        url: '/edit/:id',
-        templateUrl: 'src/app/users/managedUsers/update-user-modal.html'
+      .state('editUser', {
+        url: '/editeditUser/:id',
+        templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
       })
       .state('users.externalUers', {
         url: '/externalUers',

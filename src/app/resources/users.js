@@ -7,6 +7,13 @@ angular.module('App.Resources').factory('Users', function($resource, CONFIG) {
             },
             isArray: true
         },
+        getUserById: {
+        	method: "GET",
+            params: {
+                action: 'view',
+                id : ''
+            },
+        },
         'delete': {
         	method: "DELETE",
             params: {

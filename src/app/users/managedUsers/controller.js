@@ -30,6 +30,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
   	//增加window 用户默认值
   	$scope.user = {
       total_space : 5,
+      space_unlimited :false,
       config:{
         show_member : true,
         allow_sync : true,
@@ -69,7 +70,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         field: 'group_name',
         displayName: '群组名称'
       }, {
-        field: 'group_desc',
+        field: 'user_count',
         displayName: '人数'
       }, {
         displayName: '组内权限',
@@ -120,11 +121,11 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           // or  if (group.showRoleMenu && gorup.show) {
           groups.push({
             group_id: group.group_id,
-            group_role: group.groupRole
+            role_id: group.role_id
           })
         }
       })
-      user.groups = groups;
+      user.group = groups;
       Users.create({}, user).$promise.then(function(resUser) {
         $scope.userList.push(resUser)
         Notification.show({
@@ -222,52 +223,53 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
   //editUser
   $scope.edit = function edit(row) {
+  	$scope.editUser = row.entity;
     console.log("Here I need to know which row was selected " + row.entity.user_id)
-    var editUserModal = $modal.open({
-      templateUrl: 'src/app/users/managedUsers/update-user-modal.html',
-      controller: editModalController,
-      resolve: {
-        editUser: function() {
-          // Past the ref to the modal
-          return angular.copy(row.entity)
-        }
-      }
-    })
+//  var editUserModal = $modal.open({
+//    templateUrl: 'src/app/users/managedUsers/update-user-modal.html',
+//    controller: editModalController,
+//    resolve: {
+//      editUser: function() {
+//        // Past the ref to the modal
+//        return angular.copy(row.entity)
+//      }
+//    }
+//  })
 
-    editUserModal.result.then(function(editUser) {
-      Users.update({
-        id: editUser.user_id
-      }, editUser).$promise.then(function() {
-        angular.extend(row.entity, editUser)
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: '修改用户成功',
-          closeable: true
-        })
-      }, function(error) {
-        Notification.show({
-          title: '失败',
-          type: 'danger',
-          msg: error.data.result,
-          closeable: true
-        })
-      })
-    })
+//  editUserModal.result.then(function(editUser) {
+//    Users.update({
+//      id: editUser.user_id
+//    }, editUser).$promise.then(function() {
+//      angular.extend(row.entity, editUser)
+//      Notification.show({
+//        title: '成功',
+//        type: 'success',
+//        msg: '修改用户成功',
+//        closeable: true
+//      })
+//    }, function(error) {
+//      Notification.show({
+//        title: '失败',
+//        type: 'danger',
+//        msg: error.data.result,
+//        closeable: true
+//      })
+//    })
+//  })
   }
 
   //edit window ctrl
-  var editModalController = function($scope, $modalInstance, editUser) {
-    $scope.editUser = editUser
-
-    $scope.ok = function() {
-      $modalInstance.close($scope.editUser)
-    }
-
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel')
-    }
-  }
+//var editModalController = function($scope, $modalInstance, editUser) {
+//  $scope.editUser = editUser
+//
+//  $scope.ok = function() {
+//    $modalInstance.close($scope.editUser)
+//  }
+//
+//  $scope.cancel = function() {
+//    $modalInstance.dismiss('cancel')
+//  }
+//}
 
   $scope.bulkEdit = function() {
     alert("bulkEdit")
