@@ -11,8 +11,11 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
   $scope.user = Users.getUserById({id: $scope.id})
   
   $scope.user.$promise.then(function() {
+    // TODO group -> groups
     $scope.userGroup = $scope.user.group
-    $scope.showUserGroup = $scope.user.group
+    $scope.showUserGroup = $scope.user.group.map(function(group){
+      return group
+    })
     // if ($scope.user.config.desktop_sync == 'true') {
     //   $scope.user.config.desktop_sync = true
     // };
@@ -64,7 +67,7 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
   $scope.addGroupsWin = function(){ 
     var addGroupsModal = $modal.open({
       templateUrl: 'src/app/users/managedUsers/editUser/add-groups-window-modal.html',
-      controller: addUserModalController,
+      controller: addGroupsModalController,
       resolve: {
         groupList: function() {
           // Past the ref to the modal
@@ -80,12 +83,13 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
     addGroupsModal.result.then(function(selectedData) {
       angular.forEach(selectedData, function(addGroup) {
         $scope.userGroup.push(addGroup)
+        // TODO 需要根据seachGroups中的seachGroupsValue测试addGroup是否在里面
         $scope.showUserGroup.push(addGroup)
       })
     })
   }
 
-  var addUserModalController = function($scope, $modalInstance, groupList, userGroups) {
+  var addGroupsModalController = function($scope, $modalInstance, groupList, userGroups) {
     $scope.groupListData = [];
     groupList.$promise.then(function() {
     	angular.forEach(groupList, function(group) {
@@ -119,6 +123,7 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
     }
 
     $scope.ok = function() {
+      debugger
       $modalInstance.close($scope.selectedData)
     }
 
