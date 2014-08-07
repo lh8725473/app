@@ -61,26 +61,30 @@
 				<label>用户所在群组</label>
 			</div>
 			<div class="form-group">
-				<input type="text" placeholder="搜索所在群组" class="form-control user-email"/>
+				<input type ="text" placeholder="搜索所在群组" class="form-control seach-group" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
+				<input type="button" class="btn btn-default" value="添加群组" ng-click="addGroupsWin()"/>
 			</div>
-			<div class="form-group">
-				<div class="gridStyle col-sm-12" ng-grid="gridGroup"></div>
+			<div class="form-group gridStyleform">
+				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
+				<div class="col-sm-4"></div>
 			</div>
-			<div class="form-group">
+			<!--<div class="form-group">
 				<label>可以访问的协作文件夹</label>
 			</div>
 			<div class="form-group">
-				<input type="text" placeholder="搜索文件夹名称" class="form-control user-email"/>
+				<input type="text" placeholder="搜索文件夹名称" class="form-control seach-files"/>
+				<input type="button" class="btn btn-default" value="添加协作文件夹"/>
 			</div>
-			<div class="form-group">
-				<div class="gridStyle col-sm-12" ng-grid="gridGroup"></div>
-			</div>
+			<div class="form-group gridStyleform">
+				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
+				<div class="col-sm-4"></div>
+			</div>-->
 			<div class="form-group">
 				<a ui-sref="users.managedUsers">
 					<button class="btn btn-primary" ng-click="updateUser(user)">保存修改</button>
 				</a>
 				<a ui-sref="users.managedUsers">
-					<button class="btn btn-primary">取消</button>
+					<button class="btn btn-default">取消</button>
 				</a>	
 			</div>
 		</div>
