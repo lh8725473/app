@@ -4,6 +4,7 @@ angular.module('App', [
   'ngGrid',
   'ui.bootstrap',
   'ngAnimate',
+  'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
 
@@ -27,8 +28,10 @@ angular.module('App', [
   // Http Interceptor
 ]).factory('httpInterceptor',[
   '$q',
+  'CONFIG',
   function(
-    $q
+    $q,
+    CONFIG
   ) {
     return {
       response: function(response) {
@@ -39,7 +42,8 @@ angular.module('App', [
       },
       responseError: function(rejection) {
         // Handle Request error
-        console.log(JSON.stringify(rejection))
+        debugger
+        window.location.href = CONFIG.LOGIN_PATH
         return $q.reject(rejection)
       }
     }
@@ -101,7 +105,6 @@ angular.module('App', [
       templateUrl: 'src/app/settings/template.html'
     })
 
-    $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = CONFIG.token
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
 
@@ -112,12 +115,17 @@ angular.module('App', [
     $translateProvider.preferredLanguage('zh-CN');
   }
 ]).run([
+  '$http',
+  '$cookies',
   '$rootScope',
   '$translate',
   function(
+    $http,
+    $cookies,
     $rootScope,
     $translate
   ) {
+    $http.defaults.headers.common['HTTP_X_OAUTH'] = $cookies.accessToken
     $rootScope.$on('$translatePartialLoaderStructureChanged', function() {
       $translate.refresh();
     });
