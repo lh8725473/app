@@ -9,7 +9,7 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/app.b134373d.css">
+  <link rel="stylesheet" href="css/app/app.4c8dcaa1.css">
   
 </head>
 <body>
@@ -85,9 +85,9 @@
 <script type="text/ng-template" id="src/app/users/externalUsers/externalUser-table-action-cell.html">
 <div class="action ngCellText col3 colt3">
   <a ui-sref="users.editGroup({id: row.entity.group_id})">
-    <img src="./src/images/edit.png"/>
+    <img src="./images/edit.png"/>
   </a>
-	<img src="./src/images/delete.png" ng-click="delete(row)"/>
+	<img src="./images/delete.png" ng-click="delete(row)"/>
 </div>
 </script>
 
@@ -483,7 +483,7 @@
 </div>
 <div class="modal-body editGroup" ng-controller="App.Users.Groups.EditGroup.Controller">
 		<div class="col-sm-1">
-			<img src="src/images/grouplist_icon.png" height="64px" width="64px"/>
+			<img src="./images/grouplist_icon.png" height="64px" width="64px"/>
 		</div>
 		<div class="col-sm-10">
 			<div class="form-group">
@@ -551,9 +551,9 @@
 <script type="text/ng-template" id="src/app/users/groups/group-table-action-cell.html">
 <div class="action ngCellText col3 colt3">
   <a ui-sref="users.editGroup({id: row.entity.group_id})">
-    <img src="./src/images/edit.png"/>
+    <img src="./images/edit.png"/>
   </a>
-	<img src="./src/images/delete.png" ng-click="delete(row)"/>
+	<img src="./images/delete.png" ng-click="delete(row)"/>
 </div>
 </script>
 
@@ -563,7 +563,7 @@
 
 <script type="text/ng-template" id="src/app/users/groups/row-groups-name.html">
 <div class="groups-name ngCellText col3 colt3">
-	<img src="src/images/grouplist_icon.png" height="40px" width="40px"/>
+	<img src="./images/grouplist_icon.png" height="40px" width="40px"/>
 	{{row.entity.group_name}}
 </div>
 </script>
@@ -790,7 +790,7 @@
 
 <script type="text/ng-template" id="src/app/users/managedUsers/editUser/row-groups-name.html">
 <div class="groups-name ngCellText col3 colt3">
-	<img src="src/images/grouplist_icon.png" height="24px" width="24px"/>
+	<img src="./images/grouplist_icon.png" height="24px" width="24px"/>
 	{{row.entity.group_name}}
 </div>
 </script>
@@ -973,9 +973,9 @@
 <script type="text/ng-template" id="src/app/users/managedUsers/user-table-action-cell.html">
 <div class="action ngCellText col3 colt3">
   <a ui-sref="users.editUser({id: row.entity.user_id})">
-    <img src="./src/images/edit.png"/>
+    <img src="./images/edit.png"/>
   </a>
-	<img src="./src/images/delete.png" ng-click="delete(row)"/>
+	<img src="./images/delete.png" ng-click="delete(row)"/>
 </div>
 </script>
 
@@ -1028,6 +1028,6 @@
     <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
     <div class="right-main" ui-view=""></div>
   </div>
-  <script src="js/app.5baa1a4d.js"></script>
+  <script src="js/app.76c1f461.js"></script>
 </body>
 </html>
