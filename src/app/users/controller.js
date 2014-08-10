@@ -1,2 +1,8 @@
-angular.module('App.Users').controller('App.Users.Controller', function ($scope) {
-})
+angular.module('App.Users').controller('App.Users.Controller', [
+  '$scope',
+  function (
+    $scope
+  ) {
+    // TODO
+  }
+])

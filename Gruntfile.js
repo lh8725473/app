@@ -36,6 +36,10 @@ module.exports = function(grunt) {
                 files: {
                     'production/index.html': 'index.html'
                 }
+            },
+            images: {
+                src: 'src/images',
+                dest: 'production/'
             }
         },
         clean: {

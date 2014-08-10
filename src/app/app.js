@@ -25,8 +25,11 @@ angular.module('App', [
   'App.Resources'
 
   // Http Interceptor
-]).factory('httpInterceptor',
-  function($q) {
+]).factory('httpInterceptor',[
+  '$q',
+  function(
+    $q
+  ) {
     return {
       response: function(response) {
         if (response.data.result) {
@@ -41,8 +44,21 @@ angular.module('App', [
       }
     }
   }
-).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$translatePartialLoaderProvider', 'CONFIG',
-  function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider, CONFIG) {
+]).config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  '$httpProvider',
+  '$translateProvider',
+  '$translatePartialLoaderProvider',
+  'CONFIG',
+  function (
+    $stateProvider,
+    $urlRouterProvider,
+    $httpProvider,
+    $translateProvider,
+    $translatePartialLoaderProvider,
+    CONFIG
+  ) {
     $urlRouterProvider.otherwise('/overview')
     $stateProvider
       .state('overview', {
@@ -95,8 +111,15 @@ angular.module('App', [
     });
     $translateProvider.preferredLanguage('zh-CN');
   }
-]).run(function($rootScope, $translate) {
-  $rootScope.$on('$translatePartialLoaderStructureChanged', function() {
-    $translate.refresh();
-  });
-})
+]).run([
+  '$rootScope',
+  '$translate',
+  function(
+    $rootScope,
+    $translate
+  ) {
+    $rootScope.$on('$translatePartialLoaderStructureChanged', function() {
+      $translate.refresh();
+    });
+  }
+])
