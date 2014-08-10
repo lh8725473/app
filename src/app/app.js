@@ -42,7 +42,6 @@ angular.module('App', [
       },
       responseError: function(rejection) {
         // Handle Request error
-        debugger
         window.location.href = CONFIG.LOGIN_PATH
         return $q.reject(rejection)
       }
@@ -81,12 +80,12 @@ angular.module('App', [
         url: '/editUser/:id',
         templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
       })
-      .state('users.externalUers', {
-        url: '/externalUers',
+      .state('users.externalUsers', {
+        url: '/externalUsers',
         templateUrl: 'src/app/users/externalUsers/template.html'
       })
-      .state('users.editExternalUer', {
-        url: '/editExternalUer/:id',
+      .state('users.editExternalUser', {
+        url: '/editExternalUser/:id',
         templateUrl: 'src/app/users/externalUsers/editExternalUser/update-externalUser-modal.html'
       })
       .state('users.groups', {

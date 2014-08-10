@@ -43,7 +43,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
       ) {
         $scope.userList = userList;
 
-      	//增加window 用户默认值
+      	//增加userwindow 用户默认值
       	$scope.user = {
           total_space : 5,
           space_unlimited :false,
@@ -51,37 +51,112 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
             show_member : true,
             desktop_sync : true,
             inner_share : false
-          }
+          },
+          groups:[]
       	}
+
+        $scope.addGroupWindow = function() {
+          var addGroupModal = $modal.open({
+            templateUrl: 'src/app/users/managedUsers/add-group-window-modal.html',
+            windowClass: 'add-group-modal-view',
+            controller: addGroupModalController,
+            resolve: {
+              groupList: function() {
+                return Group.query()
+              },
+              addgroups: function() {
+                return $scope.user.groups
+              }
+            }
+          })
+
+          addGroupModal.result.then(function(selectedData) {
+            angular.forEach(selectedData, function(group){
+            	$scope.user.groups.push(group)
+            })
+          })
+        }
+
+        var addGroupModalController = [
+          '$scope',
+          '$modalInstance',
+          'groupList',
+          'addgroups',
+          function(
+            $scope,
+            $modalInstance,
+            groupList,
+            addgroups
+          ){
+            $scope.groupListData = []
+            groupList.$promise.then(function() { 
+              angular.forEach(groupList, function(group) {
+                var addFlag = true;
+                for (var i = 0;i < addgroups.length; i++) {
+                  if(group.group_id == addgroups[i].group_id){
+                    addFlag = false;
+                  }
+                }
+                if(addFlag){
+                  group.role_id = 0
+                  $scope.groupListData.push(group)
+                }
+              })
+            })
+
+            $scope.shownData = $scope.groupListData
+			
+			      $scope.seachGroups = function(seachGroupsValue) {
+              // 清空显示的group
+              $scope.shownData = []
+              // 重新计算
+              $scope.shownData = $($scope.groupListData).filter(function(index, group) {
+                if (!seachGroupsValue || seachGroupsValue.trim() === '') {
+                  return true
+                } else if (group.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
+                  return true
+                } else {
+                  return false
+                }
+              })
+            }
+			
+            $scope.selectedData = []
+            $scope.selectedGroupGridOptions = {
+              data: 'shownData',
+              selectedItems: $scope.selectedData,
+              showSelectionCheckbox: true,
+              selectWithCheckboxOnly: true,
+              columnDefs: [{
+                field: 'group_name',
+                displayName: '群组名称'
+              }, {
+                field: 'user_count',
+                displayName: '人数'
+              }, {
+                displayName: '组内权限',
+                cellTemplate: 'src/app/users/managedUsers/row-group-role.html',
+              }]
+            }
+
+            $scope.ok = function() {
+              $modalInstance.close($scope.selectedData)
+            }
+
+            $scope.cancel = function() {
+              $modalInstance.dismiss('cancel')
+            }
+          }
+        ]
       	
         $scope.groupList = groupList;
         // 过滤后的数据
         $scope.shownData = [];
-        // 选中的数据
-        $scope.selectedData = [];
-        $scope.gridGroup = {
-          data: 'shownData',
+        
+        $scope.gridAddGroup = {
+          data: 'user.groups',
           selectedItems: $scope.selectedData,
-          // enableRowSelection : false,
-          showSelectionCheckbox: true,
-          selectWithCheckboxOnly: true,
-          showSelectionCheckbox: true,
-          afterSelectionChange: function(rows, checkAll) {
-            if (!angular.isArray(rows)) {
-              rows = [rows]
-            }
-            angular.forEach(rows, function(row) {
-              if (angular.isUndefined(checkAll)) {
-                row.entity.showRoleMenu = !row.entity.showRoleMenu;
-              } else {
-                row.entity.showRoleMenu = checkAll;
-              }
-            })
-            // 重新计算选中的项
-            $scope.selectedData = $($scope.groupList).filter(function(index, group) {
-              return group.showRoleMenu;
-            })
-          },
+          enableRowSelection : false,
           columnDefs: [{
             field: 'group_name',
             displayName: '群组名称'
@@ -94,54 +169,11 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           }]
         }
 
-        $scope.seachGroups = function(seachGroupsValue) {
-          // 清空显示的group
-          $scope.shownData = []
-          // 重新计算
-          $scope.shownData = $($scope.groupList).filter(function(index, group) {
-            if (!seachGroupsValue || seachGroupsValue.trim() === '') {
-              return true
-            } else if (group.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
-              return true
-            } else {
-              return false
-            }
-          })
-        }
-
-        groupList.$promise.then(function() {
-          angular.forEach(groupList, function(group) {
-            group.showRoleMenu = false;
-            group.role_id = 0;
-            // 获取数据之后，全部填充到显示的数据中
-            $scope.shownData.push(group);
-          });
-
-        });
-        $scope.groupList = groupList;
-        $scope.showAccountAdmin = false;
-
-        $scope.switchAccountAdmin = function() {
-          $scope.showAccountAdmin = !$scope.showAccountAdmin;
-        };
-
         $scope.switchRoleMenu = function(group) {
           group.showRoleMenu = !group.showRoleMenu;
         };
 
         $scope.ok = function(user) {
-          var groups = []
-            // TODO 我觉得这里的逻辑完全是交互的问题，用户本来选了的，但是搜索的时候影藏了还要不要添加进去呢？
-          angular.forEach(groupList, function(group) {
-            if (group.showRoleMenu) {
-              // or  if (group.showRoleMenu && gorup.show) {
-              groups.push({
-                group_id: group.group_id,
-                role_id: group.role_id
-              })
-            }
-          })
-          user.groups = groups;
           Users.create({}, user).$promise.then(function(resUser) {
             $scope.userList.push(resUser)
             Notification.show({
@@ -198,7 +230,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
 
     //deleteUser
     $scope['delete'] = function(row) {
-      console.log("Here I need to know which row was selected " + row.entity.user_id)
       var deleteUserModal = $modal.open({
         templateUrl: 'src/app/users/managedUsers/delete-user-modal.html',
         controller: deleteModalController,
@@ -241,65 +272,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           $modalInstance.close(userId)
         }
 
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
-        }
-      }
-    ]
-
-    //editUser
-    $scope.edit = function edit(row) {
-    	$scope.editUser = row.entity;
-      console.log("Here I need to know which row was selected " + row.entity.user_id)
-   // var editUserModal = $modal.open({
-   //   templateUrl: 'src/app/users/managedUsers/update-user-modal.html',
-   //   controller: editModalController,
-   //   resolve: {
-   //     editUser: function() {
-   //       // Past the ref to the modal
-   //       return angular.copy(row.entity)
-   //     }
-   //   }
-   // })
-
-   // editUserModal.result.then(function(editUser) {
-   //   Users.update({
-   //     id: editUser.user_id
-   //   }, editUser).$promise.then(function() {
-   //     angular.extend(row.entity, editUser)
-   //     Notification.show({
-   //       title: '成功',
-   //       type: 'success',
-   //       msg: '修改用户成功',
-   //       closeable: true
-   //     })
-   //   }, function(error) {
-   //     Notification.show({
-   //       title: '失败',
-   //       type: 'danger',
-   //       msg: error.data.result,
-   //       closeable: true
-   //     })
-   //   })
-   // })
-    }
-
-    // edit window ctrl
-    var editModalController = [
-      '$scope',
-      '$modalInstance',
-      'editUser',
-      function(
-        $scope,
-        $modalInstance,
-        editUser
-      ) {
-        $scope.editUser = editUser
-      
-        $scope.ok = function() {
-          $modalInstance.close($scope.editUser)
-        }
-      
         $scope.cancel = function() {
           $modalInstance.dismiss('cancel')
         }

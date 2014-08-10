@@ -136,9 +136,9 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', [
                 $scope.selectedMemberGridOptions = {
                     data : 'shownData',
                     selectedItems : $scope.selectedData,
-                      rowHeight: 40,
-                      showSelectionCheckbox: true,
-                      selectWithCheckboxOnly: true,
+                    rowHeight: 40,
+                    showSelectionCheckbox: true,
+                    selectWithCheckboxOnly: true,
                     columnDefs : [{
                     displayName: '姓名',
                           cellTemplate: 'src/app/users/groups/row-user-name.html'
