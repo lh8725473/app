@@ -10,7 +10,7 @@ angular.module('App.Resources').factory('ExternalUser', [
         method: "GET",
         isArray: true
       },
-      getUserById: {
+      getExternalUserById: {
         method: "GET",
         params: {
           id : ''
