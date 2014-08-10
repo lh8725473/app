@@ -4,6 +4,7 @@ angular.module('App', [
   'ngGrid',
   'ui.bootstrap',
   'ngAnimate',
+  'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
 
@@ -25,8 +26,13 @@ angular.module('App', [
   'App.Resources'
 
   // Http Interceptor
-]).factory('httpInterceptor',
-  function($q) {
+]).factory('httpInterceptor',[
+  '$q',
+  'CONFIG',
+  function(
+    $q,
+    CONFIG
+  ) {
     return {
       response: function(response) {
         if (response.data.result) {
@@ -36,13 +42,27 @@ angular.module('App', [
       },
       responseError: function(rejection) {
         // Handle Request error
-        console.log(JSON.stringify(rejection))
+        debugger
+        window.location.href = CONFIG.LOGIN_PATH
         return $q.reject(rejection)
       }
     }
   }
-).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$translatePartialLoaderProvider', 'CONFIG',
-  function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $translatePartialLoaderProvider, CONFIG) {
+]).config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  '$httpProvider',
+  '$translateProvider',
+  '$translatePartialLoaderProvider',
+  'CONFIG',
+  function (
+    $stateProvider,
+    $urlRouterProvider,
+    $httpProvider,
+    $translateProvider,
+    $translatePartialLoaderProvider,
+    CONFIG
+  ) {
     $urlRouterProvider.otherwise('/overview')
     $stateProvider
       .state('overview', {
@@ -85,18 +105,29 @@ angular.module('App', [
       templateUrl: 'src/app/settings/template.html'
     })
 
-    $httpProvider.defaults.headers.common['HTTP_X_OAUTH'] = CONFIG.token
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
 
-    $translatePartialLoaderProvider.addPart('app')
+    // $translatePartialLoaderProvider.addPart('app')
     $translateProvider.useLoader('$translatePartialLoader', {
       urlTemplate: 'src/{part}/locals/{lang}.json'
     });
     $translateProvider.preferredLanguage('zh-CN');
   }
-]).run(function($rootScope, $translate) {
-  $rootScope.$on('$translatePartialLoaderStructureChanged', function() {
-    $translate.refresh();
-  });
-})
+]).run([
+  '$http',
+  '$cookies',
+  '$rootScope',
+  '$translate',
+  function(
+    $http,
+    $cookies,
+    $rootScope,
+    $translate
+  ) {
+    $http.defaults.headers.common['HTTP_X_OAUTH'] = $cookies.accessToken
+    $rootScope.$on('$translatePartialLoaderStructureChanged', function() {
+      $translate.refresh();
+    });
+  }
+])

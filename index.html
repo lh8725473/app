@@ -9,17 +9,17 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- build:css css/app.css -->
+  <!-- build:css css/app/app.css -->
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="bower_components/ng-grid/ng-grid.css">
-  <link rel="stylesheet" type="text/css" href="build/default/app.css">
+  <link rel="stylesheet" type="text/css" href="src/app/app.css">
   <!-- endbuild -->
   
 </head>
 <body>
   <div class="header" ng-include="'src/app/header/template.html'"></div>
   <div class="main">
-    <div class="sidebar" class="col-md-3" ng-include="'src/app/sidebar/template.html'"></div>
+    <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
     <div class="right-main" ui-view></div>
   </div>
   <!-- build:js js/app.js -->
@@ -35,6 +35,7 @@
   <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
   <script type="text/javascript" src="bower_components/mb-scrollbar/mb-scrollbar.js"></script>
   <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="src/app/widgets/widgets.js"></script>
   <script type="text/javascript" src="src/app/widgets/notification/factory.js"></script>

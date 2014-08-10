@@ -1,2 +1,8 @@
-angular.module('App.Reports').controller('App.Reports.Controller', function ($scope) {
-})
+angular.module('App.Reports').controller('App.Reports.Controller', [
+  '$scope',
+  function (
+    $scope
+  ) {
+    // TODO
+  }
+])
