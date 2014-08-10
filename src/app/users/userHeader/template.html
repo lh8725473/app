@@ -5,7 +5,7 @@
         	内部用户
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('users.groups') }">
+    <li ng-class="{ active: $state.includes('users.groups') ||  $state.includes('users.editGroup') }">
       <a ui-sref="users.groups">
        		群组
       </a>

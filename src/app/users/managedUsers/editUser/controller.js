@@ -12,13 +12,10 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
   
   $scope.user.$promise.then(function() {
     // TODO group -> groups
-    $scope.userGroup = $scope.user.group
-    $scope.showUserGroup = $scope.user.group.map(function(group){
+    $scope.userGroup = $scope.user.groups
+    $scope.showUserGroup = $scope.user.groups.map(function(group){
       return group
     })
-    // if ($scope.user.config.desktop_sync == 'true') {
-    //   $scope.user.config.desktop_sync = true
-    // };
   })
  	
 	$scope.gridGroup = {
@@ -82,6 +79,7 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
     
     addGroupsModal.result.then(function(selectedData) {
       angular.forEach(selectedData, function(addGroup) {
+        addGroup.role_id = 0;
         $scope.userGroup.push(addGroup)
         // TODO 需要根据seachGroups中的seachGroupsValue测试addGroup是否在里面
         $scope.showUserGroup.push(addGroup)
@@ -123,7 +121,6 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
     }
 
     $scope.ok = function() {
-      debugger
       $modalInstance.close($scope.selectedData)
     }
 
@@ -133,13 +130,11 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
   }
 
   $scope.updateUser = function(user){
-    user.group = $scope.userGroup;
+    user.groups = $scope.userGroup;
     Users.update({
       id: user.user_id
     }, user).$promise.then(function() {
       Notification.show({
-
-
         title: '成功',
         type: 'success',
         msg: '修改用户成功',

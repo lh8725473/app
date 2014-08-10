@@ -1,0 +1,68 @@
+<div class="modal-header editGroup-header">
+	<h3 class="modal-title">更改群组设置</h3>
+</div>
+<div class="modal-body editGroup" ng-controller="App.Users.Groups.EditGroup.Controller">
+		<div class="col-sm-1">
+			<img src="src/images/grouplist_icon.png" height="64px" width="64px"/>
+		</div>
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label>群组名称</label>
+			</div>
+			<div class="form-group">
+				<input type="text" ng-model="group.group_name" class="form-control group-name"/>
+			</div>
+			<h4 class="modal-title">群组权限</h4>
+			<div class="form-group permission-checkbox">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="group.config.show_member"/>
+						允许该用户查看所有的内部用户&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
+				</div>
+			</div>		
+			<div class="form-group permission-checkbox">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="group.config.desktop_sync">
+						允许此群组所有用户同步到全协同步文件&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
+				</div>
+			</div>			
+			<div class="form-group permission-checkbox">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="group.config.inner_share">
+						限定该群组中的用户在自己的的问佳佳中只能邀请内部用户进行写作&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>群组成员</label>
+			</div>
+			<div class="form-group">
+				<input type ="text" placeholder="搜索人员" class="form-control seach-group" ng-model="seachUsersValue" ng-change="seachUsers(seachUsersValue)"/>
+				<input type="button" class="btn btn-default" value="添加人员" ng-click="addUsersWin()"/>
+			</div>
+			<div class="form-group gridStyleform">
+				<div class="gridStyle col-sm-8" ng-grid="gridUser"></div>
+				<div class="col-sm-4"></div>
+			</div>
+			<!--<div class="form-group">
+				<label>可以访问的协作文件夹</label>
+			</div>
+			<div class="form-group">
+				<input type="text" placeholder="搜索文件夹名称" class="form-control seach-files"/>
+				<input type="button" class="btn btn-default" value="添加协作文件夹"/>
+			</div>
+			<div class="form-group gridStyleform">
+				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
+				<div class="col-sm-4"></div>
+			</div>-->
+			<div class="form-group">
+				<a ui-sref="users.groups">
+					<button class="btn btn-primary" ng-click="updateGroup(group)">保存修改</button>
+				</a>
+				<a ui-sref="users.groups">
+					<button class="btn btn-default">取消</button>
+				</a>	
+			</div>
+		</div>
+</div>

@@ -1,30 +1,20 @@
-angular.module('App.Resources').factory('ExternalUsers', function($resource, CONFIG) {
-    return $resource(CONFIG.API_ROOT + '/externalUsers/:action/:id', {}, {
+angular.module('App.Resources').factory('ExternalUser', function($resource, CONFIG) {
+    return $resource(CONFIG.API_ROOT + '/share/externalUser/:id', {}, {
         query: {
         	method: "GET",
-            params: {
-                action: 'list'
-            }
+            isArray: true
         },
-        delete: {
+        getUserById: {
+        	method: "GET",
+            params: {
+                id : ''
+            },
+        },
+        'delete': {
         	method: "DELETE",
             params: {
-                action: 'delete',
-                id : 0
+                id : ''
             }
-        },
-        create: {
-        	method: "POST",
-            params: {
-                action: 'create',
-            }
-        },
-        update: {
-        	method: "PUT",
-            params: {
-                action: 'update',
-                id : 0
-            }
-        }
+        }       
     })
 })

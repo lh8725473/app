@@ -7,6 +7,13 @@ angular.module('App.Resources').factory('Group', function($resource, CONFIG) {
             },
             isArray: true
         },
+        getGroupById: {
+            method: "GET",
+            params: {
+                action: 'view',
+                id : ''
+            }
+        },
         'delete': {
         	method: "DELETE",
             params: {
