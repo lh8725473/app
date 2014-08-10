@@ -3,7 +3,7 @@ module.exports = function(grunt) {
         less: {
             'default': {
                 files: {
-                    'build/default/app.css': 'src/app/app.less'
+                    'src/app/app.css': 'src/app/app.less'
                 },
                 options: {
                     modifyVars: {
@@ -13,7 +13,7 @@ module.exports = function(grunt) {
             },
             'dark': {
                 files: {
-                    'build/dark/app.css': 'src/app/app.less'
+                    'src/app/app.css': 'src/app/app.less'
                 },
                 options: {
                     modifyVars: {
@@ -38,8 +38,12 @@ module.exports = function(grunt) {
                 }
             },
             images: {
-                src: 'src/images',
-                dest: 'production/'
+                files: [{
+                    expand: true,
+                    cwd: 'src/',
+                    src: ['images/**'],
+                    dest: 'production/'
+                }]
             }
         },
         clean: {
@@ -65,6 +69,11 @@ module.exports = function(grunt) {
             production: {
                 files: {
                     'production/index.html': ['src/**/*.html']
+                }
+            },
+            options:{
+                unescape: {
+                    '&apos;': '\''
                 }
             }
         }

@@ -105,7 +105,7 @@ angular.module('App', [
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
 
-    $translatePartialLoaderProvider.addPart('app')
+    // $translatePartialLoaderProvider.addPart('app')
     $translateProvider.useLoader('$translatePartialLoader', {
       urlTemplate: 'src/{part}/locals/{lang}.json'
     });
