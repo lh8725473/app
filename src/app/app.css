@@ -182,6 +182,7 @@ body {
   padding-left: 57px;
   padding-top: 9px;
   width: 90%;
+  height: 53px;
 }
 .externalUsers-view .groupGridStyle {
   bottom: 40px;
@@ -224,6 +225,58 @@ body {
 }
 .externalUsers-view .btn.btn-default:first-child {
   margin-left: 0px;
+}
+.editExternalUser-header {
+  height: 10%;
+}
+.editExternalUser {
+  height: 90%;
+  overflow-y: auto;
+}
+.editExternalUser label {
+  margin-bottom: 0px;
+  margin-left: 5px;
+}
+.editExternalUser .form-group {
+  margin-bottom: 10px;
+}
+.editExternalUser .user-name {
+  width: 30%;
+}
+.editExternalUser .user-email {
+  width: 30%;
+}
+.editExternalUser .user-total-space {
+  width: 15%;
+  float: left;
+}
+.editExternalUser .checkbox-label {
+  margin-top: 5px;
+  margin-left: 35px;
+}
+.editExternalUser h4 {
+  margin-top: 35px;
+}
+.editExternalUser .permission-checkbox {
+  padding: 0;
+  margin-left: -3px;
+}
+.editExternalUser .seach-group,
+.editExternalUser .seach-files {
+  float: left;
+  margin-right: 10px;
+  width: 20%;
+}
+.editExternalUser .seach-folder {
+  height: 34px;
+}
+.editExternalUser .gridStyle {
+  border: 1px solid #e5e5e5;
+  height: 250px;
+  padding: 0;
+}
+.editExternalUser .gridStyleform {
+  height: 250px;
 }
 .group-view {
   height: 100%;

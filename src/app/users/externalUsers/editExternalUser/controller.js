@@ -1,42 +1,52 @@
-angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users.ExternalUsers.EditExternalUser.Controller', function(
-  $scope,
-  $modal,
-  Notification,
-  $state,
-  Users,
-  Group,
-  ExternalUser) {
+angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users.ExternalUsers.EditExternalUser.Controller', [
+  '$scope',
+  '$modal',
+  'Notification',
+  '$state',
+  'Users',
+  'Group',
+  'ExternalUser', 
+  function(
+  	$scope,
+  	$modal,
+  	Notification,
+  	$state,
+  	Users,
+  	Group,
+  	ExternalUser) {
   	
-  $scope.id = $state.params.id
+  	$scope.id = $state.params.id
   	
-  $scope.externalUser = ExternalUser.getExternalUserById({id: $scope.id})
+  	$scope.externalUser = ExternalUser.getExternalUserById({id: $scope.id})
   
-//$scope.externalUser.$promise.then(function() {
-//  // TODO group -> groups
-//  $scope.userGroup = $scope.user.groups
-//  $scope.showUserGroup = $scope.user.groups.map(function(group){
-//    return group
-//  })
-//})
+    $scope.externalUser.$promise.then(function() {
+      $scope.externalUserFolder = $scope.externalUser.folder
+      $scope.showUserExternalUserFolder = $scope.externalUser.folder.map(function(folder){
+        return folder
+      })
+    })
  	
-//	$scope.gridGroup = {
-//    data: 'showUserGroup',
-//    selectedItems: $scope.selectedData,
-//    enableRowSelection : false,
-//    columnDefs: [{
-//      displayName: '群组名称',
-//      cellTemplate : 'src/app/users/managedUsers/editUser/row-groups-name.html'    
-//    }, {
-//      field: 'user_count',
-//      displayName: '人数'
-//    }, {
-//      displayName: '组内权限',
-//      cellTemplate : 'src/app/users/managedUsers/editUser/row-group-role.html'
-//    }, {
-//      displayName: '管理',
-//      cellTemplate : 'src/app/users/managedUsers/editUser/row-groups-remove.html'
-//    }]
-//}
+	 $scope.gridFolder = {
+    data: 'showUserExternalUserFolder',
+    selectedItems: $scope.selectedData,
+    enableRowSelection : false,
+    columnDefs: [{
+      field: 'folder_name',
+      displayName: '文件夹名' 
+    }, {
+      field: 'folder_name',
+      displayName: '拥有者'
+    }, {
+      field: 'folder_name',
+      displayName: '文件数量'
+    }, {
+      displayName: '权限',
+      cellTemplate : 'src/app/users/externalUsers/editExternalUser/row-externalUser-role.html'
+    }, {
+      displayName: '操作',
+      cellTemplate : 'src/app/users/externalUsers/editExternalUser/row-externalUser-remove.html'
+    }]
+  }
 
 //$scope.seachGroups = function(seachGroupsValue) {
 //    // 清空显示的group
@@ -150,4 +160,5 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
 //    })
 // })
 //}
-})
+	}
+  	])
