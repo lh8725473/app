@@ -1,26 +1,23 @@
-angular.module('App.Users.ExternalUsers').controller('App.Users.ExternalUsers.Controller', function($scope, $modal, Notification, Group) {
+angular.module('App.Users.ExternalUsers').controller('App.Users.ExternalUsers.Controller', function($scope, $modal, Notification, ExternalUser) {
 	//groupList data
-	$scope.groupList = Group.query()
+	$scope.externalUserList = ExternalUser.query()
 
 	//group grid
 	$scope.groupGridOptions = {
-		data : 'groupList',
+		data : 'externalUserList',
 		selectedItems : [],
 		headerRowHeight : 36,
 		enableRowSelection : false,
 		rowHeight : 60,
 		columnDefs : [{
-			field : 'group_name',
-			displayName : '群组名称'
+			displayName : '用户',
+			cellTemplate : 'src/app/users/externalUsers/row-externalUser-name.html'
 		}, {
-			field : 'group_desc',
+			field : 'email',
 			displayName : '组员'
 		}, {
-			field : 'group_name',
-			displayName : '动态'
-		}, {
 			displayName : '操作',
-			cellTemplate : 'src/app/users/groups/group-table-action-cell.html'
+			cellTemplate : 'src/app/users/externalUsers/externalUser-table-action-cell.html'
 		}]
 	}
 

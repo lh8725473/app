@@ -58,8 +58,8 @@ angular.module('App', [
         url: '/managedUsers',
         templateUrl: 'src/app/users/managedUsers/template.html'
       })
-      .state('editUser', {
-        url: '/editeditUser/:id',
+      .state('users.editUser', {
+        url: '/editUser/:id',
         templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
       })
       .state('users.externalUers', {
@@ -69,6 +69,10 @@ angular.module('App', [
       .state('users.groups', {
         url: '/groups',
         templateUrl: 'src/app/users/groups/template.html'
+      })
+      .state('users.editGroup', {
+        url: '/editGroup/:id',
+        templateUrl: 'src/app/users/groups/editGroup/update-group-modal.html'
       })
 
     .state('reports', {

@@ -162,7 +162,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', fun
     	
         $scope.ok = function(group) {
             var addMembers = $scope.addMembers
-            group.user = addMembers;
+            group.users = addMembers;
             // angular.forEach($scope.addMembers, function(addMember,group){
             //     group.user.push(addMember)
             // })

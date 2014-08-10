@@ -33,7 +33,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
       space_unlimited :false,
       config:{
         show_member : true,
-        allow_sync : true,
+        desktop_sync : true,
         inner_share : false
       }
   	}
@@ -125,7 +125,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           })
         }
       })
-      user.group = groups;
+      user.groups = groups;
       Users.create({}, user).$promise.then(function(resUser) {
         $scope.userList.push(resUser)
         Notification.show({
