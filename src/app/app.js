@@ -69,11 +69,10 @@ angular.module('App', [
         url: '/overview',
         templateUrl: 'src/app/overview/template.html'
       })
-
-    .state('users', {
-      url: '/users',
-      templateUrl: 'src/app/users/template.html'
-    })
+      .state('users', {
+        url: '/users',
+        templateUrl: 'src/app/users/template.html'
+      })
       .state('users.managedUsers', {
         url: '/managedUsers',
         templateUrl: 'src/app/users/managedUsers/template.html'
@@ -86,6 +85,10 @@ angular.module('App', [
         url: '/externalUers',
         templateUrl: 'src/app/users/externalUsers/template.html'
       })
+      .state('users.editExternalUer', {
+        url: '/editExternalUer/:id',
+        templateUrl: 'src/app/users/externalUsers/editExternalUser/update-externalUser-modal.html'
+      })
       .state('users.groups', {
         url: '/groups',
         templateUrl: 'src/app/users/groups/template.html'
@@ -94,16 +97,14 @@ angular.module('App', [
         url: '/editGroup/:id',
         templateUrl: 'src/app/users/groups/editGroup/update-group-modal.html'
       })
-
-    .state('reports', {
-      url: '/reports',
-      templateUrl: 'src/app/reports/template.html'
-    })
-
-    .state('settings', {
-      url: '/settings',
-      templateUrl: 'src/app/settings/template.html'
-    })
+      .state('reports', {
+        url: '/reports',
+        templateUrl: 'src/app/reports/template.html'
+      })
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'src/app/settings/template.html'
+      })
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
