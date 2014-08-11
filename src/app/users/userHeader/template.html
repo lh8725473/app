@@ -10,8 +10,8 @@
        		群组
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('users.externalUers') }">
-      <a ui-sref="users.externalUers">
+    <li ng-class="{ active: $state.includes('users.externalUsers') ||  $state.includes('users.editExternalUser') }">
+      <a ui-sref="users.externalUsers">
         	外部用户
       </a>
     </li>

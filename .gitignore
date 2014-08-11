@@ -4,3 +4,4 @@ node_modules/
 .idea/
 .tmp/
 .project
+src/app/app.css
