@@ -37,6 +37,12 @@ angular.module('App.Resources').factory('OverView', [
           action: 'spaceRank'
         },
         isArray: true
+      },
+      spaceInfo: {
+        method: "GET",
+        params: {
+          action: 'spaceInfo'
+        }
       }
     })
   }
