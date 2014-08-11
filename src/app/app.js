@@ -42,7 +42,9 @@ angular.module('App', [
       },
       responseError: function(rejection) {
         // Handle Request error
-        window.location.href = CONFIG.LOGIN_PATH
+        if(rejection.status == 401){//401 accessToken 无效
+          window.location.href = CONFIG.LOGIN_PATH
+        }
         return $q.reject(rejection)
       }
     }

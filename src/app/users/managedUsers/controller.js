@@ -59,6 +59,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           var addGroupModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/add-group-window-modal.html',
             windowClass: 'add-group-modal-view',
+            backdrop: 'static',
             controller: addGroupModalController,
             resolve: {
               groupList: function() {
