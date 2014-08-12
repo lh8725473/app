@@ -270,13 +270,13 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
 
 		 Users.getSpaceinfo().$promise.then(function(spaceinfo) {
 		 	$scope.data = {
-		 		series : ['usedSpace', 'freeSpace'],
+		 		series : [],
 		 		data : [{
-		 			x : "usedSpace(GB)",
+		 			x : "used(GB)",
 		 			y : [spaceinfo.used_size],
 		 			"tooltip": spaceinfo.used_size
 		 		}, {
-		 			x : "freeSpace(GB)",
+		 			x : "free(GB)",
 		 			y : [spaceinfo.total_size - spaceinfo.used_size]
 		 		}]
 		 	};

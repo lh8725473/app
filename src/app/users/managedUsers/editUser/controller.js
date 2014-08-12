@@ -18,8 +18,12 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
     	
     $scope.user = Users.getUserById({id: $scope.id})
     
+    $scope.coAdmin = true;
+
     $scope.user.$promise.then(function() {
-      // TODO group -> groups
+      if($scope.user.config.co_admin == undefined){
+        $scope.coAdmin = false
+      }
       $scope.userGroup = $scope.user.groups
       $scope.showUserGroup = $scope.user.groups.map(function(group){
         return group

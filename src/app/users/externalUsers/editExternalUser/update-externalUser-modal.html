@@ -22,17 +22,17 @@
 				<label>用户所在群组</label>
 			</div>
 			<div class="form-group seach-folder">
-				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
+				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachFoldersValue" ng-change="seachFolders(seachFoldersValue)"/>
 			</div>
 			<div class="form-group gridStyleform">
 				<div class="gridStyle col-sm-8" ng-grid="gridFolder"></div>
 				<div class="col-sm-4"></div>
 			</div>
 			<div class="form-group">
-				<a ui-sref="users.managedUsers">
-					<button class="btn btn-primary" ng-click="updateUser(user)">保存修改</button>
+				<a ui-sref="users.externalUsers">
+					<button class="btn btn-primary" ng-click="updateUser(externalUser)">保存修改</button>
 				</a>
-				<a ui-sref="users.managedUsers">
+				<a ui-sref="users.externalUsers">
 					<button class="btn btn-default">取消</button>
 				</a>	
 			</div>
