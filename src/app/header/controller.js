@@ -1,10 +1,14 @@
 angular.module('App.Header').controller('App.Header.Controller', [
   '$scope',
   '$translatePartialLoader',
+  'CONFIG',
   function(
     $scope,
-    $translatePartialLoader
+    $translatePartialLoader,
+    CONFIG
   ) {
-    // $translatePartialLoader.addPart('app/header');
+  	$scope.backToindex = function(){
+  	  window.location.href = CONFIG.LOGIN_PATH
+  	}
   }
 ])

@@ -268,16 +268,16 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
 
 
 
-		 Users.getSpaceinfo().$promise.then(function(spaceinfo) {
+		 OverView.spaceInfo().$promise.then(function(spaceinfo) {
 		 	$scope.data = {
 		 		series : [],
 		 		data : [{
+		 			x : "free(GB)",
+		 			y : [spaceinfo.total_size - spaceinfo.used_size]	 			
+		 		}, {
 		 			x : "used(GB)",
 		 			y : [spaceinfo.used_size],
 		 			"tooltip": spaceinfo.used_size
-		 		}, {
-		 			x : "free(GB)",
-		 			y : [spaceinfo.total_size - spaceinfo.used_size]
 		 		}]
 		 	};
 		 });
@@ -286,7 +286,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
 		 	title : 'UserSpace',
 		 	tooltips : true,
 		 	labels : false,
-		 	colors : ['rgb(73,66,204)','rgb(0,128,0)'],
+//		 	colors : ['rgb(73,66,204)','rgb(0,128,0)'],
 		 	mouseover : function() {
 		 	},
 		 	mouseout : function() {
