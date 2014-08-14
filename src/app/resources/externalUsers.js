@@ -16,6 +16,12 @@ angular.module('App.Resources').factory('ExternalUser', [
           id : ''
         },
       },
+      updateExternalUser: {
+        method: "PUT",
+        params: {
+          id : ''
+        },
+      },
       'delete': {
         method: "DELETE",
         params: {

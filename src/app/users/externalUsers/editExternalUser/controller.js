@@ -5,7 +5,8 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
   '$state',
   'Users',
   'Group',
-  'ExternalUser', 
+  'ExternalUser',
+  'CONFIG',
   function(
   	$scope,
   	$modal,
@@ -13,15 +14,28 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
   	$state,
   	Users,
   	Group,
-  	ExternalUser) {
+  	ExternalUser,
+  	CONFIG) {
+
+  	$scope.permission_key = CONFIG.PERMISSION_KEY
+	  $scope.permission_value = CONFIG.PERMISSION_VALUE
+  	
+    $scope.permissions = []
+  	angular.forEach($scope.permission_key, function(key, index) {
+      var permissionMap = {
+        key : key,
+        value : $scope.permission_value[index]
+      }
+      $scope.permissions.push(permissionMap)
+    })
   	
   	$scope.id = $state.params.id
   	
   	$scope.externalUser = ExternalUser.getExternalUserById({id: $scope.id})
   
     $scope.externalUser.$promise.then(function() {
-      $scope.externalUserFolder = $scope.externalUser.folder
-      $scope.showUserExternalUserFolder = $scope.externalUser.folder.map(function(folder){
+      $scope.externalUserFolder = $scope.externalUser.folders
+      $scope.showUserExternalUserFolder = $scope.externalUser.folders.map(function(folder){
         return folder
       })
     })
@@ -51,7 +65,7 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
     $scope.removeExternalUser = function(row){
       $scope.showUserExternalUserFolder.splice(row.rowIndex, 1);
         angular.forEach($scope.externalUserFolder, function(folder, index) {
-          if(row.entity.id == folder.id){
+          if(row.entity.folder_id == folder.folder_id){
             $scope.externalUserFolder.splice(index, 1);
           }
       })
@@ -73,10 +87,9 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
     }
 
     $scope.updateExternalUser = function(externalUser){
-      externalUser.groups = $scope.userGroup;
-      Users.update({
-        id: user.user_id
-      }, user).$promise.then(function() {
+      ExternalUser.updateExternalUser({
+        id: externalUser.user_id
+      }, externalUser).$promise.then(function() {
         Notification.show({
           title: '成功',
           type: 'success',
@@ -93,4 +106,4 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
       })
     }
 	}
-  	])
+ ])

@@ -1,15 +1,15 @@
 <div class="modal-header">
-	<h3 class="modal-title">选择人员</h3>
+	<h3 class="modal-title">选择协作文件夹</h3>
 </div>
 <div class="modal-body">
 	<form role="form" class="form-horizontal">
 		<div class="form-group">
 			<div class="col-sm-5">
-				<input type="name" placeholder="输入人员名称查找" class="form-control" ng-model="seachUsersValue" ng-change="seachUsers(seachUsersValue)">
+				<input type="name" placeholder="输入文件夹名称查找" class="form-control" ng-model="seachFoldersValue" ng-change="seachFolders(seachFoldersValue)">
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedMemberGridOptions"></div>
+			<div class="gridStyle col-sm-12" ng-grid="selectedFolderGridOptions"></div>
 		</div>
 	</form>
 </div>

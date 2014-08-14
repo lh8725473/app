@@ -10,7 +10,7 @@
 				<label>姓名</label>
 			</div>
 			<div class="form-group">
-				<input type="text" ng-model="externalUser.user_name" class="form-control user-name"/>
+				<input type="text" ng-model="externalUser.user_name" class="form-control user-name" disabled/>
 			</div>
 			<div class="form-group">
 				<label>邮箱</label>
@@ -19,7 +19,7 @@
 				<input type="email" ng-model="externalUser.email" class="form-control user-email" disabled/>
 			</div>
 			<div class="form-group">
-				<label>用户所在群组</label>
+				<label>用户所在文件夹</label>
 			</div>
 			<div class="form-group seach-folder">
 				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachFoldersValue" ng-change="seachFolders(seachFoldersValue)"/>
@@ -30,7 +30,7 @@
 			</div>
 			<div class="form-group">
 				<a ui-sref="users.externalUsers">
-					<button class="btn btn-primary" ng-click="updateUser(externalUser)">保存修改</button>
+					<button class="btn btn-primary" ng-click="updateExternalUser(externalUser)">保存修改</button>
 				</a>
 				<a ui-sref="users.externalUsers">
 					<button class="btn btn-default">取消</button>

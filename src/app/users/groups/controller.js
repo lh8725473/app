@@ -214,6 +214,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', [
           var deleteUserModal = $modal.open({
               templateUrl: 'src/app/users/groups/delete-group-modal.html',
               controller: deleteModalController,
+              backdrop: 'static',
               resolve: {
                   groupId: function() {
                       return row.entity.group_id

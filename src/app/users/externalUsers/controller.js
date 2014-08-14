@@ -24,7 +24,10 @@ angular.module('App.Users.ExternalUsers').controller('App.Users.ExternalUsers.Co
 				cellTemplate : 'src/app/users/externalUsers/row-externalUser-name.html'
 			}, {
 				field : 'email',
-				displayName : '组员'
+				displayName : '邮件'
+			}, {
+				field : 'folder_count',
+				displayName : '文件夹数'
 			}, {
 				displayName : '操作',
 				cellTemplate : 'src/app/users/externalUsers/externalUser-table-action-cell.html'
@@ -36,6 +39,7 @@ angular.module('App.Users.ExternalUsers').controller('App.Users.ExternalUsers.Co
 			var deleteUserModal = $modal.open({
 				templateUrl : 'src/app/users/externalUsers/delete-externalUser-modal.html',
 				controller : deleteModalController,
+				backdrop: 'static',
 				resolve : {
 					externalUserId : function() {
 						return row.entity.user_id
