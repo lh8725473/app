@@ -203,7 +203,7 @@ angular.module('App.Users.Groups.EditGroup').controller('App.Users.Groups.EditGr
           angular.forEach(folderList, function(folder) {
             var addFlag = true;
             for (var i = 0;i < groupFolders.length; i++) {
-              if(folder.id == groupFolders[i].id){
+              if(folder.folder_id == groupFolders[i].folder_id){
                 addFlag = false;
               }
             }
