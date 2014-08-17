@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html ng-app="App" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="App" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="App" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="App" class=""> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Console of Act</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/app/app.dc3a84f8.css">
+  
+</head>
+<body>
+
+<!-- Begin Templates -->
+<script type="text/ng-template" id="src/app/header/template.html">
+<div class="header-view" ng-controller="App.Header.Controller">
+	<div class="header-ext">
+		<div class="back-main pull-right" ng-click = "backToindex()">
+			<div class="back-img"></div>
+			返回我的主页面
+		</div>
+	</div>
+	<div class="header-search" role="navigation">
+		<div class="logo pull-left"></div>
+		<div class="search pull-left">
+			<input type="text" class="search-text form-control" placeholder="搜索"/>
+			<button class="search-button btn btn-default">搜索</button>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/sidebar/template.html">
+<div class="sidebar-view" ng-controller="App.Sidebar.Controller">
+  <ul class="nav nav-sidebar">
+    <li ng-class="{ active: $state.includes('overview') }">
+      <a ui-sref="overview" class="overview">
+        <span class="overview-img"></span>
+        	概况
+      </a>
+    </li>
+    <li ng-class="{ active: $state.includes('users') }">
+      <a ui-sref="users.managedUsers" class="users">
+        <span class="users-img"></span>
+        	用户与群组
+      </a>
+    </li>
+    <li ng-class="{ active: $state.includes('reports') }">
+      <a ui-sref="reports" class="reports">
+        <span class="reports-img"></span>
+        	报告
+      </a>
+    </li>
+    <li ng-class="{ active: $state.includes('settings') }">
+      <a ui-sref="settings" class="settings">
+        <span class="settings-img"></span>
+       		设置
+      </a>
+    </li>
+  </ul>
+</div>
+</script>
+<!-- End Templates -->
+
+
+  <div class="header" ng-include="'src/app/header/template.html'"></div>
+  <div class="main">
+    <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
+    <div class="right-main" ui-view=""></div>
+  </div>
+  <script src="js/app.028ff3fc.js"></script>
+</body>
+</html>

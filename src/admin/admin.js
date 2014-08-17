@@ -11,9 +11,19 @@ angular.module('App', [
   // Config
   'App.Config',
 
+  // Widget
+  'App.Widgets',
+
   // Components
   'App.Header',
-  'App.Sidebar'
+  'App.Sidebar',
+  'App.Overview',
+  'App.Users',
+  'App.Reports',
+  'App.Settings',
+
+  // Resources
+  'App.Resources'
 
   // Http Interceptor
 ]).factory('httpInterceptor',[
@@ -54,48 +64,48 @@ angular.module('App', [
     $translatePartialLoaderProvider,
     CONFIG
   ) {
-    // $urlRouterProvider.otherwise('/overview')
-    // $stateProvider
-    //   .state('overview', {
-    //     url: '/overview',
-    //     templateUrl: 'src/app/overview/template.html'
-    //   })
-    //   .state('users', {
-    //     url: '/users',
-    //     templateUrl: 'src/app/users/template.html'
-    //   })
-    //   .state('users.managedUsers', {
-    //     url: '/managedUsers',
-    //     templateUrl: 'src/app/users/managedUsers/template.html'
-    //   })
-    //   .state('users.editUser', {
-    //     url: '/editUser/:id',
-    //     templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
-    //   })
-    //   .state('users.externalUsers', {
-    //     url: '/externalUsers',
-    //     templateUrl: 'src/app/users/externalUsers/template.html'
-    //   })
-    //   .state('users.editExternalUser', {
-    //     url: '/editExternalUser/:id',
-    //     templateUrl: 'src/app/users/externalUsers/editExternalUser/update-externalUser-modal.html'
-    //   })
-    //   .state('users.groups', {
-    //     url: '/groups',
-    //     templateUrl: 'src/app/users/groups/template.html'
-    //   })
-    //   .state('users.editGroup', {
-    //     url: '/editGroup/:id',
-    //     templateUrl: 'src/app/users/groups/editGroup/update-group-modal.html'
-    //   })
-    //   .state('reports', {
-    //     url: '/reports',
-    //     templateUrl: 'src/app/reports/template.html'
-    //   })
-    //   .state('settings', {
-    //     url: '/settings',
-    //     templateUrl: 'src/app/settings/template.html'
-    //   })
+    $urlRouterProvider.otherwise('/overview')
+    $stateProvider
+      .state('overview', {
+        url: '/overview',
+        templateUrl: 'src/admin/overview/template.html'
+      })
+      .state('users', {
+        url: '/users',
+        templateUrl: 'src/admin/users/template.html'
+      })
+      .state('users.managedUsers', {
+        url: '/managedUsers',
+        templateUrl: 'src/admin/users/managedUsers/template.html'
+      })
+      .state('users.editUser', {
+        url: '/editUser/:id',
+        templateUrl: 'src/admin/users/managedUsers/editUser/update-user-modal.html'
+      })
+      .state('users.externalUsers', {
+        url: '/externalUsers',
+        templateUrl: 'src/admin/users/externalUsers/template.html'
+      })
+      .state('users.editExternalUser', {
+        url: '/editExternalUser/:id',
+        templateUrl: 'src/admin/users/externalUsers/editExternalUser/update-externalUser-modal.html'
+      })
+      .state('users.groups', {
+        url: '/groups',
+        templateUrl: 'src/admin/users/groups/template.html'
+      })
+      .state('users.editGroup', {
+        url: '/editGroup/:id',
+        templateUrl: 'src/admin/users/groups/editGroup/update-group-modal.html'
+      })
+      .state('reports', {
+        url: '/reports',
+        templateUrl: 'src/admin/reports/template.html'
+      })
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'src/admin/settings/template.html'
+      })
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
