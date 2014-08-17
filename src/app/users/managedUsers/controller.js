@@ -35,7 +35,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         $scope,
         $modalInstance,
         userList
-      ) {
+      ) {                                     
         $scope.userList = userList;
 
       	//增加userwindow 用户默认值

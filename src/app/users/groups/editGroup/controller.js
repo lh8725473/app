@@ -102,9 +102,9 @@ angular.module('App.Users.Groups.EditGroup').controller('App.Users.Groups.EditGr
 	
 	$scope.seachFolders = function(seachFoldersValue) {
       // 清空显示的Folder
-      $scope.showUserFolder = []
+      $scope.showGroupFolder = []
       // 重新计算
-      $scope.showUserFolder = $($scope.userFolder).filter(function(index, folder) {
+      $scope.showGroupFolder = $($scope.groupFolder).filter(function(index, folder) {
         if (!seachFoldersValue || seachFoldersValue.trim() === '') {
           return true
         } else if (folder.folder_name.toLowerCase().indexOf(seachFoldersValue.toLowerCase()) != -1) {
@@ -125,10 +125,10 @@ angular.module('App.Users.Groups.EditGroup').controller('App.Users.Groups.EditGr
     }
     
     $scope.removeFolder = function(row){
-      $scope.showUserFolder.splice(row.rowIndex, 1);
-        angular.forEach($scope.userFolder, function(folder, index) {
-          if(row.entity.id == folder.id){
-            $scope.userFolder.splice(index, 1);
+      $scope.showGroupFolder.splice(row.rowIndex, 1);
+        angular.forEach($scope.groupFolder, function(folder, index) {
+          if(row.entity.folder_id == folder.folder_id){
+            $scope.groupFolder.splice(index, 1);
           }
       })
     }
