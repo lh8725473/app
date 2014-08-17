@@ -7,6 +7,7 @@ angular.module('App', [
   'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
+  'highcharts-ng',
 
   // Config
   'App.Config',
