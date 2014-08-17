@@ -5,7 +5,8 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
   '$state',
   'Users',
   'Group',
-  'ExternalUser', 
+  'ExternalUser',
+  'CONFIG',
   function(
   	$scope,
   	$modal,
@@ -13,15 +14,28 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
   	$state,
   	Users,
   	Group,
-  	ExternalUser) {
+  	ExternalUser,
+  	CONFIG) {
+
+  	$scope.permission_key = CONFIG.PERMISSION_KEY
+	  $scope.permission_value = CONFIG.PERMISSION_VALUE
+  	
+    $scope.permissions = []
+  	angular.forEach($scope.permission_key, function(key, index) {
+      var permissionMap = {
+        key : key,
+        value : $scope.permission_value[index]
+      }
+      $scope.permissions.push(permissionMap)
+    })
   	
   	$scope.id = $state.params.id
   	
   	$scope.externalUser = ExternalUser.getExternalUserById({id: $scope.id})
   
     $scope.externalUser.$promise.then(function() {
-      $scope.externalUserFolder = $scope.externalUser.folder
-      $scope.showUserExternalUserFolder = $scope.externalUser.folder.map(function(folder){
+      $scope.externalUserFolder = $scope.externalUser.folders
+      $scope.showUserExternalUserFolder = $scope.externalUser.folders.map(function(folder){
         return folder
       })
     })
@@ -48,117 +62,48 @@ angular.module('App.Users.ExternalUsers.EditExternalUser').controller('App.Users
     }]
   }
 
-//$scope.seachGroups = function(seachGroupsValue) {
-//    // 清空显示的group
-//    $scope.showUserGroup = []
-//    // 重新计算
-//    $scope.showUserGroup = $($scope.userGroup).filter(function(index, group) {
-//      if (!seachGroupsValue || seachGroupsValue.trim() === '') {
-//        return true
-//      } else if (group.group_name.toLowerCase().indexOf(seachGroupsValue.toLowerCase()) != -1) {
-//        return true
-//      } else {
-//        return false
-//      }
-//    })
-//  }
+    $scope.removeExternalUser = function(row){
+      $scope.showUserExternalUserFolder.splice(row.rowIndex, 1);
+        angular.forEach($scope.externalUserFolder, function(folder, index) {
+          if(row.entity.folder_id == folder.folder_id){
+            $scope.externalUserFolder.splice(index, 1);
+          }
+      })
+    }
 
-//$scope.removeg = function(row){
-//  $scope.showUserGroup.splice(row.rowIndex, 1);
-//  angular.forEach($scope.userGroup, function(group, index) {
-//    if(row.entity.group_id == group.group_id){
-//      $scope.userGroup.splice(index, 1);
-//    }
-//  })
-//}
+    $scope.seachFolders = function(seachFoldersValue) {
+      // 清空显示的group
+      $scope.showUserExternalUserFolder = []
+      // 重新计算
+      $scope.showUserExternalUserFolder = $($scope.externalUserFolder).filter(function(index, folder) {
+        if (!seachFoldersValue || seachFoldersValue.trim() === '') {
+          return true
+        } else if (folder.folder_name.toLowerCase().indexOf(seachFoldersValue.toLowerCase()) != -1) {
+          return true
+        } else {
+          return false
+        }
+      })
+    }
 
-//$scope.addGroupsWin = function(){ 
-//  var addGroupsModal = $modal.open({
-//    templateUrl: 'src/app/users/managedUsers/editUser/add-groups-window-modal.html',
-//    controller: addGroupsModalController,
-//    resolve: {
-//      groupList: function() {
-//        // Past the ref to the modal
-//        return Group.query()
-//      },
-//      userGroups: function() {
-//        // Past the ref to the modal
-//        return $scope.userGroup
-//      }
-//    }
-//  })
-    
-//  addGroupsModal.result.then(function(selectedData) {
-//    angular.forEach(selectedData, function(addGroup) {
-//      addGroup.role_id = 0;
-//      $scope.userGroup.push(addGroup)
-//      // TODO 需要根据seachGroups中的seachGroupsValue测试addGroup是否在里面
-//      $scope.showUserGroup.push(addGroup)
-//    })
-//  })
-//}
-
-//var addGroupsModalController = function($scope, $modalInstance, groupList, userGroups) {
-//  $scope.groupListData = [];
-//  groupList.$promise.then(function() {
-//  	angular.forEach(groupList, function(group) {
-//      var addFlag = true;
-//      for (var i = 0;i < userGroups.length; i++) {
-//        if(group.group_id == userGroups[i].group_id){
-//          addFlag = false;
-//        }
-//      }
-//      if(addFlag){
-//        $scope.groupListData.push(group)
-//      }
-//    })
-//  })
-//
-//  $scope.selectedData = [];
-//  
-//  $scope.selectedMemberGridOptions = {
-//    data : 'groupListData',
-//    selectedItems : $scope.selectedData,
-//    showSelectionCheckbox: true,
-//    selectWithCheckboxOnly: true,
-//    columnDefs : [{
-//    	  displayName: '群组名称',
-//        cellTemplate: 'src/app/users/managedUsers/editUser/row-groups-name.html'
-//      }, {
-//        field: 'user_count',
-//    	  displayName: '群组人数',
-//        cellClass: 'gruop-add-email-row'
-//      }]
-//  }
-//
-//  $scope.ok = function() {
-//    $modalInstance.close($scope.selectedData)
-//  }
-//
-//  $scope.cancel = function() {
-//    $modalInstance.dismiss('cancel')
-//  }
-//}
-
-//$scope.updateUser = function(user){
-//  user.groups = $scope.userGroup;
-//  Users.update({
-//    id: user.user_id
-//  }, user).$promise.then(function() {
-//    Notification.show({
-//      title: '成功',
-//      type: 'success',
-//      msg: '修改用户成功',
-//      closeable: true
-//    })
-//  }, function(error) {
-//    Notification.show({
-//      title: '失败',
-//      type: 'danger',
-//      msg: error.data.result,
-//      closeable: true
-//    })
-// })
-//}
+    $scope.updateExternalUser = function(externalUser){
+      ExternalUser.updateExternalUser({
+        id: externalUser.user_id
+      }, externalUser).$promise.then(function() {
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '修改用户成功',
+          closeable: true
+        })
+      }, function(error) {
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: error.data.result,
+          closeable: true
+        })
+      })
+    }
 	}
-  	])
+ ])

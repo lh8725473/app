@@ -19,9 +19,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         backdrop: 'static',
         controller: addUserModalController,
         resolve: {
-          groupList: function() {
-            return Group.query()
-          },
           userList: function() {
             return $scope.userList
           }
@@ -33,14 +30,12 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     var addUserModalController = [
       '$scope',
       '$modalInstance',
-      'groupList',
       'userList',
       function(
         $scope,
         $modalInstance,
-        groupList,
         userList
-      ) {
+      ) {                                     
         $scope.userList = userList;
 
       	//增加userwindow 用户默认值
@@ -59,6 +54,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           var addGroupModal = $modal.open({
             templateUrl: 'src/app/users/managedUsers/add-group-window-modal.html',
             windowClass: 'add-group-modal-view',
+            backdrop: 'static',
             controller: addGroupModalController,
             resolve: {
               groupList: function() {
@@ -149,7 +145,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
           }
         ]
       	
-        $scope.groupList = groupList;
         // 过滤后的数据
         $scope.shownData = [];
         
@@ -224,7 +219,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
         displayName: '活动'
       }, {
         cellTemplate: 'src/app/users/managedUsers/user-table-action-cell.html',
-        displayName: '更多'
+        displayName: '操作'
       }]
     }
 
@@ -233,6 +228,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
       var deleteUserModal = $modal.open({
         templateUrl: 'src/app/users/managedUsers/delete-user-modal.html',
         controller: deleteModalController,
+        backdrop: 'static',
         resolve: {
           userId: function() {
             return row.entity.user_id

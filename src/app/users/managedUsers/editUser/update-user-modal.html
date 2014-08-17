@@ -50,11 +50,11 @@
 						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span  tooltip-placement="bottom" tooltip="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
-			<div class="form-group permission-checkbox">
+			<div class="form-group permission-checkbox" ng-show = "coAdmin">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" >
-						协同管理选&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
+						<input type="checkbox" ng-model="user.config.co_admin">
+						协同管理员&nbsp;</label><span tooltip="授予该用户管理员权限（不能管理主要管理员 main admin，也即不能点击main admin进行编辑；并且协同管理员不能取消自己的管理员权限）。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -68,17 +68,17 @@
 				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
 				<div class="col-sm-4"></div>
 			</div>
-			<!--<div class="form-group">
+			<div class="form-group">
 				<label>可以访问的协作文件夹</label>
 			</div>
-			<div class="form-group">
-				<input type="text" placeholder="搜索文件夹名称" class="form-control seach-files"/>
-				<input type="button" class="btn btn-default" value="添加协作文件夹"/>
+			<div class="form-group seach-folder">
+				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachFoldersValue" ng-change="seachFolders(seachFoldersValue)"/>
+				<input type="button" class="btn btn-default" value="添加协作文件夹" ng-click= "addFolderWin()"/>
 			</div>
 			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
+				<div class="gridStyle col-sm-8" ng-grid="gridFolder"></div>
 				<div class="col-sm-4"></div>
-			</div>-->
+			</div>
 			<div class="form-group">
 				<a ui-sref="users.managedUsers">
 					<button class="btn btn-primary" ng-click="updateUser(user)">保存修改</button>
