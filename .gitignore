@@ -5,3 +5,4 @@ node_modules/
 .tmp/
 .project
 src/app/app.css
+src/admin/admin.css
