@@ -1,15 +1,29 @@
 <div class="header-view" ng-controller="App.Header.Controller">
-	<div class="header-ext">
-		<div class="back-main pull-right" ng-click = "backToindex()">
-			<div class="back-img"></div>
-			返回我的主页面
+	<div class="header-top">
+		<div class="user-info pull-right">
+			<div class="username" ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span>{{user.user_name}}</span>
+				<div class="personalInfor"></div>
+			</div>
+			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
+		</div>
+		<div class="to-admin-control pull-right">
+			管理控制台
+		</div>
+		<div class="notif_box" class="message-notice pull-right">
+			<span class="notice" title="通知"></span>
+			<label class="message-count notice-count"></label>
+			<span class="message" title="消息"></span>
+			<label class="message-count letter-count"></label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
 			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<button class="search-button btn btn-default">
+				搜索
+			</button>
 		</div>
 	</div>
 </div>

@@ -11,6 +11,10 @@ angular.module('App', [
   // Config
   'App.Config',
 
+  // Resources
+  'App.Resources',
+
+
   // Components
   'App.Header',
   'App.Sidebar',
