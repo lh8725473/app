@@ -13,7 +13,12 @@ angular.module('App', [
 
   // Components
   'App.Header',
-  'App.Sidebar'
+  'App.Sidebar',
+  'App.Updates',
+  'App.Files',
+  'App.Contacts',
+  'App.Trash'
+
 
   // Http Interceptor
 ]).factory('httpInterceptor',[
@@ -54,11 +59,11 @@ angular.module('App', [
     $translatePartialLoaderProvider,
     CONFIG
   ) {
-    $urlRouterProvider.otherwise('/update')
+    $urlRouterProvider.otherwise('/updates')
     $stateProvider
       .state('updates', {
         url: '/updates',
-        templateUrl: 'src/app/update/template.html'
+        templateUrl: 'src/app/updates/template.html'
       })
       .state('files', {
         url: '/files/:folderId',

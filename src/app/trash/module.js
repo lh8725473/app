@@ -1,1 +1,1 @@
-angular.module('App.Header', []);
+angular.module('App.Trash', []);
