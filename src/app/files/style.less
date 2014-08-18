@@ -1,6 +1,96 @@
 .files-view {
   height: 100%;
+  .file-row{
+    height: 65px;  
+  }
+  .top-bar{
+    height: 50px;
+    border-bottom: 1px solid #252519;
+  }
+  .buttonGroup{
+    border-bottom: 1px solid #252519;
+  }
   .folder-grid {
     height: 100%;
+    overflow-y: auto;
+  }
+  
+  .selected{
+    background-color: green;  
+  }
+  
+  .input-checkbox-td{
+    padding-top: 20px;
+    width: 20px;
+  }
+  
+  .create-buttonGroup{
+    float: left;  
+  }
+  
+  .form-control{
+    width: 50%;  
+  }
+  
+  .img-name-td{
+    width: 30%;
+    img{
+      float: left;  
+    }
+    .file-name{
+      float: left;  
+      width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 8px;
+      padding-top: 5px;
+    }
+    .tag{
+      color: white;
+      font-size: 11px;
+      span{       
+        background-color: #c2c2c2;
+        padding: 0 4px;
+        border-radius: 1px;
+      }
+    }  
+  }
+  .state-td{
+    padding-top: 20px;
+  }
+  
+  .file-sise-td{
+    padding-top: 20px;
+  }
+  
+  .permission-td{
+    padding-top: 20px;
+  }
+
+  .action-td{
+    padding-top: 20px;
+    height: 40px;
+  }
+  .link-share-ico{
+    float: left;
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px 0px;
+    height:19px;
+    width: 16px;  
+  }
+  .share-ico{
+    float: left;
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px -20px;
+    height:19px;
+    width: 16px;  
+  }
+  .discuss-ico{
+    float: left;  
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px -39px;
+    height:19px;
+    width: 16px;  
   }
 }

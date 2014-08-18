@@ -14,7 +14,9 @@ angular.module('App', [
   // Resources
   'App.Resources',
 
-
+  // Widget
+  'App.Widgets',	
+	
   // Components
   'App.Header',
   'App.Sidebar',
