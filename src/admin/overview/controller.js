@@ -7,16 +7,12 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
     Users,
     OverView
   ) {
-    $scope.loginCountConfig = {
-      title: {
-        text: '过去一段时间的登录次数'
-      }
-    }
+
     OverView.loginCount().$promise.then(function(loginCount) {
       $scope.loginCountConfig = {
         options: {
           chart: {
-            type: 'bar'
+            type: 'column'
           }
         },
         title: {
@@ -45,228 +41,170 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
     })
 
     OverView.loginRank().$promise.then(function(loginRank) {
+      var categories = []
       var data = []
       angular.forEach(loginRank, function(rank) {
-        var rankMap = {
-          x: rank.real_name,
-          y: [parseInt(rank.used_size)]
-        }
-        data.push(rankMap)
+        categories.push(rank.real_name)
+        data.push(parseInt(rank.login_count))
       })
-      $scope.spaceRankData = {
-        series: [],
-        data: data
-      };
-      $scope.spaceRankData = {
-        series: [],
-        data: data
-      };
-    })
 
-    $scope.spaceRankConfig = {
-      title: '历史活动',
-      tooltips: true,
-      labels: false,
-      mouseover: function() {},
-      mouseout: function() {},
-      click: function() {},
-      legend: {
-        display: true,
-        //could be 'left, right'
-        position: 'right'
+      $scope.loginRankConfig = {
+        options: {
+          chart: {
+            type: 'column'
+          }
+        },
+        title: {
+          text: '活跃用户'
+        },
+        xAxis: {
+          categories: categories
+        },
+        yAxis: {
+          title: {
+            text: null
+          }
+        },
+        series: [{
+          name: '登陆次数',
+          data: data
+        }],
+        credits: {
+          enabled: false
+        }
       }
-    };
+    })
 
     OverView.loginTrend().$promise.then(function(loginTrend) {
+      var categories = []
       var data = []
       angular.forEach(loginTrend, function(value, key) {
-        var maps = {
-          x: key,
-          y: [value]
-        }
-        data.push(maps)
+        categories.push(key)
+        data.push(parseInt(value))
       })
-      $scope.loginTrendData = {
-        series: ['2012', '2014'],
-        data: data
-      };
-    })
 
-    $scope.loginTrendConfig = {
-      "labels": false,
-      "title": "Products",
-      "legend": {
-        "display": true,
-        "position": "right"
-      },
-      "innerRadius": "",
-      "lineLegend": "traditional"
-    }
+      $scope.loginTrendConfig = {
+        title: {
+          text: '登录变化'
+        },
+        xAxis: {
+          categories: [2014-10-1,2014-6-1]
+        },
+        yAxis: {
+          title: {
+            text: null
+          }
+        },
+        series: [{
+          name: '登录变化',
+          data: [1,2,3,4,5,6,10,5,16]
+        }],
+        credits: {
+          enabled: false
+        }
+      }
+    })
 
     OverView.spaceTrend().$promise.then(function(spaceTrend) {
+      var categories = []
       var data = []
       angular.forEach(spaceTrend, function(value, key) {
-        var maps = {
-          x: key,
-          y: [value.used_size]
-        }
-        data.push(maps)
+        categories.push(key)
+        data.push(parseInt(value))
       })
-      $scope.spaceTrendData = {
-        series: ['2012', '2014'],
-        data: [{
-            x: '2000',
-            y: [1]
-          }, {
-            x: '2001',
-            y: [5]
-          }, {
-            x: '2002',
-            y: [20]
-          }, {
-            x: '2003',
-            y: [12]
-          }, {
-            x: '2004',
-            y: [50]
-          }, {
-            x: '2005',
-            y: [30]
-          }, {
-            x: '2006',
-            y: [40]
-          }, {
-            x: '2007',
-            y: [16]
-          }, {
-            x: '2008',
-            y: [26]
-          }, {
-            x: '2009',
-            y: [69]
-          }, {
-            x: '2010',
-            y: [78]
-          }, {
-            x: '2011',
-            y: [125]
-          }, {
-            x: '2012',
-            y: [130]
-          }, {
-            x: '2013',
-            y: [50]
-          }, {
-            x: '2014',
-            y: [78]
-          }, {
-            x: '2015',
-            y: [49]
-          }, {
-            x: '2016',
-            y: [90]
-          }, {
-            x: '2017',
-            y: [66]
-          }, {
-            x: '2018',
-            y: [88]
-          }, {
-            x: '2019',
-            y: [55]
-          }, {
-            x: '2020',
-            y: [11]
-          }, {
-            x: '2021',
-            y: [9]
-          }, {
-            x: '2022',
-            y: [33]
-          }, {
-            x: '2023',
-            y: [19]
-          }, {
-            x: '2024',
-            y: [17]
-          }, {
-            x: '2025',
-            y: [44]
-          }
 
-        ]
-      };
+      $scope.spaceTrendConfig = {
+        title: {
+          text: '用量变化'
+        },
+        xAxis: {
+          type: 'datetime',
+          pointStart: Date.UTC(2014, 0, 1)
+        },
+        yAxis: {
+            title: {
+                text: '用量'
+            },
+            min: 0
+        },
+        series: [{
+          name: '用量变化',
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+          pointInterval: 24 * 3600 * 1000
+        }]
+      }
     })
-
-    $scope.spaceTrendConfig = {
-      "labels": false,
-      "title": "Products",
-      "legend": {
-        "display": true,
-        "position": "right"
-      },
-      "innerRadius": "",
-      "lineLegend": "traditional"
-    }
 
     OverView.spaceRank().$promise.then(function(spaceRank) {
+      var categories = []
       var data = []
       angular.forEach(spaceRank, function(rank) {
-        var rankMap = {
-          x: rank.real_name,
-          y: [parseInt(rank.used_size)]
-        }
-        data.push(rankMap)
+        categories.push(rank.real_name)
+        data.push(parseInt(rank.used_size))
       })
-      $scope.spaceRankData = {
-        series: [],
-        data: data
-      };
+
+      $scope.spaceRankConfig = {
+        options: {
+          chart: {
+            type: 'column'
+          }
+        },
+        title: {
+          text: '使用空间最多的五位用户'
+        },
+        xAxis: {
+          categories: categories
+        },
+        yAxis: {
+          title: {
+            text: null
+          }
+        },
+        series: [{
+          name: '使用空间最多的五位用户',
+          data: data
+        }],
+        credits: {
+          enabled: false
+        }
+      }
     })
 
-    $scope.spaceRankConfig = {
-      title: '活跃用户空间',
-      tooltips: true,
-      labels: false,
-      mouseover: function() {},
-      mouseout: function() {},
-      click: function() {},
-      legend: {
-        display: true,
-        //could be 'left, right'
-        position: 'right'
-      }
-    };
-
-
-
     OverView.spaceInfo().$promise.then(function(spaceinfo) {
-      $scope.data = {
-        series: [],
-        data: [{
-          x: "free(GB)",
-          y: [spaceinfo.total_size - spaceinfo.used_size]
-        }, {
-          x: "used(GB)",
-          y: [spaceinfo.used_size],
-          "tooltip": spaceinfo.used_size
+      $scope.UserSpaceConfig = {
+      	chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: '已用团队空间'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'green'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '空间',
+            data: [
+              ['剩余空间', spaceinfo.total_size - spaceinfo.used_size],
+              ['已用空间', spaceinfo.used_size]
+            ]
         }]
-      };
-    });
-
-    $scope.UserSpaceConfig = {
-      title: 'UserSpace',
-      tooltips: true,
-      labels: false,
-      //		 	colors : ['rgb(73,66,204)','rgb(0,128,0)'],
-      mouseover: function() {},
-      mouseout: function() {},
-      click: function() {},
-      legend: {
-        display: true,
-        //could be 'left, right'
-        position: 'right'
       }
-    };
+    });
   }
 ])
