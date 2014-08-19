@@ -7,6 +7,8 @@ angular.module('App', [
   'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
+  'ng-context-menu',
+  'angularTreeview',
 
   // Config
   'App.Config',

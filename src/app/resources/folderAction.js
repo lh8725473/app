@@ -21,6 +21,20 @@ angular.module('App.Resources').factory('FolderAction', [
           folder_name : '',
           parent_id: 0
         }
+      },
+      deleteFolder: {
+        method: "DELETE",
+        params: {
+          action: 'delete',
+          folder_id : ''
+        }
+      },
+      updateFolder:{
+      	method: "PUT",
+        params: {
+          action: 'update',
+          folder_id: ''
+        }
       }
     })
   }  

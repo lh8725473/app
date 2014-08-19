@@ -32,7 +32,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
 			  $scope.showMessageCount = $scope.messageCount != 0
 			  $scope.showMoticeCount = $scope.noticeCount != 0
   		})
-  		$timeout($scope.pollForMessages, 10000)
+  		$timeout($scope.pollForMessages, 100000)
   	}
   	
   	$scope.pollForMessages()
