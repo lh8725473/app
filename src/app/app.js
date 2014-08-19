@@ -8,6 +8,7 @@ angular.module('App', [
   'mb-scrollbar',
   'pascalprecht.translate',
   'ng-context-menu',
+  'angularFileUpload',
   'angularTreeview',
   'snap',
   "pageslide-directive",

@@ -16,9 +16,7 @@
 		</div>
 	</div>
 	<div class="buttonGroup">
-		<button ng-click='addUser()' class="btn btn-default">
-			上传文件
-		</button>
+       <button ng-file-select="onFileSelect($files)" class="btn btn-default">上传文件</button>
 		<button ng-click='showCreateFolder()' class="btn btn-default">
 			新建文件夹
 		</button>

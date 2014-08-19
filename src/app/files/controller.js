@@ -1,6 +1,7 @@
 angular.module('App.Files').controller('App.Files.Controller', [
   '$scope',
   '$state',
+  '$upload',
   'CONFIG',
   'Folders',
   'FolderAction',
@@ -14,6 +15,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   function(
     $scope,
     $state,
+    $upload,
     CONFIG,
     Folders,
     FolderAction,
@@ -341,7 +343,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       }
     ]
-    
 //  $scope.showDiscuss = function(){
 //  	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
 //  		obj_id : $scope.checkedObj.file_id
@@ -349,5 +350,25 @@ angular.module('App.Files').controller('App.Files.Controller', [
 ////  	userDiscussList.$promise.then(function() {
 ////  		
 ////  	})
-//  }
+//  }    
+    // upload file
+    $scope.onFileSelect = function($files) {
+      for (var i = 0; i < $files.length; i++) {
+        var file = $files[i];
+        $scope.upload = $upload.upload({
+          url: CONFIG.API_ROOT + '/file/create?token=f98716ed6be3e177a7e7ddf1fa182aac', 
+          method: 'POST',
+          withCredentials: true,
+          data: {
+            file_name: file.name
+          },
+          file: file,
+          fileFormDataName: 'file_content',
+        }).progress(function(evt) {
+          console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+        }).success(function(data, status, headers, config) {
+          console.log(data);
+        });
+      }
+    };
 }])
