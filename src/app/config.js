@@ -21,49 +21,49 @@ angular.module('App.Config', []).constant('CONFIG', {
   //文件ICO
   ICONS : {
   	folder: {
-	    small: 'file_folder_small.png',
+	    small: 'web_files_personal.png',
 		large: 'file_folder_large.png',
-		small_share: 'file_folder_share_small.png',
+		small_share: 'web_files_shared.png',
 		large_share: 'file_folder_share_large.png'
 	},
 	pdf: {
-	    small: 'file_pdf_small.png',
+	    small: 'web_files_pdf.png',
 		large: 'file_pdf_large.png'
 	},
 	xls: {
-	    small: 'file_els_small.png',
+	    small: 'web_files_xls.png',
 		large: 'file_els_large.png'
 	},
 	txt: {
-	    small: 'file_txt_small.png',
+	    small: 'web_files_txt.png',
 		large: 'file_txt_large.png'
 	},
 	mp3: {
-	    small: 'file_mp3_small.png',
+	    small: 'web_files_mp3.png',
 		large: 'file_mp3_large.png'
 	},
 	mp4: {
-	    small: 'file_mp4_small.png',
+	    small: 'web_files_video.png',
 		large: 'file_mp4_large.png'
 	},
 	jpg: {
-		small: 'file_jpg_small.png',
+		small: 'web_files_jpeg.png',
 		large: 'file_jpg_large.png'
 	},
 	doc: {
-		small: 'file_doc_small.png',
+		small: 'web_files_doc.png',
 		large: 'file_doc_large.png'
 	},
 	zip:{
-		small: 'file_zip_small.png',
+		small: 'web_files_zip.png',
 		large: 'file_zip_large.png'
 	},
 	ppt:{
-		small: 'file_ppt_small.png',
+		small: 'web_files_ppt.png',
 		large: 'file_ppt_large.png'
 	},
 	all: {//default icon
-	    small: 'file_default_small.png',
+	    small: 'web_files_unknown.png',
 		large: 'file_default_large.png'
 	}
   }

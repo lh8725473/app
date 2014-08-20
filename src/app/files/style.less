@@ -1,5 +1,13 @@
+.file-team{
+    position: absolute;
+    bottom: 40px;    
+}
+
 .files-view {
   height: 100%;
+  position: absolute;
+  right: 260px;
+  left: 0;
   .file-row{
     height: 65px;  
   }
@@ -11,8 +19,13 @@
     border-bottom: 1px solid #252519;
   }
   .folder-grid {
-    height: 100%;
-    overflow-y: auto;
+     height: 85%;
+     overflow-y: auto;
+    .table{
+        height: 100%;
+       overflow-y: auto; 
+    }
+    
   }
   
   .selected{
@@ -105,6 +118,23 @@
   .position-fixed {
     position: fixed;
   }
+  
+}
+
+.team-collaboration{
+    width: 260px;
+    float: right;
+    border-left: 1px solid #ddd;
+    height: 100%;
+}
+
+.folder-table{
+    height: 85%;
+}
+
+.snap-content {
+   background-color: #fff;
+   border-left: 1px solid #ccc;
 }
 
 .move-file-modal-view{

@@ -26,7 +26,8 @@
     "highcharts": "~4.0.3",
     "highcharts-ng": "~0.0.6",
     "ng-context-menu": "~0.1.6",
-    "angular-treeview": "*"
+    "angular-treeview": "*",
+    "angular-snap": "~1.5.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.19"

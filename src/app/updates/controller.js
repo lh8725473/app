@@ -5,5 +5,11 @@ angular.module('App.Updates').controller('App.Updates.Controller', [
     $scope,
     CONFIG
   ) {
+  	$scope.name = 'World';
+  	
+  	$scope.opts = {
+  		disable: 'left',
+  		touchToDrag : false
+	};
   }
 ])

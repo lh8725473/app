@@ -58,7 +58,7 @@
 					<input type="checkbox" ng-model = "obj.checked" />
 					</td>
 					<td class="img-name-td">
-						<img ng-src = "images/web_files_personal.png" height="42px" width="42px"/>
+						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
 						<div class="file-name" ng-hide = "obj.rename">
 							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
 								{{obj.folder_name}}
@@ -114,7 +114,7 @@
 							</a>
 						</li>
 						<li>
-							<a class="pointer" role="menuitem" tabindex="5" ng-click="addPanel()">
+							<a class="pointer" role="menuitem" tabindex="5" ng-click="addPanel()" nap-toggle="right">
 								讨论
 							</a>
 						</li>
@@ -122,5 +122,18 @@
 				</div>
 			</tbody>
 		</table>
+	</div>
+</div>
+<div class="team-collaboration" ng-controller="App.Files.TeamController">
+	<div class="groups-users" ng-show = "isRoot">
+		根目录下不能邀请协作人
+	</div>
+	<div class="groups-users" ng-hide = "isRoot">
+		<div class="groups">
+			
+		</div>
+		<div class="users" ng-repeat="user in users">
+			{{user.user_name}}
+		</div>	
 	</div>
 </div>

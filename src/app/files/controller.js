@@ -9,6 +9,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   'DownLoadFile',
   '$modal',
   '$cookies',
+  'Utils',
   function(
     $scope,
     $state,
@@ -19,7 +20,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     Files,
     DownLoadFile,
     $modal,
-    $cookies
+    $cookies,
+    Utils
   ) {
 	
 	//权限
@@ -57,7 +59,29 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
 		
 		//文件图像
+		if (obj.isFolder == 1) {//文件夹
+			if (obj.isShared == 1) {
+				obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
+				obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
+			} else {
+				obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
+				obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
+			}
+		}else{
+			var ext;
+			if (obj.isFolder == 1) {
+				ext = 'folder';
+			} else {
+				ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
+			}
+			var icon = Utils.getIconByExtension(ext); 
+	    	obj.smallIcon = icon.small;
+			obj.largeIcon = icon.large;		
+		}
+ 
 		
+		
+		//文件权限
         angular.forEach($scope.permission_key, function(key, index) {
           if(key == obj.permission){
             obj.permission = $scope.permission_value[index]
@@ -278,4 +302,41 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     ]
 	
+	//邀请协作人
+	$scope.inviteTeamUsers = function() {
+		var addUserModal = $modal.open({
+			templateUrl : 'src/app/files/invite-team-users.html',
+			windowClass : 'invite-team-users',
+			backdrop : 'static',
+			controller : inviteTeamUsersModalController,
+			resolve : {
+				fileid : function() {
+					return $scope.checkedObj.file_id
+				}
+			}
+		})
+	}
+	
+	//moveFile window ctrl
+    var inviteTeamUsersModalController = [
+      '$scope',
+      '$modalInstance',
+      'fileid',
+      function(
+        $scope,
+        $modalInstance,
+        fileid
+      ) {
+      	
+		
+        $scope.ok = function() {
+          console.log(currentNode)
+          $modalInstance.close(fileid)
+        }
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
 }])

@@ -9,6 +9,7 @@ angular.module('App', [
   'pascalprecht.translate',
   'ng-context-menu',
   'angularTreeview',
+  'snap',
 
   // Config
   'App.Config',
