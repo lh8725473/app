@@ -1,0 +1,96 @@
+.upload-progress-dialog {
+    display:none;
+    position:absolute;
+  z-index:99999;
+  right:20px;
+  bottom:0;
+  width:550px;
+  
+  background:white;
+}
+.upload-progress-dialog .dialog-header {
+    height:30px;
+  line-height:30px;
+  background:#2C3E50;
+  color:white;
+  padding:0 10px;
+  font-size:16px;
+  border:2px solid #555;
+}
+.upload-progress-dialog .dialog-title {
+    float:left;
+  
+}
+.upload-progress-dialog .dialog-btn {
+    background-image:url(../images/dialog_icon.png);
+  float:right;
+  width:16px;
+  height:16px;
+  margin-right:4px;
+  margin-top: 7px;
+  cursor:pointer;
+}
+.upload-progress-dialog .btn-max {
+    background-position:0 3px;
+  background-repeat:no-repeat;
+  display:none;
+}
+.upload-progress-dialog .btn-min {
+    background-position:0 -16px;
+}
+.upload-progress-dialog .btn-close {
+    background-position:0 -36px;
+}
+.upload-progress-dialog .dialog-body {
+    height:366px;
+    overflow:auto;
+  border:2px solid #444;
+  border-top: none;
+  border-bottom: none;
+}
+.upload-progress-dialog  .progress-item {
+    height:28px;
+  line-height:28px;
+  border-bottom:1px solid #c6c6c6;
+  margin:0px 2px;
+}
+
+.upload-progress-dialog  .progress-item  span{
+  float: left;
+    display:inline-block;
+  overflow:hidden;
+  margin-right:6px;
+}
+.upload-progress-dialog  .progress-item  button{
+  position:relative;
+  height:20px;
+  margin-top: 4px;
+}
+.upload-progress-dialog  .progress-item  .file-icon {
+  float: left;
+    margin-right:4px;
+  margin-top:4px;
+  width: 24px;
+}
+.upload-progress-dialog  .file-name {
+    width:180px;
+}
+.upload-progress-dialog  .file-size {
+    width:80px;
+}
+.upload-progress-dialog  .file-progress{
+  width:100px;
+  height:8px;
+  border:1px solid #c6c6c6;
+  padding:1px;
+  margin-top:8px;
+}
+.upload-progress-dialog  .file-progress a{
+    display:block;
+    background:#4A9AFD;
+  height:100%;
+    width:0%;
+}
+.upload-progress-dialog  .file-status{
+    width:50px;
+}

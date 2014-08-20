@@ -23,17 +23,20 @@
   <div class="main">
     <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
     
-    <div class="right-main" ui-view>
-    </div>
+    <div class="right-main" ui-view></div>
+
     <div class="main-bottom">
-		<div>
-			版权所有©2013 上海灵利信息技术有限公司
-		</div>
-		<div>
-			沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012
-		</div>
-	</div>
+  		<div>
+  			版权所有©2013 上海灵利信息技术有限公司
+  		</div>
+  		<div>
+  			沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012
+  		</div>
+	  </div>
   </div>
+
+  <div class="upload-progress-dialog" style="display: block;" ng-include="'src/app/upload-progress-dialog/template.html'"></div>
+
   <!-- build:js js/app.js -->
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
@@ -90,6 +93,9 @@
 
   <script type="text/javascript" src="src/app/trash/module.js"></script>
   <script type="text/javascript" src="src/app/trash/controller.js"></script>
+
+  <script type="text/javascript" src="src/app/upload-progress-dialog/module.js"></script>
+  <script type="text/javascript" src="src/app/upload-progress-dialog/controller.js"></script>
   
   <script type="text/javascript" src="src/app/config.js"></script>
   <script type="text/javascript" src="src/app/app.js"></script>

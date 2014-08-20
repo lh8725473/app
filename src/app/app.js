@@ -28,7 +28,8 @@ angular.module('App', [
   'App.Updates',
   'App.Files',
   'App.Contacts',
-  'App.Trash'
+  'App.Trash',
+  'App.UploadProgressDialog'
 
 
   // Http Interceptor
