@@ -8,6 +8,7 @@ angular.module('App', [
   'mb-scrollbar',
   'pascalprecht.translate',
   'ng-context-menu',
+  'angularFileUpload',
   'angularTreeview',
   'snap',
   "pageslide-directive",
@@ -27,7 +28,8 @@ angular.module('App', [
   'App.Updates',
   'App.Files',
   'App.Contacts',
-  'App.Trash'
+  'App.Trash',
+  'App.UploadProgressDialog'
 
 
   // Http Interceptor

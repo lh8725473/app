@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title">上传文件</h3>
+</div>
+<div class="modal-body">
+  <div class="drop-box"
+    ng-file-drop="onFileSelect($files)"
+    ng-file-drag-over-class="drop-box-over"
+    ng-file-drag-over-delay="100">or drop files <div>here</div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">
+    Cancel
+  </button>
+</div>
