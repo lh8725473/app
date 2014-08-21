@@ -1,12 +1,20 @@
-<div class="dialog-header">
-    <div class="dialog-title">正在上传</div>
-    <div class="dialog-btn btn-close"></div>
-    <div class="dialog-btn btn-max" style="display: none;"></div>
-    <div class="dialog-btn btn-min" style="display: block;"></div>
-</div>
-<div class="dialog-body" style="height: 366px;">
-    <div class="progress-item" id="ddupload_file_1_progress">
-        <img class="file-icon" src="theme_01/images/file_jpg_small.png"><span class="file-name" title="webappdigger.png">webappdigger.png</span><span class="file-size">2.33KB</span><span class="file-progress"><a style="">&nbsp;</a></span><span class="file-status">完成</span>
-        <button class="file-remove" actionid="ddupload_file_1">删除</button>
-    </div>
+<div ng-show="shown" ng-controller="App.UploadProgressDialog.Controller">
+  <div class="dialog-header">
+      <div class="dialog-title">正在上传</div>
+      <div class="dialog-btn btn-close" ng-click="hide()"></div>
+      <div class="dialog-btn btn-max" ng-hide="isMax" ng-click="max()"></div>
+      <div class="dialog-btn btn-min" ng-show="isMax" ng-click="min()"></div>
+  </div>
+  <div class="dialog-body" style="height: 366px;" ng-show="isMax">
+      <div class="progress-item" id="ddupload_file_1_progress" ng-repeat="file in files">
+          <img class="file-icon" src="theme_01/images/file_jpg_small.png">
+          <span class="file-name" title="webappdigger.png">{{file.file.name}}</span>
+          <span class="file-size">2.33KB</span>
+          <span class="file-progress">
+            <a style="width:{{file.progress}}%">&nbsp;</a>
+          </span>
+          <span class="file-status">完成</span>
+          <button class="file-remove" actionid="ddupload_file_1">删除</button>
+      </div>
+  </div>
 </div>
