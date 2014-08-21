@@ -7,6 +7,10 @@ angular.module('App', [
   'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
+  'ng-context-menu',
+  'angularTreeview',
+  'snap',
+  "pageslide-directive",
 
   // Config
   'App.Config',
@@ -14,7 +18,9 @@ angular.module('App', [
   // Resources
   'App.Resources',
 
-
+  // Widget
+  'App.Widgets',	
+	
   // Components
   'App.Header',
   'App.Sidebar',
@@ -72,6 +78,10 @@ angular.module('App', [
       .state('files', {
         url: '/files/:folderId',
         templateUrl: 'src/app/files/template.html'
+      })
+      .state('files.userDisscuss', {
+        url: '/userDisscuss/:file_id',
+        templateUrl: 'src/app/files/user-disscuss.html'
       })
       .state('contacts', {
         url: '/contacts',

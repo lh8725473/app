@@ -29,10 +29,10 @@ angular.module('App.Header').controller('App.Header.Controller', [
   		$scope.unreadCount.$promise.then(function(){
   			$scope.messageCount = $scope.unreadCount.letter
   			$scope.noticeCount = $scope.unreadCount.notice
-			$scope.showMessageCount = $scope.messageCount != 0
-			$scope.showMoticeCount = $scope.noticeCount != 0
+			  $scope.showMessageCount = $scope.messageCount != 0
+			  $scope.showMoticeCount = $scope.noticeCount != 0
   		})
-  		$timeout($scope.pollForMessages, 10000)
+  		$timeout($scope.pollForMessages, 100000)
   	}
   	
   	$scope.pollForMessages()
