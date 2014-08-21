@@ -11,5 +11,6 @@ angular.module('App.Updates').controller('App.Updates.Controller', [
   		disable: 'left',
   		touchToDrag : false
 	};
+	$scope.checked;
   }
 ])

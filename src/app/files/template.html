@@ -43,7 +43,7 @@
 					<td>
 					<div class="col-sm-12">
 						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
-						<div class="create-buttonGroup col-sm-5">
+						<div class="create-buttonGroup col-sm-6">
 							<button ng-click="createFolder(createFolderName)" class="btn btn-default">
 								确定
 							</button>
@@ -114,7 +114,10 @@
 							</a>
 						</li>
 						<li>
-							<a class="pointer" role="menuitem" tabindex="5" ng-click="addPanel()" nap-toggle="right">
+							<!--<a ng-click="showDiscuss(checkedObj)" ui-sref="files({file_id: checkedObj.file_id})" class="large button" pageslide="right" ps-speed="0.5" href="#demo-right" ps-custom-top="78px" ps-custom-bottom="40px" ps-size="400px">
+								讨论
+							</a>-->
+							<a ui-sref="files.userDisscuss({file_id: checkedObj.file_id})" class="large button" pageslide="right" ps-speed="0.5" href="#demo-right" ps-custom-top="78px" ps-custom-bottom="40px" ps-size="400px">
 								讨论
 							</a>
 						</li>
@@ -129,11 +132,50 @@
 		根目录下不能邀请协作人
 	</div>
 	<div class="groups-users" ng-hide = "isRoot">
-		<div class="groups">
-			
+		<div class="groups-users-header col-sm-12">
+			<span class="pull-left">全部协作人</span>
+			<a class="pull-right">增加协作人</a>
 		</div>
-		<div class="users" ng-repeat="user in users">
-			{{user.user_name}}
+		<div class="groups col-sm-12" ng-repeat="group in groups" >
+			<div class="group-div" ng-click = "changeGroupshow(group)">
+				<span class="arrows-img"></span>
+				<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+				<span class="group-name">{{group.group_name}}</span>
+				<span class="group-user-count">({{group.user_count}})</span>
+				<span class="group-permission">{{group.permission}}</span>
+			</div>
+			<div class="col-sm-12">
+				<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+					<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+					<span class="group-name">{{user.real_name}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="users col-sm-12" ng-repeat="user in users">
+			<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+			<span class="group-name">{{user.real_name}}</span>
+			<span class="group-permission">{{user.permission}}</span>
 		</div>	
+	</div>
+</div>
+<div id="demo-right" ng-controller="App.Files.UserDisscussController">
+    <h2>讨论{{test}}</h2>
+    <div class="disc-item-list" mb-scrollbar>
+    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+    		<div class="disc-box">
+    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+    			<div class="disc-time">{{userDiscuss.format_date}}</div>
+    			<div class="disc-content">{{userDiscuss.content}}</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="disc-inputbox">
+		<textarea style="width: 100%;"></textarea>
+		<a id="demo-right-close" class="button" >Close</a>
+		<label style="display:inline-block;color:#1570C0;margin-left:42px;margin-top:10px;">200</label>
+		<button class="btn btn-default">
+			发表
+		</button>
 	</div>
 </div>

@@ -126,6 +126,33 @@
     float: right;
     border-left: 1px solid #ddd;
     height: 100%;
+    .groups-users-header{
+        background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    }
+    .groups{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .group-div{
+            padding-bottom: 5px;
+        }
+        .group-user{
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+    .users{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .arrows-img{
+        background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
+        cursor: pointer;
+        float: left;
+        height: 8px;
+        margin-top: 8px;
+        transition: -moz-transform 0.2s ease 0s;
+        width: 15px;
+    }
 }
 
 .folder-table{
@@ -139,4 +166,38 @@
 
 .move-file-modal-view{
 
+}
+
+#demo-right{
+    padding: 5px;
+    img{
+        float: left;
+    }
+    .disc-item-list{
+        bottom: 210px;
+        overflow: hidden;
+        position: absolute;
+        top: 64px;
+    }
+    
+    .disc-item{
+        padding: 10px;
+        .disc-box{
+            margin-left: 35px;
+            .disc-name{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+            .disc-time{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+        }
+    }
+    .disc-inputbox{
+        background-color: white;
+        bottom: 70px;
+        height: 130px;
+        position: absolute;
+    }
 }

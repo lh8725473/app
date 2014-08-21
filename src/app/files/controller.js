@@ -10,6 +10,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   '$modal',
   '$cookies',
   'Utils',
+  'UserDiscuss',
   function(
     $scope,
     $state,
@@ -21,7 +22,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     DownLoadFile,
     $modal,
     $cookies,
-    Utils
+    Utils,
+    UserDiscuss
   ) {
 	
 	//权限
@@ -339,4 +341,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       }
     ]
+    
+//  $scope.showDiscuss = function(){
+//  	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
+//  		obj_id : $scope.checkedObj.file_id
+//  	})
+////  	userDiscussList.$promise.then(function() {
+////  		
+////  	})
+//  }
 }])

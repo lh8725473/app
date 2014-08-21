@@ -1,18 +1,3 @@
 <div class="updates-view"  id = "updates-view" ng-controller="App.Updates.Controller">
-	<snap-drawers>
-      <snap-drawer>
-        <p>Hello from drawer!</p>
-      </snap-drawer>
-      
-      <div snap-drawer="right">
-        <p>Hello from the right drawer!</p>
-      </div>
-    </snap-drawers>
-    
-    <snap-content snap-options="opts">
-      <p>Hello {{name}}!</p>
-      <p>The demo shows how to work with both left and right side drawers</p>
-      <button snap-toggle>Toggle Left</button>
-      <button snap-toggle="right">Toggle Right</button>
-    </snap-content>
+	<a  class="large button" pageslide="right" ps-speed="0.5" href="#demo-right" ps-custom-top="78px" ps-custom-bottom="40px">Open Demo</a>
 </div>
