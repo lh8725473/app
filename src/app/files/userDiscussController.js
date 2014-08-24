@@ -1,20 +1,30 @@
-angular.module('App.Files').controller('App.Files.UserDisscussController', [
+angular.module('App.Files').controller('App.Files.UserDiscussController', [
   '$scope',
   'CONFIG',
-  '$state',
   'Share',
   'UserDiscuss',
   function(
     $scope,
     CONFIG,
-    $state,
     Share,
     UserDiscuss
   ) {
-  	var file_id = $state.params.file_id || 0;
+  	var discuss_file_id = $scope.discuss_file_id || 0;
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
-  		obj_id : file_id
+  		obj_id : discuss_file_id
   	})
+
+    $scope.scrollbarConfig = {
+      autoResize: true,
+      scrollTo: 'end'
+    }
+
+    $scope.$watch('discuss_file_id', function (new_file_id) {
+      discuss_file_id = new_file_id
+      $scope.userDiscussList = UserDiscuss.getUserDiscussList({
+        obj_id : discuss_file_id
+      })
+    })
   	
   	$scope.discussContent = ''
   	$scope.discussCount = 0
@@ -22,7 +32,7 @@ angular.module('App.Files').controller('App.Files.UserDisscussController', [
   	
   	$scope.createUserDiscuss = function(){
   		UserDiscuss.createUserDiscuss({
-  			obj_id : file_id
+  			obj_id : discuss_file_id
   		},{
   			content	:$scope.discussContent
   		}).$promise.then(function(userDiscuss){

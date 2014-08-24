@@ -305,6 +305,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       }
     ]
+    
+    // 打开讨论 默认是关闭的
+    $scope.discussOpened = false
+    $scope.openUserDiscuss = function (file_id) {
+      $scope.discuss_file_id = file_id
+      $scope.discussOpened = true
+    }
 
     //邀请协作人
     $scope.inviteTeamUsers = function(obj) {
@@ -381,15 +388,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           $modalInstance.dismiss('cancel')
         }
       }
-    ]
-//  $scope.showDiscuss = function(){
-//  	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
-//  		obj_id : $scope.checkedObj.file_id
-//  	})
-////  	userDiscussList.$promise.then(function() {
-////  		
-////  	})
-//  }    
+    ]  
     // upload file
     var uploadModalController = [
       '$scope',
@@ -445,7 +444,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         templateUrl: 'src/app/files/modal-upload.html',
         windowClass: 'modal-upload',
         backdrop: 'static',
-        controller: uploadModalController,
+        controller: 'uploadModalController',
         resolve: {}
       })
     }
