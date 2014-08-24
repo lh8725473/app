@@ -206,8 +206,52 @@
 }
 
 .invite-team-users{
+    .modal-dialog {
+        width: 100%;
+        .modal-content {
+            border: none;
+            border-radius: none;
+            background: transparent;
+             box-shadow: none;
+        }
+    }
+    .invite-team-users-inner {
+        transition:width 0.5s;
+        -moz-transition:width 0.5s; /* Firefox 4 */
+        -webkit-transition:width 0.5s; /* Safari and Chrome */
+        -o-transition:width 0.5s; /* Opera */
+        width: 400px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        &.broad {
+            width: 600px;
+        }
+    }
     .invite-form{
-        height: 450px;
+        .invite-content{
+            width: 360px;
+        }
+        height: 460px;
+        .input-from-group{
+            margin-bottom: 5px;
+        }
+        .or-from-group{
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .select-from-group{
+            margin-bottom: 5px;
+        }
+        .selected-groups-users{
+            border: 1px solid #e5e5e5;
+            margin-left: 15px;
+            max-height: 76px;
+            padding: 0;
+            width: 92%;
+        }
         .dropdown-menu{
             width: 100%;
             text-align: center;
@@ -233,6 +277,15 @@
         .select-invite{
             height: 100%;
             border-left: 1px solid #e5e5e5;
+             .arrows-img{
+                background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
+                cursor: pointer;
+                float: right;
+                height: 8px;
+                margin-top: 8px;
+                transition: -moz-transform 0.2s ease 0s;
+                width: 15px;
+             }
         }
     }
 }
