@@ -59,7 +59,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   		})
   	}
   	
-  	$scope.changeGroupshow= function(group){
+  	$scope.changeGroupshow = function(group){
   		group.show = !group.show
   	}
   	

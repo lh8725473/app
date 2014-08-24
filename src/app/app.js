@@ -81,10 +81,6 @@ angular.module('App', [
         url: '/files/:folderId',
         templateUrl: 'src/app/files/template.html'
       })
-      .state('files.userDisscuss', {
-        url: '/userDisscuss/:file_id',
-        templateUrl: 'src/app/files/user-disscuss.html'
-      })
       .state('contacts', {
         url: '/contacts',
         templateUrl: 'src/app/contacts/template.html'

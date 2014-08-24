@@ -1,19 +1,57 @@
 <div class="modal-header">
 	<h3 class="modal-title">邀请协作人</h3>
 </div>
-<div class="modal-body">
-	<div class="selected-group-users">
-		已经选取
+<div class="modal-body invite-form">
+	<form role="form" class="form-horizontal col-sm-8">
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inputValue" ng-enter="inviteBypress(inputValue)">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="button" class="btn btn-default form-control" ng-click="showGRroupUser()" value="从联系人列表中选取"></input>
+			</div>
+		</div>
+		<h5>已选取</h5>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="selectedItem" ng-repeat="user in invitedList.userList">
+					<span class="selectedName">{{user}}</span>
+					<span class="fa fa-times deleteSelected" ng-click = "deleteSelected(user)">x</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
+						{{selectedPermissionValue}}
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">				
+						<li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
+							<a role="menuitem" tabindex="-1">
+								{{value}}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<h5>留言</h5>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<textarea type="text" placeholder="参与讨论" class="form-control comment-input"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="button" class="btn btn-primary form-control" ng-click="showGRroupUser()" value="发送邀请"></input>
+			</div>
+		</div>
+	</form>
+	<div class="col-sm-4 select-invite">
+		groups and users
 	</div>
-	<div class="group-users">
-		协作人列表
-	</div>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
 </div>
