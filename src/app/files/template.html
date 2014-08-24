@@ -178,23 +178,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="users col-sm-12 dropdown" ng-repeat="user in users">
+		<div class="users col-sm-12" ng-repeat="user in users">
 			<div class="col-sm-6">
 				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
 				<span class="group-name">{{user.real_name}}</span>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6" dropdown is-open="user.isopen">
 				<span class="group-permission dropdown-toggle">{{user.permission}}</span>
 				<span class="caret"></span>
 				<span class="">X</span>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation" ng-repeat="value in permission_value" ng-click = "toggleDropdown(user)">
+						<a role="menuitem" tabindex="-1">
+							{{value}}
+						</a>
+					</li>
+				</ul>
 			</div>
-			<ul class="dropdown-menu" role="menu">
-				<li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
-					<a role="menuitem" tabindex="-1">
-						{{value}}
-					</a>
-				</li>
-			</ul>
 		</div>
 	</div>
 </div>

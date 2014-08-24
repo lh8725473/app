@@ -358,14 +358,18 @@ angular.module('App.Files').controller('App.Files.Controller', [
     var inviteTeamUsersModalController = [
         '$scope',
         '$modalInstance',
+        'Share',
         'folderid',
         'CONFIG',
         function(
           $scope,
           $modalInstance,
+          Share,
           folderid,
           CONFIG
         ) {
+          $scope.broad = false
+          $scope.folderid = folderid
           //权限
           $scope.permission_key = CONFIG.PERMISSION_KEY
           $scope.permission_value = CONFIG.PERMISSION_VALUE
@@ -386,23 +390,78 @@ angular.module('App.Files').controller('App.Files.Controller', [
             $scope.selectedPermissionValue = value
           }
 
-          $scope.deleteSelected = function(obj) {
-            for (var i = 0; i < $scope.invitedList.userList; ++i) {
-              if ($scope.invitedList.userList[i] == obj)
+          $scope.deleteSelectedUser = function(user) {
+            for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
+              if ($scope.invitedList.userList[i] == user)
                 break
             }
             $scope.invitedList.userList.splice(i, 1)
           }
 
+          $scope.deleteSelectedGroup = function(group) {
+            for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
+              if ($scope.invitedList.groupList[i] == group)
+                break
+            }
+            $scope.invitedList.groupList.splice(i, 1)
+          }
+
+
+          $scope.shareObj = Share.queryShareObj({
+            id: $scope.folderid
+          })
+
+          $scope.shareObj.$promise.then(function(shareObj) {
+            $scope.userList = shareObj.list.users
+            $scope.groupList = shareObj.list.groups
+
+            angular.forEach($scope.userList, function(user) {
+              user.selected = false
+            })
+
+            angular.forEach($scope.groupList, function(group) {
+              group.show = false
+              group.selected = false
+            })
+          })
+
+          $scope.changeGroupshow = function(group) {
+            group.show = !group.show
+          }
 
           $scope.invitedList = {
-            groupList: [],
+            groupList: ["测试组一", "测试组二", "测试组三"],
             userList: ["大龙一号", "小龙二号", "大龙三号"]
           }
 
-          $scope.inviteBypress = function(inputValue) {
-            $scope.invitedList.userList.push(inputValue)
-            inputValue = ''
+          $scope.inputValue = "123213"
+
+          //输入框输入增加协作人或组
+          $scope.inviteBypress = function() {
+            $scope.invitedList.userList.push($scope.inputValue)
+            $scope.inputValue = ''
+          }
+
+          $scope.showGRroupUser = function() {
+            $scope.broad = !$scope.broad
+          }
+
+          //右侧列表选择协作人或组
+          $scope.inviteBySelect = function(groupOrUser, selected) {
+            if (selected) { //选中列表中组或者协作人
+              if (groupOrUser.group_name) { //选择的是组
+                alert("删除群组")
+              } else { //选择的是用户
+                alert("删除人员")
+              }
+            } else { //取消组或者协作人
+              if (groupOrUser.group_name) { //取消的是组
+                $scope.invitedList.userList.push(groupOrUser.group_name)
+              } else { //选择的是用户
+                $scope.invitedList.userList.push(groupOrUser.real_name)
+              }
+            }
+
           }
 
           $scope.ok = function() {
@@ -476,11 +535,11 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
   }
 ]).directive('ngEnter', function() {
-  return function($scope, element, attrs) {
+  return function(scope, element, attrs) {
     element.bind("keydown keypress", function(event) {
       if (event.which === 13) {
-        $scope.$apply(function() {
-          $scope.$eval(attrs.ngEnter);
+        scope.$apply(function() {
+          scope.$eval(attrs.ngEnter);
         });
 
         event.preventDefault();

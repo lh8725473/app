@@ -63,5 +63,10 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   		group.show = !group.show
   	}
   	
+  	$scope.isopen = false
+  	
+  	$scope.toggleDropdown = function(user) {
+    	user.isopen = !user.isopen;
+  	};
   }
 ])
