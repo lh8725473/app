@@ -287,13 +287,39 @@ angular.module('App.Files').controller('App.Files.Controller', [
           "children": []
         }];
 
+        // FCUK code
+        var treeId = $scope.treeId = 'abc';
+        $scope[treeId] = $scope[treeId] || {};
+
+        //if node head clicks,
+        $scope[treeId].selectNodeHead = $scope[treeId].selectNodeHead || function(selectedNode) {
+
+          //Collapse or Expand
+          selectedNode.collapsed = !selectedNode.collapsed;
+        };
+
+        //if node label clicks,
+        $scope[treeId].selectNodeLabel = $scope[treeId].selectNodeLabel || function(selectedNode) {
+
+          //remove highlight from previous node
+          if ($scope[treeId].currentNode && $scope[treeId].currentNode.selected) {
+            $scope[treeId].currentNode.selected = undefined;
+          }
+
+          //set highlight to selected node
+          selectedNode.selected = 'selected';
+
+          //set currentNode
+          $scope[treeId].currentNode = selectedNode;
+        };
+        // FCUK code end
 
         $scope.$watch('abc.currentNode', function(newObj, oldObj) {
           if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
             console.log('Node Selected!!');
             console.log($scope.abc.currentNode);
           }
-        }, true);
+        }, false);
 
         $scope.ok = function() {
           console.log(currentNode)
@@ -305,10 +331,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       }
     ]
-    
+
     // 打开讨论 默认是关闭的
     $scope.discussOpened = false
-    $scope.openUserDiscuss = function (file_id) {
+    $scope.openUserDiscuss = function(file_id) {
       $scope.discuss_file_id = file_id
       $scope.discussOpened = true
     }
@@ -330,66 +356,66 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //邀请协作人
     var inviteTeamUsersModalController = [
-      '$scope',
-      '$modalInstance',
-      'folderid',
-      'CONFIG',
-      function(
-        $scope,
-        $modalInstance,
-        folderid,
-        CONFIG
-      ) {
-		//权限
-    	$scope.permission_key = CONFIG.PERMISSION_KEY
-    	$scope.permission_value = CONFIG.PERMISSION_VALUE
+        '$scope',
+        '$modalInstance',
+        'folderid',
+        'CONFIG',
+        function(
+          $scope,
+          $modalInstance,
+          folderid,
+          CONFIG
+        ) {
+          //权限
+          $scope.permission_key = CONFIG.PERMISSION_KEY
+          $scope.permission_value = CONFIG.PERMISSION_VALUE
 
-    	$scope.permissions = []
-    	angular.forEach($scope.permission_key, function(key, index) {
-      		var permissionMap = {
-        		key: key,
-        		value: $scope.permission_value[index]
-      		}
-      		$scope.permissions.push(permissionMap)
-    	})
-		
-		$scope.selectedPermissionKey = "0111111"
-		$scope.selectedPermissionValue = "编辑者"
-		
-		$scope.selectedPermission = function(value){
-			$scope.selectedPermissionValue = value
-		}
-		
-		$scope.deleteSelected = function(obj){
-			for (var i = 0; i < $scope.invitedList.userList; ++i) {
-        		if ($scope.invitedList.userList[i] == obj)
-          			break
-      		}
-			$scope.invitedList.userList.splice(i, 1)
-		}
-		
-		
-		$scope.invitedList = {
-			groupList : [],
-			userList : ["大龙一号","小龙二号","大龙三号"]
-		}
-		
-		$scope.inviteBypress = function(inputValue){
-			$scope.invitedList.userList.push(inputValue)
-			inputValue = ''
-		}
+          $scope.permissions = []
+          angular.forEach($scope.permission_key, function(key, index) {
+            var permissionMap = {
+              key: key,
+              value: $scope.permission_value[index]
+            }
+            $scope.permissions.push(permissionMap)
+          })
 
-        $scope.ok = function() {
-          console.log(currentNode)
-          $modalInstance.close(folderid)
+          $scope.selectedPermissionKey = "0111111"
+          $scope.selectedPermissionValue = "编辑者"
+
+          $scope.selectedPermission = function(value) {
+            $scope.selectedPermissionValue = value
+          }
+
+          $scope.deleteSelected = function(obj) {
+            for (var i = 0; i < $scope.invitedList.userList; ++i) {
+              if ($scope.invitedList.userList[i] == obj)
+                break
+            }
+            $scope.invitedList.userList.splice(i, 1)
+          }
+
+
+          $scope.invitedList = {
+            groupList: [],
+            userList: ["大龙一号", "小龙二号", "大龙三号"]
+          }
+
+          $scope.inviteBypress = function(inputValue) {
+            $scope.invitedList.userList.push(inputValue)
+            inputValue = ''
+          }
+
+          $scope.ok = function() {
+            console.log(currentNode)
+            $modalInstance.close(folderid)
+          }
+
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel')
+          }
         }
-
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
-        }
-      }
-    ]  
-    // upload file
+      ]
+      // upload file
     var uploadModalController = [
       '$scope',
       '$rootScope',
@@ -411,7 +437,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
             var file = $files[i];
             var f = new File(file);
             $rootScope.$broadcast('addFile', f);
-            (function(f){
+            (function(f) {
               $scope.upload = $upload.upload({
                 url: CONFIG.API_ROOT + '/file/create?token=f98716ed6be3e177a7e7ddf1fa182aac',
                 method: 'POST',
@@ -449,16 +475,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
   }
-]).directive('ngEnter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.ngEnter);
-                });
-
-                event.preventDefault();
-            }
+]).directive('ngEnter', function() {
+  return function($scope, element, attrs) {
+    element.bind("keydown keypress", function(event) {
+      if (event.which === 13) {
+        $scope.$apply(function() {
+          $scope.$eval(attrs.ngEnter);
         });
-    };
+
+        event.preventDefault();
+      }
+    });
+  };
 });
