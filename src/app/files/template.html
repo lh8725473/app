@@ -85,8 +85,8 @@
 					<td class="permission-td"> {{obj.permission}} </td>
 					<td class="action-td">
 						<div class = "link-share-ico"></div>
-						<div class = "share-ico"></div>
-						<div class = "discuss-ico"></div>
+						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
+						<div class = "discuss-ico" ng-hide = "obj.folder"></div>
 					</td>
 				</tr>
 				<div class="dropdown position-fixed" id="myMenu">
@@ -135,12 +135,14 @@
 			<a class="pull-right">增加协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
-			<div class="group-div" ng-click = "changeGroupshow(group)">
-				<span class="arrows-img"></span>
+			<div class="group-div" >
+				<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
 				<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
 				<span class="group-name">{{group.group_name}}</span>
 				<span class="group-user-count">({{group.user_count}})</span>
 				<span class="group-permission">{{group.permission}}</span>
+				<span class="caret" id="permissiondropdownMenu" data-toggle="dropdown"></span>
+				<span class="">X</span>
 			</div>
 			<div class="col-sm-12">
 				<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
@@ -149,16 +151,29 @@
 				</div>
 			</div>
 		</div>
-		<div class="users col-sm-12" ng-repeat="user in users">
-			<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
-			<span class="group-name">{{user.real_name}}</span>
-			<span class="group-permission">{{user.permission}}</span>
-		</div>	
+		<div class="users col-sm-12 dropdown" ng-repeat="user in users">
+			<div class="col-sm-6">
+				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+				<span class="group-name">{{user.real_name}}</span>
+			</div>
+			<div class="col-sm-6">
+				<span class="group-permission dropdown-toggle">{{user.permission}}</span>
+				<span class="caret"></span>
+				<span class="">X</span>
+			</div>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
+					<a role="menuitem" tabindex="-1">
+						{{value}}
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 <div id="demo-right" ng-controller="App.Files.UserDisscussController">
-    <h2>讨论{{test}}</h2>
-    <div class="disc-item-list" mb-scrollbar>
+    <h2 class="col-sm-12">讨论{{test}}</h2>
+    <div class="disc-item-list col-sm-12" mb-scrollbar>
     	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
     		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
     		<div class="disc-box">
@@ -168,12 +183,12 @@
     		</div>
     	</div>
     </div>
-    <div class="disc-inputbox">
-		<textarea style="width: 100%;"></textarea>
+    <div class="disc-inputbox col-sm-12">
+		<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
 		<a id="demo-right-close" class="button" >Close</a>
-		<label style="display:inline-block;color:#1570C0;margin-left:42px;margin-top:10px;">200</label>
-		<button class="btn btn-default">
+		<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 			发表
 		</button>
+		<label class="pull-right">{{discussCount}}/200</label>
 	</div>
 </div>

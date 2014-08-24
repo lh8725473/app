@@ -307,35 +307,74 @@ angular.module('App.Files').controller('App.Files.Controller', [
     ]
 
     //邀请协作人
-    $scope.inviteTeamUsers = function() {
+    $scope.inviteTeamUsers = function(obj) {
       var addUserModal = $modal.open({
         templateUrl: 'src/app/files/invite-team-users.html',
         windowClass: 'invite-team-users',
         backdrop: 'static',
         controller: inviteTeamUsersModalController,
         resolve: {
-          fileid: function() {
-            return $scope.checkedObj.file_id
+          folderid: function() {
+            return obj.folder_id
           }
         }
       })
     }
 
-    //moveFile window ctrl
+    //邀请协作人
     var inviteTeamUsersModalController = [
       '$scope',
       '$modalInstance',
-      'fileid',
+      'folderid',
+      'CONFIG',
       function(
         $scope,
         $modalInstance,
-        fileid
+        folderid,
+        CONFIG
       ) {
+		//权限
+    	$scope.permission_key = CONFIG.PERMISSION_KEY
+    	$scope.permission_value = CONFIG.PERMISSION_VALUE
 
+    	$scope.permissions = []
+    	angular.forEach($scope.permission_key, function(key, index) {
+      		var permissionMap = {
+        		key: key,
+        		value: $scope.permission_value[index]
+      		}
+      		$scope.permissions.push(permissionMap)
+    	})
+		
+		$scope.selectedPermissionKey = "0111111"
+		$scope.selectedPermissionValue = "编辑者"
+		
+		$scope.selectedPermission = function(value){
+			$scope.selectedPermissionValue = value
+		}
+		
+		$scope.deleteSelected = function(obj){
+			for (var i = 0; i < $scope.invitedList.userList; ++i) {
+        		if ($scope.invitedList.userList[i] == obj)
+          			break
+      		}
+			$scope.invitedList.userList.splice(i, 1)
+		}
+		
+		
+		$scope.invitedList = {
+			groupList : [],
+			userList : ["大龙一号","小龙二号","大龙三号"]
+		}
+		
+		$scope.inviteBypress = function(inputValue){
+			$scope.invitedList.userList.push(inputValue)
+			inputValue = ''
+		}
 
         $scope.ok = function() {
           console.log(currentNode)
-          $modalInstance.close(fileid)
+          $modalInstance.close(folderid)
         }
 
         $scope.cancel = function() {
@@ -411,4 +450,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
   }
-])
+]).directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
