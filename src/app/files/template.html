@@ -162,14 +162,22 @@
 			<a class="pull-right">增加协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
-			<div class="group-div" >
-				<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
-				<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
-				<span class="group-name">{{group.group_name}}</span>
-				<span class="group-user-count">({{group.user_count}})</span>
-				<span class="group-permission">{{group.permission}}</span>
-				<span class="caret" id="permissiondropdownMenu" data-toggle="dropdown"></span>
-				<span class="">X</span>
+			<div class="group-div">
+				<div class="img">
+					<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+					<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+				</div>
+				<div class="group-name">
+					<span>{{group.group_name}}</span>
+					<span class="group-user-count">({{group.user_count}})</span>
+				</div>
+				<div class="group-permission" data-toggle="dropdown" id="permissiondropdownMenu">
+					<span class="">{{group.permission}}</span>
+					<span class="caret"></span>
+				</div>
+				<div class="deleteGroup">
+					<span class="">X</span>
+				</div>
 			</div>
 			<div class="col-sm-12">
 				<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
@@ -179,9 +187,11 @@
 			</div>
 		</div>
 		<div class="users col-sm-12" ng-repeat="user in users">
-			<div class="col-sm-6">
+			<div class="col-sm-2">
 				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
-				<span class="group-name">{{user.real_name}}</span>
+			</div>
+			<div class="user-name col-sm-3">
+				<span class="user-name">{{user.real_name}}</span>
 			</div>
 			<div class="col-sm-6" dropdown is-open="user.isopen">
 				<span class="group-permission dropdown-toggle">{{user.permission}}</span>

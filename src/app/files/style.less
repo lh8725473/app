@@ -137,6 +137,26 @@
         padding-bottom: 10px;
         .group-div{
             padding-bottom: 5px;
+            .img{
+                float: left;
+                width: 50px;
+            }
+            .group-name{
+                float: left;
+                width: 85px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-right: 8px;
+            }
+            .group-permission{
+                float: left;
+                width: 80px;
+            }
+            .deleteGroup{
+                float: right;
+                width: 5px;
+            }
         }
         .group-user{
             padding-top: 5px;
@@ -146,6 +166,21 @@
     .users{
         padding-top: 5px;
         padding-bottom: 5px;
+        .img{
+            float: left;
+            width: 50px;
+        }
+        .user-name{
+            float: left;
+            width: 85px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+        .permission-delete{
+            float: left;
+        }
     }
     .arrows-img{
         background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
@@ -216,10 +251,10 @@
         }
     }
     .invite-team-users-inner {
-        transition:width 0.5s;
-        -moz-transition:width 0.5s; /* Firefox 4 */
-        -webkit-transition:width 0.5s; /* Safari and Chrome */
-        -o-transition:width 0.5s; /* Opera */
+//      transition:width 0.5s;
+//      -moz-transition:width 0.5s; /* Firefox 4 */
+//      -webkit-transition:width 0.5s; /* Safari and Chrome */
+//      -o-transition:width 0.5s; /* Opera */
         width: 400px;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 6px;
@@ -227,7 +262,7 @@
         background: white;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         &.broad {
-            width: 600px;
+            width: 700px;
         }
     }
     .invite-form{
@@ -248,7 +283,7 @@
         .selected-groups-users{
             border: 1px solid #e5e5e5;
             margin-left: 15px;
-            max-height: 76px;
+            height: 76px;
             padding: 0;
             width: 92%;
         }
@@ -277,6 +312,28 @@
         .select-invite{
             height: 100%;
             border-left: 1px solid #e5e5e5;
+            width: 300px;
+            .form-group{
+                height: 20px;
+            }
+            .group{
+                padding: 5px;
+                .group-user{
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    padding-left: 25px;
+                }
+            }
+            .user{
+                padding: 5px;
+            }
+            .groups-users{
+              height: 350px;
+              overflow-y: auto;
+              .group-name{
+                  max-width: 90px;
+              }   
+            }
              .arrows-img{
                 background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
                 cursor: pointer;

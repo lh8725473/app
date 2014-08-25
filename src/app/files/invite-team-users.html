@@ -6,7 +6,7 @@
 		<form role="form" class="form-horizontal invite-content" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
 			<div class="form-group input-from-group">
 				<div class="col-sm-12">
-					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inputValue" ng-enter="inviteBypress()">
+					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inviteInputValue" ng-enter="inviteBypress(inviteInputValue)">
 				</div>
 			</div>
 			<div class="form-group or-from-group">
@@ -23,18 +23,18 @@
 			<div class="form-group">
 				<div class="col-sm-12 selected-groups-users">
 					<div class="selectedItem" ng-repeat="group in invitedList.groupList">
-						<span class="selectedName">{{group}}</span>
+						<span class="selectedName">{{group.group_name}}</span>
 						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedGroup(group)">x</span>
 					</div>
 					<div class="selectedItem" ng-repeat="user in invitedList.userList">
-						<span class="selectedName">{{user}}</span>
+						<span class="selectedName">{{user.real_name}}</span>
 						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedUser(user)">x</span>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<div class="dropdown">
+					<div class="dropdown" is-open="permissionOpen">
 						<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
 							{{selectedPermissionValue}}
 							<span class="caret"></span>
@@ -52,12 +52,12 @@
 			<h5>留言</h5>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<textarea type="text" placeholder="参与讨论" class="form-control comment-input"></textarea>
+					<textarea type="text" placeholder="" class="form-control comment-input" ng-model = "comment"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<input type="button" class="btn btn-primary form-control" ng-click="showGRroupUser()" value="发送邀请"></input>
+					<input type="button" class="btn btn-primary form-control" ng-click="createShare()" value="发送邀请"></input>
 				</div>
 			</div>
 		</form>
@@ -72,24 +72,26 @@
 					全选
 				</div>
 			</div>
-			<div class="groups-div">
-				<div class="group" ng-repeat="group in groupList">
-					<input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
-					<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
-					<span class="group-name">{{group.group_name}}</span>
-					<span class="group-user-count">({{group.user_count}})</span>
-					<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
-					<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+			<div class="groups-users">	
+				<div class="groups-div">
+					<div class="group" ng-repeat="group in groupList">
+						<input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
+						<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+						<span class="group-name">{{group.group_name}}</span>
+						<span class="group-user-count">({{group.user_count}})</span>
+						<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+						<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+							<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+							<span class="group-name">{{user.real_name}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="users-div">
+					<div class="user" ng-repeat="user in userList">
+						<input type="checkbox" ng-click = "inviteBySelect(user, user.selected)" ng-model = "user.selected" />
 						<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
 						<span class="group-name">{{user.real_name}}</span>
 					</div>
-				</div>
-			</div>
-			<div class="users-div" ng-repeat="user in userList">
-				<div class="user">
-					<input type="checkbox" ng-click = "inviteBySelect(user, user.selected)" ng-model = "user.selected" />
-					<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
-					<span class="group-name">{{user.real_name}}</span>
 				</div>
 			</div>
 		</div>
