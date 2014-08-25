@@ -38,12 +38,21 @@
 
   <div class="upload-progress-dialog" style="display: block;" ng-include="'src/app/upload-progress-dialog/template.html'"></div>
 
+  <script id="template/modal/window.html" type="text/ng-template">
+    <div tabindex="-1" role="dialog" class="modal fade" ng-class="{in: animate}" ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+        <div class="modal-dialog" ng-class="{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}"><div class="modal-content" modal-transclude>
+        </div>
+      </div>
+    </div>
+  </script>
+
   <!-- build:js js/app.js -->
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="src/app/ui-bootstrap-fix.js"></script>
   <script type="text/javascript" src="bower_components/ng-grid/build/ng-grid.js"></script>
 
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload.js"></script>
