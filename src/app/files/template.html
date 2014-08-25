@@ -129,28 +129,28 @@
 		ps-auto-close="true"
 		href="#user-discuss-right"
 		ps-open="discussOpened">
-		<div class="user-discuss-view" ng-controller="App.Files.UserDiscussController">
-		    <h2 class="col-sm-12">讨论{{test}}</h2>
-		    <div class="disc-item-list col-sm-12" mb-scrollbar="scrollbarConfig">
-		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
-		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
-		    		<div class="disc-box">
-		    			<div class="disc-name">{{userDiscuss.real_name}}</div>
-		    			<div class="disc-time">{{userDiscuss.format_date}}</div>
-		    			<div class="disc-content">{{userDiscuss.content}}</div>
-		    		</div>
-		    	</div>
-		    </div>
-		    <div class="disc-inputbox col-sm-12">
-				<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
-				<a id="user-discuss-right-close" class="button" >Close</a>
-				<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
-					发表
-				</button>
-				<label class="pull-right">{{discussCount}}/200</label>
-			</div>
-		</div>	
 	</pageslide>
+	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
+	    <h2 class="col-sm-12">讨论{{test}}</h2>
+	    <div class="disc-item-list col-sm-12" mb-scrollbar="scrollbarConfig">
+	    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+	    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+	    		<div class="disc-box">
+	    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+	    			<div class="disc-time">{{userDiscuss.format_date}}</div>
+	    			<div class="disc-content">{{userDiscuss.content}}</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="disc-inputbox col-sm-12">
+			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+			<a id="user-discuss-right-close" class="button" >Close</a>
+			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
+				发表
+			</button>
+			<label class="pull-right">{{discussCount}}/200</label>
+		</div>
+	</div>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">
 	<div class="groups-users" ng-show = "isRoot">
