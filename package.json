@@ -1,6 +1,6 @@
 {
   "name": "admin-console-of-act",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Hello Bitbucket",
   "main": "index.js",
   "scripts": {
