@@ -7,4 +7,4 @@ angular.module('ui.bootstrap.modal').directive('modalTransclude', function() {
       });
     }
   };
-})
+});

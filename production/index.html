@@ -9,25 +9,410 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/app/app.dc3a84f8.css">
+  <link rel="stylesheet" href="css/app/app.4af408ee.css">
   
 </head>
 <body>
 
 <!-- Begin Templates -->
+<script type="text/ng-template" id="src/app/contacts/template.html">
+<div class="contacts-view" ng-controller="App.Contacts.Controller">
+	contacts
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/invite-team-users.html">
+<div class="invite-team-users-inner" ng-class="{broad:broad}">
+	<div class="modal-header">
+		<h3 class="modal-title">邀请协作人</h3>
+	</div>
+	<div class="modal-body invite-form">
+		<form role="form" class="form-horizontal invite-content" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
+			<div class="form-group input-from-group">
+				<div class="col-sm-12">
+					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inviteInputValue" ng-enter="inviteBypress(inviteInputValue)">
+				</div>
+			</div>
+			<div class="form-group or-from-group">
+				<div class="col-sm-12">
+					或
+				</div>
+			</div>
+			<div class="form-group select-from-group">
+				<div class="col-sm-12">
+					<input type="button" class="btn btn-default form-control" ng-click="showGRroupUser()" value="从联系人列表中选取"></input>
+				</div>
+			</div>
+			<h5>已选取</h5>
+			<div class="form-group">
+				<div class="col-sm-12 selected-groups-users">
+					<div class="selectedItem" ng-repeat="group in invitedList.groupList">
+						<span class="selectedName">{{group.group_name}}</span>
+						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedGroup(group)">x</span>
+					</div>
+					<div class="selectedItem" ng-repeat="user in invitedList.userList">
+						<span class="selectedName">{{user.real_name}}</span>
+						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedUser(user)">x</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="dropdown" is-open="permissionOpen">
+						<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
+							{{selectedPermissionValue}}
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">				
+							<li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
+								<a role="menuitem" tabindex="-1">
+									{{value}}
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<h5>留言</h5>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<textarea type="text" placeholder="" class="form-control comment-input" ng-model = "comment"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="button" class="btn btn-primary form-control" ng-click="createShare()" value="发送邀请"></input>
+				</div>
+			</div>
+		</form>
+		<div class="col-sm-4 select-invite"  ng-show = "broad">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					全选
+				</div>
+			</div>
+			<div class="groups-users">	
+				<div class="groups-div">
+					<div class="group" ng-repeat="group in groupList">
+						<input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
+						<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+						<span class="group-name">{{group.group_name}}</span>
+						<span class="group-user-count">({{group.user_count}})</span>
+						<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+						<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+							<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+							<span class="group-name">{{user.real_name}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="users-div">
+					<div class="user" ng-repeat="user in userList">
+						<input type="checkbox" ng-click = "inviteBySelect(user, user.selected)" ng-model = "user.selected" />
+						<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+						<span class="group-name">{{user.real_name}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/modal-upload.html">
+<div class="modal-header">
+  <h3 class="modal-title">上传文件</h3>
+</div>
+<div class="modal-body">
+  <div class="drop-box"
+    ng-file-drop="onFileSelect($files)"
+    ng-file-drag-over-class="drop-box-over"
+    ng-file-drag-over-delay="100">or drop files <div>here</div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">
+    Cancel
+  </button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/move-file.html">
+<div class="modal-header">
+	<h3 class="modal-title">移动文件夹</h3>
+</div>
+<div class="modal-body">
+	<div>选中:{{abc.currentNode.id}}</div>
+	<div
+    data-angular-treeview="true"
+    data-tree-id="{{treeId}}"
+    data-tree-model="treedata"
+    data-node-id="id"
+    data-node-label="label"
+    data-node-children="children" >
+</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">
+		OK
+	</button>
+	<button class="btn btn-warning" ng-click="cancel()">
+		Cancel
+	</button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/template.html">
+<div class="files-view" ng-controller="App.Files.Controller">
+	<div class="top-bar">
+		<div class="pull-left">
+			<a ui-sref="files({folderId: 0})">
+				根目录
+			</a>
+		</div>
+		<div class="folder-crumb pull-left" ng-repeat="path in folderPath">
+			：
+			<a ui-sref="files({folderId: path.id})">
+				{{path.name}}
+			</a>
+		</div>
+		<div class="view-model-swither pull-right">
+			视图转换and排序
+		</div>
+	</div>
+	<div class="buttonGroup">
+       <button ng-click="upload()" class="btn btn-default">上传文件</button>
+		<button ng-click='showCreateFolder()' class="btn btn-default">
+			新建文件夹
+		</button>
+	</div>
+	<div class="folder-grid">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+					<input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
+					</th>
+					<th>名称</th>
+					<th>状态</th>
+					<th>大小</th>
+					<th>权限</th>
+					<th>分享</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show = "showCreateFolderDiv">
+					<td></td>
+					<td>
+					<div class="col-sm-12">
+						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
+						<div class="create-buttonGroup col-sm-6">
+							<button ng-click="createFolder(createFolderName)" class="btn btn-default">
+								确定
+							</button>
+							<button ng-click="cancleCreate()" class="btn btn-default">
+								取消
+							</button>
+						</div>
+					</div></td>
+				</tr>
+				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu">
+					<td class="input-checkbox-td">
+					<input type="checkbox" ng-model = "obj.checked" />
+					</td>
+					<td class="img-name-td">
+						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
+						<div class="file-name" ng-hide = "obj.rename">
+							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
+								{{obj.folder_name}}
+							</a>
+							<a ng-hide = "obj.folder">
+								{{obj.file_name}}
+							</a>
+							<div class="tag">
+								<span>+添加标签</span>
+							</div>
+						</div>
+						<div class="rename-form" ng-show = "obj.rename">
+							<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
+							<div class="rename-buttonGroup col-sm-5">
+								<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+									确定
+								</button>
+								<button ng-click="cancleRenameFile()" class="btn btn-default">
+									取消
+								</button>
+							</div>
+						</div>
+					</td>
+					<td class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </td>
+					<td class="file-sise-td"><span ng-show = "obj.folder">{{obj.file_count}}</span><span ng-hide = "obj.folder">{{obj.format_size}}</span></td>
+					<td class="permission-td"> {{obj.permission}} </td>
+					<td class="action-td">
+						<div class = "link-share-ico"></div>
+						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
+						<div class = "discuss-ico" ng-hide = "obj.folder"></div>
+					</td>
+				</tr>
+				<div class="dropdown position-fixed" id="myMenu">
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+						<li>
+							<a class="pointer" role="menuitem" tabindex="1" ng-click="dowloadFile()">
+								下载
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
+								删除
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
+								移动
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
+								重命名
+							</a>
+						</li>
+						<li>
+							<a ng-click="openUserDiscuss(checkedObj.file_id)" class="large button">
+								讨论
+							</a>
+						</li>
+					</ul>
+				</div>
+			</tbody>
+		</table>
+	</div>
+	<pageslide
+		ps-speed="0.5"
+		ps-custom-top="78px"
+		ps-custom-bottom="40px"
+		ps-size="400px"
+		ps-auto-close="true"
+		href="#user-discuss-right"
+		ps-open="discussOpened">
+	</pageslide>
+	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
+	    <h2 class="col-sm-12">讨论{{test}}</h2>
+	    <div class="disc-item-list col-sm-12" mb-scrollbar="scrollbarConfig">
+	    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+	    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+	    		<div class="disc-box">
+	    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+	    			<div class="disc-time">{{userDiscuss.format_date}}</div>
+	    			<div class="disc-content">{{userDiscuss.content}}</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="disc-inputbox col-sm-12">
+			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+			<a id="user-discuss-right-close" class="button" >Close</a>
+			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
+				发表
+			</button>
+			<label class="pull-right">{{discussCount}}/200</label>
+		</div>
+	</div>
+</div>
+<div class="team-collaboration" ng-controller="App.Files.TeamController">
+	<div class="groups-users" ng-show = "isRoot">
+		根目录下不能邀请协作人
+	</div>
+	<div class="groups-users" ng-hide = "isRoot">
+		<div class="groups-users-header col-sm-12">
+			<span class="pull-left">全部协作人</span>
+			<a class="pull-right">增加协作人</a>
+		</div>
+		<div class="groups col-sm-12" ng-repeat="group in groups" >
+			<div class="group-div">
+				<div class="img">
+					<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+					<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+				</div>
+				<div class="group-name">
+					<span>{{group.group_name}}</span>
+					<span class="group-user-count">({{group.user_count}})</span>
+				</div>
+				<div class="group-permission" data-toggle="dropdown" id="permissiondropdownMenu">
+					<span class="">{{group.permission}}</span>
+					<span class="caret"></span>
+				</div>
+				<div class="deleteGroup">
+					<span class="">X</span>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+					<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+					<span class="group-name">{{user.real_name}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="users col-sm-12" ng-repeat="user in users">
+			<div class="col-sm-2">
+				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+			</div>
+			<div class="user-name col-sm-3">
+				<span class="user-name">{{user.real_name}}</span>
+			</div>
+			<div class="col-sm-6" dropdown is-open="user.isopen">
+				<span class="group-permission dropdown-toggle">{{user.permission}}</span>
+				<span class="caret"></span>
+				<span class="">X</span>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation" ng-repeat="value in permission_value" ng-click = "toggleDropdown(user)">
+						<a role="menuitem" tabindex="-1">
+							{{value}}
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</script>
+
 <script type="text/ng-template" id="src/app/header/template.html">
 <div class="header-view" ng-controller="App.Header.Controller">
-	<div class="header-ext">
-		<div class="back-main pull-right" ng-click = "backToindex()">
-			<div class="back-img"></div>
-			返回我的主页面
+	<div class="header-top">
+		<div class="user-info pull-right" dropdown is-open="status.isopen">
+			<div class="username dropdown-toggle" ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span>{{user.user_name}}</span>
+				<div class="personalInfor"></div>
+			</div>
+			<ul class="dropdown-menu" role="menu">
+        		<li><a href="#">个人信息</a></li>
+        		<li><a href="#">退出</a></li>
+      		</ul>
+			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
+		</div>
+		<div class="to-admin-control pull-right">
+			管理控制台
+		</div>
+		<div class="notif_box" class="message-notice pull-right">
+			<span class="notice" title="通知"></span>
+			<label class="message-count notice-count" ng-show = "showMessageCount">{{messageCount}}</label>
+			<span class="message" title="消息"></span>
+			<label class="message-count letter-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
-			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<input type="text" placeholder="搜索" class="search-text form-control">
+			<button class="search-button btn btn-default">
+				搜索
+			</button>
 		</div>
 	</div>
 </div>
@@ -36,31 +421,79 @@
 <script type="text/ng-template" id="src/app/sidebar/template.html">
 <div class="sidebar-view" ng-controller="App.Sidebar.Controller">
   <ul class="nav nav-sidebar">
-    <li ng-class="{ active: $state.includes('overview') }">
-      <a ui-sref="overview" class="overview">
-        <span class="overview-img"></span>
-        	概况
+    <li ng-class="{ active: $state.includes('updates') }">
+      <a ui-sref="updates" class="updates">
+        <span class="updates-img"></span>
+        	最近更新
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('users') }">
-      <a ui-sref="users.managedUsers" class="users">
-        <span class="users-img"></span>
-        	用户与群组
+    <li ng-class="{ active: $state.includes('files') }">
+      <a ui-sref="files" class="files">
+        <span class="files-img"></span>
+        	所有文件
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('reports') }">
-      <a ui-sref="reports" class="reports">
-        <span class="reports-img"></span>
-        	报告
+    <li ng-class="{ active: $state.includes('contacts') }">
+      <a ui-sref="contacts" class="contacts">
+        <span class="contacts-img"></span>
+        	联系人
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('settings') }">
-      <a ui-sref="settings" class="settings">
-        <span class="settings-img"></span>
-       		设置
+    <li ng-class="{ active: $state.includes('trash') }">
+      <a ui-sref="trash" class="trash">
+        <span class="trash-img"></span>
+       		回收中心
       </a>
     </li>
   </ul>
+  <div class="storage">
+  	<div class="col-sm-12"><progressbar class="" value= "storage.percentage" type="success">{{storage.percentage}}%</progressbar></div>
+  	<span class="pull-right">{{storage.used_space}}/{{storage.total_space}}</span>
+  </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/trash/template.html">
+<div class="trash-view" ng-controller="App.Trash.Controller">
+	trash
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/updates/template.html">
+<div class="updates-view"  id = "updates-view" ng-controller="App.Updates.Controller">
+	<a  class="large button" pageslide="right" ps-speed="0.5" href="#demo-right" ps-custom-top="78px" ps-custom-bottom="40px">Open Demo</a>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/upload-progress-dialog/template.html">
+<div ng-show="shown" ng-controller="App.UploadProgressDialog.Controller">
+  <div class="dialog-header">
+      <div class="dialog-title">正在上传</div>
+      <div class="dialog-btn btn-close" ng-click="hide()"></div>
+      <div class="dialog-btn btn-max" ng-hide="isMax" ng-click="max()"></div>
+      <div class="dialog-btn btn-min" ng-show="isMax" ng-click="min()"></div>
+  </div>
+  <div class="dialog-body" style="height: 366px;" ng-show="isMax">
+      <div class="progress-item" id="ddupload_file_1_progress" ng-repeat="file in files">
+          <img class="file-icon" src="./images/file_icon.png">
+          <span class="file-name" title="webappdigger.png">{{file.file.name}}</span>
+          <span class="file-size">2.33KB</span>
+          <span class="file-progress">
+            <a style="width:{{file.progress}}%">&nbsp;</a>
+          </span>
+          <span class="file-status">完成</span>
+          <button class="file-remove" actionid="ddupload_file_1">删除</button>
+      </div>
+  </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/widgets/notification/template.html">
+<div class="modal-body">
+    <div class="alert alert-{{notification.type}} alert-dismissible" role="alert">
+      <button type="button" class="close" ng-click="close()" ng-show="notification.closeable" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      {{notification.msg}}
+    </div>
 </div>
 </script>
 <!-- End Templates -->
@@ -69,8 +502,29 @@
   <div class="header" ng-include="'src/app/header/template.html'"></div>
   <div class="main">
     <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
+    
     <div class="right-main" ui-view=""></div>
+
+    <div class="main-bottom">
+  		<div>
+  			版权所有©2013 上海灵利信息技术有限公司
+  		</div>
+  		<div>
+  			沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012
+  		</div>
+	  </div>
   </div>
-  <script src="js/app.028ff3fc.js"></script>
+
+  <div class="upload-progress-dialog" style="display: block;" ng-include="'src/app/upload-progress-dialog/template.html'"></div>
+
+  <script id="template/modal/window.html" type="text/ng-template">
+    <div tabindex="-1" role="dialog" class="modal fade" ng-class="{in: animate}" ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+        <div class="modal-dialog" ng-class="{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}"><div class="modal-content" modal-transclude>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script src="js/app.41952711.js"></script>
 </body>
 </html>
