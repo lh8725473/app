@@ -3,6 +3,7 @@
     bottom: 40px;    
 }
 
+//文件列表
 .files-view {
   height: 100%;
   position: absolute;
@@ -133,11 +134,14 @@
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     }
     .groups{
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         .group-div{
+            height: 25px;
             padding-bottom: 5px;
+            width: 100%;
             .img{
+                cursor: pointer;
                 float: left;
                 width: 50px;
             }
@@ -151,12 +155,26 @@
             }
             .group-permission{
                 float: left;
-                width: 80px;
+                cursor: pointer;
+                width: 75px;
+                position: relative;
+                .caret{
+                    display: none;            
+                }
             }
-            .deleteGroup{
+            .delete-group{
+                display: none;
                 float: right;
-                width: 5px;
             }
+        }
+        .group-div:hover{
+            background-color: #ebf1f7;
+        }
+        .group-div:hover .caret{
+            display: inline-block;
+        }
+        .group-div:hover .delete-group{
+            display: inline-block;
         }
         .group-user{
             padding-top: 5px;
@@ -164,11 +182,13 @@
         }
     }
     .users{
+        padding-left: 30px;
         padding-top: 5px;
         padding-bottom: 5px;
+        padding-right: 15px;
         .img{
             float: left;
-            width: 50px;
+            width: 35px;
         }
         .user-name{
             float: left;
@@ -178,10 +198,29 @@
             white-space: nowrap;
             margin-right: 8px;
         }
-        .permission-delete{
+        .user-permission{
+            cursor: pointer;
             float: left;
+            position: relative;
+            width: 75px;
+            .caret{
+                display: none;            
+            }
+        }
+        .delete-user{
+            float: right;
+            display: none; 
         }
     }
+    .users:hover{
+            background-color: #ebf1f7;
+        }
+        .users:hover .caret{
+            display: inline-block;
+        }
+        .users:hover .delete-user{
+            display: inline-block;
+        }
     .arrows-img{
         background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
         cursor: pointer;
@@ -202,10 +241,12 @@
    border-left: 1px solid #ccc;
 }
 
+//移动文件夹
 .move-file-modal-view{
 
 }
 
+//讨论
 .user-discuss-view {
     padding: 5px;
     img{
@@ -240,6 +281,7 @@
     }
 }
 
+//邀请协作人
 .invite-team-users{
     .modal-dialog {
         width: 100%;
@@ -343,6 +385,26 @@
                 transition: -moz-transform 0.2s ease 0s;
                 width: 15px;
              }
+        }
+    }
+}
+
+//链接分享
+.link-share{
+    .modal-dialog{
+        width: 350px;
+        .input-group{
+            margin-bottom: 5px;
+        }
+        .dropdown-menu{
+            text-align: center;
+            width: 100%;
+        }
+        .input-password{
+            margin-top: 5px;
+        }
+        .code_src{
+            margin-right: 5px;
         }
     }
 }

@@ -2,12 +2,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   '$scope',
   'CONFIG',
   '$state',
-  'Share',
+  'Folders',
   function(
     $scope,
     CONFIG,
     $state,
-    Share
+    Folders
   ) {
   	//权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
@@ -32,8 +32,8 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	}
   	
   	if(folderId != 0){
-  		$scope.shareObj = Share.queryShareObj({
-  			id : folderId
+  		$scope.shareObj = Folders.queryShareObj({
+  			folder_id : folderId
   		})
   	
   		$scope.shareObj.$promise.then(function(shareObj){
@@ -44,7 +44,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   				//群组权限
         		angular.forEach($scope.permission_key, function(key, index) {
           			if(key == group.permission){
-            			group.permission = $scope.permission_value[index]
+            			group.permission_value = $scope.permission_value[index]
           			}
         		})			
   			})
@@ -52,7 +52,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   				//人员权限
         		angular.forEach($scope.permission_key, function(key, index) {
           			if(key == user.permission){
-            			user.permission = $scope.permission_value[index]
+            			user.permission_value = $scope.permission_value[index]
           			}
         		})			
   			})
@@ -63,10 +63,14 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   		group.show = !group.show
   	}
   	
-  	$scope.isopen = false
-  	
-  	$scope.toggleDropdown = function(user) {
-    	user.isopen = !user.isopen;
-  	};
+  	$scope.changePermission = function(user, permission_value){
+  		user.isopen = !user.isopen;
+  		user.permission_value = permission_value;
+  		angular.forEach($scope.permission_value, function(value, index) {
+  			if(permission_value = value){
+  				
+  			}
+  		})
+  	}
   }
 ])

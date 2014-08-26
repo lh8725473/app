@@ -362,7 +362,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         'folderid',
         'CONFIG',
         '$timeout',
-        "ShareAction",
+        "Share",
         function(
           $scope,
           $modalInstance,
@@ -370,7 +370,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           folderid,
           CONFIG,
           $timeout,
-          ShareAction
+          Share
         ) {
           $scope.broad = false
           //分享文件夹ID
@@ -456,7 +456,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
 
           //外部联系人输入框
-          $scope.inviteInputValue = "12313"
+          $scope.inviteInputValue = ""
 
           //输入框输入增加协作人或组
           $scope.inviteBypress = function(inviteInputValue) {
@@ -465,7 +465,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
               email: inviteInputValue
             }
             $scope.invitedList.userList.push(user)
-            debugger
             $scope.inviteInputValue = ''
           }
 
@@ -536,7 +535,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
               }
               toGroupList.push(to_group)
             })
-            ShareAction.createShare({}, {
+            Share.createShare({}, {
               share_type: "to_all",
               permission: $scope.selectedPermissionKey,
               obj_type: "folder",
@@ -561,7 +560,136 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
         }
       ]
-      // upload file
+    
+    //链接分享
+    $scope.linkShare = function(obj){
+    	var linkShareModal = $modal.open({
+        	templateUrl: 'src/app/files/link-share.html',
+        	windowClass: 'link-share',
+        	backdrop: 'static',
+        	controller: linkShareModalController,
+        	resolve: {
+          		obj: function() {
+            		return obj
+          		}
+        	}
+      	})
+    }
+    
+    var linkShareModalController = [
+      '$scope',
+      '$modalInstance',
+      'obj',
+      'Share',
+      function(
+        $scope,
+        $modalInstance,
+        obj,
+        Share
+      ) {
+		
+		$scope.today = function() {
+			$scope.dt = new Date();
+		};
+		$scope.today();
+
+		$scope.clear = function() {
+			$scope.dt = null;
+		};
+
+		// Disable weekend selection
+		$scope.disabled = function(date, mode) {
+			return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6 ) );
+		};
+
+		$scope.toggleMin = function() {
+			$scope.minDate = $scope.minDate ? null : new Date();
+		};
+		$scope.toggleMin();
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
+		};
+
+		$scope.dateOptions = {
+			formatYear : 'yy',
+			startingDay : 1
+		};
+
+		$scope.initDate = new Date('2016-15-20');
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		$scope.format = $scope.formats[1];
+		
+		//链接分享权限
+		$scope.linkSharePermissionValue = "仅预览"
+		
+		//链接分享权限List
+		$scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
+		
+		//是否设置访问权限
+		$scope.linkSharePasswordShow = false
+		
+		//链接分享访问密码输入框type
+		$scope.linkSharePasswordType = 'password'
+		
+		//显示或者隐藏密码
+		$scope.changeLinkSharePasswordType = function(){
+			if($scope.linkSharePasswordType == 'password'){
+				$scope.linkSharePasswordType = 'text'
+			}else{
+				$scope.linkSharePasswordType = 'password'
+			}
+		}
+		
+		//链接分享选择权限
+		$scope.changeLinkSharePermission = function(value){
+			$scope.linkSharePermissionValue = value
+		}
+		
+		//链接说明
+		$scope.comment = ""
+		
+		//生成链接
+		$scope.createLinkShare = function(){
+			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
+			Share.getLink({},{
+				comment : "124554",
+				expiration : "2016-08-1",
+				obj_id : 17,
+				obj_name : "ogc",
+				obj_type : "folder",
+				password : 213421321,
+				permission : 0000111
+			}).$promise.then(function(linkShare) {
+				$scope.share_url = linkShare.share_url
+				$scope.code_src = linkShare.code_src
+			})
+		}
+		
+		//生成链接与发送链接邀请form切换
+		$scope.linkCreateOrSend = true;
+		
+		//返回修改
+		$scope.backToCreate = function(){
+			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
+		}
+		
+		//复制链接地址至剪切板
+		$scope.getTextLinkUrl = function(){
+			alert("链接已复制到剪切板")
+			return $scope.share_url
+		}
+		
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
+    
+    // upload file
     var uploadModalController = [
       '$scope',
       '$rootScope',

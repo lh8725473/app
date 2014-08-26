@@ -15,8 +15,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
     Message,
     $timeout
   ) {
-  	$scope.backToindex = function(){
-  	  window.location.href = CONFIG.LOGIN_PATH
+  	$scope.toadmin = function(){
+  	  window.location.href = "admin.html"
   	}
   	
   	$scope.messageCount = 0
