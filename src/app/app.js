@@ -7,23 +7,30 @@ angular.module('App', [
   'ngCookies',
   'mb-scrollbar',
   'pascalprecht.translate',
+  'ng-context-menu',
+  'angularFileUpload',
+  'angularTreeview',
+  'snap',
+  "pageslide-directive",
 
   // Config
   'App.Config',
 
-  // Widget
-  'App.Widgets',
+  // Resources
+  'App.Resources',
 
+  // Widget
+  'App.Widgets',	
+	
   // Components
   'App.Header',
   'App.Sidebar',
-  'App.Overview',
-  'App.Users',
-  'App.Reports',
-  'App.Settings',
+  'App.Updates',
+  'App.Files',
+  'App.Contacts',
+  'App.Trash',
+  'App.UploadProgressDialog'
 
-  // Resources
-  'App.Resources'
 
   // Http Interceptor
 ]).factory('httpInterceptor',[
@@ -42,7 +49,9 @@ angular.module('App', [
       },
       responseError: function(rejection) {
         // Handle Request error
-        window.location.href = CONFIG.LOGIN_PATH
+        if(rejection.status == 401){//401 accessToken 无效
+          window.location.href = CONFIG.LOGIN_PATH
+        }
         return $q.reject(rejection)
       }
     }
@@ -62,47 +71,23 @@ angular.module('App', [
     $translatePartialLoaderProvider,
     CONFIG
   ) {
-    $urlRouterProvider.otherwise('/overview')
+    $urlRouterProvider.otherwise('/updates')
     $stateProvider
-      .state('overview', {
-        url: '/overview',
-        templateUrl: 'src/app/overview/template.html'
+      .state('updates', {
+        url: '/updates',
+        templateUrl: 'src/app/updates/template.html'
       })
-      .state('users', {
-        url: '/users',
-        templateUrl: 'src/app/users/template.html'
+      .state('files', {
+        url: '/files/:folderId',
+        templateUrl: 'src/app/files/template.html'
       })
-      .state('users.managedUsers', {
-        url: '/managedUsers',
-        templateUrl: 'src/app/users/managedUsers/template.html'
+      .state('contacts', {
+        url: '/contacts',
+        templateUrl: 'src/app/contacts/template.html'
       })
-      .state('users.editUser', {
-        url: '/editUser/:id',
-        templateUrl: 'src/app/users/managedUsers/editUser/update-user-modal.html'
-      })
-      .state('users.externalUsers', {
-        url: '/externalUsers',
-        templateUrl: 'src/app/users/externalUsers/template.html'
-      })
-      .state('users.editExternalUser', {
-        url: '/editExternalUser/:id',
-        templateUrl: 'src/app/users/externalUsers/editExternalUser/update-externalUser-modal.html'
-      })
-      .state('users.groups', {
-        url: '/groups',
-        templateUrl: 'src/app/users/groups/template.html'
-      })
-      .state('users.editGroup', {
-        url: '/editGroup/:id',
-        templateUrl: 'src/app/users/groups/editGroup/update-group-modal.html'
-      })
-      .state('reports', {
-        url: '/reports',
-        templateUrl: 'src/app/reports/template.html'
-      })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'src/app/settings/template.html'
+      .state('trash', {
+        url: '/trash',
+        templateUrl: 'src/app/trash/template.html'
       })
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'

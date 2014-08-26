@@ -1,0 +1,40 @@
+<div class="modal-header editExternalUser-header">
+	<h3 class="modal-title">更改用户设置</h3>
+</div>
+<div class="modal-body editExternalUser" ng-controller="App.Users.ExternalUsers.EditExternalUser.Controller">
+		<div class="col-sm-1">
+			<img ng-src="{{externalUser.avatar}}" height="64px" width="64px"/>
+		</div>
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label>姓名</label>
+			</div>
+			<div class="form-group">
+				<input type="text" ng-model="externalUser.user_name" class="form-control user-name" disabled/>
+			</div>
+			<div class="form-group">
+				<label>邮箱</label>
+			</div>
+			<div class="form-group">
+				<input type="email" ng-model="externalUser.email" class="form-control user-email" disabled/>
+			</div>
+			<div class="form-group">
+				<label>用户所在文件夹</label>
+			</div>
+			<div class="form-group seach-folder">
+				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachFoldersValue" ng-change="seachFolders(seachFoldersValue)"/>
+			</div>
+			<div class="form-group gridStyleform">
+				<div class="gridStyle col-sm-8" ng-grid="gridFolder"></div>
+				<div class="col-sm-4"></div>
+			</div>
+			<div class="form-group">
+				<a ui-sref="users.externalUsers">
+					<button class="btn btn-primary" ng-click="updateExternalUser(externalUser)">保存修改</button>
+				</a>
+				<a ui-sref="users.externalUsers">
+					<button class="btn btn-default">取消</button>
+				</a>	
+			</div>
+		</div>
+</div>

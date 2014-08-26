@@ -1,0 +1,348 @@
+.file-team{
+    position: absolute;
+    bottom: 40px;    
+}
+
+.files-view {
+  height: 100%;
+  position: absolute;
+  right: 260px;
+  left: 0;
+  .file-row{
+    height: 65px;  
+  }
+  .top-bar{
+    height: 50px;
+    border-bottom: 1px solid #252519;
+  }
+  .buttonGroup{
+    border-bottom: 1px solid #252519;
+  }
+  .folder-grid {
+     height: 85%;
+     overflow-y: auto;
+    .table{
+        height: 100%;
+       overflow-y: auto; 
+    }
+    
+  }
+  
+  .selected{
+    background-color: #ebf1f7;  
+  }
+  
+  .input-checkbox-td{
+    padding-top: 20px;
+    width: 20px;
+  }
+  
+  .create-buttonGroup{
+    float: left;  
+  }
+  
+  .form-control{
+    width: 50%;  
+  }
+  
+  .rename-file{
+    width: 40%;  
+  }
+  
+  .rename-form{
+    padding-top: 5px;  
+  }
+  
+  .img-name-td{
+    width: 30%;
+    img{
+      float: left;  
+    }
+    .file-name{
+      float: left;  
+      width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 8px;
+      padding-top: 5px;
+    }
+    .tag{
+      color: white;
+      font-size: 11px;
+      span{       
+        background-color: #c2c2c2;
+        padding: 0 4px;
+        border-radius: 1px;
+      }
+    }  
+  }
+  .state-td{
+    padding-top: 20px;
+  }
+  
+  .file-sise-td{
+    padding-top: 20px;
+  }
+  
+  .permission-td{
+    padding-top: 20px;
+  }
+
+  .action-td{
+    padding-top: 20px;
+    height: 40px;
+  }
+  .link-share-ico{
+    float: left;
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px -38px;
+    height:19px;
+    width: 16px;
+    cursor: pointer;  
+  }
+  .share-ico{
+    float: left;
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px 0px;
+    height:19px;
+    width: 16px;
+    cursor: pointer;  
+  }
+  .discuss-ico{
+    float: left;  
+    background: url("../../images/contact_comment_link_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-position: 0px -19px;
+    height:19px;
+    width: 16px;
+    cursor: pointer;  
+  }
+  
+  .position-fixed {
+    position: fixed;
+  }
+  
+}
+
+.team-collaboration{
+    width: 260px;
+    float: right;
+    border-left: 1px solid #ddd;
+    height: 100%;
+    .groups-users-header{
+        background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    }
+    .groups{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .group-div{
+            padding-bottom: 5px;
+            .img{
+                float: left;
+                width: 50px;
+            }
+            .group-name{
+                float: left;
+                width: 85px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-right: 8px;
+            }
+            .group-permission{
+                float: left;
+                width: 80px;
+            }
+            .deleteGroup{
+                float: right;
+                width: 5px;
+            }
+        }
+        .group-user{
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+    .users{
+        padding-top: 5px;
+        padding-bottom: 5px;
+        .img{
+            float: left;
+            width: 50px;
+        }
+        .user-name{
+            float: left;
+            width: 85px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+        .permission-delete{
+            float: left;
+        }
+    }
+    .arrows-img{
+        background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
+        cursor: pointer;
+        float: left;
+        height: 8px;
+        margin-top: 8px;
+        transition: -moz-transform 0.2s ease 0s;
+        width: 15px;
+    }
+}
+
+.folder-table{
+    height: 85%;
+}
+
+.snap-content {
+   background-color: #fff;
+   border-left: 1px solid #ccc;
+}
+
+.move-file-modal-view{
+
+}
+
+.user-discuss-view {
+    padding: 5px;
+    img{
+        float: left;
+    }
+    .disc-item-list{
+        bottom: 210px;
+        overflow-y: auto;
+        position: absolute;
+        top: 64px;
+    }
+    
+    .disc-item{
+        padding: 10px;
+        .disc-box{
+            margin-left: 35px;
+            .disc-name{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+            .disc-time{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+        }
+    }
+    .disc-inputbox{
+        background-color: white;
+        bottom: 70px;
+        height: 130px;
+        position: absolute;
+    }
+}
+
+.invite-team-users{
+    .modal-dialog {
+        width: 100%;
+        .modal-content {
+            border: none;
+            border-radius: none;
+            background: transparent;
+             box-shadow: none;
+        }
+    }
+    .invite-team-users-inner {
+//      transition:width 0.5s;
+//      -moz-transition:width 0.5s; /* Firefox 4 */
+//      -webkit-transition:width 0.5s; /* Safari and Chrome */
+//      -o-transition:width 0.5s; /* Opera */
+        width: 400px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        &.broad {
+            width: 700px;
+        }
+    }
+    .invite-form{
+        .invite-content{
+            width: 360px;
+        }
+        height: 460px;
+        .input-from-group{
+            margin-bottom: 5px;
+        }
+        .or-from-group{
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .select-from-group{
+            margin-bottom: 5px;
+        }
+        .selected-groups-users{
+            border: 1px solid #e5e5e5;
+            margin-left: 15px;
+            height: 76px;
+            padding: 0;
+            width: 92%;
+        }
+        .dropdown-menu{
+            width: 100%;
+            text-align: center;
+        }
+        .selectedItem{
+            background: none repeat scroll 0 0 #eee;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            float: left;
+            margin: 5px;
+            padding: 3px;
+            .deleteSelected{
+                padding: 5px;
+                cursor: pointer;
+            }
+        }
+        form{
+            height: 100%;
+            h5{
+              border-bottom: 1px solid #e5e5e5;  
+            }
+        }
+        .select-invite{
+            height: 100%;
+            border-left: 1px solid #e5e5e5;
+            width: 300px;
+            .form-group{
+                height: 20px;
+            }
+            .group{
+                padding: 5px;
+                .group-user{
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    padding-left: 25px;
+                }
+            }
+            .user{
+                padding: 5px;
+            }
+            .groups-users{
+              height: 350px;
+              overflow-y: auto;
+              .group-name{
+                  max-width: 90px;
+              }   
+            }
+             .arrows-img{
+                background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
+                cursor: pointer;
+                float: right;
+                height: 8px;
+                margin-top: 8px;
+                transition: -moz-transform 0.2s ease 0s;
+                width: 15px;
+             }
+        }
+    }
+}

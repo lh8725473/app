@@ -9,1090 +9,482 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/app/app.602df5cb.css">
+  <link rel="stylesheet" href="css/app/app.4af408ee.css">
   
 </head>
 <body>
 
 <!-- Begin Templates -->
+<script type="text/ng-template" id="src/app/contacts/template.html">
+<div class="contacts-view" ng-controller="App.Contacts.Controller">
+	contacts
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/invite-team-users.html">
+<div class="invite-team-users-inner" ng-class="{broad:broad}">
+	<div class="modal-header">
+		<h3 class="modal-title">邀请协作人</h3>
+	</div>
+	<div class="modal-body invite-form">
+		<form role="form" class="form-horizontal invite-content" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
+			<div class="form-group input-from-group">
+				<div class="col-sm-12">
+					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inviteInputValue" ng-enter="inviteBypress(inviteInputValue)">
+				</div>
+			</div>
+			<div class="form-group or-from-group">
+				<div class="col-sm-12">
+					或
+				</div>
+			</div>
+			<div class="form-group select-from-group">
+				<div class="col-sm-12">
+					<input type="button" class="btn btn-default form-control" ng-click="showGRroupUser()" value="从联系人列表中选取"></input>
+				</div>
+			</div>
+			<h5>已选取</h5>
+			<div class="form-group">
+				<div class="col-sm-12 selected-groups-users">
+					<div class="selectedItem" ng-repeat="group in invitedList.groupList">
+						<span class="selectedName">{{group.group_name}}</span>
+						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedGroup(group)">x</span>
+					</div>
+					<div class="selectedItem" ng-repeat="user in invitedList.userList">
+						<span class="selectedName">{{user.real_name}}</span>
+						<span class="fa fa-times deleteSelected" ng-click = "deleteSelectedUser(user)">x</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<div class="dropdown" is-open="permissionOpen">
+						<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
+							{{selectedPermissionValue}}
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">				
+							<li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
+								<a role="menuitem" tabindex="-1">
+									{{value}}
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<h5>留言</h5>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<textarea type="text" placeholder="" class="form-control comment-input" ng-model = "comment"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="button" class="btn btn-primary form-control" ng-click="createShare()" value="发送邀请"></input>
+				</div>
+			</div>
+		</form>
+		<div class="col-sm-4 select-invite"  ng-show = "broad">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					全选
+				</div>
+			</div>
+			<div class="groups-users">	
+				<div class="groups-div">
+					<div class="group" ng-repeat="group in groupList">
+						<input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
+						<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+						<span class="group-name">{{group.group_name}}</span>
+						<span class="group-user-count">({{group.user_count}})</span>
+						<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+						<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+							<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+							<span class="group-name">{{user.real_name}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="users-div">
+					<div class="user" ng-repeat="user in userList">
+						<input type="checkbox" ng-click = "inviteBySelect(user, user.selected)" ng-model = "user.selected" />
+						<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+						<span class="group-name">{{user.real_name}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/modal-upload.html">
+<div class="modal-header">
+  <h3 class="modal-title">上传文件</h3>
+</div>
+<div class="modal-body">
+  <div class="drop-box"
+    ng-file-drop="onFileSelect($files)"
+    ng-file-drag-over-class="drop-box-over"
+    ng-file-drag-over-delay="100">or drop files <div>here</div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">
+    Cancel
+  </button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/move-file.html">
+<div class="modal-header">
+	<h3 class="modal-title">移动文件夹</h3>
+</div>
+<div class="modal-body">
+	<div>选中:{{abc.currentNode.id}}</div>
+	<div
+    data-angular-treeview="true"
+    data-tree-id="{{treeId}}"
+    data-tree-model="treedata"
+    data-node-id="id"
+    data-node-label="label"
+    data-node-children="children" >
+</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">
+		OK
+	</button>
+	<button class="btn btn-warning" ng-click="cancel()">
+		Cancel
+	</button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/template.html">
+<div class="files-view" ng-controller="App.Files.Controller">
+	<div class="top-bar">
+		<div class="pull-left">
+			<a ui-sref="files({folderId: 0})">
+				根目录
+			</a>
+		</div>
+		<div class="folder-crumb pull-left" ng-repeat="path in folderPath">
+			：
+			<a ui-sref="files({folderId: path.id})">
+				{{path.name}}
+			</a>
+		</div>
+		<div class="view-model-swither pull-right">
+			视图转换and排序
+		</div>
+	</div>
+	<div class="buttonGroup">
+       <button ng-click="upload()" class="btn btn-default">上传文件</button>
+		<button ng-click='showCreateFolder()' class="btn btn-default">
+			新建文件夹
+		</button>
+	</div>
+	<div class="folder-grid">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+					<input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
+					</th>
+					<th>名称</th>
+					<th>状态</th>
+					<th>大小</th>
+					<th>权限</th>
+					<th>分享</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show = "showCreateFolderDiv">
+					<td></td>
+					<td>
+					<div class="col-sm-12">
+						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
+						<div class="create-buttonGroup col-sm-6">
+							<button ng-click="createFolder(createFolderName)" class="btn btn-default">
+								确定
+							</button>
+							<button ng-click="cancleCreate()" class="btn btn-default">
+								取消
+							</button>
+						</div>
+					</div></td>
+				</tr>
+				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu">
+					<td class="input-checkbox-td">
+					<input type="checkbox" ng-model = "obj.checked" />
+					</td>
+					<td class="img-name-td">
+						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
+						<div class="file-name" ng-hide = "obj.rename">
+							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
+								{{obj.folder_name}}
+							</a>
+							<a ng-hide = "obj.folder">
+								{{obj.file_name}}
+							</a>
+							<div class="tag">
+								<span>+添加标签</span>
+							</div>
+						</div>
+						<div class="rename-form" ng-show = "obj.rename">
+							<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
+							<div class="rename-buttonGroup col-sm-5">
+								<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+									确定
+								</button>
+								<button ng-click="cancleRenameFile()" class="btn btn-default">
+									取消
+								</button>
+							</div>
+						</div>
+					</td>
+					<td class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </td>
+					<td class="file-sise-td"><span ng-show = "obj.folder">{{obj.file_count}}</span><span ng-hide = "obj.folder">{{obj.format_size}}</span></td>
+					<td class="permission-td"> {{obj.permission}} </td>
+					<td class="action-td">
+						<div class = "link-share-ico"></div>
+						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
+						<div class = "discuss-ico" ng-hide = "obj.folder"></div>
+					</td>
+				</tr>
+				<div class="dropdown position-fixed" id="myMenu">
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+						<li>
+							<a class="pointer" role="menuitem" tabindex="1" ng-click="dowloadFile()">
+								下载
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
+								删除
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
+								移动
+							</a>
+						</li>
+						<li>
+							<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
+								重命名
+							</a>
+						</li>
+						<li>
+							<a ng-click="openUserDiscuss(checkedObj.file_id)" class="large button">
+								讨论
+							</a>
+						</li>
+					</ul>
+				</div>
+			</tbody>
+		</table>
+	</div>
+	<pageslide
+		ps-speed="0.5"
+		ps-custom-top="78px"
+		ps-custom-bottom="40px"
+		ps-size="400px"
+		ps-auto-close="true"
+		href="#user-discuss-right"
+		ps-open="discussOpened">
+	</pageslide>
+	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
+	    <h2 class="col-sm-12">讨论{{test}}</h2>
+	    <div class="disc-item-list col-sm-12" mb-scrollbar="scrollbarConfig">
+	    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+	    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+	    		<div class="disc-box">
+	    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+	    			<div class="disc-time">{{userDiscuss.format_date}}</div>
+	    			<div class="disc-content">{{userDiscuss.content}}</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="disc-inputbox col-sm-12">
+			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+			<a id="user-discuss-right-close" class="button" >Close</a>
+			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
+				发表
+			</button>
+			<label class="pull-right">{{discussCount}}/200</label>
+		</div>
+	</div>
+</div>
+<div class="team-collaboration" ng-controller="App.Files.TeamController">
+	<div class="groups-users" ng-show = "isRoot">
+		根目录下不能邀请协作人
+	</div>
+	<div class="groups-users" ng-hide = "isRoot">
+		<div class="groups-users-header col-sm-12">
+			<span class="pull-left">全部协作人</span>
+			<a class="pull-right">增加协作人</a>
+		</div>
+		<div class="groups col-sm-12" ng-repeat="group in groups" >
+			<div class="group-div">
+				<div class="img">
+					<span class="arrows-img" ng-click = "changeGroupshow(group)"></span>
+					<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
+				</div>
+				<div class="group-name">
+					<span>{{group.group_name}}</span>
+					<span class="group-user-count">({{group.user_count}})</span>
+				</div>
+				<div class="group-permission" data-toggle="dropdown" id="permissiondropdownMenu">
+					<span class="">{{group.permission}}</span>
+					<span class="caret"></span>
+				</div>
+				<div class="deleteGroup">
+					<span class="">X</span>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="col-sm-12 group-user" ng-repeat="user in group.users" ng-show = "group.show">
+					<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+					<span class="group-name">{{user.real_name}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="users col-sm-12" ng-repeat="user in users">
+			<div class="col-sm-2">
+				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
+			</div>
+			<div class="user-name col-sm-3">
+				<span class="user-name">{{user.real_name}}</span>
+			</div>
+			<div class="col-sm-6" dropdown is-open="user.isopen">
+				<span class="group-permission dropdown-toggle">{{user.permission}}</span>
+				<span class="caret"></span>
+				<span class="">X</span>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation" ng-repeat="value in permission_value" ng-click = "toggleDropdown(user)">
+						<a role="menuitem" tabindex="-1">
+							{{value}}
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</script>
+
 <script type="text/ng-template" id="src/app/header/template.html">
 <div class="header-view" ng-controller="App.Header.Controller">
-	<div class="header-ext">
-		<div class="back-main pull-right">
-			<div class="back-img"></div>
-			返回我的主页面
+	<div class="header-top">
+		<div class="user-info pull-right" dropdown is-open="status.isopen">
+			<div class="username dropdown-toggle" ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span>{{user.user_name}}</span>
+				<div class="personalInfor"></div>
+			</div>
+			<ul class="dropdown-menu" role="menu">
+        		<li><a href="#">个人信息</a></li>
+        		<li><a href="#">退出</a></li>
+      		</ul>
+			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
+		</div>
+		<div class="to-admin-control pull-right">
+			管理控制台
+		</div>
+		<div class="notif_box" class="message-notice pull-right">
+			<span class="notice" title="通知"></span>
+			<label class="message-count notice-count" ng-show = "showMessageCount">{{messageCount}}</label>
+			<span class="message" title="消息"></span>
+			<label class="message-count letter-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
-			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<input type="text" placeholder="搜索" class="search-text form-control">
+			<button class="search-button btn btn-default">
+				搜索
+			</button>
 		</div>
 	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/overview/template.html">
-<div class="overview-view" ng-controller="App.Overview.Controller">
-	<div data-ac-chart="'pie'" data-ac-data="data" data-ac-config="config" class="chart"></div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/reports/template.html">
-<div class="reports-view" ng-controller="App.Reports.Controller">
-  reports
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/settings/template.html">
-<div class="settings-view" ng-controller="App.Settings.Controller">
-  settings
 </div>
 </script>
 
 <script type="text/ng-template" id="src/app/sidebar/template.html">
 <div class="sidebar-view" ng-controller="App.Sidebar.Controller">
   <ul class="nav nav-sidebar">
-    <li ng-class="{ active: $state.includes('overview') }">
-      <a ui-sref="overview" class="overview">
-        <span class="overview-img"></span>
-        	概况
+    <li ng-class="{ active: $state.includes('updates') }">
+      <a ui-sref="updates" class="updates">
+        <span class="updates-img"></span>
+        	最近更新
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('users') }">
-      <a ui-sref="users.managedUsers" class="users">
-        <span class="users-img"></span>
-        	用户与群组
+    <li ng-class="{ active: $state.includes('files') }">
+      <a ui-sref="files" class="files">
+        <span class="files-img"></span>
+        	所有文件
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('reports') }">
-      <a ui-sref="reports" class="reports">
-        <span class="reports-img"></span>
-        	报告
+    <li ng-class="{ active: $state.includes('contacts') }">
+      <a ui-sref="contacts" class="contacts">
+        <span class="contacts-img"></span>
+        	联系人
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('settings') }">
-      <a ui-sref="settings" class="settings">
-        <span class="settings-img"></span>
-       		设置
-      </a>
-    </li>
-  </ul>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/editExternalUser/add-groups-window-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">选择群组</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-5">
-				<input type="name" placeholder="输入群组名称查找" class="form-control" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedMemberGridOptions"></div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/editExternalUser/row-externalUser-name.html">
-<div class="groups-name ngCellText col3 colt3">
-	<img src="src/images/grouplist_icon.png" height="24px" width="24px"/>
-	{{row.entity.group_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/editExternalUser/row-externalUser-remove.html">
-<div class="groups-remove ngCellText col3 colt3">
-	<div ng-click="removeg(row)" >
-		<a>移出群组</a>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/editExternalUser/row-externalUser-role.html">
-<div class="user-activety ngCellText col3 colt3">
-	<div class="roll" style="display: block;">
-		<select ng-model="row.entity.role_id" class="">
-			<option value="0">群组成员</option>
-			<option value="1">群组管理员</option>
-		</select>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/editExternalUser/update-externalUser-modal.html">
-<div class="modal-header editExternalUser-header">
-	<h3 class="modal-title">更改用户设置</h3>
-</div>
-<div class="modal-body editExternalUser" ng-controller="App.Users.ExternalUsers.EditExternalUser.Controller">
-		<div class="col-sm-1">
-			<img ng-src="{{externalUser.avatar}}" height="64px" width="64px"/>
-		</div>
-		<div class="col-sm-10">
-			<div class="form-group">
-				<label>姓名</label>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="externalUser.user_name" class="form-control user-name"/>
-			</div>
-			<div class="form-group">
-				<label>邮箱</label>
-			</div>
-			<div class="form-group">
-				<input type="email" ng-model="externalUser.email" class="form-control user-email" disabled/>
-			</div>
-			<div class="form-group">
-				<label>用户所在群组</label>
-			</div>
-			<div class="form-group seach-folder">
-				<input type ="text" placeholder="搜索所在文件夹" class="form-control seach-group" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
-			</div>
-			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridFolder"></div>
-				<div class="col-sm-4"></div>
-			</div>
-			<div class="form-group">
-				<a ui-sref="users.managedUsers">
-					<button class="btn btn-primary" ng-click="updateUser(user)">保存修改</button>
-				</a>
-				<a ui-sref="users.managedUsers">
-					<button class="btn btn-default">取消</button>
-				</a>	
-			</div>
-		</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/externalUser-table-action-cell.html">
-<div class="action ngCellText col3 colt3">
-  <a ui-sref="users.editExternalUser({id: row.entity.user_id})">
-    <img src="./images/edit.png"/>
-  </a>
-	<img src="./images/delete.png" ng-click="delete(row)"/>
-</div>
-
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/row-externalUser-name.html">
-<div class="user-name ngCellText col3 colt3">
-	<img src="{{row.entity.avatar}}" height="40px" width="40px"/>
-	{{row.entity.user_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/externalUsers/template.html">
-<div class="externalUsers-view" ng-controller="App.Users.ExternalUsers.Controller">
-	<div class="buttonGroup">
-		<!--<button ng-click='addGroup()' class="btn btn-default">
-			增加外部用户
-		</button>-->
-	</div>
-	<div class="groupGridStyle" ng-grid="groupGridOptions"></div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/add-group-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">创建新群组</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<h4 class="">创建新群组</h4>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">群组名称</label>
-			<div class="col-sm-5">
-				<input type="name" placeholder="" class="form-control" ng-model="group.group_name"></input>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">群组成员</label>
-			<div class="col-sm-5">
-				<input type="button" class="btn btn-default" ng-click="addMemberWindow()" value="添加成员"></input>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label"></label>
-			<div class="col-sm-10">
-				<div class="gridStyle col-sm-12" ng-grid="addMemberGridOptions"></div>
-			</div>
-		</div>
-		<h4 class="">设置群组用户权限</h4>
-		<div class="form-group">
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.show_member">
-						允许该用户查看所有的内部用户&nbsp;</label><span tooltip = "如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.desktop_sync">
-						允许此群组所有用户同步到全协同步文件&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-11">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.inner_share">
-						限定该群组中的用户在自己的的问佳佳中只能邀请内部用户进行写作&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/add-member-window-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">选择联系人</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-5">
-				<input type="name" placeholder="输入用户名称查找" class="form-control" ng-model="seachMembersValue" ng-change="seachGroups(seachMembersValue)">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedMemberGridOptions"></div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/add-user-modal.html">
-<div class="modal-header">
-	<button class="bootbox-close-button close" type="button" ng-click="cancel()">×</button>
-	<h3 class="modal-title">AddUser</h3>
-</div>
-<div class="modal-body">
-	<form id="" role="form" class="form-horizontal userDetail">
-		<h4>新用户账户信息</h4>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">姓名</label>
-			<div class="col-sm-5">
-				<input type="name" placeholder="" id="inputEmail3" class="form-control">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">Email</label>
-			<div class="col-sm-5">
-				<input type="email" placeholder="" id="inputEmail3" class="form-control">
-			</div><label class="col-sm-4 forEmailtip">这会成为ta的登录名</label>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="inputEmail3">空间分配（GoB）</label>
-			<div class="col-sm-5">
-				<input type="" placeholder="" id="inputGoB" class="form-control">
-			</div>
-			<div class="col-sm-4">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						不限空间</label>
-				</div>
-			</div>
-		</div>
-	</form>
-	<form role="form" class="form-horizontal accessPermissions">
-		<h4>访问权限</h4>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">分享联系人</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						允许该用户查看所有的内部用户&nbsp;</label><span title="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">允许同步</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						允许该用户在全携通与桌面端间同步文件&nbsp;</label><span title="如果选中，则允许该用户在全携通网页端与桌面客户端之间双向同步文件。" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">限制外部协作</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span title="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">协同管理员</label>
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox">
-						授予该用户管理员权限&nbsp;</label><span title="不能管理主要管理员 " class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">账号管理员</label>
-			<div id="changeco-admin" class="col-sm-4">
-				<div class="checkbox">
-					<div class="downmune" ng-click="switchAccountAdmin()">
-						<a>
-							更改账号管理员&nbsp;
-						</a><span class="glyphicon glyphicon-circle-arrow-down"></span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="account-admin" ng-show='showAccountAdmin'>
-			<div class="form-group">
-				<label for="newadmin" class="col-sm-2 control-label">新管理员</label>
-				<div class="col-sm-10">
-					<input type="newadmin" class="form-control" id="newadmin" placeholder="newadmin">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="newroll" class="col-sm-2 control-label">你的新角色</label>
-				<div class="col-sm-10">
-					<select class="form-control">
-						<option>协作管理员</option><option>普通用户</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">
-						确定
-					</button>
-					<button type="cancle" class="btn btn-default col-sm-offset-1">
-						取消
-					</button>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">选择该用户所属的群组</label>
-			<div class="col-sm-5">
-				<input type="text" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
-				<!--<input type="text" placeholder="查询群组" id="seach" class="form-control" ng-model= "seachGroupsValue" ng-change="seachGroups()">-->
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">aaa</label>
-			<div class="col-sm-9">
-				<table id="group_table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>群组名称</th><th>成员数</th><th class="tdroll">权限</th>
-						</tr>
-					</thead>
-					<tbody ng-repeat="group in groupList">
-						<tr>
-							<td>
-								<input type="checkbox" name="checkbox"  ng-click="switchRoleMenu(group)">
-								{{group.group_name}}
-							</td>
-							<td>
-								{{group.group_desc}}
-							</td>
-							<td class="rolltd" ng-show = "group.showRoleMenu">
-							<div class="roll" style="display: block;">
-								<select id="roll" ng-model="group.groupRole" class="">
-									<option value="1">群组成员</option>
-									<option value="2">群组管理员</option>
-								</select>
-							</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">选择该用户可以访问的协作文件夹</label>
-			<div class="col-sm-5">
-				<input type="" placeholder="" id="seach" class="form-control">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">aaa</label>
-			<div class="col-sm-6">
-				<table id="file_table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>文件夹名</th><th>拥有者</th><th>文件数</th><th>权限</th>
-						</tr>
-					</thead>
-					<!-- <tbody data-bind="foreach: filedataArray"></tbody> -->
-				</table>
-			</div>
-		</div>
-	</form>
-	<div>
-		<label>USERNAME:</label>
-		<input type="text" ng-model="user.user_name"/>
-	</div>
-	<div>
-		<label>EMAIL:</label>
-		<input type="text" ng-model="user.email"/>
-	</div>
-	<div>
-		<label>PASSWORD:</label>
-		<input type="text" ng-model="user.password"/>
-	</div>
-	<div>
-		<label>GROUNPID:</label>
-		<input type="text" ng-model="user.group_id"/>
-	</div>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(user)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/delete-group-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">DeleteGroup</h3>
-</div>
-<div class="modal-body">
-	Are you sure delete this group?
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">OK</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/delete-user-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">DeleteGroup</h3>
-</div>
-<div class="modal-body">
-	Are you sure delete this group?
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(updateuser)">OK</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/editGroup/add-users-window-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">选择人员</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-5">
-				<input type="name" placeholder="输入人员名称查找" class="form-control" ng-model="seachUsersValue" ng-change="seachUsers(seachUsersValue)">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedMemberGridOptions"></div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/editGroup/row-users-name.html">
-<div class="groups-name ngCellText col3 colt3">
-	<img src="{{row.entity.avatar}}" height="24px" width="24px"/>
-	{{row.entity.real_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/editGroup/row-users-remove.html">
-<div class="groups-remove ngCellText col3 colt3">
-	<div ng-click="removeu(row)" >
-		<a>移出群</a>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/editGroup/row-users-role.html">
-<div class="user-activety ngCellText col3 colt3">
-	<div class="roll" style="display: block;">
-		<select ng-model="row.entity.role_id" class="">
-			<option value="0">群组成员</option>
-			<option value="1">群组管理员</option>
-		</select>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/editGroup/update-group-modal.html">
-<div class="modal-header editGroup-header">
-	<h3 class="modal-title">更改群组设置</h3>
-</div>
-<div class="modal-body editGroup" ng-controller="App.Users.Groups.EditGroup.Controller">
-		<div class="col-sm-1">
-			<img src="./images/grouplist_icon.png" height="64px" width="64px"/>
-		</div>
-		<div class="col-sm-10">
-			<div class="form-group">
-				<label>群组名称</label>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="group.group_name" class="form-control group-name"/>
-			</div>
-			<h4 class="modal-title">群组权限</h4>
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.show_member"/>
-						允许该用户查看所有的内部用户&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>		
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.desktop_sync">
-						允许此群组所有用户同步到全协同步文件&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>			
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="group.config.inner_share">
-						限定该群组中的用户在自己的的问佳佳中只能邀请内部用户进行写作&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label>群组成员</label>
-			</div>
-			<div class="form-group">
-				<input type ="text" placeholder="搜索人员" class="form-control seach-group" ng-model="seachUsersValue" ng-change="seachUsers(seachUsersValue)"/>
-				<input type="button" class="btn btn-default" value="添加人员" ng-click="addUsersWin()"/>
-			</div>
-			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridUser"></div>
-				<div class="col-sm-4"></div>
-			</div>
-			<!--<div class="form-group">
-				<label>可以访问的协作文件夹</label>
-			</div>
-			<div class="form-group">
-				<input type="text" placeholder="搜索文件夹名称" class="form-control seach-files"/>
-				<input type="button" class="btn btn-default" value="添加协作文件夹"/>
-			</div>
-			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
-				<div class="col-sm-4"></div>
-			</div>-->
-			<div class="form-group">
-				<a ui-sref="users.groups">
-					<button class="btn btn-primary" ng-click="updateGroup(group)">保存修改</button>
-				</a>
-				<a ui-sref="users.groups">
-					<button class="btn btn-default">取消</button>
-				</a>	
-			</div>
-		</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/group-table-action-cell.html">
-<div class="action ngCellText col3 colt3">
-  <a ui-sref="users.editGroup({id: row.entity.group_id})">
-    <img src="./images/edit.png"/>
-  </a>
-	<img src="./images/delete.png" ng-click="delete(row)"/>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/group-table-img-cell.html">
-<div>{{row.entity.group_id}}</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/row-groups-name.html">
-<div class="groups-name ngCellText col3 colt3">
-	<img src="./images/grouplist_icon.png" height="40px" width="40px"/>
-	{{row.entity.group_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/row-member-role.html">
-<div class="user-activety ngCellText col3 colt3">
-	<div class="roll" style="display: block;">
-		<select ng-model="row.entity.role_id" class="">
-			<option value="0">群组成员</option>
-			<option value="1">群组管理员</option>
-		</select>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/row-user-name.html">
-<div class="user-name ngCellText col3 colt3">
-	<img src="{{row.entity.avatar}}" height="24px" width="24px"/>
-	{{row.entity.user_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/template.html">
-<div class="group-view" ng-controller="App.Users.Groups.Controller">
-	<div class="buttonGroup">
-		<button ng-click='addGroup()' class="btn btn-default">
-			增加群组
-		</button>
-	</div>
-	<div class="groupGridStyle" ng-grid="groupGridOptions"></div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/groups/update-group-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">updateGroup</h3>
-</div>
-<div class="modal-body">
-	<div>
-		<label>USERNAME:</label><input type="text" ng-model="editGroup.group_name"/> 		
-	</div>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">OK</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/add-group-window-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">选择群组</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-5">
-				<input type ="name" placeholder="输入群组名称查找" class="form-control" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedGroupGridOptions"></div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/add-user-modal.html">
-<div class="modal-header">
-	<button class="bootbox-close-button close" type="button" ng-click="cancel()">
-		×
-	</button>
-	<h3 class="modal-title">添加内部人员</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal userDetail"  name="myForm" ng-submit="ok(user)">
-		<h4>新用户账户信息</h4>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="username">姓名</label>
-			<div class="col-sm-8">
-				<input type="name" name="username" placeholder="请填写用户的真实姓名以便管理" ng-class="{ empty: userEmpty }" class="form-control" ng-model="user.real_name" required>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">邮箱</label>
-			<div class="col-sm-8">
-				<input type="email" placeholder="此邮箱将作为登录名使用，请准确填写" class="form-control" ng-model="user.email" required>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">容量</label>
-			<div class="col-sm-2">
-				<input type="text"  class="form-control" ng-disabled="user.space_unlimited" ng-model="user.total_space"/>
-			</div>
-			<label class="unit col-sm-1">GB</label>
-			<div class="col-sm-3">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.space_unlimited">
-						无限制</label>
-				</div>
-			</div>
-		</div>
-
-		<h4>访问权限</h4>
-		<div class="permission-form form-group">
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.config.show_member">
-						允许该用户查看所有的内部用户&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="permission-form form-group">
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.config.desktop_sync">
-						允许该用户在全携通与桌面端间同步文件&nbsp;</label><span tooltip="如果选中，则允许该用户在全携通网页端与桌面客户端之间双向同步文件。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="permission-form form-group">
-			<div class="col-sm-8">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="checkbox" ng-model="user.config.inner_share">
-						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span  tooltip-placement="bottom" tooltip="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label" for="seach">所属群组</label>
-			<div class="col-sm-5">
-				<input type="button" class="btn btn-default" ng-click="addGroupWindow()" value="添加群组"></input>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="gridAddGroup"></div>
-		</div>
-
-		<div class="modal-footer">
-			<button class="btn btn-primary" type="submit">
-				保存
-			</button>
-			<input type="button" class="btn" ng-click="cancel()" value="取消">
-			</input>
-		</div>
-	</form>
-
-</div>
-
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/delete-user-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">DeleteUser</h3>
-</div>
-<div class="modal-body">
-	你是否确定删除此用户?
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">OK</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/editUser/add-groups-window-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">选择群组</h3>
-</div>
-<div class="modal-body">
-	<form role="form" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-5">
-				<input type="name" placeholder="输入群组名称查找" class="form-control" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="gridStyle col-sm-12" ng-grid="selectedMemberGridOptions"></div>
-		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
-	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
-	</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/editUser/row-group-role.html">
-<div class="user-activety ngCellText col3 colt3">
-	<div class="roll" style="display: block;">
-		<select ng-model="row.entity.role_id" class="">
-			<option value="0">群组成员</option>
-			<option value="1">群组管理员</option>
-		</select>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/editUser/row-groups-name.html">
-<div class="groups-name ngCellText col3 colt3">
-	<img src="./images/grouplist_icon.png" height="24px" width="24px"/>
-	{{row.entity.group_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/editUser/row-groups-remove.html">
-<div class="groups-remove ngCellText col3 colt3">
-	<div ng-click="removeg(row)" >
-		<a>移出群组</a>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/editUser/update-user-modal.html">
-<div class="modal-header editUser-header">
-	<h3 class="modal-title">更改用户设置</h3>
-</div>
-<div class="modal-body editUser" ng-controller="App.Users.ManagedUsers.EditUser.Controller">
-		<div class="col-sm-1">
-			<img ng-src="{{user.avatar}}" height="64px" width="64px"/>
-		</div>
-		<div class="col-sm-10">
-			<div class="form-group">
-				<label>姓名</label>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="user.real_name" class="form-control user-name"/>
-			</div>
-			<div class="form-group">
-				<label>邮箱</label>
-			</div>
-			<div class="form-group">
-				<input type="email" ng-model="user.email" class="form-control user-email" disabled/>
-			</div>
-			<div class="form-group">
-				<label>容量</label>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="user.total_space" class="form-control user-total-space"/>
-				<label class="">GB</label>
-				<label class="checkbox-label">
-					<input type="checkbox" ng-model="user.space_unlimited">
-				  无限制</label>
-			</div>
-			<h4 class="modal-title">用户权限</h4>
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.config.show_member"/>
-						允许该用户查看所有的内部用户&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>		
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.config.desktop_sync"/>
-						允许该用户在全携通与桌面端间同步文件&nbsp;</label><span tooltip="如果选中，则允许该用户在全携通网页端与桌面客户端之间双向同步文件。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>			
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="user.config.inner_share"/>
-						限定该用户在自己的文件夹中只能邀请内部用&nbsp;</label><span  tooltip-placement="bottom" tooltip="如果选中，则禁止该用户在自己的文件夹中邀请外部用户进行协作。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-			<div class="form-group permission-checkbox">
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" >
-						协同管理选&nbsp;</label><span tooltip="如果选中，则该用户在邀请协作人时可以在自己的联系人列表中访问到其他的内部用户；而除非是自己邀请过的协作人，否则外部用户不会出现在该用户的联系人列表中。" tooltip-append-to-body="true" class="glyphicon glyphicon-info-sign"></span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label>用户所在群组</label>
-			</div>
-			<div class="form-group">
-				<input type ="text" placeholder="搜索所在群组" class="form-control seach-group" ng-model="seachGroupsValue" ng-change="seachGroups(seachGroupsValue)"/>
-				<input type="button" class="btn btn-default" value="添加群组" ng-click="addGroupsWin()"/>
-			</div>
-			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
-				<div class="col-sm-4"></div>
-			</div>
-			<!--<div class="form-group">
-				<label>可以访问的协作文件夹</label>
-			</div>
-			<div class="form-group">
-				<input type="text" placeholder="搜索文件夹名称" class="form-control seach-files"/>
-				<input type="button" class="btn btn-default" value="添加协作文件夹"/>
-			</div>
-			<div class="form-group gridStyleform">
-				<div class="gridStyle col-sm-8" ng-grid="gridGroup"></div>
-				<div class="col-sm-4"></div>
-			</div>-->
-			<div class="form-group">
-				<a ui-sref="users.managedUsers">
-					<button class="btn btn-primary" ng-click="updateUser(user)">保存修改</button>
-				</a>
-				<a ui-sref="users.managedUsers">
-					<button class="btn btn-default">取消</button>
-				</a>	
-			</div>
-		</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/row-group-role.html">
-<div class="user-activety ngCellText col3 colt3">
-	<div class="roll" style="display: block;">
-		<select ng-model="row.entity.role_id" class="">
-			<option value="0">群组成员</option>
-			<option value="1">群组管理员</option>
-		</select>
-	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/row-user-activety.html">
-<div class="activety ngCellText col3 colt3">
-	<div>{{row.entity.action_date}}</div>
-	<span>{{row.entity.action}}</span>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/row-user-email.html">
-<div class="user-email ngCellText col3 colt3">
-	{{row.entity.email}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/row-user-name.html">
-<div class="user-name ngCellText col3 colt3">
-	<img src="{{row.entity.avatar}}" height="40px" width="40px"/>
-	{{row.entity.user_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/row-user-storage.html">
-<div class="user-storage">
-	{{row.entity.user_name}}
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/template.html">
-<div class="managedUsers-view" ng-controller="App.Users.ManagedUsers.Controller" ng-claas="{empty : true}">
-	<div class="buttonGroup">
-		<button ng-click='addUser()' class="btn btn-default">添加用户</button>
-		<button ng-click='bulkEdit()' class="btn btn-default">批量添加</button>
-		<button ng-click='bulkadd()' class="btn btn-default">批量编辑</button>
-		<button ng-click='exportUser()' class="btn btn-default">导出</button>
-	</div>
-  <div class="gridStyle" ng-grid="gridOptions" ></div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/update-user-modal.html">
-<div class="modal-header">
-	<h3 class="modal-title">updateUser</h3>
-</div>
-<div class="modal-body" ng-controller="App.Users.ManagedUsers.EditUserController">
-	<div>
-		<label>USERNAME:</label><input type="text" ng-model="name"/> 		
-	</div>
-	<!--<div>
-		<label>EMAIL:</label><input type="text" ng-model="user.email"/>
-	</div>
-	<div>
-		<label>PASSWORD:</label><input type="text" ng-model="user.password"/> 
-	</div>
-	<div>
-		<label>GROUNPID:</label><input type="text" ng-model="user.group_id"/>
-	</div>-->
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">OK</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/managedUsers/user-table-action-cell.html">
-<div class="action ngCellText col3 colt3">
-  <a ui-sref="users.editUser({id: row.entity.user_id})">
-    <img src="./images/edit.png"/>
-  </a>
-	<img src="./images/delete.png" ng-click="delete(row)"/>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/template.html">
-<div class="users-view" ng-controller="App.Users.Controller">
-	<div ng-include="'src/app/users/userHeader/template.html'"></div>
- 	<div ui-view class="grid-view"></div>
- 	<div class="main-bottom">
- 		<div>版权所有©2013 上海灵利信息技术有限公司</div>
-		<div>沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012 </div>
- 	</div>
-</div>
-</script>
-
-<script type="text/ng-template" id="src/app/users/userHeader/template.html">
-<div class="user-header-view" ng-controller="App.Users.UserHeader.Controller">
-  <ul class="nav nav-sidebar">
-    <li ng-class="{ active: $state.includes('users.managedUsers') || $state.includes('users.editUser') }">
-      <a ui-sref="users.managedUsers">
-        	内部用户
-      </a>
-    </li>
-    <li ng-class="{ active: $state.includes('users.groups') ||  $state.includes('users.editGroup') }">
-      <a ui-sref="users.groups">
-       		群组
-      </a>
-    </li>
-    <li ng-class="{ active: $state.includes('users.externalUsers') ||  $state.includes('users.editExternalUser') }">
-      <a ui-sref="users.externalUsers">
-        	外部用户
+    <li ng-class="{ active: $state.includes('trash') }">
+      <a ui-sref="trash" class="trash">
+        <span class="trash-img"></span>
+       		回收中心
       </a>
     </li>
   </ul>
+  <div class="storage">
+  	<div class="col-sm-12"><progressbar class="" value= "storage.percentage" type="success">{{storage.percentage}}%</progressbar></div>
+  	<span class="pull-right">{{storage.used_space}}/{{storage.total_space}}</span>
+  </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/trash/template.html">
+<div class="trash-view" ng-controller="App.Trash.Controller">
+	trash
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/updates/template.html">
+<div class="updates-view"  id = "updates-view" ng-controller="App.Updates.Controller">
+	<a  class="large button" pageslide="right" ps-speed="0.5" href="#demo-right" ps-custom-top="78px" ps-custom-bottom="40px">Open Demo</a>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/upload-progress-dialog/template.html">
+<div ng-show="shown" ng-controller="App.UploadProgressDialog.Controller">
+  <div class="dialog-header">
+      <div class="dialog-title">正在上传</div>
+      <div class="dialog-btn btn-close" ng-click="hide()"></div>
+      <div class="dialog-btn btn-max" ng-hide="isMax" ng-click="max()"></div>
+      <div class="dialog-btn btn-min" ng-show="isMax" ng-click="min()"></div>
+  </div>
+  <div class="dialog-body" style="height: 366px;" ng-show="isMax">
+      <div class="progress-item" id="ddupload_file_1_progress" ng-repeat="file in files">
+          <img class="file-icon" src="./images/file_icon.png">
+          <span class="file-name" title="webappdigger.png">{{file.file.name}}</span>
+          <span class="file-size">2.33KB</span>
+          <span class="file-progress">
+            <a style="width:{{file.progress}}%">&nbsp;</a>
+          </span>
+          <span class="file-status">完成</span>
+          <button class="file-remove" actionid="ddupload_file_1">删除</button>
+      </div>
+  </div>
 </div>
 </script>
 
@@ -1110,8 +502,29 @@
   <div class="header" ng-include="'src/app/header/template.html'"></div>
   <div class="main">
     <div class="sidebar" ng-include="'src/app/sidebar/template.html'"></div>
+    
     <div class="right-main" ui-view=""></div>
+
+    <div class="main-bottom">
+  		<div>
+  			版权所有©2013 上海灵利信息技术有限公司
+  		</div>
+  		<div>
+  			沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012
+  		</div>
+	  </div>
   </div>
-  <script src="js/app.8c41273a.js"></script>
+
+  <div class="upload-progress-dialog" style="display: block;" ng-include="'src/app/upload-progress-dialog/template.html'"></div>
+
+  <script id="template/modal/window.html" type="text/ng-template">
+    <div tabindex="-1" role="dialog" class="modal fade" ng-class="{in: animate}" ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
+        <div class="modal-dialog" ng-class="{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}"><div class="modal-content" modal-transclude>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script src="js/app.41952711.js"></script>
 </body>
 </html>

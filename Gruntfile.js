@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     less: {
       'default': {
         files: {
+          'src/admin/admin.css': 'src/admin/admin.less',
           'src/app/app.css': 'src/app/app.less'
         },
         options: {
@@ -13,6 +14,7 @@ module.exports = function(grunt) {
       },
       'dark': {
         files: {
+          'src/admin/admin.css': 'src/admin/admin.less',
           'src/app/app.css': 'src/app/app.less'
         },
         options: {
@@ -34,6 +36,7 @@ module.exports = function(grunt) {
     copy: {
       html: {
         files: {
+          'production/admin.html': 'admin.html',
           'production/index.html': 'index.html'
         }
       },
@@ -59,7 +62,7 @@ module.exports = function(grunt) {
       production: ['production/']
     },
     useminPrepare: {
-      html: 'production/index.html',
+      html: ['production/admin.html', 'production/index.html'],
       options: {
         root: './',
         dest: 'production/'
@@ -71,12 +74,13 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: 'production/index.html'
+      html: ['production/admin.html', 'production/index.html']
     },
     inline_angular_templates: {
       production: {
         files: {
-          'production/index.html': ['src/**/*.html']
+          'production/admin.html': ['src/admin/**/*.html'],
+          'production/index.html': ['src/app/**/*.html']
         }
       },
       options: {

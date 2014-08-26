@@ -1,6 +1,6 @@
 {
   "name": "admin-console-of-act",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -17,13 +17,19 @@
     "ng-grid": "~2.0.11",
     "angular-bootstrap": "~0.11.0",
     "angular-animate": "~1.2.20",
-    "angular-charts": "~0.2.4",
     "es5-shim": "~4.0.1",
     "angular-translate": "~2.2.0",
     "angular-translate-loader-partial": "~2.0.0",
     "angular-ui-utils": "https://github.com/angular-ui/ui-utils.git#~0.1.1",
     "mb-scrollbar": "https://github.com/mattbalmer/mb-scrollbar.git#~2.1.0",
-    "angular-cookies": "~1.2.21"
+    "angular-cookies": "~1.2.21",
+    "highcharts": "~4.0.3",
+    "highcharts-ng": "~0.0.6",
+    "ng-context-menu": "~0.1.6",
+    "ng-file-upload": "~1.6.5",
+    "angular-treeview": "*",
+    "angular-snap": "~1.5.4",
+    "ng-pageslide": "~0.1.8"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.19"

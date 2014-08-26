@@ -1,15 +1,33 @@
 <div class="header-view" ng-controller="App.Header.Controller">
-	<div class="header-ext">
-		<div class="back-main pull-right">
-			<div class="back-img"></div>
-			返回我的主页面
+	<div class="header-top">
+		<div class="user-info pull-right" dropdown is-open="status.isopen">
+			<div class="username dropdown-toggle" ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span>{{user.user_name}}</span>
+				<div class="personalInfor"></div>
+			</div>
+			<ul class="dropdown-menu" role="menu">
+        		<li><a href="#">个人信息</a></li>
+        		<li><a href="#">退出</a></li>
+      		</ul>
+			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
+		</div>
+		<div class="to-admin-control pull-right">
+			管理控制台
+		</div>
+		<div class="notif_box" class="message-notice pull-right">
+			<span class="notice" title="通知"></span>
+			<label class="message-count notice-count" ng-show = "showMessageCount">{{messageCount}}</label>
+			<span class="message" title="消息"></span>
+			<label class="message-count letter-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
-			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<input type="text" placeholder="搜索" class="search-text form-control">
+			<button class="search-button btn btn-default">
+				搜索
+			</button>
 		</div>
 	</div>
 </div>
