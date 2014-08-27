@@ -20,11 +20,16 @@
     border-bottom: 1px solid #252519;
   }
   .folder-grid {
-     height: 85%;
+     bottom: 0;
      overflow-y: auto;
+     position: absolute;
+     top: 85px;
+     width: 100%;
     .table{
-        height: 100%;
-       overflow-y: auto; 
+       overflow-y: auto;
+       thead{
+           height: 25px;
+       } 
     }
     
   }
@@ -136,6 +141,7 @@
     .groups{
         padding-top: 5px;
         padding-bottom: 5px;
+        padding-right: 6px;
         .group-div{
             height: 25px;
             padding-bottom: 5px;
@@ -156,10 +162,17 @@
             .group-permission{
                 float: left;
                 cursor: pointer;
-                width: 75px;
+                width: 80px;
                 position: relative;
                 .caret{
                     display: none;            
+                }
+                .dropdown-menu{
+                    width: 85px;
+                    min-width: 85px;
+                    > li > a{
+                        padding: 3px 8px;
+                    }
                 }
             }
             .delete-group{
@@ -185,7 +198,7 @@
         padding-left: 30px;
         padding-top: 5px;
         padding-bottom: 5px;
-        padding-right: 15px;
+        padding-right: 6px;
         .img{
             float: left;
             width: 35px;
@@ -202,9 +215,16 @@
             cursor: pointer;
             float: left;
             position: relative;
-            width: 75px;
+            width: 80px;
             .caret{
                 display: none;            
+            }
+            .dropdown-menu{
+                width: 85px;
+                min-width: 85px;
+                > li > a{
+                    padding: 3px 8px;
+                }
             }
         }
         .delete-user{
@@ -243,7 +263,22 @@
 
 //移动文件夹
 .move-file-modal-view{
-
+    div[data-tree-model] li .expanded {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    
+    div[data-tree-model] li .collapsed {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    div[data-tree-model] li .normal {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
 }
 
 //讨论
@@ -399,6 +434,9 @@
         .dropdown-menu{
             text-align: center;
             width: 100%;
+            li{
+                cursor: pointer;
+            }
         }
         .input-password{
             margin-top: 5px;

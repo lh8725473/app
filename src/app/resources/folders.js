@@ -21,6 +21,20 @@ angular.module('App.Resources').factory('Folders', [
           folder_id : 0
         },
         isArray: false
+      },
+      getTree: {
+        method: "GET",
+        params: {
+          action: 'getTree'
+        },
+        isArray: true
+      },
+      update: {
+        method: "PUT",
+        params: {
+          action: 'update',
+          folder_id: 0
+        }
       }
     })
   }  

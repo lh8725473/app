@@ -82,7 +82,7 @@
 					</td>
 					<td class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </td>
 					<td class="file-sise-td"><span ng-show = "obj.folder">{{obj.file_count}}</span><span ng-hide = "obj.folder">{{obj.format_size}}</span></td>
-					<td class="permission-td"> {{obj.permission}} </td>
+					<td class="permission-td"> {{obj.permission_value}} </td>
 					<td class="action-td">
 						<div class = "link-share-ico" ng-click = "linkShare(obj)"></div>
 						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
@@ -174,7 +174,7 @@
 				<div class="group-permission" dropdown>
 					<span class="dropdown-toggle">{{group.permission_value}}<span class="caret"></span></span>
 					<ul class="dropdown-menu" role="menu">
-						<li role="presentation" ng-repeat="value in permission_value" ng-click = "toggleDropdown(user)">
+						<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeGroupPermission(group, value)">
 							<a role="menuitem" tabindex="-1">
 								{{value}}
 							</a>
@@ -182,7 +182,7 @@
 					</ul>
 				</div>
 				<div class="delete-group">
-					<span class="">X</span>
+					<span class="" ng-click = "deleteGroupShare(group)">X</span>
 				</div>
 			</div>
 			<div class="col-sm-12">
@@ -202,7 +202,7 @@
 			<div class="user-permission" dropdown is-open="user.isopen">
 				<span class="group-permission dropdown-toggle">{{user.permission_value}}<span class="caret"></span></span>
 				<ul class="dropdown-menu" role="menu">
-					<li role="presentation" ng-repeat="value in permission_value" ng-click = "changePermission(user, value)">
+					<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeUserPermission(user, value)">
 						<a role="menuitem" tabindex="-1">
 							{{value}}
 						</a>
@@ -210,7 +210,7 @@
 				</ul>
 			</div>
 			<div class="delete-user">
-				<span class="">X</span>
+				<span class="" ng-click = "deleteUserShare(user)">X</span>
 			</div>
 		</div>
 	</div>

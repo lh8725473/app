@@ -3,11 +3,13 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   'CONFIG',
   '$state',
   'Folders',
+  'Share',
   function(
     $scope,
     CONFIG,
     $state,
-    Folders
+    Folders,
+    Share
   ) {
   	//权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
@@ -22,7 +24,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
       $scope.permissions.push(permissionMap)
     })
   	
-  	
+  	//当前所在文件夹目录
   	var folderId = $state.params.folderId || 0;
   	
   	if(folderId == 0){
@@ -59,18 +61,46 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   		})
   	}
   	
+  	//群组是否展开查看用户
   	$scope.changeGroupshow = function(group){
   		group.show = !group.show
   	}
   	
-  	$scope.changePermission = function(user, permission_value){
+  	//改变用户权限
+  	$scope.changeUserPermission = function(user, permission_value){
   		user.isopen = !user.isopen;
   		user.permission_value = permission_value;
   		angular.forEach($scope.permission_value, function(value, index) {
-  			if(permission_value = value){
-  				
+  			if(user.permission_value == value){
+  				user.permission = $scope.permission_key[index]
   			}
   		})
+  		Share.update({
+  			id : folderId
+  		},{
+  			user_id : user.user_id,
+  			permission : user.permission,
+  			obj_id : user.obj_id
+  		})
+  	}
+  	
+  	//改变群组权限
+  	$scope.changeGroupPermission = function(group, permission_value){
+  		
+  	}
+  	
+  	//移除用户分享
+  	$scope.deleteUserShare = function(user){
+  		Share.deleteShare({
+  			id : folderId,
+  			user_id : user.user_id,
+  			obj_id : user.obj_id
+  		})
+  	}
+  	
+  	//改变群组权限
+  	$scope.deleteGroupShare = function(group){
+  		
   	}
   }
 ])

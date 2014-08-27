@@ -17,6 +17,20 @@ angular.module('App.Resources').factory('Share', [
         params: {
           action: 'getLink'
         }
+      },
+      update: {
+        method: "PUT",
+        params: {
+          action: 'update',
+          id : ''
+        }
+      },
+      deleteShare: {
+        method: "DELETE",
+        params: {
+          action: 'delete',
+          id : ''
+        }
       }
     })
   }  
