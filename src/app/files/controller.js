@@ -27,7 +27,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
     Utils,
     UserDiscuss
   ) {
-
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
@@ -54,12 +53,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     $scope.objList.$promise.then(function(objList) {
       angular.forEach(objList, function(obj) {
+      	//对象是否被选中
         obj.checked = false
+        //对象是否显示重名输入框
         obj.rename = false
+        
+        //对象是否是文件夹
         if (obj.isFolder == 1) {
           obj.folder = true
         } else {
           obj.folder = false
+        }
+        
+        //对象是否能被预览
+        var fileType =  Utils.getFileTypeByName(obj.file_name)
+        if(!fileType){
+        	obj.isPreview = false
+        }else{
+        	obj.isPreview = true
         }
 
         //文件图像
@@ -83,12 +94,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
           obj.largeIcon = icon.large;
         }
 
-
-
         //文件权限
         angular.forEach($scope.permission_key, function(key, index) {
           if (key == obj.permission) {
-            obj.permission = $scope.permission_value[index]
+            obj.permission_value = $scope.permission_value[index]
           }
         })
       })
@@ -235,8 +244,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
         backdrop: 'static',
         controller: moveFileModalController,
         resolve: {
-          fileid: function() {
-            return $scope.checkedObj.file_id
+          obj: function() {
+            return $scope.checkedObj
           }
         }
       })
@@ -246,49 +255,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
     var moveFileModalController = [
       '$scope',
       '$modalInstance',
-      'fileid',
+      'obj',
+      'Folders',
+      'Files',
       function(
         $scope,
         $modalInstance,
-        fileid
+        obj,
+        Folders,
+        Files
       ) {
-
-        $scope.treedata = [{
-          "label": "User",
-          "id": "role1",
-          "children": [{
-            "label": "subUser1",
-            "id": "role11",
-            "children": []
-          }, {
-            "label": "subUser2",
-            "id": "role12",
-            "children": [{
-              "label": "subUser2-1",
-              "id": "role121",
-              "children": [{
-                "label": "subUser2-1-1",
-                "id": "role1211",
-                "children": []
-              }, {
-                "label": "subUser2-1-2",
-                "id": "role1212",
-                "children": []
-              }]
-            }]
-          }]
-        }, {
-          "label": "Admin",
-          "id": "role2",
-          "children": []
-        }, {
-          "label": "Guest",
-          "id": "role3",
-          "children": []
-        }];
+		$scope.obj = obj
+		
+        $scope.treedata = Folders.getTree({
+        	type: 'tree'
+        })
 
         // FCUK code
-        var treeId = $scope.treeId = 'abc';
+        var treeId = $scope.treeId = 'folderTree';
         $scope[treeId] = $scope[treeId] || {};
 
         //if node head clicks,
@@ -316,14 +300,27 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
         $scope.$watch('abc.currentNode', function(newObj, oldObj) {
           if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
-            console.log('Node Selected!!');
-            console.log($scope.abc.currentNode);
+//          console.log('Node Selected!!');
+//          console.log($scope.folderTree.currentNode);
           }
         }, false);
 
         $scope.ok = function() {
-          console.log(currentNode)
-          $modalInstance.close(fileid)
+          if($scope.obj.folder){
+          	Folders.update({
+          		folder_id : $scope.obj.file_id
+          	},{
+          		parent_id : $scope.folderTree.currentNode.id
+          	})
+          }else{
+          	Files.updateFile({
+          		file_id : $scope.obj.file_id
+          	},{
+          		parent_id : $scope.folderTree.currentNode.id
+          	})
+          }
+
+          $modalInstance.close()
         }
 
         $scope.cancel = function() {
@@ -362,7 +359,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         'folderid',
         'CONFIG',
         '$timeout',
-        "ShareAction",
+        "Share",
         function(
           $scope,
           $modalInstance,
@@ -370,7 +367,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           folderid,
           CONFIG,
           $timeout,
-          ShareAction
+          Share
         ) {
           $scope.broad = false
           //分享文件夹ID
@@ -456,7 +453,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
 
           //外部联系人输入框
-          $scope.inviteInputValue = "12313"
+          $scope.inviteInputValue = ""
 
           //输入框输入增加协作人或组
           $scope.inviteBypress = function(inviteInputValue) {
@@ -465,7 +462,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
               email: inviteInputValue
             }
             $scope.invitedList.userList.push(user)
-            debugger
             $scope.inviteInputValue = ''
           }
 
@@ -536,7 +532,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
               }
               toGroupList.push(to_group)
             })
-            ShareAction.createShare({}, {
+            Share.createShare({}, {
               share_type: "to_all",
               permission: $scope.selectedPermissionKey,
               obj_type: "folder",
@@ -561,7 +557,165 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
         }
       ]
-      // upload file
+    
+    //链接分享
+    $scope.linkShare = function(obj){
+    	var linkShareModal = $modal.open({
+        	templateUrl: 'src/app/files/link-share.html',
+        	windowClass: 'link-share',
+        	backdrop: 'static',
+        	controller: linkShareModalController,
+        	resolve: {
+          		obj: function() {
+            		return obj
+          		}
+        	}
+      	})
+    }
+    
+    var linkShareModalController = [
+      '$scope',
+      '$modalInstance',
+      'obj',
+      'Share',
+      function(
+        $scope,
+        $modalInstance,
+        obj,
+        Share
+      ) {
+				
+		$scope.today = function() {
+			$scope.dt = new Date()
+		};
+		$scope.today()
+
+		$scope.clear = function() {
+			$scope.dt = null
+		}
+
+		// Disable weekend selection
+		$scope.disabled = function(date, mode) {
+			return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6 ) )
+		}
+
+		$scope.toggleMin = function() {
+			$scope.minDate = $scope.minDate ? null : new Date()
+		};
+		$scope.toggleMin()
+
+		$scope.open = function($event) {
+			$event.preventDefault()
+			$event.stopPropagation()
+			$scope.opened = true
+		};
+
+		$scope.dateOptions = {
+			formatYear : 'yy',
+			startingDay : 1
+		};
+
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
+		$scope.format = $scope.formats[1]
+		
+		//链接对象
+		$scope.obj = obj
+		
+		//链接对象类型
+		if($scope.obj.folder){
+			$scope.type = "folder"
+		}else{
+			$scope.type = "file"
+		}
+		
+		//链接分享权限
+		$scope.linkSharePermissionValue = "仅预览"
+		$scope.linkSharePermissionKey = "0000100"
+		
+		//链接分享权限List
+		$scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
+		$scope.linkSharePermissionKeyList = ["0000100", "0000001", "0001110", "0001111"]
+		
+		//是否设置访问权限
+		$scope.linkSharePasswordShow = false
+		
+		//访问密码
+		$scope.linkSharePassword = ""
+		
+		//是否设置访问权限切换
+		$scope.changeLinkSharePasswordShow = function(){
+			if(!$scope.linkSharePasswordShow){
+				$scope.linkSharePassword = ""
+			}
+		}
+		
+		//链接分享访问密码输入框type
+		$scope.linkSharePasswordType = 'password'
+		
+		//显示或者隐藏密码
+		$scope.changeLinkSharePasswordType = function(){
+			if($scope.linkSharePasswordType == 'password'){
+				$scope.linkSharePasswordType = 'text'
+			}else{
+				$scope.linkSharePasswordType = 'password'
+			}
+		}
+		
+		//选择链接dropdown是否显示
+		$scope.permissionOpen = false
+		
+		//链接分享选择权限
+		$scope.changeLinkSharePermission = function(value){
+			$scope.permissionOpen = !$scope.permissionOpen
+			$scope.linkSharePermissionValue = value
+			angular.forEach($scope.linkSharePermissionValueList, function(permissionvalue, index) {
+				if(permissionvalue == value){
+					$scope.linkSharePermissionKey = $scope.linkSharePermissionKeyList[index]
+				}
+			})
+		}
+		
+		//链接说明
+		$scope.comment = ""
+				
+		//生成链接
+		$scope.createLinkShare = function(){
+			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
+			Share.getLink({},{
+				comment : $scope.comment,
+				expiration : $scope.dt,
+				obj_id : $scope.obj.file_id,
+				obj_name : $scope.obj.file_name,
+				obj_type : $scope.type,
+				password : $scope.linkSharePassword,
+				permission : $scope.linkSharePermissionKey
+			}).$promise.then(function(linkShare) {
+				$scope.share_url = linkShare.share_url
+				$scope.code_src = linkShare.code_src
+			})
+		}
+		
+		//生成链接与发送链接邀请form切换
+		$scope.linkCreateOrSend = true;
+		
+		//返回修改
+		$scope.backToCreate = function(){
+			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
+		}
+		
+		//复制链接地址至剪切板
+		$scope.getTextLinkUrl = function(){
+			alert("链接已复制到剪切板")
+			return $scope.share_url
+		}
+		
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
+    
+    // upload file
     var uploadModalController = [
       '$scope',
       '$rootScope',
@@ -620,6 +774,71 @@ angular.module('App.Files').controller('App.Files.Controller', [
         resolve: {}
       })
     }
+    
+    //文件预览
+    $scope.previewFile = function(obj){
+    	var previewFileModal = $modal.open({
+        	templateUrl: 'src/app/files/preview-file.html',
+        	windowClass: 'preview-file',
+        	backdrop: 'static',
+        	controller: previewFileModalController,
+        	resolve: {
+          		obj: function() {
+            		return obj
+          		}
+        	}
+      	})
+    }
+    
+    var previewFileModalController = [
+      '$scope',
+      'Utils',
+      '$modalInstance',
+      'obj',
+      'Files',
+      '$sce',
+      function(
+        $scope,
+        Utils,
+        $modalInstance,
+        obj,
+        Files,
+        $sce
+      ) {
+      
+      	
+		$scope.fileType =  Utils.getFileTypeByName(obj.file_name)
+		
+//		$scope.previewValue = "1111111111111111<br/>"
+		
+		$scope.previewValue = Files.preview({
+				file_id : obj.file_id
+			})
+		$scope.previewValue.$promise.then(function(previewValue) {
+			$scope.deliberatelyTrustDangerousSnippet = function() {
+          		return $sce.trustAsHtml($scope.previewValue);
+        	};
+		})
+		
+//		if ('image' == $scope.fileType) {//图片预览
+//			Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}else if('txt' == $scope.fileType){//文本预览
+//			$scope.previewValue = Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}else{//office或者pdf预览
+//			$scope.previewValue = Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}
+		
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
   }
 ]).directive('ngEnter', function() {
   return function(scope, element, attrs) {

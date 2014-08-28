@@ -1,0 +1,99 @@
+<div class="modal-header">
+	<button class="bootbox-close-button close" type="button" ng-click="cancel()">
+		×
+	</button>
+	<h3 class="modal-title">"{{obj.file_name}}"链接分享</h3>
+</div>
+<div class="modal-body">
+	<form role="form" class="form-horizontal link-share-content" ng-show = "linkCreateOrSend">
+		<h5>链接有效期至</h5>
+		<p class="input-group">
+			<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="open($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button> </span>
+		</p>
+		<div class="checkbox">
+			<label class="pull-left">
+				<input type="checkbox" ng-model="linkSharePasswordShow" ng-click = "changeLinkSharePasswordShow()">
+				设置访问密码 </label>
+		</div>
+		<div class="form-group input-password">
+			<div class="col-sm-11 col-sm-offset-1">
+				<input type="{{linkSharePasswordType}}" class="form-control" placeholder="输入访问密码" ng-model="linkSharePassword0" ng-disabled="!linkSharePasswordShow">
+			</div>
+			<div class="col-sm-11 col-sm-offset-1">
+				<div class="checkbox">
+					<label class="pull-left">
+						<input type="checkbox" ng-click="changeLinkSharePasswordType()">
+						显示密码 </label>
+				</div>
+			</div>
+		</div>
+		<h5>链接权限</h5>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="dropdown" is-open="permissionOpen" is-open="permissionOpen">
+					<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
+						{{linkSharePermissionValue}}
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li role="presentation" ng-repeat="value in linkSharePermissionValueList" ng-click = "changeLinkSharePermission(value)">
+							<a role="menuitem" tabindex="-1">
+								{{value}}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<h5>链接描述</h5>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<textarea type="text" placeholder="" class="form-control comment-input" ng-model = "comment"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="button" class="btn btn-primary form-control" ng-click="createLinkShare()" value="生成链接">
+				</input>
+			</div>
+		</div>
+	</form>
+	<form role="form" class="form-horizontal send-share-content" ng-hide = "linkCreateOrSend">
+		<h5>链接地址</h5>
+		<div class="form-group">
+			<div class="col-sm-9">
+				<input type="text" class="form-control" ng-model="share_url">
+			</div>
+			<div class="col-sm-3">
+				<input type="button" class="btn btn-default form-control" value="复制" clip-copy="getTextLinkUrl()">
+				</input>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-6 col-sm-offset-3 code_src">
+				<img width="145px" ng-src = "{{code_src}}"/>
+			</div>
+			<div class="col-sm-6 col-sm-offset-3">
+				<input type="button" class="btn btn-default form-control" ng-click="backToCreate()" value="返回修改">
+				</input>
+			</div>
+		</div>
+		<h5>邮件分享</h5>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="text" class="form-control" ng-model="inviteInputValue">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="button" class="btn btn-primary form-control" ng-click="sendEmail()" value="发送邮件">
+				</input>
+			</div>
+		</div>
+		
+	</form>	
+</div>

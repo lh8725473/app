@@ -38,6 +38,37 @@ angular.module('App.Widgets').factory('Utils', [
 				small : path + icon.small,
 				large : path + icon.large
 			}
+		},
+		getFileTypeByName : function(name){
+			var extStart = name.lastIndexOf(".");
+			var ext = name.substring(extStart + 1, name.length);
+			ext = ext.toLowerCase();
+			var office = ['doc', 'xls', 'ppt', 'docx', 'xlsx', 'pptx'];
+			var img = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'ico'];
+			var txt = 'txt';
+			var pdf = 'pdf';
+
+			if (ext == txt) {
+				return 'txt';
+			}
+
+			if (ext == pdf) {
+				return 'pdf'
+			}
+
+			for ( i = 0; i < office.length; i++) {
+				if (ext == office[i]) {
+					return 'office';
+				}
+			}
+
+			for ( i = 0; i < img.length; i++) {
+				if (ext == img[i]) {
+					return 'image';
+				}
+			}
+
+			return false;
 		}
 	}
 }])

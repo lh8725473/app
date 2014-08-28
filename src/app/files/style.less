@@ -3,6 +3,7 @@
     bottom: 40px;    
 }
 
+//文件列表
 .files-view {
   height: 100%;
   position: absolute;
@@ -19,11 +20,16 @@
     border-bottom: 1px solid #252519;
   }
   .folder-grid {
-     height: 85%;
+     bottom: 0;
      overflow-y: auto;
+     position: absolute;
+     top: 85px;
+     width: 100%;
     .table{
-        height: 100%;
-       overflow-y: auto; 
+       overflow-y: auto;
+       thead{
+           height: 25px;
+       } 
     }
     
   }
@@ -133,11 +139,15 @@
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     }
     .groups{
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 6px;
         .group-div{
+            height: 25px;
             padding-bottom: 5px;
+            width: 100%;
             .img{
+                cursor: pointer;
                 float: left;
                 width: 50px;
             }
@@ -151,12 +161,33 @@
             }
             .group-permission{
                 float: left;
+                cursor: pointer;
                 width: 80px;
+                position: relative;
+                .caret{
+                    display: none;            
+                }
+                .dropdown-menu{
+                    width: 85px;
+                    min-width: 85px;
+                    > li > a{
+                        padding: 3px 8px;
+                    }
+                }
             }
-            .deleteGroup{
+            .delete-group{
+                display: none;
                 float: right;
-                width: 5px;
             }
+        }
+        .group-div:hover{
+            background-color: #ebf1f7;
+        }
+        .group-div:hover .caret{
+            display: inline-block;
+        }
+        .group-div:hover .delete-group{
+            display: inline-block;
         }
         .group-user{
             padding-top: 5px;
@@ -164,11 +195,13 @@
         }
     }
     .users{
+        padding-left: 30px;
         padding-top: 5px;
         padding-bottom: 5px;
+        padding-right: 6px;
         .img{
             float: left;
-            width: 50px;
+            width: 35px;
         }
         .user-name{
             float: left;
@@ -178,10 +211,36 @@
             white-space: nowrap;
             margin-right: 8px;
         }
-        .permission-delete{
+        .user-permission{
+            cursor: pointer;
             float: left;
+            position: relative;
+            width: 80px;
+            .caret{
+                display: none;            
+            }
+            .dropdown-menu{
+                width: 85px;
+                min-width: 85px;
+                > li > a{
+                    padding: 3px 8px;
+                }
+            }
+        }
+        .delete-user{
+            float: right;
+            display: none; 
         }
     }
+    .users:hover{
+            background-color: #ebf1f7;
+        }
+        .users:hover .caret{
+            display: inline-block;
+        }
+        .users:hover .delete-user{
+            display: inline-block;
+        }
     .arrows-img{
         background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
         cursor: pointer;
@@ -202,10 +261,27 @@
    border-left: 1px solid #ccc;
 }
 
+//移动文件夹
 .move-file-modal-view{
-
+    div[data-tree-model] li .expanded {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    
+    div[data-tree-model] li .collapsed {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    div[data-tree-model] li .normal {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
 }
 
+//讨论
 .user-discuss-view {
     padding: 5px;
     img{
@@ -240,6 +316,7 @@
     }
 }
 
+//邀请协作人
 .invite-team-users{
     .modal-dialog {
         width: 100%;
@@ -344,5 +421,61 @@
                 width: 15px;
              }
         }
+    }
+}
+
+//链接分享
+.link-share{
+    .modal-dialog{
+        width: 350px;
+        .input-group{
+            margin-bottom: 5px;
+        }
+        .dropdown-menu{
+            text-align: center;
+            width: 100%;
+            li{
+                cursor: pointer;
+            }
+        }
+        .input-password{
+            margin-top: 5px;
+        }
+        .code_src{
+            margin-right: 5px;
+        }
+    }
+}
+
+//文件预览
+.preview-file{
+    .preview-file-inner{
+        width: 600px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        &.broad {
+            width: 900px;
+        }
+    }
+    
+    .modal-dialog{
+        height: 90%;
+    }
+    .modal-content{
+        height: 100%;
+    }
+    .preview-view{
+        height: 100%;
+    }
+    .modal-body{
+        position: relative;
+        height: 90%;
+    }
+    .preview-action{
+        position: absolute;
+        bottom: 0;
     }
 }

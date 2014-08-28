@@ -8,7 +8,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
     CONFIG
   ) {
   	$scope.backToindex = function(){
-  	  window.location.href = CONFIG.LOGIN_PATH
+  	  window.location.href = "index.html"
   	}
   }
 ])

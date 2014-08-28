@@ -9,6 +9,7 @@ angular.module('App', [
   'pascalprecht.translate',
   'ng-context-menu',
   'angularFileUpload',
+  'ngSanitize',
   'angularTreeview',
   'snap',
   "pageslide-directive",
