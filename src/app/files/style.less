@@ -446,3 +446,36 @@
         }
     }
 }
+
+//文件预览
+.preview-file{
+    .preview-file-inner{
+        width: 600px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        &.broad {
+            width: 900px;
+        }
+    }
+    
+    .modal-dialog{
+        height: 90%;
+    }
+    .modal-content{
+        height: 100%;
+    }
+    .preview-view{
+        height: 100%;
+    }
+    .modal-body{
+        position: relative;
+        height: 90%;
+    }
+    .preview-action{
+        position: absolute;
+        bottom: 0;
+    }
+}

@@ -61,7 +61,10 @@
 							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
 								{{obj.folder_name}}
 							</a>
-							<a ng-hide = "obj.folder">
+							<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
+								{{obj.file_name}}
+							</a>
+							<a ng-show = "!obj.isPreview">
 								{{obj.file_name}}
 							</a>
 							<div class="tag">

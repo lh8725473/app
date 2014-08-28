@@ -19,6 +19,14 @@ angular.module('App.Resources').factory('Files', [
           action: 'update',
           file_id: ''
         }
+      },
+      preview:{
+      	method: "GET",
+        params: {
+          action: 'preview',
+          file_id: ''
+        },
+        responseType : 'text/plain'
       }
     })
   }  

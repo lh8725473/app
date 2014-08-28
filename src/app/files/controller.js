@@ -27,7 +27,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
     Utils,
     UserDiscuss
   ) {
-
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
@@ -54,12 +53,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     $scope.objList.$promise.then(function(objList) {
       angular.forEach(objList, function(obj) {
+      	//对象是否被选中
         obj.checked = false
+        //对象是否显示重名输入框
         obj.rename = false
+        
+        //对象是否是文件夹
         if (obj.isFolder == 1) {
           obj.folder = true
         } else {
           obj.folder = false
+        }
+        
+        //对象是否能被预览
+        var fileType =  Utils.getFileTypeByName(obj.file_name)
+        if(!fileType){
+        	obj.isPreview = false
+        }else{
+        	obj.isPreview = true
         }
 
         //文件图像
@@ -763,6 +774,71 @@ angular.module('App.Files').controller('App.Files.Controller', [
         resolve: {}
       })
     }
+    
+    //文件预览
+    $scope.previewFile = function(obj){
+    	var previewFileModal = $modal.open({
+        	templateUrl: 'src/app/files/preview-file.html',
+        	windowClass: 'preview-file',
+        	backdrop: 'static',
+        	controller: previewFileModalController,
+        	resolve: {
+          		obj: function() {
+            		return obj
+          		}
+        	}
+      	})
+    }
+    
+    var previewFileModalController = [
+      '$scope',
+      'Utils',
+      '$modalInstance',
+      'obj',
+      'Files',
+      '$sce',
+      function(
+        $scope,
+        Utils,
+        $modalInstance,
+        obj,
+        Files,
+        $sce
+      ) {
+      
+      	
+		$scope.fileType =  Utils.getFileTypeByName(obj.file_name)
+		
+//		$scope.previewValue = "1111111111111111<br/>"
+		
+		$scope.previewValue = Files.preview({
+				file_id : obj.file_id
+			})
+		$scope.previewValue.$promise.then(function(previewValue) {
+			$scope.deliberatelyTrustDangerousSnippet = function() {
+          		return $sce.trustAsHtml($scope.previewValue);
+        	};
+		})
+		
+//		if ('image' == $scope.fileType) {//图片预览
+//			Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}else if('txt' == $scope.fileType){//文本预览
+//			$scope.previewValue = Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}else{//office或者pdf预览
+//			$scope.previewValue = Files.preview({
+//				file_id : obj.file_id
+//			})
+//		}
+		
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
   }
 ]).directive('ngEnter', function() {
   return function(scope, element, attrs) {

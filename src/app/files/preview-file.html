@@ -1,0 +1,19 @@
+<div class="modal-header">
+	<h3 class="modal-title">文件预览</h3>
+</div>
+<div class="modal-body">
+	<div class="preview-view" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
+		<div class="image-preview" ng-show = "fileType == 'image'">
+			图片
+		</div>
+		<div class="txt-preview" ng-show = "fileType == 'txt'" ng-bind-html = "previewValue">
+
+		</div>
+		<div class="office-preview" ng-show = "fileType == 'office'">
+
+		</div>
+	</div>
+	<div class="col-sm-4 discuss-view" ng-show = "broad">
+
+	</div>
+</div>
