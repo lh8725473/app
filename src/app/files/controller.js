@@ -135,12 +135,23 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
-
+	
+	//左键选取对象
+	$scope.selectObj = function(obj){
+		if(obj.checked){
+			obj.checked = false
+		}else{
+			obj.checked = true
+		}
+	}
+	
     //右键菜单
     $scope.onRightClick = function(obj) {
+      //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
         obj.checked = false
       })
+      //右键对象选中
       obj.checked = true
       for (var i = 0; i < $scope.objList.length; ++i) {
         if ($scope.objList[i].checked == true)
@@ -805,7 +816,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
         Files,
         $sce
       ) {
-      
+      	
+      	//右侧菜单 讨论or版本
+      	$scope.navType = 'dis'
+      	
+      	$scope.changeNavType = function(navType){
+      		$scope.navType = navType
+      	}
       	
 		$scope.fileType =  Utils.getFileTypeByName(obj.file_name)
 		

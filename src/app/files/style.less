@@ -12,6 +12,9 @@
   .file-row{
     height: 65px;  
   }
+  .file-row:hover{
+      background-color: #ebf1f7;
+  }
   .top-bar{
     height: 50px;
     border-bottom: 1px solid #252519;
@@ -29,6 +32,10 @@
        overflow-y: auto;
        thead{
            height: 25px;
+       }
+       a:hover, a:focus{
+           text-decoration: none;
+           cursor: pointer;
        } 
     }
     
@@ -113,7 +120,8 @@
     background-position: 0px 0px;
     height:19px;
     width: 16px;
-    cursor: pointer;  
+    cursor: pointer;
+    margin-left: 10px;  
   }
   .discuss-ico{
     float: left;  
@@ -121,7 +129,8 @@
     background-position: 0px -19px;
     height:19px;
     width: 16px;
-    cursor: pointer;  
+    cursor: pointer;
+    margin-left: 10px;  
   }
   
   .position-fixed {
@@ -463,6 +472,7 @@
     
     .modal-dialog{
         height: 90%;
+        width: 90%;
     }
     .modal-content{
         height: 100%;
@@ -472,10 +482,29 @@
     }
     .modal-body{
         position: relative;
-        height: 90%;
+        height: 100%;
     }
     .preview-action{
         position: absolute;
         bottom: 0;
+    }
+    .modal-header{
+        padding: 0;
+    }
+    .discuss-version-view{
+        border-left: 1px solid #e5e5e5;
+        height: 100%;
+        .nav-sidebar{
+            .ver{
+              margin-left: 15px;  
+            }
+            li{
+               float: left;
+               cursor: pointer;
+               &.active{
+                   border-bottom: 2px solid #428bca;
+               }
+            }
+        }
     }
 }

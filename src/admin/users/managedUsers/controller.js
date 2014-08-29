@@ -4,13 +4,28 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
   'Notification',
   'Users',
   'Group',
+  '$cookies',
+  'CONFIG',
+  '$rootScope',
   function(
     $scope,
     $modal,
     Notification,
     Users,
-    Group
+    Group,
+    $cookies,
+    CONFIG,
+    $rootScope
   ) {
+  	$rootScope.seachInputValue = ''
+  	$rootScope.$watch('seachInputValue', function (seachInputValue) {
+    	if(seachInputValue || seachInputValue == ''){
+    		$scope.userList = Users.query({
+    			keyword : seachInputValue
+    		})
+    	}
+    })
+
     //addUser window
     $scope.addUser = function() {
       var addUserModal = $modal.open({
@@ -281,9 +296,19 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.bulkadd = function() {
       alert("bulkadd")
     }
-
+    
+	//导出用户到excel
     $scope.exportUser = function() {
-      alert("exportUser")
+      var hiddenIframeID = 'hiddenDownloader'
+      var iframe = $('#' + hiddenIframeID)[0]
+      if (iframe == null) {
+        iframe = document.createElement('iframe')
+        iframe.id = hiddenIframeID
+        iframe.style.display = 'none'
+        document.body.appendChild(iframe)
+      }
+      iframe.src = CONFIG.API_ROOT + '/user/list?act=toExcel&token='+ $cookies.accessToken
     }
+    
   }
 ])

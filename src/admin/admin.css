@@ -55,6 +55,7 @@ body {
   margin-top: 5px;
   cursor: pointer;
   font-size: 12px;
+  line-height: 1.6;
 }
 .header-view .header-ext .back-main .back-img {
   background: url("../../images/back.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);

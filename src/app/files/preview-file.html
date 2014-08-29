@@ -1,8 +1,8 @@
-<div class="modal-header">
-	<h3 class="modal-title">文件预览</h3>
-</div>
 <div class="modal-body">
-	<div class="preview-view" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
+	<div class="preview-view col-sm-9">
+		<div class="modal-header">
+			<h3 class="modal-title">文件预览</h3>
+		</div>
 		<div class="image-preview" ng-show = "fileType == 'image'">
 			图片
 		</div>
@@ -13,7 +13,20 @@
 
 		</div>
 	</div>
-	<div class="col-sm-4 discuss-view" ng-show = "broad">
-
+	<div class="col-sm-3 discuss-version-view">
+		<ul class="nav nav-sidebar">
+			<li class="disc" ng-class="{ active: navType == 'dis'}" ng-click = "changeNavType('dis')">
+				讨论
+			</li>
+			<li class="ver" ng-class="{ active: navType == 'ver'}" ng-click = "changeNavType('ver')">
+				版本
+			</li>
+		</ul>
+		<div class="discuss" ng-show = "navType == 'dis'">
+			discuss
+		</div>
+		<div class="version" ng-show = "navType == 'ver'">
+			version
+		</div>
 	</div>
 </div>
