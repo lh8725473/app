@@ -5,6 +5,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
   'CONFIG',
   'obj',
   'Files',
+  '$cookies',
   '$sce',
   function(
     $scope,
@@ -13,6 +14,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
     CONFIG,
     obj,
     Files,
+    $cookies,
     $sce
   ) {
       //右侧菜单 讨论or版本

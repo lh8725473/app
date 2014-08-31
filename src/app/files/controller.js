@@ -139,12 +139,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //左键选取对象
-    $scope.selectObj = function(obj) {
-      if (obj.checked) {
-        obj.checked = false
-      } else {
-        obj.checked = true
-      }
+    $scope.selectObj = function($event, obj) {
+      obj.checked = !obj.checked
     }
 
     //右键菜单
@@ -281,8 +277,15 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.discussOpened = true
     }
 
+    $scope.stopPropagation = function($event, obj) {
+      $event.stopPropagation()
+      obj.checked = !obj.checked
+
+    }
+
     //邀请协作人
-    $scope.inviteTeamUsers = function(obj) {
+    $scope.inviteTeamUsers = function($event, obj) {
+      $event.stopPropagation()
       var addUserModal = $modal.open({
         templateUrl: 'src/app/files/invite-team-users.html',
         windowClass: 'invite-team-users',
@@ -504,7 +507,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     ]
 
     //链接分享
-    $scope.linkShare = function(obj) {
+    $scope.linkShare = function($event, obj) {
+      $event.stopPropagation()
       var linkShareModal = $modal.open({
         templateUrl: 'src/app/files/link-share.html',
         windowClass: 'link-share',
