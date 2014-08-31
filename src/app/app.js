@@ -12,7 +12,8 @@ angular.module('App', [
   'ngSanitize',
   'angularTreeview',
   'snap',
-  "pageslide-directive",
+  'pageslide-directive',
+  'ui.select2',
 
   // Config
   'App.Config',

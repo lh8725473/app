@@ -4,6 +4,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   '$upload',
   'CONFIG',
   'Folders',
+  'Users',
   'FolderAction',
   'Notification',
   'Files',
@@ -18,6 +19,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $upload,
     CONFIG,
     Folders,
+    Users,
     FolderAction,
     Notification,
     Files,
@@ -511,6 +513,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
         resolve: {
           obj: function() {
             return obj
+          },
+          users: function () {
+            return Users.query().$promise;
           }
         }
       })
@@ -520,13 +525,25 @@ angular.module('App.Files').controller('App.Files.Controller', [
       '$scope',
       '$modalInstance',
       'obj',
+      'users',
       'Share',
       function(
         $scope,
         $modalInstance,
         obj,
+        users,
         Share
       ) {
+
+        $scope.emailSelectOptions = {
+          'multiple': true,
+          'simple_tags': true,
+          'tags': users.map(function(user) {
+            return user.email
+          })
+        }
+
+        $scope.selectedEmails = []
 
         $scope.today = function() {
           $scope.dt = new Date()
@@ -590,6 +607,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
           if (!$scope.linkSharePasswordShow) {
             $scope.linkSharePassword = ""
           }
+        }
+
+        $scope.sendEmail = function() {
+          console.log($scope.selectedEmails)
         }
 
         //链接分享访问密码输入框type
@@ -759,7 +780,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         $scope.fileType = Utils.getFileTypeByName(obj.file_name)
 
         if ('image' == $scope.fileType) { //图片预览
-           $scope.previewValue = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token='+$cookies.accessToken
+          $scope.previewValue = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token=' + $cookies.accessToken
         } else { //office或者pdf预览
           Files.preview(obj.file_id).then(function(htmlData) {
             $scope.previewValue = htmlData
