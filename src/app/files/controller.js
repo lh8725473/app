@@ -260,6 +260,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
         }
       })
+
+      addUserModal.result.then(function(file_id) {
+        console.log(file_id)
+        for (var i = 0; i < $scope.objList.length; ++i) {
+          if ($scope.objList[i].file_id == file_id) {
+            $scope.objList.splice(i, 1)
+            break
+          }
+        }
+      })
     }
 
     // 打开讨论 默认是关闭的

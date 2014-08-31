@@ -52,21 +52,28 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
     }, false);
 
     $scope.ok = function() {
+      var file_id = $scope.obj.file_id
       if ($scope.obj.folder) {
         Folders.update({
-          folder_id: $scope.obj.file_id
+          folder_id: file_id
         }, {
           parent_id: $scope.folderTree.currentNode.id
+        }).$promise.then(function() {
+          moved(file_id)
         })
       } else {
         Files.updateFile({
-          file_id: $scope.obj.file_id
+          file_id: file_id
         }, {
           parent_id: $scope.folderTree.currentNode.id
+        }).$promise.then(function() {
+          moved(file_id)
         })
       }
+    }
 
-      $modalInstance.close()
+    function moved(file_id) {
+      $modalInstance.close(file_id)
     }
 
     $scope.cancel = function() {

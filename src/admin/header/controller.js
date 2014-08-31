@@ -11,6 +11,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
     CONFIG,
     $rootScope
   ) {
+
   	$scope.backToindex = function(){
   	  window.location.href = CONFIG.INDEX_PATH
   	}
