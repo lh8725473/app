@@ -1,10 +1,13 @@
 <div class="modal-body">
 	<div class="preview-view col-sm-10">
 		<div class="modal-header">
+		  <button class="btn btn-default upload-new-version" type="button" ng-click="cancel()">
+                   上传新版本
+      </button>
 			<h3 class="modal-title">文件预览</h3>
 		</div>
 		<div class="image-preview" ng-show = "fileType == 'image'">
-			<img src="{{previewValue}}" />
+			<img ng-src="{{imageSrc}}" alt="null"/>
 		</div>
 		<div class="txt-preview" ng-show = "fileType == 'txt'" ng-bind-html = "previewValue">
 
@@ -21,6 +24,9 @@
 			<li class="ver" ng-class="{ active: navType == 'ver'}" ng-click = "changeNavType('ver')">
 				版本
 			</li>
+			<button class="bootbox-close-button close" type="button" ng-click="cancel()">
+        ×
+      </button>
 		</ul>
 		<div class="discuss" ng-show = "navType == 'dis'">
 			discuss
