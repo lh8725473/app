@@ -51,7 +51,7 @@
 						</div>
 					</div></td>
 				</tr>
-				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu">
+				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj(obj)">
 					<td class="input-checkbox-td">
 					<input type="checkbox" ng-model = "obj.checked" />
 					</td>
@@ -64,7 +64,7 @@
 							<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
 								{{obj.file_name}}
 							</a>
-							<a ng-show = "!obj.isPreview">
+							<a ng-show = "!obj.folder&&!obj.isPreview">
 								{{obj.file_name}}
 							</a>
 							<div class="tag">
@@ -89,7 +89,9 @@
 					<td class="action-td">
 						<div class = "link-share-ico" ng-click = "linkShare(obj)"></div>
 						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
+						{{obj.user_count}}
 						<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
+						{{obj.discuss_count}}	
 					</td>
 				</tr>
 				<div class="dropdown position-fixed" id="myMenu">
