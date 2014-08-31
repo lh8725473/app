@@ -9,7 +9,7 @@ angular.module('App.Config', []).constant('CONFIG', {
   // localhost
   // API_ROOT: 'http://localhost/api',
 
-  LOGIN_PATH: '../login.html',
+  LOGIN_PATH: 'login.html',
 
   INDEX_PATH: '/index.html',
   

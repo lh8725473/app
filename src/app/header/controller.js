@@ -4,6 +4,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   'CONFIG',
   'Users',
   '$cookies',
+  '$cookieStore',
   'Message',
   '$timeout',
   function(
@@ -12,9 +13,15 @@ angular.module('App.Header').controller('App.Header.Controller', [
     CONFIG,
     Users,
     $cookies,
+    $cookieStore,
     Message,
     $timeout
   ) {
+    $scope.toLogin = function(){
+      $cookieStore.removeCookie('accessToken')
+      window.location.href = "login.html"
+    }
+    
   	$scope.toadmin = function(){
   	  window.location.href = "admin.html"
   	}
