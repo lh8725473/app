@@ -51,9 +51,9 @@
 						</div>
 					</div></td>
 				</tr>
-				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj(obj)">
+				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj($event, obj)">
 					<td class="input-checkbox-td">
-					<input type="checkbox" ng-model = "obj.checked" />
+					<input type="checkbox" ng-model = "obj.checked" ng-click="stopPropagation($event)" />
 					</td>
 					<td class="img-name-td">
 						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
@@ -64,7 +64,7 @@
 							<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
 								{{obj.file_name}}
 							</a>
-							<a ng-show = "!obj.folder&&!obj.isPreview">
+							<a ng-show = "!obj.folder&&!obj.isPreview" ng-class = "{ noPreview: !obj.isPreview }">
 								{{obj.file_name}}
 							</a>
 							<div class="tag">
@@ -87,8 +87,8 @@
 					<td class="file-sise-td"><span ng-show = "obj.folder">{{obj.file_count}}</span><span ng-hide = "obj.folder">{{obj.format_size}}</span></td>
 					<td class="permission-td"> {{obj.permission_value}} </td>
 					<td class="action-td">
-						<div class = "link-share-ico" ng-click = "linkShare(obj)"></div>
-						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers(obj)"></div>
+						<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
+						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
 						{{obj.user_count}}
 						<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
 						{{obj.discuss_count}}	

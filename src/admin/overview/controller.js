@@ -109,8 +109,10 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
       var categories = []
       var data = []
       angular.forEach(spaceTrend, function(value, key) {
-        categories.push(key)
-        data.push(parseInt(value))
+        if (key != '$promise' && key != '$resolved') {
+          categories.push(key)
+          data.push(parseInt(value.used_size))
+        }
       })
 
       $scope.spaceTrendConfig = {

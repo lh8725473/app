@@ -139,12 +139,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //左键选取对象
-    $scope.selectObj = function(obj) {
-      if (obj.checked) {
-        obj.checked = false
-      } else {
-        obj.checked = true
-      }
+    $scope.selectObj = function($event, obj) {
+      obj.checked = !obj.checked
     }
 
     //右键菜单
@@ -281,8 +277,15 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.discussOpened = true
     }
 
+    $scope.stopPropagation = function($event, obj) {
+      $event.stopPropagation()
+      obj.checked = !obj.checked
+
+    }
+
     //邀请协作人
-    $scope.inviteTeamUsers = function(obj) {
+    $scope.inviteTeamUsers = function($event, obj) {
+      $event.stopPropagation()
       var addUserModal = $modal.open({
         templateUrl: 'src/app/files/invite-team-users.html',
         windowClass: 'invite-team-users',
@@ -504,7 +507,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     ]
 
     //链接分享
-    $scope.linkShare = function(obj) {
+    $scope.linkShare = function($event, obj) {
+      $event.stopPropagation()
       var linkShareModal = $modal.open({
         templateUrl: 'src/app/files/link-share.html',
         windowClass: 'link-share',
@@ -742,10 +746,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //文件预览
     $scope.previewFile = function(obj) {
       var previewFileModal = $modal.open({
-        templateUrl: 'src/app/files/preview-file.html',
+        templateUrl: 'src/app/files/preview-file/template.html',
         windowClass: 'preview-file',
         backdrop: 'static',
-        controller: previewFileModalController,
+        controller: 'App.Files.PreviewFileController',
         resolve: {
           obj: function() {
             return obj
@@ -754,44 +758,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
 
-    var previewFileModalController = [
-      '$scope',
-      'Utils',
-      '$modalInstance',
-      'obj',
-      'Files',
-      '$sce',
-      function(
-        $scope,
-        Utils,
-        $modalInstance,
-        obj,
-        Files,
-        $sce
-      ) {
-
-        //右侧菜单 讨论or版本
-        $scope.navType = 'dis'
-
-        $scope.changeNavType = function(navType) {
-          $scope.navType = navType
-        }
-
-        $scope.fileType = Utils.getFileTypeByName(obj.file_name)
-
-        if ('image' == $scope.fileType) { //图片预览
-          $scope.previewValue = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token=' + $cookies.accessToken
-        } else { //office或者pdf预览
-          Files.preview(obj.file_id).then(function(htmlData) {
-            $scope.previewValue = htmlData
-          })
-        }
-
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
-        }
-      }
-    ]
   }
 ]).directive('ngEnter', function() {
   return function(scope, element, attrs) {
