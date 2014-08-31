@@ -53,24 +53,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     $scope.objList.$promise.then(function(objList) {
       angular.forEach(objList, function(obj) {
-      	//对象是否被选中
+        //对象是否被选中
         obj.checked = false
         //对象是否显示重名输入框
         obj.rename = false
-        
+
         //对象是否是文件夹
         if (obj.isFolder == 1) {
           obj.folder = true
         } else {
           obj.folder = false
         }
-        
+
         //对象是否能被预览
-        var fileType =  Utils.getFileTypeByName(obj.file_name)
-        if(!fileType){
-        	obj.isPreview = false
-        }else{
-        	obj.isPreview = true
+        var fileType = Utils.getFileTypeByName(obj.file_name)
+        if (!fileType) {
+          obj.isPreview = false
+        } else {
+          obj.isPreview = true
         }
 
         //文件图像
@@ -135,16 +135,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
-	
-	//左键选取对象
-	$scope.selectObj = function(obj){
-		if(obj.checked){
-			obj.checked = false
-		}else{
-			obj.checked = true
-		}
-	}
-	
+
+    //左键选取对象
+    $scope.selectObj = function(obj) {
+      if (obj.checked) {
+        obj.checked = false
+      } else {
+        obj.checked = true
+      }
+    }
+
     //右键菜单
     $scope.onRightClick = function(obj) {
       //取消所有选中状态
@@ -276,10 +276,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
         Folders,
         Files
       ) {
-		$scope.obj = obj
-		
+        $scope.obj = obj
+
         $scope.treedata = Folders.getTree({
-        	type: 'tree'
+          type: 'tree'
         })
 
         // FCUK code
@@ -311,24 +311,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
         $scope.$watch('abc.currentNode', function(newObj, oldObj) {
           if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
-//          console.log('Node Selected!!');
-//          console.log($scope.folderTree.currentNode);
+            //          console.log('Node Selected!!');
+            //          console.log($scope.folderTree.currentNode);
           }
         }, false);
 
         $scope.ok = function() {
-          if($scope.obj.folder){
-          	Folders.update({
-          		folder_id : $scope.obj.file_id
-          	},{
-          		parent_id : $scope.folderTree.currentNode.id
-          	})
-          }else{
-          	Files.updateFile({
-          		file_id : $scope.obj.file_id
-          	},{
-          		parent_id : $scope.folderTree.currentNode.id
-          	})
+          if ($scope.obj.folder) {
+            Folders.update({
+              folder_id: $scope.obj.file_id
+            }, {
+              parent_id: $scope.folderTree.currentNode.id
+            })
+          } else {
+            Files.updateFile({
+              file_id: $scope.obj.file_id
+            }, {
+              parent_id: $scope.folderTree.currentNode.id
+            })
           }
 
           $modalInstance.close()
@@ -364,226 +364,226 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //邀请协作人
     var inviteTeamUsersModalController = [
-        '$scope',
-        '$modalInstance',
-        'Cloud',
-        'folderid',
-        'CONFIG',
-        '$timeout',
-        "Share",
-        function(
-          $scope,
-          $modalInstance,
-          Cloud,
-          folderid,
-          CONFIG,
-          $timeout,
-          Share
-        ) {
-          $scope.broad = false
-          //分享文件夹ID
-          $scope.folderid = folderid
-          //权限
-          $scope.permission_key = CONFIG.PERMISSION_KEY
-          $scope.permission_value = CONFIG.PERMISSION_VALUE
+      '$scope',
+      '$modalInstance',
+      'Cloud',
+      'folderid',
+      'CONFIG',
+      '$timeout',
+      "Share",
+      function(
+        $scope,
+        $modalInstance,
+        Cloud,
+        folderid,
+        CONFIG,
+        $timeout,
+        Share
+      ) {
+        $scope.broad = false
+        //分享文件夹ID
+        $scope.folderid = folderid
+        //权限
+        $scope.permission_key = CONFIG.PERMISSION_KEY
+        $scope.permission_value = CONFIG.PERMISSION_VALUE
 
-          $scope.permissions = []
-          angular.forEach($scope.permission_key, function(key, index) {
-            var permissionMap = {
-              key: key,
-              value: $scope.permission_value[index]
+        $scope.permissions = []
+        angular.forEach($scope.permission_key, function(key, index) {
+          var permissionMap = {
+            key: key,
+            value: $scope.permission_value[index]
+          }
+          $scope.permissions.push(permissionMap)
+        })
+
+        $scope.selectedPermissionKey = "0111111"
+        $scope.selectedPermissionValue = "编辑者"
+
+        //选择权限dropdown
+        $scope.permissionOpen = false
+
+        //选择权限
+        $scope.selectedPermission = function(value) {
+          $scope.selectedPermissionValue = value
+          $scope.permissionOpen = !$scope.permissionOpen
+          angular.forEach($scope.permission_value, function(p_value, index) {
+            if (p_value == value) {
+              $scope.selectedPermissionKey = $scope.permission_key[index]
             }
-            $scope.permissions.push(permissionMap)
           })
+        }
 
-          $scope.selectedPermissionKey = "0111111"
-          $scope.selectedPermissionValue = "编辑者"
-
-          //选择权限dropdown
-          $scope.permissionOpen = false
-
-          //选择权限
-          $scope.selectedPermission = function(value) {
-            $scope.selectedPermissionValue = value
-            $scope.permissionOpen = !$scope.permissionOpen
-            angular.forEach($scope.permission_value, function(p_value, index) {
-              if (p_value == value) {
-                $scope.selectedPermissionKey = $scope.permission_key[index]
-              }
-            })
-          }
-
-          //删除选中的人员
-          $scope.deleteSelectedUser = function(user) {
-            for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
-              if ($scope.invitedList.userList[i].user_id == user.user_id || $scope.invitedList.userList[i].email == user.email)
-                user.selected = false
-              break
-            }
-            $scope.invitedList.userList.splice(i, 1)
-          }
-
-          //删除选中的组
-          $scope.deleteSelectedGroup = function(group) {
-            for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
-              if ($scope.invitedList.groupList[i].group_id == group.group_id)
-                group.selected = false
-              break
-            }
-            $scope.invitedList.groupList.splice(i, 1)
-          }
-
-          //协作 人员和组的接口
-          $scope.cloudUserList = Cloud.cloudUserList({
-            folder_id: $scope.folderid
-          })
-
-          $scope.cloudUserList.$promise.then(function(cloudUser) {
-            $scope.userList = cloudUser.list.users
-            $scope.groupList = cloudUser.list.groups
-
-            angular.forEach($scope.userList, function(user) {
+        //删除选中的人员
+        $scope.deleteSelectedUser = function(user) {
+          for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
+            if ($scope.invitedList.userList[i].user_id == user.user_id || $scope.invitedList.userList[i].email == user.email)
               user.selected = false
-            })
+            break
+          }
+          $scope.invitedList.userList.splice(i, 1)
+        }
 
-            angular.forEach($scope.groupList, function(group) {
-              group.show = false
+        //删除选中的组
+        $scope.deleteSelectedGroup = function(group) {
+          for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
+            if ($scope.invitedList.groupList[i].group_id == group.group_id)
               group.selected = false
-            })
+            break
+          }
+          $scope.invitedList.groupList.splice(i, 1)
+        }
+
+        //协作 人员和组的接口
+        $scope.cloudUserList = Cloud.cloudUserList({
+          folder_id: $scope.folderid
+        })
+
+        $scope.cloudUserList.$promise.then(function(cloudUser) {
+          $scope.userList = cloudUser.list.users
+          $scope.groupList = cloudUser.list.groups
+
+          angular.forEach($scope.userList, function(user) {
+            user.selected = false
           })
 
-          //组是否显示人员
-          $scope.changeGroupshow = function(group) {
-            group.show = !group.show
+          angular.forEach($scope.groupList, function(group) {
+            group.show = false
+            group.selected = false
+          })
+        })
+
+        //组是否显示人员
+        $scope.changeGroupshow = function(group) {
+          group.show = !group.show
+        }
+
+        //已邀请的 组和人员
+        $scope.invitedList = {
+          groupList: [],
+          userList: []
+        }
+
+        //外部联系人输入框
+        $scope.inviteInputValue = ""
+
+        //输入框输入增加协作人或组
+        $scope.inviteBypress = function(inviteInputValue) {
+          var user = {
+            real_name: inviteInputValue,
+            email: inviteInputValue
           }
+          $scope.invitedList.userList.push(user)
+          $scope.inviteInputValue = ''
+        }
 
-          //已邀请的 组和人员
-          $scope.invitedList = {
-            groupList: [],
-            userList: []
-          }
+        //右侧列表是否显示
+        $scope.showGRroupUser = function() {
+          $scope.broad = !$scope.broad
+        }
 
-          //外部联系人输入框
-          $scope.inviteInputValue = ""
-
-          //输入框输入增加协作人或组
-          $scope.inviteBypress = function(inviteInputValue) {
-            var user = {
-              real_name: inviteInputValue,
-              email: inviteInputValue
+        //右侧列表选择协作人或组
+        $scope.inviteBySelect = function(groupOrUser, selected) {
+          if (selected) { //取消组或者协作人
+            if (groupOrUser.group_id) { //取消的是组
+              angular.forEach($scope.groupList, function(group) {
+                if (groupOrUser.group_id == group.group_id) {
+                  group.selected = false;
+                }
+              })
+              for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
+                if ($scope.invitedList.groupList[i].group_id == groupOrUser.group_id)
+                  break
+              }
+              $scope.invitedList.groupList.splice(i, 1)
+            } else { //取消的是用户
+              angular.forEach($scope.userList, function(user) {
+                if (groupOrUser.user_id == user.user_id) {
+                  user.selected = false;
+                }
+              })
+              for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
+                if ($scope.invitedList.userList[i].user_id == groupOrUser.user_id)
+                  break
+              }
+              $scope.invitedList.userList.splice(i, 1)
             }
-            $scope.invitedList.userList.push(user)
-            $scope.inviteInputValue = ''
-          }
-
-          //右侧列表是否显示
-          $scope.showGRroupUser = function() {
-            $scope.broad = !$scope.broad
-          }
-
-          //右侧列表选择协作人或组
-          $scope.inviteBySelect = function(groupOrUser, selected) {
-            if (selected) { //取消组或者协作人
-              if (groupOrUser.group_id) { //取消的是组
-                angular.forEach($scope.groupList, function(group) {
-                  if (groupOrUser.group_id == group.group_id) {
-                    group.selected = false;
-                  }
-                })
-                for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
-                  if ($scope.invitedList.groupList[i].group_id == groupOrUser.group_id)
-                    break
-                }
-                $scope.invitedList.groupList.splice(i, 1)
-              } else { //取消的是用户
-                angular.forEach($scope.userList, function(user) {
-                  if (groupOrUser.user_id == user.user_id) {
-                    user.selected = false;
-                  }
-                })
-                for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
-                  if ($scope.invitedList.userList[i].user_id == groupOrUser.user_id)
-                    break
-                }
-                $scope.invitedList.userList.splice(i, 1)
-              }
-            } else { //选中列表中组或者协作人
-              if (groupOrUser.group_id) { //选中的是组
-                $scope.invitedList.groupList.push(groupOrUser)
-              } else { //选中的是用户
-                $scope.invitedList.userList.push(groupOrUser)
-              }
+          } else { //选中列表中组或者协作人
+            if (groupOrUser.group_id) { //选中的是组
+              $scope.invitedList.groupList.push(groupOrUser)
+            } else { //选中的是用户
+              $scope.invitedList.userList.push(groupOrUser)
             }
-
           }
 
-          //邀请联系人comment
-          $scope.comment = "你好，我想在全协通中与你分享文件夹"
+        }
 
-          //发送邀请
-          $scope.createShare = function() {
-            var toUserList = []
-            var toGroupList = []
-            angular.forEach($scope.invitedList.userList, function(user) {
-              if (user.user_id) { //已有联系人
-                var to_user = {
-                  to_user_id: user.user_id
-                }
-                toUserList.push(to_user)
-              } else { //没有的联系人 （通过邮件邀请）
-                var to_user = {
-                  email: user.email
-                }
-                toUserList.push(to_user)
-              }
-            })
-            angular.forEach($scope.invitedList.groupList, function(group) {
-              var to_group = {
-                to_group_id: group.group_id
-              }
-              toGroupList.push(to_group)
-            })
-            Share.createShare({}, {
-              share_type: "to_all",
-              permission: $scope.selectedPermissionKey,
-              obj_type: "folder",
-              comment: $scope.comment,
-              obj_id: $scope.folderid,
-              list: {
-                users: toUserList,
-                groups: toGroupList
-              }
-            }).$promise.then(function(resUser) {
-              $modalInstance.close()
-            })
-          }
+        //邀请联系人comment
+        $scope.comment = "你好，我想在全协通中与你分享文件夹"
 
-          $scope.ok = function() {
-            console.log(currentNode)
-            $modalInstance.close(folderid)
-          }
+        //发送邀请
+        $scope.createShare = function() {
+          var toUserList = []
+          var toGroupList = []
+          angular.forEach($scope.invitedList.userList, function(user) {
+            if (user.user_id) { //已有联系人
+              var to_user = {
+                to_user_id: user.user_id
+              }
+              toUserList.push(to_user)
+            } else { //没有的联系人 （通过邮件邀请）
+              var to_user = {
+                email: user.email
+              }
+              toUserList.push(to_user)
+            }
+          })
+          angular.forEach($scope.invitedList.groupList, function(group) {
+            var to_group = {
+              to_group_id: group.group_id
+            }
+            toGroupList.push(to_group)
+          })
+          Share.createShare({}, {
+            share_type: "to_all",
+            permission: $scope.selectedPermissionKey,
+            obj_type: "folder",
+            comment: $scope.comment,
+            obj_id: $scope.folderid,
+            list: {
+              users: toUserList,
+              groups: toGroupList
+            }
+          }).$promise.then(function(resUser) {
+            $modalInstance.close()
+          })
+        }
 
-          $scope.cancel = function() {
-            $modalInstance.dismiss('cancel')
+        $scope.ok = function() {
+          console.log(currentNode)
+          $modalInstance.close(folderid)
+        }
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
+
+    //链接分享
+    $scope.linkShare = function(obj) {
+      var linkShareModal = $modal.open({
+        templateUrl: 'src/app/files/link-share.html',
+        windowClass: 'link-share',
+        backdrop: 'static',
+        controller: linkShareModalController,
+        resolve: {
+          obj: function() {
+            return obj
           }
         }
-      ]
-    
-    //链接分享
-    $scope.linkShare = function(obj){
-    	var linkShareModal = $modal.open({
-        	templateUrl: 'src/app/files/link-share.html',
-        	windowClass: 'link-share',
-        	backdrop: 'static',
-        	controller: linkShareModalController,
-        	resolve: {
-          		obj: function() {
-            		return obj
-          		}
-        	}
-      	})
+      })
     }
-    
+
     var linkShareModalController = [
       '$scope',
       '$modalInstance',
@@ -595,137 +595,137 @@ angular.module('App.Files').controller('App.Files.Controller', [
         obj,
         Share
       ) {
-				
-		$scope.today = function() {
-			$scope.dt = new Date()
-		};
-		$scope.today()
 
-		$scope.clear = function() {
-			$scope.dt = null
-		}
+        $scope.today = function() {
+          $scope.dt = new Date()
+        };
+        $scope.today()
 
-		// Disable weekend selection
-		$scope.disabled = function(date, mode) {
-			return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6 ) )
-		}
+        $scope.clear = function() {
+          $scope.dt = null
+        }
 
-		$scope.toggleMin = function() {
-			$scope.minDate = $scope.minDate ? null : new Date()
-		};
-		$scope.toggleMin()
+        // Disable weekend selection
+        $scope.disabled = function(date, mode) {
+          return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6))
+        }
 
-		$scope.open = function($event) {
-			$event.preventDefault()
-			$event.stopPropagation()
-			$scope.opened = true
-		};
+        $scope.toggleMin = function() {
+          $scope.minDate = $scope.minDate ? null : new Date()
+        };
+        $scope.toggleMin()
 
-		$scope.dateOptions = {
-			formatYear : 'yy',
-			startingDay : 1
-		};
+        $scope.open = function($event) {
+          $event.preventDefault()
+          $event.stopPropagation()
+          $scope.opened = true
+        };
 
-		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
-		$scope.format = $scope.formats[1]
-		
-		//链接对象
-		$scope.obj = obj
-		
-		//链接对象类型
-		if($scope.obj.folder){
-			$scope.type = "folder"
-		}else{
-			$scope.type = "file"
-		}
-		
-		//链接分享权限
-		$scope.linkSharePermissionValue = "仅预览"
-		$scope.linkSharePermissionKey = "0000100"
-		
-		//链接分享权限List
-		$scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
-		$scope.linkSharePermissionKeyList = ["0000100", "0000001", "0001110", "0001111"]
-		
-		//是否设置访问权限
-		$scope.linkSharePasswordShow = false
-		
-		//访问密码
-		$scope.linkSharePassword = ""
-		
-		//是否设置访问权限切换
-		$scope.changeLinkSharePasswordShow = function(){
-			if(!$scope.linkSharePasswordShow){
-				$scope.linkSharePassword = ""
-			}
-		}
-		
-		//链接分享访问密码输入框type
-		$scope.linkSharePasswordType = 'password'
-		
-		//显示或者隐藏密码
-		$scope.changeLinkSharePasswordType = function(){
-			if($scope.linkSharePasswordType == 'password'){
-				$scope.linkSharePasswordType = 'text'
-			}else{
-				$scope.linkSharePasswordType = 'password'
-			}
-		}
-		
-		//选择链接dropdown是否显示
-		$scope.permissionOpen = false
-		
-		//链接分享选择权限
-		$scope.changeLinkSharePermission = function(value){
-			$scope.permissionOpen = !$scope.permissionOpen
-			$scope.linkSharePermissionValue = value
-			angular.forEach($scope.linkSharePermissionValueList, function(permissionvalue, index) {
-				if(permissionvalue == value){
-					$scope.linkSharePermissionKey = $scope.linkSharePermissionKeyList[index]
-				}
-			})
-		}
-		
-		//链接说明
-		$scope.comment = ""
-				
-		//生成链接
-		$scope.createLinkShare = function(){
-			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
-			Share.getLink({},{
-				comment : $scope.comment,
-				expiration : $scope.dt,
-				obj_id : $scope.obj.file_id,
-				obj_name : $scope.obj.file_name,
-				obj_type : $scope.type,
-				password : $scope.linkSharePassword,
-				permission : $scope.linkSharePermissionKey
-			}).$promise.then(function(linkShare) {
-				$scope.share_url = linkShare.share_url
-				$scope.code_src = linkShare.code_src
-			})
-		}
-		
-		//生成链接与发送链接邀请form切换
-		$scope.linkCreateOrSend = true;
-		
-		//返回修改
-		$scope.backToCreate = function(){
-			$scope.linkCreateOrSend = !$scope.linkCreateOrSend
-		}
-		
-		//复制链接地址至剪切板
-		$scope.getTextLinkUrl = function(){
-			alert("链接已复制到剪切板")
-			return $scope.share_url
-		}
-		
+        $scope.dateOptions = {
+          formatYear: 'yy',
+          startingDay: 1
+        };
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
+        $scope.format = $scope.formats[1]
+
+        //链接对象
+        $scope.obj = obj
+
+        //链接对象类型
+        if ($scope.obj.folder) {
+          $scope.type = "folder"
+        } else {
+          $scope.type = "file"
+        }
+
+        //链接分享权限
+        $scope.linkSharePermissionValue = "仅预览"
+        $scope.linkSharePermissionKey = "0000100"
+
+        //链接分享权限List
+        $scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
+        $scope.linkSharePermissionKeyList = ["0000100", "0000001", "0001110", "0001111"]
+
+        //是否设置访问权限
+        $scope.linkSharePasswordShow = false
+
+        //访问密码
+        $scope.linkSharePassword = ""
+
+        //是否设置访问权限切换
+        $scope.changeLinkSharePasswordShow = function() {
+          if (!$scope.linkSharePasswordShow) {
+            $scope.linkSharePassword = ""
+          }
+        }
+
+        //链接分享访问密码输入框type
+        $scope.linkSharePasswordType = 'password'
+
+        //显示或者隐藏密码
+        $scope.changeLinkSharePasswordType = function() {
+          if ($scope.linkSharePasswordType == 'password') {
+            $scope.linkSharePasswordType = 'text'
+          } else {
+            $scope.linkSharePasswordType = 'password'
+          }
+        }
+
+        //选择链接dropdown是否显示
+        $scope.permissionOpen = false
+
+        //链接分享选择权限
+        $scope.changeLinkSharePermission = function(value) {
+          $scope.permissionOpen = !$scope.permissionOpen
+          $scope.linkSharePermissionValue = value
+          angular.forEach($scope.linkSharePermissionValueList, function(permissionvalue, index) {
+            if (permissionvalue == value) {
+              $scope.linkSharePermissionKey = $scope.linkSharePermissionKeyList[index]
+            }
+          })
+        }
+
+        //链接说明
+        $scope.comment = ""
+
+        //生成链接
+        $scope.createLinkShare = function() {
+          $scope.linkCreateOrSend = !$scope.linkCreateOrSend
+          Share.getLink({}, {
+            comment: $scope.comment,
+            expiration: $scope.dt,
+            obj_id: $scope.obj.file_id,
+            obj_name: $scope.obj.file_name,
+            obj_type: $scope.type,
+            password: $scope.linkSharePassword,
+            permission: $scope.linkSharePermissionKey
+          }).$promise.then(function(linkShare) {
+            $scope.share_url = linkShare.share_url
+            $scope.code_src = linkShare.code_src
+          })
+        }
+
+        //生成链接与发送链接邀请form切换
+        $scope.linkCreateOrSend = true;
+
+        //返回修改
+        $scope.backToCreate = function() {
+          $scope.linkCreateOrSend = !$scope.linkCreateOrSend
+        }
+
+        //复制链接地址至剪切板
+        $scope.getTextLinkUrl = function() {
+          alert("链接已复制到剪切板")
+          return $scope.share_url
+        }
+
         $scope.cancel = function() {
           $modalInstance.dismiss('cancel')
         }
       }
     ]
-    
+
     // upload file
     var uploadModalController = [
       '$scope',
@@ -785,22 +785,22 @@ angular.module('App.Files').controller('App.Files.Controller', [
         resolve: {}
       })
     }
-    
+
     //文件预览
-    $scope.previewFile = function(obj){
-    	var previewFileModal = $modal.open({
-        	templateUrl: 'src/app/files/preview-file.html',
-        	windowClass: 'preview-file',
-        	backdrop: 'static',
-        	controller: previewFileModalController,
-        	resolve: {
-          		obj: function() {
-            		return obj
-          		}
-        	}
-      	})
+    $scope.previewFile = function(obj) {
+      var previewFileModal = $modal.open({
+        templateUrl: 'src/app/files/preview-file.html',
+        windowClass: 'preview-file',
+        backdrop: 'static',
+        controller: previewFileModalController,
+        resolve: {
+          obj: function() {
+            return obj
+          }
+        }
+      })
     }
-    
+
     var previewFileModalController = [
       '$scope',
       'Utils',
@@ -816,41 +816,41 @@ angular.module('App.Files').controller('App.Files.Controller', [
         Files,
         $sce
       ) {
-      	
-      	//右侧菜单 讨论or版本
-      	$scope.navType = 'dis'
-      	
-      	$scope.changeNavType = function(navType){
-      		$scope.navType = navType
-      	}
-      	
-		$scope.fileType =  Utils.getFileTypeByName(obj.file_name)
-		
-//		$scope.previewValue = "1111111111111111<br/>"
-		
-		$scope.previewValue = Files.preview({
-				file_id : obj.file_id
-			})
-		$scope.previewValue.$promise.then(function(previewValue) {
-			$scope.deliberatelyTrustDangerousSnippet = function() {
-          		return $sce.trustAsHtml($scope.previewValue);
-        	};
-		})
-		
-//		if ('image' == $scope.fileType) {//图片预览
-//			Files.preview({
-//				file_id : obj.file_id
-//			})
-//		}else if('txt' == $scope.fileType){//文本预览
-//			$scope.previewValue = Files.preview({
-//				file_id : obj.file_id
-//			})
-//		}else{//office或者pdf预览
-//			$scope.previewValue = Files.preview({
-//				file_id : obj.file_id
-//			})
-//		}
-		
+
+        //右侧菜单 讨论or版本
+        $scope.navType = 'dis'
+
+        $scope.changeNavType = function(navType) {
+          $scope.navType = navType
+        }
+
+        $scope.fileType = Utils.getFileTypeByName(obj.file_name)
+
+        //		$scope.previewValue = "1111111111111111<br/>"
+
+        $scope.previewValue = Files.preview({
+          file_id: obj.file_id
+        })
+        $scope.previewValue.$promise.then(function(previewValue) {
+          $scope.deliberatelyTrustDangerousSnippet = function() {
+            return $sce.trustAsHtml($scope.previewValue);
+          };
+        })
+
+        // if ('image' == $scope.fileType) { //图片预览
+        //   Files.preview({
+        //     file_id: obj.file_id
+        //   })
+        // } else if ('txt' == $scope.fileType) { //文本预览
+        //   $scope.previewValue = Files.preview({
+        //     file_id: obj.file_id
+        //   })
+        // } else { //office或者pdf预览
+        //   $scope.previewValue = Files.preview({
+        //     file_id: obj.file_id
+        //   })
+        // }
+
         $scope.cancel = function() {
           $modalInstance.dismiss('cancel')
         }
