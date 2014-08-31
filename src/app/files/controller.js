@@ -250,10 +250,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //移动文件或者文件夹
     $scope.moveFile = function() {
       var addUserModal = $modal.open({
-        templateUrl: 'src/app/files/move-file.html',
+        templateUrl: 'src/app/files/move-file/template.html',
         windowClass: 'move-file-modal-view',
         backdrop: 'static',
-        controller: moveFileModalController,
+        controller: 'App.Files.MoveFileController',
         resolve: {
           obj: function() {
             return $scope.checkedObj
@@ -261,84 +261,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       })
     }
-
-    //moveFile window ctrl
-    var moveFileModalController = [
-      '$scope',
-      '$modalInstance',
-      'obj',
-      'Folders',
-      'Files',
-      function(
-        $scope,
-        $modalInstance,
-        obj,
-        Folders,
-        Files
-      ) {
-        $scope.obj = obj
-
-        $scope.treedata = Folders.getTree({
-          type: 'tree'
-        })
-
-        // FCUK code
-        var treeId = $scope.treeId = 'folderTree';
-        $scope[treeId] = $scope[treeId] || {};
-
-        //if node head clicks,
-        $scope[treeId].selectNodeHead = $scope[treeId].selectNodeHead || function(selectedNode) {
-
-          //Collapse or Expand
-          selectedNode.collapsed = !selectedNode.collapsed;
-        };
-
-        //if node label clicks,
-        $scope[treeId].selectNodeLabel = $scope[treeId].selectNodeLabel || function(selectedNode) {
-
-          //remove highlight from previous node
-          if ($scope[treeId].currentNode && $scope[treeId].currentNode.selected) {
-            $scope[treeId].currentNode.selected = undefined;
-          }
-
-          //set highlight to selected node
-          selectedNode.selected = 'selected';
-
-          //set currentNode
-          $scope[treeId].currentNode = selectedNode;
-        };
-        // FCUK code end
-
-        $scope.$watch('abc.currentNode', function(newObj, oldObj) {
-          if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
-            //          console.log('Node Selected!!');
-            //          console.log($scope.folderTree.currentNode);
-          }
-        }, false);
-
-        $scope.ok = function() {
-          if ($scope.obj.folder) {
-            Folders.update({
-              folder_id: $scope.obj.file_id
-            }, {
-              parent_id: $scope.folderTree.currentNode.id
-            })
-          } else {
-            Files.updateFile({
-              file_id: $scope.obj.file_id
-            }, {
-              parent_id: $scope.folderTree.currentNode.id
-            })
-          }
-
-          $modalInstance.close()
-        }
-
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
-        }
-      }
-    ]
 
     // 打开讨论 默认是关闭的
     $scope.discussOpened = false
@@ -781,7 +703,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         templateUrl: 'src/app/files/modal-upload.html',
         windowClass: 'modal-upload',
         backdrop: 'static',
-        controller: 'uploadModalController',
+        controller: uploadModalController,
         resolve: {}
       })
     }
