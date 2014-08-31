@@ -1,11 +1,17 @@
 angular.module('App.Resources').factory('Files', [
   '$resource',
+  '$http',
+  '$sce',
+  '$q',
   'CONFIG',
   function(
     $resource,
+    $http,
+    $sce,
+    $q,
     CONFIG
   ) {
-    return $resource(CONFIG.API_ROOT + '/file/:action/:file_id', {}, {
+    var Files = $resource(CONFIG.API_ROOT + '/file/:action/:file_id', {}, {
       deleteFile: {
         method: "DELETE",
         params: {
@@ -19,15 +25,23 @@ angular.module('App.Resources').factory('Files', [
           action: 'update',
           file_id: ''
         }
-      },
-      preview:{
-      	method: "GET",
-        params: {
-          action: 'preview',
-          file_id: ''
-        },
-        responseType : 'text/plain'
       }
     })
+    angular.extend(Files, {
+      preview: function(file_id) {
+        var deferred = $q.defer()
+        $http({
+          url: CONFIG.API_ROOT + '/file/preview/' + file_id,
+          method: 'GET'
+        }).then(function(response) {
+          deferred.resolve($sce.trustAsHtml(response.data))
+        }, function(err) {
+          deferred.reject(err);
+        })
+        return deferred.promise;
+      }
+    })
+    
+    return Files
   }  
 ])

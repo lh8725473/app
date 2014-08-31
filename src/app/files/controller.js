@@ -826,30 +826,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
         $scope.fileType = Utils.getFileTypeByName(obj.file_name)
 
-        //		$scope.previewValue = "1111111111111111<br/>"
-
-        $scope.previewValue = Files.preview({
-          file_id: obj.file_id
-        })
-        $scope.previewValue.$promise.then(function(previewValue) {
-          $scope.deliberatelyTrustDangerousSnippet = function() {
-            return $sce.trustAsHtml($scope.previewValue);
-          };
-        })
-
-        // if ('image' == $scope.fileType) { //图片预览
-        //   Files.preview({
-        //     file_id: obj.file_id
-        //   })
-        // } else if ('txt' == $scope.fileType) { //文本预览
-        //   $scope.previewValue = Files.preview({
-        //     file_id: obj.file_id
-        //   })
-        // } else { //office或者pdf预览
-        //   $scope.previewValue = Files.preview({
-        //     file_id: obj.file_id
-        //   })
-        // }
+        if ('image' == $scope.fileType) { //图片预览
+           $scope.previewValue = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token='+$cookies.accessToken
+        } else { //office或者pdf预览
+          Files.preview(obj.file_id).then(function(htmlData) {
+            $scope.previewValue = htmlData
+          })
+        }
 
         $scope.cancel = function() {
           $modalInstance.dismiss('cancel')
