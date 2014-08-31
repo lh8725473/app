@@ -76,7 +76,7 @@ angular.module('App', [
         templateUrl: 'src/admin/users/template.html'
       })
       .state('users.managedUsers', {
-        url: '/managedUsers',
+        url: '/managedUsers?k',
         templateUrl: 'src/admin/users/managedUsers/template.html'
       })
       .state('users.editUser', {

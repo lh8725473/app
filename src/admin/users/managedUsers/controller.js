@@ -1,6 +1,7 @@
 angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', [
   '$scope',
   '$modal',
+  '$stateParams',
   'Notification',
   'Users',
   'Group',
@@ -10,6 +11,7 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
   function(
     $scope,
     $modal,
+    $stateParams,
     Notification,
     Users,
     Group,
@@ -17,15 +19,6 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     CONFIG,
     $rootScope
   ) {
-  	$rootScope.seachInputValue = ''
-  	$rootScope.$watch('seachInputValue', function (seachInputValue) {
-    	if(seachInputValue || seachInputValue == ''){
-    		$scope.userList = Users.query({
-    			keyword : seachInputValue
-    		})
-    	}
-    })
-
     //addUser window
     $scope.addUser = function() {
       var addUserModal = $modal.open({
@@ -210,7 +203,13 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     ]
 
     //userList data
-    $scope.userList = Users.query()
+    if ($stateParams.k) {
+      $scope.userList = Users.query({
+        keyword: $stateParams.k
+      })      
+    } else {
+      $scope.userList = Users.query()     
+    }
 
     $scope.gridOptions = {
       data: 'userList',

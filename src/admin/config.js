@@ -10,6 +10,8 @@ angular.module('App.Config', []).constant('CONFIG', {
   // API_ROOT: 'http://localhost/api',
 
   LOGIN_PATH: '../login.html',
+
+  INDEX_PATH: '/index.html',
   
   //permission
   PERMISSION_KEY: ['1111111', '0111111', '0001111', '0000101', '0001110', '0111111', '0000100', '0000001'],
