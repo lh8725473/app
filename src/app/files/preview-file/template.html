@@ -4,7 +4,7 @@
       <button class="btn btn-default upload-new-version" type="button" ng-click="cancel()">
                    上传新版本
       </button>
-      <h3 class="modal-title">文件预览</h3>
+      <h3 class="modal-title">"{{obj.file_name}}"文件预览</h3>
     </div>
     <div class="image-preview" ng-show = "fileType == 'image'">
       <img ng-src="{{imageSrc}}" alt="null"/>

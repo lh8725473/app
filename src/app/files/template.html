@@ -1,19 +1,22 @@
 <div class="files-view" ng-controller="App.Files.Controller">
 	<div class="top-bar">
-		<div class="pull-left">
+		<div class="pull-left root-path" ng-class = "{ isRoot: isRoot }"> 
 			<a ui-sref="files({folderId: 0})">
 				根目录
 			</a>
 		</div>
 		<div class="folder-crumb pull-left" ng-repeat="path in folderPath">
-			：
+			<img src="images/arrow_icon.png" />
 			<a ui-sref="files({folderId: path.id})">
 				{{path.name}}
 			</a>
 		</div>
-		<div class="view-model-swither pull-right">
+		<!--<div class="view-model-swither pull-right">
 			视图转换and排序
-		</div>
+		</div>-->
+	</div>
+	<div class="top-bar-bottom">
+	  
 	</div>
 	<div class="buttonGroup">
        <button ng-click="upload()" class="btn btn-default">上传文件</button>
@@ -21,25 +24,29 @@
 			新建文件夹
 		</button>
 	</div>
+	<div class="title">
+	  <div class="title-checkbox col">
+	    <input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
+	  </div>
+	  <div class="title-name col">
+	    <span>名称</span>
+	  </div>
+	  <div class="title-state col">
+	    <span>状态</span>           
+	  </div>
+	  <div class="title-size col">
+	    <span>大小</span>      
+	  </div>
+	  <div class="title-permission col">
+	    <span>权限</span>          
+	  </div>
+	  <div class="title-action col">
+      <span>分享</span>          
+    </div>
+  </div>
 	<div class="folder-grid">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-					<input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
-					</th>
-					<th>名称</th>
-					<th>状态</th>
-					<th>大小</th>
-					<th>权限</th>
-					<th>分享</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-show = "showCreateFolderDiv">
-					<td></td>
-					<td>
-					<div class="col-sm-12">
+		<div class="table">
+				<div ng-show = "showCreateFolderDiv" class="create-folder-div">
 						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
 						<div class="create-buttonGroup col-sm-6">
 							<button ng-click="createFolder(createFolderName)" class="btn btn-default">
@@ -49,13 +56,12 @@
 								取消
 							</button>
 						</div>
-					</div></td>
-				</tr>
-				<tr class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj($event, obj)">
-					<td class="input-checkbox-td">
-					<input type="checkbox" ng-model = "obj.checked" ng-click="stopPropagation($event)" />
-					</td>
-					<td class="img-name-td">
+				</div>
+				<div class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj(obj)">
+					<div class="input-checkbox-td">
+					<input type="checkbox" ng-model = "obj.checked" />
+					</div>
+					<div class="img-name-td">
 						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
 						<div class="file-name" ng-hide = "obj.rename">
 							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
@@ -73,7 +79,7 @@
 						</div>
 						<div class="rename-form" ng-show = "obj.rename">
 							<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
-							<div class="rename-buttonGroup col-sm-5">
+							<div class="rename-buttonGroup">
 								<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
 									确定
 								</button>
@@ -82,18 +88,22 @@
 								</button>
 							</div>
 						</div>
-					</td>
-					<td class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </td>
-					<td class="file-sise-td"><span ng-show = "obj.folder">{{obj.file_count}}</span><span ng-hide = "obj.folder">{{obj.format_size}}</span></td>
-					<td class="permission-td"> {{obj.permission_value}} </td>
-					<td class="action-td">
+					</div>
+					<div class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </div>
+					<div class="file-sise-td">
+					  <img src="images/file_icon.png" ng-show = "obj.folder"/>
+					  <span ng-show = "obj.folder">{{obj.file_count}}</span>
+					  <span ng-hide = "obj.folder">{{obj.format_size}}</span>
+					</div>
+					<div class="permission-td"> {{obj.permission_value}} </div>
+					<div class="action-td">
 						<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
 						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
-						{{obj.user_count}}
+						  <span>{{obj.user_count}}</span>
 						<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
-						{{obj.discuss_count}}	
-					</td>
-				</tr>
+						  <span>{{obj.discuss_count}} </span>		
+					</div>
+				</div>
 				<div class="dropdown position-fixed" id="myMenu">
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 						<li>
@@ -123,8 +133,7 @@
 						</li>
 					</ul>
 				</div>
-			</tbody>
-		</table>
+		</div>
 	</div>
 	<pageslide
 		ps-speed="0.5"
@@ -220,5 +229,3 @@
 		</div>
 	</div>
 </div>
-
-

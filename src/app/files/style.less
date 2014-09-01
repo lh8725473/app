@@ -10,28 +10,137 @@
   right: 260px;
   left: 0;
   .file-row{
-    height: 65px;  
+    height: 65px;
+    border-bottom: 1px solid #cfcfcf; 
   }
   .file-row:hover{
       background-color: #ebf1f7;
   }
   .top-bar{
-    height: 50px;
-    border-bottom: 1px solid #252519;
+    height: 45px;
+    padding-left: 40px;
+    padding-top: 12px;
+    font-size: 15px;
+    .folder-crumb{
+      margin-left: 5px;  
+    }
+    .root-path a{
+      color: #aeaeae;
+      position: relative;
+      top: 1px; 
+    }
+    .root-path.isRoot a{
+       color: #676767;  
+    }
+    .root-path a:hover, .root-path a:focus{
+      text-decoration: none; 
+    } 
+    .folder-crumb a{
+      color: #aeaeae;
+      position: relative;
+      top: 2px;  
+    }
+    .folder-crumb a:hover, .folder-crumb a:focus{
+      text-decoration: none; 
+    }
+    .folder-crumb:last-child{
+        a{
+            color: #676767;
+        }
+    }
+  }
+  .top-bar-bottom{
+      height: 6px;
+      background-size: 100% 100%;
+      background-image: url("../../images/top_shadow.png");
   }
   .buttonGroup{
-    border-bottom: 1px solid #252519;
+    border-bottom: 1px solid #afafaf;
+    height: 48px;
+    margin-left: 40px;
+    padding-top: 10px;
+    button{
+        padding: 3px 6px;
+        margin-left: 5px;
+    }
+  }
+  .title{
+     height: 39px; 
+     margin-left: 40px;
+     border-bottom: 1px solid #afafaf;
+     color: #676767;
+     .title-checkbox{
+         padding: 8px;
+     }
+     .title-name{
+         width: 30%;
+     }
+     .title-state{
+         width: 25%;
+     }
+     .title-size{
+         width: 5%;
+     }
+     .title-size{
+         width: 13%;
+     }
+     .title-permission{
+         width: 13%;
+     }
+     .title-action{
+         width: 15%;
+     }
+     .col{
+       float: left;
+       padding: 8px;
+     }
   }
   .folder-grid {
-     bottom: 0;
-     overflow-y: auto;
+     bottom: 30px;
+     left: 0;
+     margin-left: 40px;
+     overflow: auto;
      position: absolute;
-     top: 85px;
-     width: 100%;
+     right: 0;
+     top: 138px;
     .table{
-       overflow-y: auto;
-       thead{
-           height: 25px;
+       height : 100%;      
+       bottom: 30px;
+       left: 0;
+       right: 0;
+       top: 25px;
+       .create-folder-div{
+           border-bottom: 1px solid #cfcfcf;
+           height: 65px;
+           padding-left: 30px;
+           padding-top: 15px;
+       }
+       .state-td{
+           width: 25%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 5px; 
+       }
+       .file-sise-td{
+           width: 13%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 8px; 
+       }
+       .permission-td{
+           width: 13%;
+           float: left;
+           padding-left: 8px; 
+           padding-top: 22px; 
+       }
+       .action-td{
+           width: 15%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 8px;
+           span{
+             margin-left: 3px;
+           } 
        }
        a:hover, a:focus{
            text-decoration: none;
@@ -50,7 +159,10 @@
   
   .input-checkbox-td{
     padding-top: 20px;
-    width: 20px;
+    width: 30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    float: left;
   }
   
   .create-buttonGroup{
@@ -58,19 +170,31 @@
   }
   
   .form-control{
-    width: 50%;  
+    width: 270px;  
   }
   
   .rename-file{
-    width: 40%;  
+    width: 125px;  
   }
   
   .rename-form{
-    padding-top: 5px;  
+    padding-top: 5px; 
   }
   
   .img-name-td{
     width: 30%;
+    float: left;
+    padding-top: 10px;
+    min-width: 315px;
+    padding-left: 8px;
+    .rename-form{
+        float: left;
+        width: 260px; 
+    }
+    .rename-buttonGroup{
+        float: left;
+        padding-left: 5px;
+    } 
     img{
       float: left;  
     }
@@ -93,20 +217,9 @@
       }
     }  
   }
-  .state-td{
-    padding-top: 20px;
-  }
-  
-  .file-sise-td{
-    padding-top: 20px;
-  }
-  
-  .permission-td{
-    padding-top: 20px;
-  }
 
   .action-td{
-    padding-top: 20px;
+    padding-top: 22px;
     height: 40px;
   }
   .link-share-ico{
