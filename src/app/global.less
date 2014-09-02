@@ -15,20 +15,22 @@ html, body {
     width: 100%;
 }
 
-.sidebar{
-    height: 100%;
-    float: left;
+.sidebar {
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 260px;
-    position: relative;
+    position: absolute;
     border-right:1px solid #bbbbbb;
     background-color: #eceff1;
 }
 
-.right-main{
-    bottom: 40px;
-    float: left;
-    left: 260px;
+.right-main {
     position: absolute;
+    bottom: 40px;
+    min-width: 860px;
+    left: 260px;
     right: 0;
     top: 0;
 }

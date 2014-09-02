@@ -1,14 +1,14 @@
-.file-team{
+.file-team {
     position: absolute;
     bottom: 40px;    
 }
 
 //文件列表
 .files-view {
+  margin-right: 260px;
   height: 100%;
-  position: absolute;
-  right: 260px;
-  left: 0;
+  position: relative;
+  min-width: 600px;
   .file-row{
     height: 65px;
     border-bottom: 1px solid #cfcfcf; 
@@ -99,10 +99,10 @@
      bottom: 30px;
      left: 0;
      margin-left: 40px;
-     overflow: auto;
-     position: absolute;
+     overflow-y: auto;
      right: 0;
      top: 138px;
+     position: absolute;
     .table{
        height : 100%;      
        bottom: 30px;
@@ -257,9 +257,11 @@
 
 .team-collaboration{
     width: 260px;
-    float: right;
     border-left: 1px solid #ddd;
-    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
     .groups-users-header{
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     }

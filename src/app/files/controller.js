@@ -1,7 +1,7 @@
 angular.module('App.Files').controller('App.Files.Controller', [
   '$scope',
   '$state',
-  '$upload',
+  '$rootScope',
   'CONFIG',
   'Folders',
   'Users',
@@ -16,7 +16,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   function(
     $scope,
     $state,
-    $upload,
+    $rootScope,
     CONFIG,
     Folders,
     Users,
@@ -328,52 +328,17 @@ angular.module('App.Files').controller('App.Files.Controller', [
     // upload file
     var uploadModalController = [
       '$scope',
-      '$rootScope',
       '$modalInstance',
       '$cookies',
       '$state',
       function(
         $scope,
-        $rootScope,
         $modalInstance,
         $cookies,
         $state
       ) {
-
-        function File(file) {
-          this.file = file
-          this.progress = 0
-        }
-        //上传所在文件夹
-        var folder_id = $state.params.folderId || 0;
-        
-        // upload file
         $scope.onFileSelect = function($files) {
-          $modalInstance.dismiss('cancel')
-          for (var i = 0; i < $files.length; i++) {
-            var file = $files[i];
-            var f = new File(file);
-            $rootScope.$broadcast('addFile', f);
-            (function(f) {
-              $scope.upload = $upload.upload({
-                url: CONFIG.API_ROOT + '/file/create?token=' + $cookies.accessToken,
-                method: 'POST',
-                withCredentials: true,
-                data: {
-                  file_name: file.name,
-                  folder_id: folder_id
-                },
-                file: file,
-                fileFormDataName: 'file_content',
-              }).progress(function(evt) {
-                f.progress = parseInt(100.0 * evt.loaded / evt.total)
-                console.log('percent: ' + f.progress);
-              }).success(function(data, status, headers, config) {
-                f.progress = 100
-                console.log(data);
-              });
-            })(f)
-          }
+          $modalInstance.close($files)
         };
 
         $scope.cancel = function() {
@@ -390,6 +355,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
         backdrop: 'static',
         controller: uploadModalController,
         resolve: {}
+      })
+
+      uploadModal.result.then(function($files) {
+        $rootScope.$broadcast('uploadFiles', $files);
       })
     }
 
