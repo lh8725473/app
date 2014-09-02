@@ -1,20 +1,25 @@
-<div ng-show="shown" ng-controller="App.UploadProgressDialog.Controller">
+<div ng-show="shown" ng-controller="App.UploadProgressDialog.Controller" class="upload-progress-win">
   <div class="dialog-header">
       <div class="dialog-title">正在上传</div>
       <div class="dialog-btn btn-close" ng-click="hide()"></div>
-      <div class="dialog-btn btn-max" ng-hide="isMax" ng-click="max()"></div>
+      <div class="dialog-btn btn-max" ng-show="!isMax" ng-click="max()"></div>
       <div class="dialog-btn btn-min" ng-show="isMax" ng-click="min()"></div>
   </div>
-  <div class="dialog-body" style="height: 366px;" ng-show="isMax">
+  <div class="dialog-body" ng-show="isMax">
       <div class="progress-item" id="ddupload_file_1_progress" ng-repeat="file in files">
           <img class="file-icon" src="./images/file_icon.png">
           <span class="file-name" title="webappdigger.png">{{file.file.name}}</span>
-          <span class="file-size">2.33KB</span>
-          <span class="file-progress">
-            <a style="width:{{file.progress}}%">&nbsp;</a>
+          <span class="file-size" ng-show = "file.progress == 100">{{file.file.fomateSize}}</span>
+          <span class="file-progress" ng-hide = "file.progress == 100">
+            <a style="width:{{file.progress}}%"></a>
           </span>
-          <span class="file-status">完成</span>
-          <button class="file-remove" actionid="ddupload_file_1">删除</button>
+          <span class="file-progress-size" ng-hide = "file.progress == 100">
+            {{file.progress}}%
+          </span>
+          <span class="file-upload-success dialog-btn" ng-show = "file.progress == 100">         
+          </span>
+          <span class="delete-upload dialog-btn" ng-hide = "file.progress == 100" ng-click="upload.abort()">          
+          </span>
       </div>
   </div>
 </div>

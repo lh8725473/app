@@ -330,16 +330,23 @@ angular.module('App.Files').controller('App.Files.Controller', [
       '$scope',
       '$rootScope',
       '$modalInstance',
+      '$cookies',
+      '$state',
       function(
         $scope,
         $rootScope,
-        $modalInstance
+        $modalInstance,
+        $cookies,
+        $state
       ) {
 
         function File(file) {
           this.file = file
           this.progress = 0
         }
+        //上传所在文件夹
+        var folder_id = $state.params.folderId || 0;
+        
         // upload file
         $scope.onFileSelect = function($files) {
           $modalInstance.dismiss('cancel')
@@ -349,11 +356,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
             $rootScope.$broadcast('addFile', f);
             (function(f) {
               $scope.upload = $upload.upload({
-                url: CONFIG.API_ROOT + '/file/create?token=f98716ed6be3e177a7e7ddf1fa182aac',
+                url: CONFIG.API_ROOT + '/file/create?token=' + $cookies.accessToken,
                 method: 'POST',
                 withCredentials: true,
                 data: {
-                  file_name: file.name
+                  file_name: file.name,
+                  folder_id: folder_id
                 },
                 file: file,
                 fileFormDataName: 'file_content',

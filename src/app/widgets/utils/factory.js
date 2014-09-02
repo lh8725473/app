@@ -69,6 +69,15 @@ angular.module('App.Widgets').factory('Utils', [
 			}
 
 			return false;
+		},
+		formateSize: function(size){
+		  var name = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+      var pos = 0;
+      while (size >= 1204) {
+        size /= 1024;
+        pos++;
+      }
+      return size.toFixed(2) + " " + name[pos];
 		}
 	}
 }])
