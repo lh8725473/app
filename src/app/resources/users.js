@@ -45,6 +45,18 @@ angular.module('App.Resources').factory('Users', [
         params: {
           action: 'spaceinfo'
         }
+      },
+      getUserInfo: {
+        method: "GET",
+        params: {
+          action: 'info'
+        }
+      },
+      updateUserInfo: {
+        method: "PUT",
+        params: {
+          action: 'info'
+        }
       }
     })
   }  

@@ -111,7 +111,7 @@ angular.module('App', [
     $translatePartialLoaderProvider,
     CONFIG
   ) {
-    $urlRouterProvider.otherwise('/updates')
+    $urlRouterProvider.otherwise('/files/')
     $stateProvider
       .state('updates', {
         url: '/updates',

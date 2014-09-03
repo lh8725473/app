@@ -57,9 +57,9 @@
 							</button>
 						</div>
 				</div>
-				<div class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj(obj)">
+				<div class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj($event, obj)">
 					<div class="input-checkbox-td">
-					<input type="checkbox" ng-model = "obj.checked" />
+					<input type="checkbox" ng-model = "obj.checked" ng-click = "selectObj($event, obj)"/>
 					</div>
 					<div class="img-name-td">
 						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>

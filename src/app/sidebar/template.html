@@ -1,15 +1,15 @@
 <div class="sidebar-view" ng-controller="App.Sidebar.Controller">
   <ul class="nav nav-sidebar">
-    <li ng-class="{ active: $state.includes('updates') }">
-      <a ui-sref="updates" class="updates">
-        <span class="updates-img"></span>
-        	最近更新
-      </a>
-    </li>
     <li ng-class="{ active: $state.includes('files') }">
       <a ui-sref="files" class="files">
         <span class="files-img"></span>
         	所有文件
+      </a>
+    </li>
+    <li ng-class="{ active: $state.includes('updates') }">
+      <a ui-sref="updates" class="updates">
+        <span class="updates-img"></span>
+        	最近更新
       </a>
     </li>
     <li ng-class="{ active: $state.includes('contacts') }">

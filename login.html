@@ -240,7 +240,7 @@
               createCookie('userType', 'qxt');
             }
 
-            window.location.href = 'index.html#cid=1';
+            window.location.href = 'index.html';
           }).fail(function(xhr, status, error) {
             var err = eval('(' + xhr.responseText + ')');
             if (err.result == 'Error: Parameter user_name does not exist') {
@@ -298,7 +298,7 @@
                 createCookie('userId', user_id);
                 createCookie('userType', 'qxt');
               }
-              window.location.href = 'index.html#cid=1';
+              window.location.href = 'index.html';
             }).fail(function(xhr, status, error) {
               var err = eval('(' + xhr.responseText + ')');
               if (err.result == 'Error: Parameter user_name does not exist') {

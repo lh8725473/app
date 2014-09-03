@@ -146,7 +146,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //左键选取对象
-    $scope.selectObj = function(obj) {
+    $scope.selectObj = function($event, obj) {
+      $event.stopPropagation()
       obj.checked = !obj.checked
     }
 
@@ -182,7 +183,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           Notification.show({
             title: '成功',
             type: 'success',
-            msg: '创建文件夹成功',
+            msg: '删除文件成功',
             closeable: true
           })
         })
@@ -267,7 +268,6 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
 
       addUserModal.result.then(function(file_id) {
-        console.log(file_id)
         for (var i = 0; i < $scope.objList.length; ++i) {
           if ($scope.objList[i].file_id == file_id) {
             $scope.objList.splice(i, 1)

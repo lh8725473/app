@@ -6,9 +6,9 @@
 				<div class="personalInfor"></div>
 			</div>
 			<ul class="dropdown-menu" role="menu">
-        		<li><a>个人信息</a></li>
+        		<li ng-click = "userInfoWin()"><a>个人信息</a></li>
         		<li ng-click = "toLogin()"><a>退出</a></li>
-      		</ul>
+      </ul>
 			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
 		</div>
 		<div class="to-admin-control pull-right" ng-click = "toadmin()">

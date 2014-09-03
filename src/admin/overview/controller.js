@@ -2,10 +2,12 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
   '$scope',
   'Users',
   'OverView',
+  'Utils',
   function(
     $scope,
     Users,
-    OverView
+    OverView,
+    Utils
   ) {
 
     OverView.loginCount().$promise.then(function(loginCount) {
@@ -119,6 +121,14 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         title: {
           text: '用量变化'
         },
+        tooltip: {
+            useHTML: true,
+            headerFormat: '<small>222</small><table>',
+            pointFormat: '<tr><td>111111 </td>' +
+                '<td style="text-align: right"><b>KB</b></td></tr>',
+            footerFormat: '</table>',
+            valueDecimals: 2
+        },
         xAxis: {
           type: 'datetime',
           pointStart: Date.UTC(2014, 0, 1)
@@ -149,7 +159,15 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         options: {
           chart: {
             type: 'column'
-          }
+          },
+          tooltip: {
+            useHTML: true,
+            headerFormat: '<table>',
+            pointFormat: '<tr><td>{point.x}</td>' +
+                '<td style="text-align: right"><b>'+'{point.y}'+'</b></td></tr>',
+            footerFormat: '</table>',
+            valueDecimals: 2
+          },
         },
         title: {
           text: '使用空间最多的五位用户'
@@ -174,6 +192,19 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
 
     OverView.spaceInfo().$promise.then(function(spaceinfo) {
       $scope.UserSpaceConfig = {
+        options: {
+          chart: {
+            type: 'pie'
+          },
+          tooltip: {
+            useHTML: true,
+            headerFormat: '<table>',
+            pointFormat: '<tr><td>{series.data}</td>' +
+                '<td style="text-align: right"><b>KB</b></td></tr>',
+            footerFormat: '</table>',
+            valueDecimals: 2
+          },
+        },      
       	chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 1,//null,
@@ -181,9 +212,6 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         },
         title: {
             text: '已用团队空间'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
             pie: {

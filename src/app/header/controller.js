@@ -7,6 +7,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   '$cookieStore',
   'Message',
   '$timeout',
+  '$modal',
   function(
     $scope,
     $translatePartialLoader,
@@ -15,7 +16,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
     $cookies,
     $cookieStore,
     Message,
-    $timeout
+    $timeout,
+    $modal
   ) {
     $scope.toLogin = function(){
       $cookieStore.removeCookie('accessToken')
@@ -47,5 +49,16 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.id = $cookies.userId
     	
     $scope.user = Users.getUserById({id: $scope.id})
+    
+    //个人信息
+    $scope.userInfoWin = function(){
+      var userInfoModal = $modal.open({
+        templateUrl: 'src/app/header/user-info/template.html',
+        windowClass: 'user-info',
+        backdrop: 'static',
+        controller: 'App.Header.UserInfoController',
+        resolve: {}
+      })
+    }
   }
 ])
