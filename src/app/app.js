@@ -5,7 +5,7 @@ angular.module('App', [
   'ui.bootstrap',
   'ngAnimate',
   'ngCookies',
-  'mb-scrollbar',
+  'ngScrollbar',
   'pascalprecht.translate',
   'ng-context-menu',
   'angularFileUpload',

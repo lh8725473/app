@@ -44,7 +44,9 @@
       <span>分享</span>          
     </div>
   </div>
-	<div class="folder-grid">
+	<div class="folder-grid"
+		ng-scrollbar
+		rebuild-on-resize>
 		<div class="table">
 				<div ng-show = "showCreateFolderDiv" class="create-folder-div">
 						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
@@ -146,7 +148,10 @@
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
 	    <h2 class="col-sm-12">讨论{{test}}</h2>
-	    <div class="disc-item-list col-sm-12" mb-scrollbar="scrollbarConfig">
+	    <div class="disc-item-list col-sm-12" 
+	    	ng-scrollbar
+	    	bottom
+	    	rebuild-on-resize>
 	    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
 	    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
 	    		<div class="disc-box">
