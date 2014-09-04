@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html ng-app="App" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="App" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="App" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html ng-app="App" class=""> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Console of Act</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- build:css css/app/app.css -->
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="src/linkShare/app.css">
+  <!-- endbuild -->
+  
+</head>
+<body>
+  <div class="header" ng-include="'src/linkShare/header/template.html'"></div>
+  <div class="main container">
+    
+    <div class="col-sm-8 col-sm-offset-2 right-main" ui-view></div>
+
+    <div class="main-bottom">
+  		<div>
+  			版权所有©2013 上海灵利信息技术有限公司
+  		</div>
+  		<div>
+  			沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012
+  		</div>
+	  </div>
+  </div>
+  <div class="enter-password">
+    <div class="input-password">
+      <img src="./images/logo_white_max.png" />
+      <div class="form-group">
+        <input class="form-control" placeholder="输入文件提取密码"/>
+        <input type="button"  class="btn btn-warning" value="确定"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- build:js js/app.js -->
+  
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+  <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
+
+  <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="src/linkShare/ui-bootstrap-fix.js"></script>
+
+
+  <script type="text/javascript" src="bower_components/mb-scrollbar/mb-scrollbar.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script type="text/javascript" src="bower_components/ng-context-menu/dist/ng-context-menu.js"></script>
+
+  <script type="text/javascript" src="src/linkShare/widgets/widgets.js"></script>
+  <script type="text/javascript" src="src/linkShare/widgets/notification/factory.js"></script>
+  <script type="text/javascript" src="src/linkShare/widgets/utils/factory.js"></script>
+  <!-- resources -->
+  <script type="text/javascript" src="src/linkShare/resources/resources.js"></script>
+  <script type="text/javascript" src="src/linkShare/resources/users.js"></script>
+  <script type="text/javascript" src="src/linkShare/resources/share.js"></script>
+
+  
+  <script type="text/javascript" src="src/linkShare/main/module.js"></script>
+  <script type="text/javascript" src="src/linkShare/main/controller.js"></script>
+  
+  <script type="text/javascript" src="src/linkShare/header/module.js"></script>
+  <script type="text/javascript" src="src/linkShare/header/controller.js"></script>
+  
+  <script type="text/javascript" src="src/linkShare/sidebar/module.js"></script>
+  <script type="text/javascript" src="src/linkShare/sidebar/controller.js"></script>
+
+  <script type="text/javascript" src="src/linkShare/config.js"></script>
+  <script type="text/javascript" src="src/linkShare/app.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

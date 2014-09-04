@@ -34,7 +34,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $scope.previewValue = htmlData
         })
       }
-
+      
       $scope.cancel = function() {
         $modalInstance.dismiss('cancel')
       }
