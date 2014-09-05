@@ -18,7 +18,6 @@ angular.module('App.Header').controller('App.Header.Controller', [
     $modal
   ) {
     $scope.toLogin = function(){
-      $cookieStore.removeCookie('accessToken')
       window.location.href = "login.html"
     }
     

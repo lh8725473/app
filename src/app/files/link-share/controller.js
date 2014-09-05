@@ -130,7 +130,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
             password: $scope.linkSharePassword,
             permission: $scope.linkSharePermissionKey
           }).$promise.then(function(linkShare) {
-            $scope.share_url = linkShare.share_url
+            $scope.link = linkShare.link
             $scope.code_src = linkShare.code_src
           })
         }
@@ -146,7 +146,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         //复制链接地址至剪切板
         $scope.getTextLinkUrl = function() {
           alert("链接已复制到剪切板")
-          return $scope.share_url
+          return $scope.link
         }
 
         $scope.cancel = function() {

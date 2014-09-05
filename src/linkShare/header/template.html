@@ -1,8 +1,11 @@
 <div class="header-view" ng-controller="App.Header.Controller">
 	<div class="header-top">
+	  <div class="logo">
+	    <img src="./images/logo_white_min.png" />
+	  </div>
 	  <div class="pull-right button-group">
-	    <button ng-click='revertRecycle()' class="btn btn-warning">注册</button>
-	    <button ng-click="emptyRecycle()" class="btn btn-primary">登录</button>
+	    <button ng-click='toLogin()' class="btn btn-warning">注册</button>
+	    <button ng-click="toLogin()" class="btn btn-primary">登录</button>
 	  </div>
 	  
 		<!--<div class="user-info pull-right" dropdown is-open="status.isopen">

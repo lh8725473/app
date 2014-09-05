@@ -2,20 +2,26 @@
   <div class="trash-view col-sm-9">
     <div class="top-bar">
       <div class="pull-left root-path" ng-class = "{ isRoot: isRoot }">
-        <a>
+        <a ui-sref="shares({folderId: 0})">
                         所有文件
         </a>
       </div>
+      <div class="folder-crumb pull-left" ng-repeat="path in folderPath">
+        <img src="images/arrow_icon.png" />
+        <a ui-sref="shares({folderId: path.id})">
+          {{path.name}}
+        </a>
+      </div>
       <div class="pull-right">
-        {{linkDetail.comment}}
+        链接有效至{{linkDetail.expiration_date}}
       </div>
     </div>
     <div class="top-bar-bottom"></div>
     <div class="buttonGroup">
-      <button ng-click="emptyRecycle()" class="btn btn-default">
+      <button ng-click="upload()" class="btn btn-default" ng-disabled="isRoot">
         上传文件
       </button>
-      <button ng-click='revertRecycle()' class="btn btn-default">
+      <button ng-click='downloadFile()' class="btn btn-default">
         下载文件
       </button>
     </div>
@@ -42,8 +48,8 @@
           <div class="img-name-td">
             <img ng-src = "{{linkShare.smallIcon}}" height="42px" width="42px"/>
             <div class="file-name">
-              <a ui-sref="files({folderId: linkShare.file_id})" ng-show = "linkShare.folder">
-                {{linkShare.file_name}}
+              <a ui-sref="shares({folderId: linkShare.file_id})" ng-show = "linkShare.folder">
+                {{linkShare.file_name}}{{linkShare.file_id}}
               </a>
               <a ng-show = "!linkShare.folder&&linkShare.isPreview" ng-click = "previewFile(linkShare)">
                 {{linkShare.file_name}}

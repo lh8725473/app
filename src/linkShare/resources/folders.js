@@ -6,35 +6,13 @@ angular.module('App.Resources').factory('Folders', [
     CONFIG
   ) {
     return $resource(CONFIG.API_ROOT + '/folder/:action/:folder_id', {}, {
-      getObjList: {
+      getFolderPath: {
         method: "GET",
         params: {
-          action: 'objList',
+          action: 'path',
           folder_id: 0
         },
         isArray: true
-      },
-      queryShareObj: {
-        method: "GET",
-        params: {
-          action: 'userList',
-          folder_id : 0
-        },
-        isArray: false
-      },
-      getTree: {
-        method: "GET",
-        params: {
-          action: 'getTree'
-        },
-        isArray: true
-      },
-      update: {
-        method: "PUT",
-        params: {
-          action: 'update',
-          folder_id: 0
-        }
       }
     })
   }  

@@ -2,6 +2,7 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
   '$scope',
   '$upload',
   '$cookies',
+  '$cookieStore',
   '$state',
   'CONFIG',
   'Utils',
@@ -9,10 +10,12 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
     $scope,
     $upload,
     $cookies,
+    $cookieStore,
     $state,
     CONFIG,
     Utils
   ) {
+      
     $scope.shown = false
     $scope.isMax = true
 
@@ -30,7 +33,7 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
         file.fomateSize = Utils.formateSize(file.size);
         (function(file) {
           file.upload = $upload.upload({
-            url: CONFIG.API_ROOT + '/file/create?token=' + $cookies.accessToken,
+            url: CONFIG.API_ROOT + '/share/fileAdd' + '?key=' + $state.params.key + '&pwd=' + $cookieStore.get('password'),
             method: 'POST',
             withCredentials: true,
             data: {

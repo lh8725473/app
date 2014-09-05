@@ -32,20 +32,26 @@ angular.module('App.Resources').factory('Share', [
           id : ''
         }
       },
-      getLinkShareDetail:{
+      getLinkShareDetail: {
         method: "GET",
         params: {
           action: 'detail'
         }
       },
-      getLinkShareList:{
+      getLinkShareList: {
         method: "GET",
         params: {
-          action: 'key',
-          act : 'view'
+          action: 'folder',
+          id : 'objList'
         },
         isArray: true
-      }     
+      },
+      checkPassword: {
+        method: "GET",
+        params: {
+          action: 'check'
+        }
+      }
     })
   }  
 ])

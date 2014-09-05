@@ -5,6 +5,8 @@ angular.module('App', [
   'ngAnimate',
   'ngCookies',
   'pascalprecht.translate',
+  'angular-md5',
+  'angularFileUpload',
 
   // Config
   'App.Config',
@@ -18,6 +20,7 @@ angular.module('App', [
   // Components
   'App.Header',
   'App.Sidebar',
+  'App.UploadProgressDialog',
   'App.LinkShare'
 
 
@@ -66,7 +69,6 @@ angular.module('App', [
         url: '/:key/:folderId',
         templateUrl: 'src/linkShare/main/template.html'
       })
-
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
 
