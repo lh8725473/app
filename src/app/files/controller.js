@@ -47,17 +47,23 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.folderPath = FolderAction.getFolderPath({
       folder_id: folderId
     })
-    
+
     //是否为根目录
-    if(folderId == 0){
+    if (folderId == 0) {
       $scope.isRoot = true
-    }else{
+    } else {
       $scope.isRoot = false
     }
 
     //fileList data
     $scope.objList = Folders.getObjList({
       folder_id: folderId
+    })
+
+    $scope.$on('uploadFilesDone', function() {
+      $scope.objList = Folders.getObjList({
+        folder_id: folderId
+      })
     })
 
     $scope.objList.$promise.then(function(objList) {
@@ -318,7 +324,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           obj: function() {
             return obj
           },
-          users: function () {
+          users: function() {
             return Users.query().$promise;
           }
         }

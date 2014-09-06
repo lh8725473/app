@@ -2,6 +2,8 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
   '$scope',
   '$upload',
   '$cookies',
+  '$rootScope',
+  '$q',
   '$state',
   'CONFIG',
   'Utils',
@@ -9,6 +11,8 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
     $scope,
     $upload,
     $cookies,
+    $rootScope,
+    $q,
     $state,
     CONFIG,
     Utils
@@ -21,7 +25,6 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
     $scope.$on('uploadFiles', function($event, $files) {
       $scope.shown = true
       $scope.isMax = true
-      console.log($files)
       //上传所在文件夹
       var folder_id = $state.params.folderId || 0;
       for (var i = 0; i < $files.length; i++) {
@@ -41,13 +44,16 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
             fileFormDataName: 'file_content',
           }).progress(function(evt) {
             file.progress = parseInt(100.0 * evt.loaded / evt.total)
-            console.log('percent: ' + file.progress);
           }).success(function(data, status, headers, config) {
             file.progress = 100
-            console.log(data);
           });
         })(file);
         $scope.files.push(file)
+        $q.all($scope.files.map(function(file) {
+          return file.upload
+        })).finally(function() {
+          $rootScope.$broadcast('uploadFilesDone');
+        })
       }
     })
 
