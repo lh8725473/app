@@ -29,7 +29,7 @@ angular.module('App', [
   // Http Interceptor
 ]).factory('httpInterceptor',[
   '$q',
-  '$cookieStore'
+  '$cookieStore',
   'CONFIG',
   function(
     $q,

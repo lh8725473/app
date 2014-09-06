@@ -9,15 +9,151 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/app/app.468fc232.css">
+  <link rel="stylesheet" href="css/app/app.9efc5732.css">
   
 </head>
 <body>
 
 <!-- Begin Templates -->
+<script type="text/ng-template" id="src/app/contacts/add-contact.html">
+<div class="modal-header">
+  <button class="bootbox-close-button close" type="button" ng-click="cancel()">
+    ×
+  </button>
+  <h3 class="modal-title">添加联系人</h3>
+</div>
+<div class="modal-body">
+    邮箱地址：<input type="text" placeholder="请输入联系人的邮箱地址" name="name" ng-model="contact_email"><br/><br/>
+    联系人姓名：<input type="text" placeholder="请输入联系人的姓名" name="name" ng-model="contact_name">
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok(contact_email, contact_name)">
+    确定
+  </button>
+  <button class="btn btn-default" ng-click="cancel()">
+    取消
+  </button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/contacts/delete-contact-confirm.html">
+<div class="modal-header">
+  <button class="bootbox-close-button close" type="button" ng-click="cancel()">
+    ×
+  </button>
+  <h3 class="modal-title">删除联系人</h3>
+</div>
+<div class="modal-body">
+  您是否确定要删除该联系人？
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">
+    确定
+  </button>
+  <button class="btn btn-default" ng-click="cancel()">
+    取消
+  </button>
+</div>
+</script>
+
 <script type="text/ng-template" id="src/app/contacts/template.html">
 <div class="contacts-view" ng-controller="App.Contacts.Controller">
-	contacts
+    <div class="top-bar">
+        <div class="pull-left root-path" ng-class = "{ isRoot: isRoot }">
+            <a>联系人</a>
+        </div>
+    </div>
+    <div class="top-bar-bottom">
+    </div>
+    <div class="content-tab">
+        <div class="contact-toolbar-button">
+            <button id="addContact" ng-click="addContact();">
+                添加联系人
+            </button>
+        </div>
+    </div>
+
+
+    <table class="gridtable">
+        <tr>
+            <th>联系人名字</th><th>&nbsp;</th><th>联系人用户名</th><th>联系人邮箱</th>
+        </tr>
+        <tr ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
+            <td>{{contact.contact_name}}</td>
+            <td width="70px">
+                <input type="image" name="updateContact" src="images/edit.png" title="编辑" ng-click="updateContact(contact);" class="actionbutton"/>&nbsp;
+                <input type="image" name="deleteContact"  src="images/delete.png" title="删除" ng-click="deleteContact(contact);" class="actionbutton"/>
+            </td>
+            <td>{{contact.contact_uname}}</td>
+            <td>{{contact.contact_email}}</td>
+        </tr>
+    </table>
+
+
+
+
+
+
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/contacts/update-contact.html">
+<div class="modal-header">
+  <button class="bootbox-close-button close" type="button" ng-click="cancel()">
+    ×
+  </button>
+  <h3 class="modal-title">编辑联系人</h3>
+</div>
+<div class="modal-body">
+    联系人姓名：<input type="text" placeholder="请输入联系人的姓名" name="name" ng-model="contact_name">
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok(contact_name)">
+    确定
+  </button>
+  <button class="btn btn-default" ng-click="cancel()">
+    取消
+  </button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/delete-share-group-confim.html">
+<div class="modal-header">
+  <button class="bootbox-close-button close" type="button" ng-click="cancel()">
+    ×
+  </button>
+  <h3 class="modal-title">删除协作</h3>
+</div>
+<div class="modal-body">
+  是否确定删除此群组的协作
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">
+    确定
+  </button>
+  <button class="btn btn-default" ng-click="cancel()">
+    取消
+  </button>
+</div>
+</script>
+
+<script type="text/ng-template" id="src/app/files/delete-share-user-confim.html">
+<div class="modal-header">
+  <button class="bootbox-close-button close" type="button" ng-click="cancel()">
+    ×
+  </button>
+  <h3 class="modal-title">删除协作</h3>
+</div>
+<div class="modal-body">
+  是否确定删除此用户的协作
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">
+    确定
+  </button>
+  <button class="btn btn-default" ng-click="cancel()">
+    取消
+  </button>
 </div>
 </script>
 
@@ -310,10 +446,30 @@
       </button>
     </ul>
     <div class="discuss" ng-show = "navType == 'dis'">
-      discuss
+      <div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+        <img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+        <div class="disc-box">
+          <div class="disc-name">{{userDiscuss.real_name}}</div>
+          <div class="disc-time">{{userDiscuss.format_date}}</div>
+          <div class="disc-content">{{userDiscuss.content}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="disc-inputbox">
+        <textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+      <button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
+        发表
+      </button>
+      <label class="pull-right">{{discussCount}}/200</label>
     </div>
     <div class="version" ng-show = "navType == 'ver'">
-      version
+      <div ng-repeat="fileHistory in fileHistoryList" class="disc-item">
+        <div class="disc-box">
+          <div class="disc-name">{{fileHistory.file_name}}</div>
+          <div class="disc-time">{{fileHistory.format_size}}</div>
+          <div class="disc-content">{{fileHistory.content}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -511,7 +667,7 @@
 					<span>{{group.group_name}}</span>
 					<span class="group-user-count">({{group.user_count}})</span>
 				</div>
-				<div class="group-permission" dropdown>
+				<div class="group-permission" dropdown is-open="group.isopen">
 					<span class="dropdown-toggle">{{group.permission_value}}<span class="caret"></span></span>
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeGroupPermission(group, value)">
@@ -576,9 +732,9 @@
 		</div>
 		<div class="notif_box" class="message-notice pull-right">
 			<span class="notice" title="通知"></span>
-			<label class="message-count notice-count" ng-show = "showMessageCount">{{messageCount}}</label>
+			<label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
 			<span class="message" title="消息"></span>
-			<label class="message-count letter-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
+			<label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">
@@ -667,12 +823,12 @@
         	所有文件
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('updates') }">
+<!--     <li ng-class="{ active: $state.includes('updates') }">
       <a ui-sref="updates" class="updates">
         <span class="updates-img"></span>
         	最近更新
       </a>
-    </li>
+    </li> -->
     <li ng-class="{ active: $state.includes('contacts') }">
       <a ui-sref="contacts" class="contacts">
         <span class="contacts-img"></span>
@@ -781,6 +937,7 @@
       <span>大小</span>      
     </div>
   </div>
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
   <div class="folder-grid">
     <div class="table">
         <div class="file-row" ng-repeat="recycle in recycleList" ng-class = "{ selected: recycle.checked }" ng-click = "selectRecycle($event, recycle)">
@@ -813,6 +970,7 @@
         </div>
     </div>
   </div>
+  </perfect-scrollbar>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">
   <div class="groups-users" ng-show = "isRoot">
@@ -898,6 +1056,6 @@
     </div>
   </script>
 
-  <script src="js/app.02aaa9de.js"></script>
+  <script src="js/app.960d646b.js"></script>
 </body>
 </html>
