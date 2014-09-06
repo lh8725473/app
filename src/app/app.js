@@ -37,9 +37,11 @@ angular.module('App', [
   // Http Interceptor
 ]).factory('httpInterceptor',[
   '$q',
+  '$cookieStore',
   'CONFIG',
   function(
     $q,
+    $cookieStore,
     CONFIG
   ) {
     return {
@@ -52,6 +54,7 @@ angular.module('App', [
       responseError: function(rejection) {
         // Handle Request error
         if(rejection.status == 401){//401 accessToken 无效
+          $cookieStore.removeCookie('accessToken')
           window.location.href = CONFIG.LOGIN_PATH
         }
         return $q.reject(rejection)

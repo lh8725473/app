@@ -29,9 +29,11 @@ angular.module('App', [
   // Http Interceptor
 ]).factory('httpInterceptor',[
   '$q',
+  '$cookieStore'
   'CONFIG',
   function(
     $q,
+    $cookieStore,
     CONFIG
   ) {
     return {
@@ -44,13 +46,52 @@ angular.module('App', [
       responseError: function(rejection) {
         // Handle Request error
         if(rejection.status == 401){//401 accessToken 无效
+          $cookieStore.removeCookie('accessToken')
           window.location.href = CONFIG.LOGIN_PATH
         }
         return $q.reject(rejection)
       }
     }
   }
-]).config([
+]).config(['$provide', function($provide) {
+  $provide.decorator('$cookieStore', ['$delegate', function($delegate) {
+    function createCookie(name, value, days) {
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = '; expires=' + date.toGMTString();
+      } else {
+        var expires = '';
+      }
+      document.cookie = name + '=' + value + expires + '; path=/';
+    }
+
+    function readCookie(name) {
+      var nameEQ = name + '=';
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+          return c.substring(nameEQ.length, c.length);
+        }
+      }
+      return null;
+    }
+
+    function removeCookie(name) {
+      createCookie(name, '', -1);
+    }
+
+    $delegate.createCookie = createCookie
+    $delegate.readCookie = readCookie
+    $delegate.removeCookie = removeCookie
+
+    return $delegate
+  }])
+}]).config([
   '$stateProvider',
   '$urlRouterProvider',
   '$httpProvider',
