@@ -25,6 +25,7 @@
       <span>大小</span>      
     </div>
   </div>
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
   <div class="folder-grid">
     <div class="table">
         <div class="file-row" ng-repeat="recycle in recycleList" ng-class = "{ selected: recycle.checked }" ng-click = "selectRecycle($event, recycle)">
@@ -57,6 +58,7 @@
         </div>
     </div>
   </div>
+  </perfect-scrollbar>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">
   <div class="groups-users" ng-show = "isRoot">

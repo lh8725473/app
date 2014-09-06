@@ -59,7 +59,6 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         categories.push(rank.real_name)
         data.push(parseInt(rank.login_count))
       })
-      console.log(categories)
 
       $scope.loginRankConfig = {
         options: {
@@ -79,7 +78,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           }
         },
         series: [{
-          name: '登陆次数',
+          name: '登录次数',
           data: data
         }],
         credits: {
@@ -92,8 +91,10 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
       var categories = []
       var data = []
       angular.forEach(loginTrend, function(value, key) {
-        categories.push(key)
-        data.push(parseInt(value))
+        if (key != '$promise' && key != '$resolved') {
+          categories.push(key)
+          data.push(parseInt(value))
+        }
       })
 
       $scope.loginTrendConfig = {
@@ -134,8 +135,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         options: {
           tooltip: {
             formatter: function() {
-              return '<span style="font-size: 10px">' + this.point.y + '</span><br/>' +
-                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+              return '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
             }
           }
         },
@@ -147,7 +147,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         },
         yAxis: {
           title: {
-            text: '用量'
+            text: ''
           },
           min: 0
         },
@@ -156,7 +156,11 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           data: data,
           pointStart: Date.UTC(categories[0].split('-')[0], categories[0].split('-')[1], categories[0].split('-')[2]),
           pointInterval: 24 * 3600 * 1000
-        }]
+        }],
+        credits: {
+          enabled: false
+        }
+
       }
     })
 
@@ -167,7 +171,6 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         categories.push(rank.real_name)
         data.push(parseInt(rank.used_size))
       })
-      console.log(data)
 
       $scope.spaceRankConfig = {
         options: {
@@ -176,8 +179,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           },
           tooltip: {
             formatter: function() {
-              return '<span style="font-size: 10px">' + this.point.y + '</span><br/>' +
-                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+              return  '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
             }
           }
         },

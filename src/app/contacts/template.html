@@ -1,3 +1,38 @@
-<div class="contacts-view" ng-controller="App.Contacts.Controller">
-	contacts
+﻿<div class="contacts-view" ng-controller="App.Contacts.Controller">
+    <div class="top-bar">
+        <div class="pull-left root-path" ng-class = "{ isRoot: isRoot }">
+            <a>联系人</a>
+        </div>
+    </div>
+    <div class="top-bar-bottom">
+    </div>
+    <div class="content-tab">
+        <div class="contact-toolbar-button">
+            <button id="addContact" ng-click="addContact();">
+                添加联系人
+            </button>
+        </div>
+    </div>
+
+
+    <table class="gridtable">
+        <tr>
+            <th>联系人名字</th><th>&nbsp;</th><th>联系人用户名</th><th>联系人邮箱</th>
+        </tr>
+        <tr ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
+            <td>{{contact.contact_name}}</td>
+            <td width="70px">
+                <input type="image" name="updateContact" src="images/edit.png" title="编辑" ng-click="updateContact(contact);" class="actionbutton"/>&nbsp;
+                <input type="image" name="deleteContact"  src="images/delete.png" title="删除" ng-click="deleteContact(contact);" class="actionbutton"/>
+            </td>
+            <td>{{contact.contact_uname}}</td>
+            <td>{{contact.contact_email}}</td>
+        </tr>
+    </table>
+
+
+
+
+
+
 </div>
