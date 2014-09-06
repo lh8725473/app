@@ -152,6 +152,9 @@ body {
 .overview-view .chart {
   height: 49%;
 }
+.overview-view .down {
+  margin-top: 10px;
+}
 .users-view {
   height: 100%;
 }

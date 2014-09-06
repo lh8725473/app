@@ -13,7 +13,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   ) {
 
   	$scope.backToindex = function(){
-  	  window.location.href = 'admin.html'
+  	  window.location.href = 'index.html'
   	}
 
     function doSearch(searchInputValue) {

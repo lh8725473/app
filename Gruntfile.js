@@ -40,7 +40,8 @@ module.exports = function(grunt) {
         files: {
           'production/admin.html': 'admin.html',
           'production/index.html': 'index.html',
-          'production/login.html': 'login.html'
+          'production/login.html': 'login.html',
+          'production/link.html': 'link.html'
         }
       },
       images: {
@@ -65,7 +66,7 @@ module.exports = function(grunt) {
       production: ['production/']
     },
     useminPrepare: {
-      html: ['production/admin.html', 'production/index.html', 'production/login.html'],
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html'],
       options: {
         root: './',
         dest: 'production/'
@@ -77,13 +78,14 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: ['production/admin.html', 'production/index.html', 'production/login.html']
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html']
     },
     inline_angular_templates: {
       production: {
         files: {
           'production/admin.html': ['src/admin/**/*.html'],
-          'production/index.html': ['src/app/**/*.html']
+          'production/index.html': ['src/app/**/*.html'],
+          'production/link.html': ['src/linkShare/**/*.html']
         }
       },
       options: {
