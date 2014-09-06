@@ -83,8 +83,7 @@ module.exports = function(grunt) {
       production: {
         files: {
           'production/admin.html': ['src/admin/**/*.html'],
-          'production/index.html': ['src/app/**/*.html'],
-          'production/login.html': ['src/app/**/*.html']
+          'production/index.html': ['src/app/**/*.html']
         }
       },
       options: {

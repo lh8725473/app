@@ -59,7 +59,7 @@ angular.module('App', [
     }
   }
 ]).config(['$provide', function($provide) {
-  $provide.decorator('$cookieStore', function($delegate) {
+  $provide.decorator('$cookieStore', ['$delegate', function($delegate) {
     function createCookie(name, value, days) {
       if (days) {
         var date = new Date();
@@ -95,7 +95,7 @@ angular.module('App', [
     $delegate.removeCookie = removeCookie
 
     return $delegate
-  })
+  }])
 }]).config([
   '$stateProvider',
   '$urlRouterProvider',
