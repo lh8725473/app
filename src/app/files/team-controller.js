@@ -4,12 +4,16 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   '$state',
   'Folders',
   'Share',
+  'Notification',
+  '$modal',
   function(
     $scope,
     CONFIG,
     $state,
     Folders,
-    Share
+    Share,
+    Notification,
+    $modal
   ) {
   	//权限
     $scope.permission_key = CONFIG.PERMISSION_KEY

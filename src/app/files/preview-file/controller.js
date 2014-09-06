@@ -17,6 +17,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
     $cookies,
     $sce
   ) { 
+      //预览对象
       $scope.obj = obj
       //右侧菜单 讨论or版本
       $scope.navType = 'dis'

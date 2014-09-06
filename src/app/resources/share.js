@@ -31,6 +31,12 @@ angular.module('App.Resources').factory('Share', [
           action: 'delete',
           id : ''
         }
+      },
+      sendEmail: {
+        method: "POST",
+        params: {
+          action: 'sendEmail'
+        }
       }
     })
   }  
