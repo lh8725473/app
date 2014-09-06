@@ -2,11 +2,23 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
   '$scope',
   'Users',
   'OverView',
+  'Utils',
   function(
     $scope,
     Users,
-    OverView
+    OverView,
+    Utils
   ) {
+
+    function bytes(bytes, label) {
+      if (bytes == 0) return '';
+      var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+      var e = Math.floor(Math.log(bytes) / Math.log(1024));
+      var value = ((bytes / Math.pow(1024, Math.floor(e))).toFixed(2));
+      e = (e < 0) ? (-e) : e;
+      if (label) value += ' ' + s[e];
+      return value;
+    }
 
     OverView.loginCount().$promise.then(function(loginCount) {
       $scope.loginCountConfig = {
@@ -66,7 +78,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           }
         },
         series: [{
-          name: '登陆次数',
+          name: '登录次数',
           data: data
         }],
         credits: {
@@ -79,8 +91,10 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
       var categories = []
       var data = []
       angular.forEach(loginTrend, function(value, key) {
-        categories.push(key)
-        data.push(parseInt(value))
+        if (key != '$promise' && key != '$resolved') {
+          categories.push(key)
+          data.push(parseInt(value))
+        }
       })
 
       $scope.loginTrendConfig = {
@@ -88,7 +102,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           text: '登录变化'
         },
         xAxis: {
-          categories: [2014-10-1,2014-6-1]
+          type: 'datetime'
         },
         yAxis: {
           title: {
@@ -97,7 +111,9 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         },
         series: [{
           name: '登录变化',
-          data: [1,2,3,4,5,6,10,5,16]
+          data: data,
+          pointStart: Date.UTC(categories[0].split('-')[0], categories[0].split('-')[1], categories[0].split('-')[2]),
+          pointInterval: 24 * 3600 * 1000
         }],
         credits: {
           enabled: false
@@ -109,29 +125,42 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
       var categories = []
       var data = []
       angular.forEach(spaceTrend, function(value, key) {
-        categories.push(key)
-        data.push(parseInt(value))
+        if (key != '$promise' && key != '$resolved') {
+          categories.push(key)
+          data.push(parseInt(value.used_size))
+        }
       })
 
       $scope.spaceTrendConfig = {
+        options: {
+          tooltip: {
+            formatter: function() {
+              return '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
+          }
+        },
         title: {
           text: '用量变化'
         },
         xAxis: {
-          type: 'datetime',
-          pointStart: Date.UTC(2014, 0, 1)
+          type: 'datetime'
         },
         yAxis: {
-            title: {
-                text: '用量'
-            },
-            min: 0
+          title: {
+            text: ''
+          },
+          min: 0
         },
         series: [{
           name: '用量变化',
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+          data: data,
+          pointStart: Date.UTC(categories[0].split('-')[0], categories[0].split('-')[1], categories[0].split('-')[2]),
           pointInterval: 24 * 3600 * 1000
-        }]
+        }],
+        credits: {
+          enabled: false
+        }
+
       }
     })
 
@@ -147,6 +176,11 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         options: {
           chart: {
             type: 'column'
+          },
+          tooltip: {
+            formatter: function() {
+              return  '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
           }
         },
         title: {
@@ -161,7 +195,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           }
         },
         series: [{
-          name: '使用空间最多的五位用户',
+          name: '空间使用量',
           data: data
         }],
         credits: {
@@ -172,37 +206,38 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
 
     OverView.spaceInfo().$promise.then(function(spaceinfo) {
       $scope.UserSpaceConfig = {
-      	chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: 1,//null,
-            plotShadow: false
+        options: {
+          chart: {
+            type: 'pie'
+          },
+          tooltip: {
+            formatter: function() {
+              return '<span style="font-size: 10px">' + this.point.name + '</span><br/>' +
+                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
+          }
+        },
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: 1, //null,
+          plotShadow: false
         },
         title: {
-            text: '已用团队空间'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          text: '已用团队空间'
         },
         plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'green'
-                    }
-                }
-            }
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer'
+          }
         },
         series: [{
-            type: 'pie',
-            name: '空间',
-            data: [
-              ['剩余空间', spaceinfo.total_size - spaceinfo.used_size],
-              ['已用空间', spaceinfo.used_size]
-            ]
+          type: 'pie',
+          name: '大小',
+          data: [
+            ['剩余空间', spaceinfo.total_size - spaceinfo.used_size],
+            ['已用空间', spaceinfo.used_size]
+          ]
         }]
       }
     });

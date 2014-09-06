@@ -5,14 +5,38 @@ angular.module('App.Resources').factory('Share', [
     $resource,
     CONFIG
   ) {
-    return $resource(CONFIG.API_ROOT + '/folder/:action/:id', {}, {
-      queryShareObj: {
-        method: "GET",
+    return $resource(CONFIG.API_ROOT + '/share/:action/:id', {}, {
+      createShare: {
+        method: "POST",
         params: {
-          action: 'userList',
-          id : 0
-        },
-        isArray: false
+          action: 'create'
+        }
+      },
+      getLink: {
+        method: "POST",
+        params: {
+          action: 'getLink'
+        }
+      },
+      update: {
+        method: "PUT",
+        params: {
+          action: 'update',
+          id : ''
+        }
+      },
+      deleteShare: {
+        method: "DELETE",
+        params: {
+          action: 'delete',
+          id : ''
+        }
+      },
+      sendEmail: {
+        method: "POST",
+        params: {
+          action: 'sendEmail'
+        }
       }
     })
   }  

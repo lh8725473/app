@@ -1,29 +1,159 @@
-.file-team{
+.file-team {
     position: absolute;
     bottom: 40px;    
 }
 
+//文件列表
 .files-view {
+  margin-right: 260px;
   height: 100%;
-  position: absolute;
-  right: 260px;
-  left: 0;
+  position: relative;
+  min-width: 600px;
+
+  .scroller {
+    overflow-y: hidden;
+    bottom: 30px;
+    left: 0;
+    margin-left: 40px;
+    right: 0;
+    top: 138px;
+    position: absolute;
+  }
+
   .file-row{
-    height: 65px;  
+    height: 65px;
+    border-bottom: 1px solid #cfcfcf; 
+    overflow: hidden;
+  }
+  .file-row:hover{
+      background-color: #ebf1f7;
   }
   .top-bar{
-    height: 50px;
-    border-bottom: 1px solid #252519;
+    height: 45px;
+    padding-left: 40px;
+    padding-top: 12px;
+    font-size: 15px;
+    .folder-crumb{
+      margin-left: 5px;  
+    }
+    .root-path a{
+      color: #aeaeae;
+      position: relative;
+      top: 1px; 
+    }
+    .root-path.isRoot a{
+       color: #676767;  
+    }
+    .root-path a:hover, .root-path a:focus{
+      text-decoration: none; 
+    } 
+    .folder-crumb a{
+      color: #aeaeae;
+      position: relative;
+      top: 2px;  
+    }
+    .folder-crumb a:hover, .folder-crumb a:focus{
+      text-decoration: none; 
+    }
+    .folder-crumb:last-child{
+        a{
+            color: #676767;
+        }
+    }
+  }
+  .top-bar-bottom{
+      height: 6px;
+      background-size: 100% 100%;
+      background-image: url("../../images/top_shadow.png");
   }
   .buttonGroup{
-    border-bottom: 1px solid #252519;
+    border-bottom: 1px solid #afafaf;
+    height: 48px;
+    margin-left: 40px;
+    padding-top: 10px;
+    button{
+        padding: 3px 6px;
+        margin-left: 5px;
+    }
+  }
+  .title{
+     height: 39px; 
+     margin-left: 40px;
+     border-bottom: 1px solid #afafaf;
+     color: #676767;
+     .title-checkbox{
+        width: 4%;
+     }
+     .title-name{
+         width: 30%;
+     }
+     .title-state{
+         width: 25%;
+     }
+     .title-size{
+         width: 5%;
+     }
+     .title-size{
+         width: 13%;
+     }
+     .title-permission{
+         width: 13%;
+     }
+     .title-action{
+         width: 15%;
+     }
+     .col{
+       float: left;
+       padding: 8px;
+     }
   }
   .folder-grid {
-     height: 85%;
-     overflow-y: auto;
     .table{
-        height: 100%;
-       overflow-y: auto; 
+       height : 100%;      
+       bottom: 30px;
+       left: 0;
+       right: 0;
+       top: 25px;
+       .create-folder-div{
+           border-bottom: 1px solid #cfcfcf;
+           height: 65px;
+           padding-left: 30px;
+           padding-top: 15px;
+       }
+       .state-td{
+           width: 25%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 5px; 
+       }
+       .file-sise-td{
+           width: 13%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 8px; 
+       }
+       .permission-td{
+           width: 13%;
+           float: left;
+           padding-left: 8px; 
+           padding-top: 22px; 
+       }
+       .action-td{
+           width: 15%;
+           float: left;
+           padding-top: 22px;
+           padding-left: 8px;
+           span{
+             margin-left: 3px;
+           } 
+       }
+       a:hover, a:focus{
+           text-decoration: none;
+           cursor: pointer;
+           &.noPreview{
+               cursor: auto;
+           }
+       } 
     }
     
   }
@@ -34,7 +164,10 @@
   
   .input-checkbox-td{
     padding-top: 20px;
-    width: 20px;
+    width: 4%;
+    padding-left: 8px;
+    padding-right: 8px;
+    float: left;
   }
   
   .create-buttonGroup{
@@ -42,19 +175,32 @@
   }
   
   .form-control{
-    width: 50%;  
+    width: 270px;  
   }
   
   .rename-file{
-    width: 40%;  
+    width: 125px;  
   }
   
   .rename-form{
-    padding-top: 5px;  
+    padding-top: 5px; 
   }
   
   .img-name-td{
     width: 30%;
+    float: left;
+    padding-top: 10px;
+    padding-left: 8px;
+    position: relative;
+    .rename-form{
+        position: absolute;
+        left: 50px;
+        width: 260px; 
+    }
+    .rename-buttonGroup{
+        float: left;
+        padding-left: 5px;
+    } 
     img{
       float: left;  
     }
@@ -77,20 +223,9 @@
       }
     }  
   }
-  .state-td{
-    padding-top: 20px;
-  }
-  
-  .file-sise-td{
-    padding-top: 20px;
-  }
-  
-  .permission-td{
-    padding-top: 20px;
-  }
 
   .action-td{
-    padding-top: 20px;
+    padding-top: 22px;
     height: 40px;
   }
   .link-share-ico{
@@ -107,7 +242,8 @@
     background-position: 0px 0px;
     height:19px;
     width: 16px;
-    cursor: pointer;  
+    cursor: pointer;
+    margin-left: 10px;  
   }
   .discuss-ico{
     float: left;  
@@ -115,7 +251,8 @@
     background-position: 0px -19px;
     height:19px;
     width: 16px;
-    cursor: pointer;  
+    cursor: pointer;
+    margin-left: 10px;  
   }
   
   .position-fixed {
@@ -126,18 +263,30 @@
 
 .team-collaboration{
     width: 260px;
-    float: right;
     border-left: 1px solid #ddd;
-    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
     .groups-users-header{
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     }
+    .dropdown-menu{
+        li{
+            cursor: pointer;
+        }
+    }
+    
     .groups{
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 6px;
         .group-div{
+            height: 25px;
             padding-bottom: 5px;
+            width: 100%;
             .img{
+                cursor: pointer;
                 float: left;
                 width: 50px;
             }
@@ -152,11 +301,35 @@
             .group-permission{
                 float: left;
                 width: 80px;
+                position: relative;
+                span{
+                    cursor: pointer;
+                }
+                .caret{
+                    display: none;            
+                }
+                .dropdown-menu{
+                    width: 85px;
+                    min-width: 85px;
+                    > li > a{
+                        padding: 3px 8px;
+                    }
+                }
             }
-            .deleteGroup{
+            .delete-group{
+                cursor: pointer;
+                display: none;
                 float: right;
-                width: 5px;
             }
+        }
+        .group-div:hover{
+            background-color: #ebf1f7;
+        }
+        .group-div:hover .caret{
+            display: inline-block;
+        }
+        .group-div:hover .delete-group{
+            display: inline-block;
         }
         .group-user{
             padding-top: 5px;
@@ -164,11 +337,13 @@
         }
     }
     .users{
+        padding-left: 30px;
         padding-top: 5px;
         padding-bottom: 5px;
+        padding-right: 6px;
         .img{
             float: left;
-            width: 50px;
+            width: 35px;
         }
         .user-name{
             float: left;
@@ -178,10 +353,39 @@
             white-space: nowrap;
             margin-right: 8px;
         }
-        .permission-delete{
+        .user-permission{
             float: left;
+            position: relative;
+            width: 80px;
+            span{
+                cursor: pointer;
+            }
+            .caret{
+                display: none;            
+            }
+            .dropdown-menu{
+                width: 85px;
+                min-width: 85px;
+                > li > a{
+                    padding: 3px 8px;
+                }
+            }
+        }
+        .delete-user{
+            float: right;
+            cursor: pointer;
+            display: none; 
         }
     }
+    .users:hover{
+            background-color: #ebf1f7;
+        }
+        .users:hover .caret{
+            display: inline-block;
+        }
+        .users:hover .delete-user{
+            display: inline-block;
+        }
     .arrows-img{
         background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
         cursor: pointer;
@@ -202,20 +406,39 @@
    border-left: 1px solid #ccc;
 }
 
+//移动文件夹
 .move-file-modal-view{
-
+    div[data-tree-model] li .expanded {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    
+    div[data-tree-model] li .collapsed {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
+    div[data-tree-model] li .normal {
+        background-image: url("../../images/tree_ico.png");
+        background-repeat: no-repeat;
+        padding: 1px 10px;
+    }
 }
 
+//讨论
 .user-discuss-view {
     padding: 5px;
     img{
         float: left;
     }
-    .disc-item-list{
+    .scroller {
         bottom: 210px;
-        overflow-y: auto;
+        overflow-y: hidden;
         position: absolute;
         top: 64px;
+        left: 0;
+        right: 0;
     }
     
     .disc-item{
@@ -240,6 +463,7 @@
     }
 }
 
+//邀请协作人
 .invite-team-users{
     .modal-dialog {
         width: 100%;
@@ -343,6 +567,172 @@
                 transition: -moz-transform 0.2s ease 0s;
                 width: 15px;
              }
+        }
+    }
+}
+
+//链接分享
+.link-share{
+    .modal-dialog{
+        width: 350px;
+        .input-group{
+            margin-bottom: 5px;
+        }
+        .dropdown-menu{
+            text-align: center;
+            width: 100%;
+            li{
+                cursor: pointer;
+            }
+        }
+        .input-password{
+            margin-top: 5px;
+        }
+        .code_src{
+            margin-right: 5px;
+        }
+    }
+}
+
+//文件预览
+.preview-file{
+    .preview-file-inner{
+        width: 600px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        &.broad {
+            width: 900px;
+        }
+    }
+    
+    .modal-dialog{
+        height: 90%;
+        width: 90%;
+    }
+    .modal-content{
+        height: 100%;
+    }
+    .upload-new-version{
+        float: right;
+        padding: 4px 6px;
+    }
+    .preview-view{
+        height: 100%;
+        .image-preview{
+            text-align: center;
+            bottom: 0;
+            left: 13px;
+            position: absolute;
+            right: 14px;
+            top: 40px;
+            img{
+                height: 100%;
+                width: 70%;
+            }
+        }
+        .txt-preview{
+            word-break: break-all;
+            bottom: 0;
+            left: 13px;
+            position: absolute;
+            right: 14px;
+            top: 40px;
+            overflow-y: auto;
+        }
+        .office-preview{
+            border: 1px solid #e5e5e5;
+            bottom: 0;
+            left: 13px;
+            position: absolute;
+            right: 14px;
+            top: 40px;
+        }
+    }
+    .modal-body{
+        position: relative;
+        height: 100%;
+    }
+    .preview-action{
+        position: absolute;
+        bottom: 0;
+    }
+    .modal-header{
+        padding: 0;
+    }
+    .discuss-version-view{
+        border-left: 1px solid #e5e5e5;
+        height: 100%;
+        .nav-sidebar{
+            .ver{
+              margin-left: 15px;  
+            }
+            li{
+               float: left;
+               cursor: pointer;
+               &.active{
+                   border-bottom: 2px solid #428bca;
+               }
+            }
+        }
+        .discuss{
+          position: absolute;
+          top: 30px;
+          left: 15px;
+          right: 0;
+          bottom: 110px;
+          overflow-y: auto;
+          .disc-item{
+            padding: 10px;
+            img{
+              float: left;
+            }
+            .disc-box{
+              margin-left: 35px;
+              .disc-name{
+                color: #c0c0c0;
+                font-size: 12px;
+              }
+            .disc-time{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+          }
+          }
+        }
+        
+        
+        .disc-inputbox{
+          bottom: 0;
+          height: 100px;
+          position: absolute;
+        }
+    }
+}
+
+//文件上传窗口
+.modal-upload{
+    .upload-box{
+        font-size: 16px;
+        border: 2px dashed #c6c6c6;
+        text-align: center;
+        height: 150px;
+        .upload-select:hover{
+            a{
+                text-decoration: underline;
+            }
+        }
+        .upload-select{
+            top: 40px;
+            margin: 0 auto;
+            width: 130px;
+            cursor: pointer;
+        }
+        .upload-drop{
+            position: relative;
+            top: 60px;
         }
     }
 }

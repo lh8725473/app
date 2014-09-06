@@ -1,15 +1,17 @@
 angular.module('App.Config', []).constant('CONFIG', {
   
   // develop
-  API_ROOT: 'http://101.231.216.75:8888/api',
+  // API_ROOT: 'http://101.231.216.75:8888/api',
 
   // production
-  // API_ROOT: '/api',
+  API_ROOT: '/api',
 
   // localhost
   // API_ROOT: 'http://localhost/api',
 
-  LOGIN_PATH: '../login.html',
+  LOGIN_PATH: 'login.html',
+
+  INDEX_PATH: '/index.html',
   
   //permission
   PERMISSION_KEY: ['1111111', '0111111', '0001111', '0000101', '0001110', '0111111', '0000100', '0000001'],

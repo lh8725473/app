@@ -1,15 +1,23 @@
 angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Controller', [
   '$scope',
   '$modal',
+  '$stateParams',
   'Notification',
   'Users',
   'Group',
+  '$cookies',
+  'CONFIG',
+  '$rootScope',
   function(
     $scope,
     $modal,
+    $stateParams,
     Notification,
     Users,
-    Group
+    Group,
+    $cookies,
+    CONFIG,
+    $rootScope
   ) {
     //addUser window
     $scope.addUser = function() {
@@ -195,7 +203,13 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     ]
 
     //userList data
-    $scope.userList = Users.query()
+    if ($stateParams.k) {
+      $scope.userList = Users.query({
+        keyword: $stateParams.k
+      })      
+    } else {
+      $scope.userList = Users.query()     
+    }
 
     $scope.gridOptions = {
       data: 'userList',
@@ -281,9 +295,19 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     $scope.bulkadd = function() {
       alert("bulkadd")
     }
-
+    
+	//导出用户到excel
     $scope.exportUser = function() {
-      alert("exportUser")
+      var hiddenIframeID = 'hiddenDownloader'
+      var iframe = $('#' + hiddenIframeID)[0]
+      if (iframe == null) {
+        iframe = document.createElement('iframe')
+        iframe.id = hiddenIframeID
+        iframe.style.display = 'none'
+        document.body.appendChild(iframe)
+      }
+      iframe.src = CONFIG.API_ROOT + '/user/list?act=toExcel&token='+ $cookies.accessToken
     }
+    
   }
 ])

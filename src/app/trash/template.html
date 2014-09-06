@@ -1,3 +1,73 @@
 <div class="trash-view" ng-controller="App.Trash.Controller">
-	trash
+  <div class="top-bar">
+    <div class="pull-left root-path" ng-class = "{ isRoot: isRoot }"> 
+      <a>回收中心</a>
+    </div>
+  </div>
+  <div class="top-bar-bottom">  
+  </div>
+  <div class="buttonGroup">
+    <button ng-click="emptyRecycle()" class="btn btn-default">清空</button>
+    <button ng-click='revertRecycle()' class="btn btn-default">还原</button>
+    <button ng-click='deleteRecycle()' class="btn btn-default">彻底删除</button>
+  </div>
+  <div class="title">
+    <div class="title-checkbox col">
+      <input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
+    </div>
+    <div class="title-name col">
+      <span>名称</span>
+    </div>
+    <div class="title-state col">
+      <span>修改时间</span>           
+    </div>
+    <div class="title-size col">
+      <span>大小</span>      
+    </div>
+  </div>
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+  <div class="folder-grid">
+    <div class="table">
+        <div class="file-row" ng-repeat="recycle in recycleList" ng-class = "{ selected: recycle.checked }" ng-click = "selectRecycle($event, recycle)">
+          <div class="input-checkbox-td">
+          <input type="checkbox" ng-model = "recycle.checked" ng-click = "selectRecycle($event, recycle)"/>
+          </div>
+          <div class="img-name-td">
+            <img ng-src = "{{recycle.smallIcon}}" height="42px" width="42px"/>
+            <div class="file-name">
+              <a ui-sref="files({folderId: recycle.file_id})" ng-show = "recycle.folder">
+                {{recycle.folder_name}}
+              </a>
+              <a ng-show = "!recycle.folder&&recycle.isPreview" ng-click = "previewFile(recycle)">
+                {{recycle.file_name}}
+              </a>
+              <a ng-show = "!recycle.folder&&!recycle.isPreview" ng-class = "{ noPreview: !recycle.isPreview }">
+                {{recycle.file_name}}
+              </a>
+              <div class="tag">
+                <span>+添加标签</span>
+              </div>
+            </div>
+          </div>
+          <div class="state-td"> {{recycle.create_uname}}于{{recycle.format_date}}更新 </div>
+          <div class="file-sise-td">
+            <img src="images/file_icon.png" ng-show = "recycle.folder"/>
+            <span ng-show = "recycle.folder">{{recycle.file_count}}</span>
+            <span ng-hide = "recycle.folder">{{recycle.format_size}}</span>
+          </div>
+        </div>
+    </div>
+  </div>
+  </perfect-scrollbar>
+</div>
+<div class="team-collaboration" ng-controller="App.Files.TeamController">
+  <div class="groups-users" ng-show = "isRoot">
+    根目录下不能邀请协作人
+  </div>
+  <div class="groups-users" ng-hide = "isRoot">
+    <div class="groups-users-header col-sm-12">
+      <span class="pull-left">全部协作人</span>
+      <a class="pull-right">增加协作人</a>
+    </div>
+  </div>
 </div>

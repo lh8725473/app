@@ -4,6 +4,11 @@
 //      background-color: @header-ext-background-color;
         color: white;
         height: 30px;
+        .dropdown-menu{
+            li{
+                cursor: pointer;
+            }
+        }
         .user-info{
             border-left: 1px solid #1b599b;
             padding-left: 10px;
@@ -15,6 +20,7 @@
         }
         
         .to-admin-control{
+            cursor: pointer;
             border-right: 1px solid #2273cc;
             border-left: 1px solid #1b599b;
             font-size: 15px;
@@ -170,5 +176,27 @@
                 margin-left: 27px;
             }
         }
+    }
+}
+
+//个人设置
+.user-info{
+    .modal-dialog{
+        width: 400px;
+    }
+    label{
+        padding-bottom: 0;
+    }
+    h5{
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 5px;  
+    }
+    .user-info .form-group{
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .save-button{
+        margin-top: 30px;
     }
 }

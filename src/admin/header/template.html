@@ -8,8 +8,8 @@
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
-			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<input type="text" class="search-text form-control" placeholder="搜索" ng-model = "seachInputValue" ng-keydown = "searchByKeyDown($event,seachInputValue)"/>
+			<button class="search-button btn btn-default" ng-click = "searchByButton(seachInputValue)">搜索</button>
 		</div>
 	</div>
 </div>

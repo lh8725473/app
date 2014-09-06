@@ -4,7 +4,8 @@ module.exports = function(grunt) {
       'default': {
         files: {
           'src/admin/admin.css': 'src/admin/admin.less',
-          'src/app/app.css': 'src/app/app.less'
+          'src/app/app.css': 'src/app/app.less',
+          'src/linkShare/app.css': 'src/linkShare/app.less'
         },
         options: {
           modifyVars: {
@@ -15,7 +16,8 @@ module.exports = function(grunt) {
       'dark': {
         files: {
           'src/admin/admin.css': 'src/admin/admin.less',
-          'src/app/app.css': 'src/app/app.less'
+          'src/app/app.css': 'src/app/app.less',
+          'src/linkShare/app.css': 'src/linkShare/app.less'
         },
         options: {
           modifyVars: {
@@ -37,7 +39,9 @@ module.exports = function(grunt) {
       html: {
         files: {
           'production/admin.html': 'admin.html',
-          'production/index.html': 'index.html'
+          'production/index.html': 'index.html',
+          'production/login.html': 'login.html',
+          'production/link.html': 'link.html'
         }
       },
       images: {
@@ -62,7 +66,7 @@ module.exports = function(grunt) {
       production: ['production/']
     },
     useminPrepare: {
-      html: ['production/admin.html', 'production/index.html'],
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html'],
       options: {
         root: './',
         dest: 'production/'
@@ -74,13 +78,14 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: ['production/admin.html', 'production/index.html']
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html']
     },
     inline_angular_templates: {
       production: {
         files: {
           'production/admin.html': ['src/admin/**/*.html'],
-          'production/index.html': ['src/app/**/*.html']
+          'production/index.html': ['src/app/**/*.html'],
+          'production/link.html': ['src/linkShare/**/*.html']
         }
       },
       options: {

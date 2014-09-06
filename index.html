@@ -10,8 +10,10 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- build:css css/app/app.css -->
+  <link rel="stylesheet" type="text/css" href="bower_components/select2/select2.css">
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="bower_components/ng-grid/ng-grid.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-treeview/css/angular.treeview.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-snap/angular-snap.min.css">
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css">
@@ -49,29 +51,36 @@
   <!-- build:js js/app.js -->
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/select2/select2.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/perfect-scrollbar/src/jquery.mousewheel.js"></script>
+  <script type="text/javascript" src="bower_components/perfect-scrollbar/src/perfect-scrollbar.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-select2/src/select2.js"></script>
   <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script type="text/javascript" src="src/app/ui-bootstrap-fix.js"></script>
   <script type="text/javascript" src="bower_components/ng-grid/build/ng-grid.js"></script>
 
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+  <script type="text/javascript" src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
   
   <script type="text/javascript" src="bower_components/es5-shim/es5-shim.js"></script>
   <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-  <script type="text/javascript" src="bower_components/mb-scrollbar/mb-scrollbar.js"></script>
   <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
   <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="bower_components/ng-context-menu/dist/ng-context-menu.js"></script>
   <script type="text/javascript" src="bower_components/angular-treeview/angular.treeview.js"></script>
+  <script type="text/javascript" src="bower_components/snapjs/snap.js"></script>
   <script type="text/javascript" src="bower_components/angular-snap/angular-snap.js"></script>
-  <script type="text/javascript" src="bower_components/angular-snap/snap.js"></script>
   <script type="text/javascript" src="bower_components/ng-pageslide/dist/angular-pageslide-directive.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <script type="text/javascript" src="bower_components/ng-clip/src/ngClip.js"></script>
+  <script type="text/javascript" src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+  <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script type="text/javascript" src="src/app/widgets/widgets.js"></script>
   <script type="text/javascript" src="src/app/widgets/notification/factory.js"></script>
   <script type="text/javascript" src="src/app/widgets/utils/factory.js"></script>
@@ -87,9 +96,12 @@
   <script type="text/javascript" src="src/app/resources/userDiscuss.js"></script>
   <script type="text/javascript" src="src/app/resources/cloud.js"></script>
   <script type="text/javascript" src="src/app/resources/shareAction.js"></script>
+  <script type="text/javascript" src="src/app/resources/trash.js"></script>
+  <script type="text/javascript" src="src/app/resources/contact.js"></script>
   
   <script type="text/javascript" src="src/app/header/module.js"></script>
   <script type="text/javascript" src="src/app/header/controller.js"></script>
+  <script type="text/javascript" src="src/app/header/user-info/controller.js"></script>
 
   <script type="text/javascript" src="src/app/sidebar/module.js"></script>
   <script type="text/javascript" src="src/app/sidebar/controller.js"></script>
@@ -99,8 +111,12 @@
 
   <script type="text/javascript" src="src/app/files/module.js"></script>
   <script type="text/javascript" src="src/app/files/controller.js"></script>
-  <script type="text/javascript" src="src/app/files/teamcontroller.js"></script>
-  <script type="text/javascript" src="src/app/files/userDiscussController.js"></script>
+  <script type="text/javascript" src="src/app/files/move-file/controller.js"></script>
+  <script type="text/javascript" src="src/app/files/preview-file/controller.js"></script>
+  <script type="text/javascript" src="src/app/files/invite-team-users/controller.js"></script>
+  <script type="text/javascript" src="src/app/files/link-share/controller.js"></script>
+  <script type="text/javascript" src="src/app/files/team-controller.js"></script>
+  <script type="text/javascript" src="src/app/files/user-discuss-controller.js"></script>
 
   <script type="text/javascript" src="src/app/contacts/module.js"></script>
   <script type="text/javascript" src="src/app/contacts/controller.js"></script>

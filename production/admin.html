@@ -9,7 +9,7 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/admin/admin.a2f2b3b8.css">
+  <link rel="stylesheet" href="css/admin/admin.4d3a9639.css">
   
 </head>
 <body>
@@ -26,8 +26,8 @@
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
 		<div class="search pull-left">
-			<input type="text" class="search-text form-control" placeholder="搜索"/>
-			<button class="search-button btn btn-default">搜索</button>
+			<input type="text" class="search-text form-control" placeholder="搜索" ng-model = "seachInputValue" ng-keydown = "searchByKeyDown($event,seachInputValue)"/>
+			<button class="search-button btn btn-default" ng-click = "searchByButton(seachInputValue)">搜索</button>
 		</div>
 	</div>
 </div>
@@ -38,9 +38,9 @@
 	<highchart config="loginCountConfig" class="chart col-sm-4"></highchart>
 	<highchart config="loginRankConfig" class="chart col-sm-4"></highchart>
 	<highchart config="loginTrendConfig" class="chart col-sm-4"></highchart>
-	<highchart config="spaceTrendConfig" class="chart col-sm-4"></highchart>
-	<highchart config="spaceRankConfig" class="chart col-sm-4"></highchart>
-	<highchart config="UserSpaceConfig" class="chart col-sm-4"></highchart>
+	<highchart config="spaceTrendConfig" class="chart col-sm-4 down"></highchart>
+	<highchart config="spaceRankConfig" class="chart col-sm-4 down"></highchart>
+	<highchart config="UserSpaceConfig" class="chart col-sm-4 down"></highchart>
 </div>
 </script>
 
@@ -71,16 +71,10 @@
         	用户与群组
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('reports') }">
+    <li ng-class="{ active: $state.includes('reports') }" ng-hide = "true">
       <a ui-sref="reports" class="reports">
         <span class="reports-img"></span>
-        	报告
-      </a>
-    </li>
-    <li ng-class="{ active: $state.includes('settings') }">
-      <a ui-sref="settings" class="settings">
-        <span class="settings-img"></span>
-       		设置
+        	报表
       </a>
     </li>
   </ul>
@@ -1138,8 +1132,6 @@
 <div class="managedUsers-view" ng-controller="App.Users.ManagedUsers.Controller" ng-claas="{empty : true}">
 	<div class="buttonGroup">
 		<button ng-click='addUser()' class="btn btn-default">添加用户</button>
-		<button ng-click='bulkEdit()' class="btn btn-default">批量添加</button>
-		<button ng-click='bulkadd()' class="btn btn-default">批量编辑</button>
 		<button ng-click='exportUser()' class="btn btn-default">导出</button>
 	</div>
   <div class="gridStyle" ng-grid="gridOptions" ></div>
@@ -1228,6 +1220,6 @@
     <div class="sidebar" ng-include="'src/admin/sidebar/template.html'"></div>
     <div class="right-main" ui-view=""></div>
   </div>
-  <script src="js/admin.51c0b129.js"></script>
+  <script src="js/admin.2171de4a.js"></script>
 </body>
 </html>

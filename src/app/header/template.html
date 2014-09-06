@@ -6,19 +6,19 @@
 				<div class="personalInfor"></div>
 			</div>
 			<ul class="dropdown-menu" role="menu">
-        		<li><a href="#">个人信息</a></li>
-        		<li><a href="#">退出</a></li>
-      		</ul>
+        		<li ng-click = "userInfoWin()"><a>个人信息</a></li>
+        		<li ng-click = "toLogin()"><a>退出</a></li>
+      </ul>
 			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
 		</div>
-		<div class="to-admin-control pull-right">
+		<div class="to-admin-control pull-right" ng-click = "toadmin()">
 			管理控制台
 		</div>
 		<div class="notif_box" class="message-notice pull-right">
 			<span class="notice" title="通知"></span>
-			<label class="message-count notice-count" ng-show = "showMessageCount">{{messageCount}}</label>
+			<label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
 			<span class="message" title="消息"></span>
-			<label class="message-count letter-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
+			<label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">

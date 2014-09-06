@@ -10,9 +10,9 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     UserDiscuss
   ) {
   	var discuss_file_id = $scope.discuss_file_id || 0;
-//	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
-//		obj_id : discuss_file_id
-//	})
+  	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
+  		obj_id : discuss_file_id
+  	})
 
     $scope.scrollbarConfig = {
       autoResize: true,
