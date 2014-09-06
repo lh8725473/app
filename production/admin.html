@@ -9,7 +9,7 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/admin/admin.85aa094f.css">
+  <link rel="stylesheet" href="css/admin/admin.4d3a9639.css">
   
 </head>
 <body>
@@ -38,9 +38,9 @@
 	<highchart config="loginCountConfig" class="chart col-sm-4"></highchart>
 	<highchart config="loginRankConfig" class="chart col-sm-4"></highchart>
 	<highchart config="loginTrendConfig" class="chart col-sm-4"></highchart>
-	<highchart config="spaceTrendConfig" class="chart col-sm-4"></highchart>
-	<highchart config="spaceRankConfig" class="chart col-sm-4"></highchart>
-	<highchart config="UserSpaceConfig" class="chart col-sm-4"></highchart>
+	<highchart config="spaceTrendConfig" class="chart col-sm-4 down"></highchart>
+	<highchart config="spaceRankConfig" class="chart col-sm-4 down"></highchart>
+	<highchart config="UserSpaceConfig" class="chart col-sm-4 down"></highchart>
 </div>
 </script>
 
@@ -71,10 +71,10 @@
         	用户与群组
       </a>
     </li>
-    <li ng-class="{ active: $state.includes('reports') }">
+    <li ng-class="{ active: $state.includes('reports') }" ng-hide = "true">
       <a ui-sref="reports" class="reports">
         <span class="reports-img"></span>
-        	报告
+        	报表
       </a>
     </li>
   </ul>
@@ -1220,6 +1220,6 @@
     <div class="sidebar" ng-include="'src/admin/sidebar/template.html'"></div>
     <div class="right-main" ui-view=""></div>
   </div>
-  <script src="js/admin.30bf3f68.js"></script>
+  <script src="js/admin.2171de4a.js"></script>
 </body>
 </html>
