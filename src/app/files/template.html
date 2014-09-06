@@ -44,99 +44,99 @@
       <span>分享</span>          
     </div>
   </div>
-	<div class="folder-grid"
-		ng-scrollbar
-		rebuild-on-resize>
-		<div class="table">
-				<div ng-show = "showCreateFolderDiv" class="create-folder-div">
-						<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
-						<div class="create-buttonGroup col-sm-6">
-							<button ng-click="createFolder(createFolderName)" class="btn btn-default">
-								确定
-							</button>
-							<button ng-click="cancleCreate()" class="btn btn-default">
-								取消
-							</button>
-						</div>
-				</div>
-				<div class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj($event, obj)">
-					<div class="input-checkbox-td">
-					<input type="checkbox" ng-model = "obj.checked" ng-click = "selectObj($event, obj)"/>
-					</div>
-					<div class="img-name-td">
-						<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
-						<div class="file-name" ng-hide = "obj.rename">
-							<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
-								{{obj.folder_name}}
-							</a>
-							<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
-								{{obj.file_name}}
-							</a>
-							<a ng-show = "!obj.folder&&!obj.isPreview" ng-class = "{ noPreview: !obj.isPreview }">
-								{{obj.file_name}}
-							</a>
-							<div class="tag">
-								<span>+添加标签</span>
-							</div>
-						</div>
-						<div class="rename-form" ng-show = "obj.rename">
-							<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
-							<div class="rename-buttonGroup">
-								<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+		<div class="folder-grid">
+			<div class="table">
+					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
+							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
+							<div class="create-buttonGroup col-sm-6">
+								<button ng-click="createFolder(createFolderName)" class="btn btn-default">
 									确定
 								</button>
-								<button ng-click="cancleRenameFile()" class="btn btn-default">
+								<button ng-click="cancleCreate()" class="btn btn-default">
 									取消
 								</button>
 							</div>
+					</div>
+					<div class="file-row" ng-repeat="obj in objList" ng-class = "{ selected: obj.checked }" context-menu="onRightClick(obj)" data-target="myMenu" ng-click = "selectObj($event, obj)">
+						<div class="input-checkbox-td">
+						<input type="checkbox" ng-model = "obj.checked" ng-click = "selectObj($event, obj)"/>
+						</div>
+						<div class="img-name-td">
+							<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
+							<div class="file-name" ng-hide = "obj.rename">
+								<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
+									{{obj.folder_name}}
+								</a>
+								<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
+									{{obj.file_name}}
+								</a>
+								<a ng-show = "!obj.folder&&!obj.isPreview" ng-class = "{ noPreview: !obj.isPreview }">
+									{{obj.file_name}}
+								</a>
+								<div class="tag">
+									<span>+添加标签</span>
+								</div>
+							</div>
+							<div class="rename-form" ng-show = "obj.rename">
+								<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
+								<div class="rename-buttonGroup">
+									<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+										确定
+									</button>
+									<button ng-click="cancleRenameFile()" class="btn btn-default">
+										取消
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </div>
+						<div class="file-sise-td">
+						  <img src="images/file_icon.png" ng-show = "obj.folder"/>
+						  <span ng-show = "obj.folder">{{obj.file_count}}</span>
+						  <span ng-hide = "obj.folder">{{obj.format_size}}</span>
+						</div>
+						<div class="permission-td"> {{obj.permission_value}} </div>
+						<div class="action-td">
+							<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
+							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
+							  <span>{{obj.user_count}}</span>
+							<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
+							  <span>{{obj.discuss_count}} </span>		
 						</div>
 					</div>
-					<div class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </div>
-					<div class="file-sise-td">
-					  <img src="images/file_icon.png" ng-show = "obj.folder"/>
-					  <span ng-show = "obj.folder">{{obj.file_count}}</span>
-					  <span ng-hide = "obj.folder">{{obj.format_size}}</span>
+					<div class="dropdown position-fixed" id="myMenu">
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+							<li>
+								<a class="pointer" role="menuitem" tabindex="1" ng-click="dowloadFile()">
+									下载
+								</a>
+							</li>
+							<li>
+								<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
+									删除
+								</a>
+							</li>
+							<li>
+								<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
+									移动
+								</a>
+							</li>
+							<li>
+								<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
+									重命名
+								</a>
+							</li>
+							<li>
+								<a ng-click="openUserDiscuss(checkedObj.file_id)" class="large button">
+									讨论
+								</a>
+							</li>
+						</ul>
 					</div>
-					<div class="permission-td"> {{obj.permission_value}} </div>
-					<div class="action-td">
-						<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
-						<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
-						  <span>{{obj.user_count}}</span>
-						<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
-						  <span>{{obj.discuss_count}} </span>		
-					</div>
-				</div>
-				<div class="dropdown position-fixed" id="myMenu">
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-						<li>
-							<a class="pointer" role="menuitem" tabindex="1" ng-click="dowloadFile()">
-								下载
-							</a>
-						</li>
-						<li>
-							<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
-								删除
-							</a>
-						</li>
-						<li>
-							<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
-								移动
-							</a>
-						</li>
-						<li>
-							<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
-								重命名
-							</a>
-						</li>
-						<li>
-							<a ng-click="openUserDiscuss(checkedObj.file_id)" class="large button">
-								讨论
-							</a>
-						</li>
-					</ul>
-				</div>
+			</div>
 		</div>
-	</div>
+	</perfect-scrollbar>
 	<pageslide
 		ps-speed="0.5"
 		ps-custom-top="78px"
@@ -148,19 +148,18 @@
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
 	    <h2 class="col-sm-12">讨论{{test}}</h2>
-	    <div class="disc-item-list col-sm-12" 
-	    	ng-scrollbar
-	    	bottom
-	    	rebuild-on-resize>
-	    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
-	    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
-	    		<div class="disc-box">
-	    			<div class="disc-name">{{userDiscuss.real_name}}</div>
-	    			<div class="disc-time">{{userDiscuss.format_date}}</div>
-	    			<div class="disc-content">{{userDiscuss.content}}</div>
-	    		</div>
-	    	</div>
-	    </div>
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+		    <div class="disc-item-list col-sm-12">
+		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+		    		<div class="disc-box">
+		    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+		    			<div class="disc-time">{{userDiscuss.format_date}}</div>
+		    			<div class="disc-content">{{userDiscuss.content}}</div>
+		    		</div>
+		    	</div>
+		    </div>
+		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12">
 			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
 			<a id="user-discuss-right-close" class="button" >Close</a>
