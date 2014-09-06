@@ -10,6 +10,16 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
     Utils
   ) {
 
+    function bytes(bytes, label) {
+      if (bytes == 0) return '';
+      var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+      var e = Math.floor(Math.log(bytes) / Math.log(1024));
+      var value = ((bytes / Math.pow(1024, Math.floor(e))).toFixed(2));
+      e = (e < 0) ? (-e) : e;
+      if (label) value += ' ' + s[e];
+      return value;
+    }
+
     OverView.loginCount().$promise.then(function(loginCount) {
       $scope.loginCountConfig = {
         options: {
@@ -49,6 +59,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         categories.push(rank.real_name)
         data.push(parseInt(rank.login_count))
       })
+      console.log(categories)
 
       $scope.loginRankConfig = {
         options: {
@@ -90,7 +101,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           text: '登录变化'
         },
         xAxis: {
-          categories: [2014-10-1,2014-6-1]
+          type: 'datetime'
         },
         yAxis: {
           title: {
@@ -99,7 +110,9 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         },
         series: [{
           name: '登录变化',
-          data: [1,2,3,4,5,6,10,5,16]
+          data: data,
+          pointStart: Date.UTC(categories[0].split('-')[0], categories[0].split('-')[1], categories[0].split('-')[2]),
+          pointInterval: 24 * 3600 * 1000
         }],
         credits: {
           enabled: false
@@ -118,30 +131,30 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
       })
 
       $scope.spaceTrendConfig = {
+        options: {
+          tooltip: {
+            formatter: function() {
+              return '<span style="font-size: 10px">' + this.point.y + '</span><br/>' +
+                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
+          }
+        },
         title: {
           text: '用量变化'
         },
-        tooltip: {
-            useHTML: true,
-            headerFormat: '<small>222</small><table>',
-            pointFormat: '<tr><td>111111 </td>' +
-                '<td style="text-align: right"><b>KB</b></td></tr>',
-            footerFormat: '</table>',
-            valueDecimals: 2
-        },
         xAxis: {
-          type: 'datetime',
-          pointStart: Date.UTC(2014, 0, 1)
+          type: 'datetime'
         },
         yAxis: {
-            title: {
-                text: '用量'
-            },
-            min: 0
+          title: {
+            text: '用量'
+          },
+          min: 0
         },
         series: [{
           name: '用量变化',
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+          data: data,
+          pointStart: Date.UTC(categories[0].split('-')[0], categories[0].split('-')[1], categories[0].split('-')[2]),
           pointInterval: 24 * 3600 * 1000
         }]
       }
@@ -154,6 +167,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         categories.push(rank.real_name)
         data.push(parseInt(rank.used_size))
       })
+      console.log(data)
 
       $scope.spaceRankConfig = {
         options: {
@@ -161,13 +175,11 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
             type: 'column'
           },
           tooltip: {
-            useHTML: true,
-            headerFormat: '<table>',
-            pointFormat: '<tr><td>{point.x}</td>' +
-                '<td style="text-align: right"><b>'+'{point.y}'+'</b></td></tr>',
-            footerFormat: '</table>',
-            valueDecimals: 2
-          },
+            formatter: function() {
+              return '<span style="font-size: 10px">' + this.point.y + '</span><br/>' +
+                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
+          }
         },
         title: {
           text: '使用空间最多的五位用户'
@@ -181,7 +193,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           }
         },
         series: [{
-          name: '使用空间最多的五位用户',
+          name: '空间使用量',
           data: data
         }],
         credits: {
@@ -197,42 +209,33 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
             type: 'pie'
           },
           tooltip: {
-            useHTML: true,
-            headerFormat: '<table>',
-            pointFormat: '<tr><td>{series.data}</td>' +
-                '<td style="text-align: right"><b>KB</b></td></tr>',
-            footerFormat: '</table>',
-            valueDecimals: 2
-          },
-        },      
-      	chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: 1,//null,
-            plotShadow: false
+            formatter: function() {
+              return '<span style="font-size: 10px">' + this.point.name + '</span><br/>' +
+                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+            }
+          }
+        },
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: 1, //null,
+          plotShadow: false
         },
         title: {
-            text: '已用团队空间'
+          text: '已用团队空间'
         },
         plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'green'
-                    }
-                }
-            }
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer'
+          }
         },
         series: [{
-            type: 'pie',
-            name: '空间',
-            data: [
-              ['剩余空间', spaceinfo.total_size - spaceinfo.used_size],
-              ['已用空间', spaceinfo.used_size]
-            ]
+          type: 'pie',
+          name: '大小',
+          data: [
+            ['剩余空间', spaceinfo.total_size - spaceinfo.used_size],
+            ['已用空间', spaceinfo.used_size]
+          ]
         }]
       }
     });
