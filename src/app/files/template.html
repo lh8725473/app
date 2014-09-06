@@ -189,7 +189,7 @@
 					<span>{{group.group_name}}</span>
 					<span class="group-user-count">({{group.user_count}})</span>
 				</div>
-				<div class="group-permission" dropdown>
+				<div class="group-permission" dropdown is-open="group.isopen">
 					<span class="dropdown-toggle">{{group.permission_value}}<span class="caret"></span></span>
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeGroupPermission(group, value)">

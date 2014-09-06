@@ -32,6 +32,14 @@ angular.module('App.Resources').factory('Files', [
           action: 'preview',
           file_id: ''
         }
+      },
+      history:{
+        method: "GET",
+        params: {
+          action: 'history',
+          file_id: ''
+        },
+        isArray: true
       }
     })
     angular.extend(Files, {

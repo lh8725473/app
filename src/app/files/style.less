@@ -271,6 +271,12 @@
     .groups-users-header{
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     }
+    .dropdown-menu{
+        li{
+            cursor: pointer;
+        }
+    }
+    
     .groups{
         padding-top: 5px;
         padding-bottom: 5px;
@@ -294,9 +300,11 @@
             }
             .group-permission{
                 float: left;
-                cursor: pointer;
                 width: 80px;
                 position: relative;
+                span{
+                    cursor: pointer;
+                }
                 .caret{
                     display: none;            
                 }
@@ -309,6 +317,7 @@
                 }
             }
             .delete-group{
+                cursor: pointer;
                 display: none;
                 float: right;
             }
@@ -345,10 +354,12 @@
             margin-right: 8px;
         }
         .user-permission{
-            cursor: pointer;
             float: left;
             position: relative;
             width: 80px;
+            span{
+                cursor: pointer;
+            }
             .caret{
                 display: none;            
             }
@@ -362,6 +373,7 @@
         }
         .delete-user{
             float: right;
+            cursor: pointer;
             display: none; 
         }
     }
@@ -664,6 +676,35 @@
                    border-bottom: 2px solid #428bca;
                }
             }
+        }
+        .discuss{
+          position: absolute;
+          top: 30px;
+          left: 15px;
+          right: 0;
+          bottom: 110px;
+          overflow-y: auto;
+          .disc-item{
+            padding: 10px;
+            .disc-box{
+              margin-left: 35px;
+              .disc-name{
+                color: #c0c0c0;
+                font-size: 12px;
+              }
+            .disc-time{
+                color: #c0c0c0;
+                font-size: 12px;
+            }
+          }
+          }
+        }
+        
+        
+        .disc-inputbox{
+          bottom: 0;
+          height: 100px;
+          position: absolute;
         }
     }
 }

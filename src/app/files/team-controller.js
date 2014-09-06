@@ -4,12 +4,16 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   '$state',
   'Folders',
   'Share',
+  'Notification',
+  '$modal',
   function(
     $scope,
     CONFIG,
     $state,
     Folders,
-    Share
+    Share,
+    Notification,
+    $modal
   ) {
   	//权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
@@ -69,9 +73,8 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//改变用户权限
   	$scope.changeUserPermission = function(user, permission_value){
   		user.isopen = !user.isopen;
-  		user.permission_value = permission_value;
   		angular.forEach($scope.permission_value, function(value, index) {
-  			if(user.permission_value == value){
+  			if(permission_value == value){
   				user.permission = $scope.permission_key[index]
   			}
   		})
@@ -81,26 +84,151 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   			user_id : user.user_id,
   			permission : user.permission,
   			obj_id : user.obj_id
+  		}).$promise.then(function() {
+  		  Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '修改权限成功',
+          closeable: true
+        })
+  		  user.permission_value = permission_value;
   		})
   	}
   	
   	//改变群组权限
   	$scope.changeGroupPermission = function(group, permission_value){
-  		
+  	  group.isopen = !group.isopen;
+  		angular.forEach($scope.permission_value, function(value, index) {
+        if(permission_value == value){
+          group.permission = $scope.permission_key[index]
+        }
+      })
+      Folders.updateGroup({
+        folder_id : folderId
+      },{
+        group_id : group.group_id,
+        permission : group.permission,
+        obj_id : group.obj_id
+      }).$promise.then(function() {
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '修改权限成功',
+          closeable: true
+        })
+        group.permission_value = permission_value;
+      })
   	}
   	
-  	//移除用户分享
+  	//移除用户协作
   	$scope.deleteUserShare = function(user){
-  		Share.deleteShare({
-  			id : folderId,
-  			user_id : user.user_id,
-  			obj_id : user.obj_id
-  		})
+      var deleteUserShareModal = $modal.open({
+        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        windowClass: 'delete-share-user',
+        backdrop: 'static',
+        controller: deleteUserShareController,
+        resolve: {
+          user: function() {
+            return user
+          }
+        }
+      })
   	}
+
+    // deleteUserShare file
+    var deleteUserShareController = [
+      '$scope',
+      '$modalInstance',
+      'user',
+      function(
+        $scope,
+        $modalInstance,
+        user
+      ) {
+             
+        $scope.ok = function() {
+          Share.deleteShare({
+            id : folderId,
+            user_id : user.user_id,
+            obj_id : user.obj_id
+          }).$promise.then(function(reFolder) {
+            Notification.show({
+              title: '成功',
+              type: 'success',
+              msg: '删除协作成功',
+              closeable: true
+            })
+            $modalInstance.close()
+          })
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
+
   	
-  	//改变群组权限
+  	//移除群组协作
   	$scope.deleteGroupShare = function(group){
-  		
+      var deleteGroupShareModal = $modal.open({
+        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        windowClass: 'delete-share-user',
+        backdrop: 'static',
+        controller: deleteGroupShareController,
+        resolve: {
+          group: function() {
+            return group
+          }
+        }
+      })
+
+
+  		Folders.deleteGroup({
+        folder_id : folderId,
+        group_id : group.group_id,
+        obj_id : group.obj_id
+      }).$promise.then(function() {
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '删除协作成功',
+          closeable: true
+        })
+      })
   	}
+
+    // deleteGroupShare file
+    var deleteGroupShareController = [
+      '$scope',
+      '$modalInstance',
+      'group',
+      function(
+        $scope,
+        $modalInstance,
+        group
+      ) {
+             
+        $scope.ok = function() {
+          Folders.deleteGroup({
+            folder_id : folderId,
+            group_id : group.group_id,
+            obj_id : group.obj_id
+          }).$promise.then(function(reFolder) {
+            Notification.show({
+              title: '成功',
+              type: 'success',
+              msg: '删除协作成功',
+              closeable: true
+            })
+            $modalInstance.close()
+          })
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
   }
 ])

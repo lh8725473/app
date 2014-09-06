@@ -7,6 +7,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
   'Files',
   '$cookies',
   '$sce',
+  'UserDiscuss',
   function(
     $scope,
     Utils,
@@ -15,8 +16,10 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
     obj,
     Files,
     $cookies,
-    $sce
+    $sce,
+    UserDiscuss
   ) { 
+      //预览对象
       $scope.obj = obj
       //右侧菜单 讨论or版本
       $scope.navType = 'dis'
@@ -34,6 +37,14 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $scope.previewValue = htmlData
         })
       }
+
+      $scope.userDiscussList = UserDiscuss.getUserDiscussList({
+        obj_id : obj.file_id
+      })
+
+      $scope.fileHistoryList = Files.history({
+        file_id : obj.file_id
+      })
       
       $scope.cancel = function() {
         $modalInstance.dismiss('cancel')

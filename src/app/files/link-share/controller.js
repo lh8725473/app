@@ -86,7 +86,14 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         }
 
         $scope.sendEmail = function() {
-          console.log($scope.selectedEmails)
+          Share.sendEmail({},{
+            obj_name : obj.file_name,
+            link : $scope.link,
+            emails : $scope.selectedEmails
+          }).$promise.then(function() {
+            alert("发送邮件成功")
+            $modalInstance.dismiss('cancel')
+          })
         }
 
         //链接分享访问密码输入框type

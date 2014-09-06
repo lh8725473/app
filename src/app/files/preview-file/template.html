@@ -29,10 +29,30 @@
       </button>
     </ul>
     <div class="discuss" ng-show = "navType == 'dis'">
-      discuss
+      <div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+        <img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
+        <div class="disc-box">
+          <div class="disc-name">{{userDiscuss.real_name}}</div>
+          <div class="disc-time">{{userDiscuss.format_date}}</div>
+          <div class="disc-content">{{userDiscuss.content}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="disc-inputbox">
+        <textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+      <button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
+        发表
+      </button>
+      <label class="pull-right">{{discussCount}}/200</label>
     </div>
     <div class="version" ng-show = "navType == 'ver'">
-      version
+      <div ng-repeat="fileHistory in fileHistoryList" class="disc-item">
+        <div class="disc-box">
+          <div class="disc-name">{{fileHistory.file_name}}</div>
+          <div class="disc-time">{{fileHistory.format_size}}</div>
+          <div class="disc-content">{{fileHistory.content}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

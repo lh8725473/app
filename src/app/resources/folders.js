@@ -35,6 +35,20 @@ angular.module('App.Resources').factory('Folders', [
           action: 'update',
           folder_id: 0
         }
+      },
+      updateGroup: {
+        method: "PUT",
+        params: {
+          action: 'updateGroup',
+          folder_id: 0
+        }
+      },
+      deleteGroup: {
+        method: "DELETE",
+        params: {
+          action: 'deleteGroup',
+          folder_id: 0
+        }
       }
     })
   }  
