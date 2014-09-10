@@ -64,58 +64,70 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.objList = Folders.getObjList({
         folder_id: folderId
       })
+      $scope.objList.$promise.then(function() {
+         refreshList();
+
+         Notification.show({
+           title: '成功',
+           type: 'success',
+           msg: '上传文件成功',
+            closeable: true
+         })
+       })
     })
+     function refreshList(){
+        angular.forEach($scope.objList, function(obj) {
+            //对象是否被选中
+            obj.checked = false
+            //对象是否显示重名输入框
+            obj.rename = false
 
-    $scope.objList.$promise.then(function(objList) {
-      angular.forEach(objList, function(obj) {
-        //对象是否被选中
-        obj.checked = false
-        //对象是否显示重名输入框
-        obj.rename = false
+            //对象是否是文件夹
+            if (obj.isFolder == 1) {
+                obj.folder = true
+            } else {
+                obj.folder = false
+            }
 
-        //对象是否是文件夹
-        if (obj.isFolder == 1) {
-          obj.folder = true
-        } else {
-          obj.folder = false
-        }
+            //对象是否能被预览
+            var fileType = Utils.getFileTypeByName(obj.file_name)
+            if (!fileType) {
+                obj.isPreview = false
+            } else {
+                obj.isPreview = true
+            }
 
-        //对象是否能被预览
-        var fileType = Utils.getFileTypeByName(obj.file_name)
-        if (!fileType) {
-          obj.isPreview = false
-        } else {
-          obj.isPreview = true
-        }
+            //文件图像
+            if (obj.isFolder == 1) { //文件夹
+                if (obj.isShared == 1) {
+                    obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
+                    obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
+                } else {
+                    obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
+                    obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
+                }
+            } else {
+                var ext;
+                if (obj.isFolder == 1) {
+                    ext = 'folder';
+                } else {
+                    ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
+                }
+                var icon = Utils.getIconByExtension(ext);
+                obj.smallIcon = icon.small;
+                obj.largeIcon = icon.large;
+            }
 
-        //文件图像
-        if (obj.isFolder == 1) { //文件夹
-          if (obj.isShared == 1) {
-            obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
-            obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
-          } else {
-            obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
-            obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
-          }
-        } else {
-          var ext;
-          if (obj.isFolder == 1) {
-            ext = 'folder';
-          } else {
-            ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
-          }
-          var icon = Utils.getIconByExtension(ext);
-          obj.smallIcon = icon.small;
-          obj.largeIcon = icon.large;
-        }
-
-        //文件权限
-        angular.forEach($scope.permission_key, function(key, index) {
-          if (key == obj.permission) {
-            obj.permission_value = $scope.permission_value[index]
-          }
+            //文件权限
+            angular.forEach($scope.permission_key, function(key, index) {
+                if (key == obj.permission) {
+                    obj.permission_value = $scope.permission_value[index]
+                }
+            })
         })
-      })
+    }
+    $scope.objList.$promise.then(function() {
+        refreshList();
     })
 
     //全部选择状态
@@ -140,14 +152,28 @@ angular.module('App.Files').controller('App.Files.Controller', [
         folder_name: createFolderName,
         parent_id: folderId
       }).$promise.then(function(reFolder) {
-        $scope.objList.push(reFolder)
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: '创建文件夹成功',
-          closeable: true
+        $scope.objList = Folders.getObjList({
+            folder_id: folderId
         })
-      })
+        $scope.objList.$promise.then(function() {
+            refreshList();
+
+            Notification.show({
+                title: '成功',
+                type: 'success',
+                msg: '创建文件夹成功',
+                closeable: true
+            })
+        })
+      }, function (error) {
+              Notification.show({
+                  title: '失败',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
+              })
+          }
+      )
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
 
@@ -383,23 +409,49 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
 
-    //文件预览
-    $scope.previewFile = function(obj) {
-      var previewFileModal = $modal.open({
-        templateUrl: 'src/app/files/preview-file/template.html',
-        windowClass: 'preview-file',
-        backdrop: 'static',
-        controller: 'App.Files.PreviewFileController',
-        resolve: {
-          obj: function() {
-            return obj
-          }
-        }
-      })
-    }
 
-  }
-]).directive('ngEnter', function() {
+        //检查预览的文件大小及类型
+        function CheckFileValid (obj) {
+            var fileSize = obj.file_size;
+            var fileType = Utils.getFileTypeByName(obj.file_name);
+            if ('office' == fileType) {
+                //10MB = 10485760 Byte
+                if (fileSize > 10485760) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        //文件预览
+        $scope.previewFile = function (obj) {
+            var validFile = CheckFileValid(obj);
+            if (validFile) {
+                var previewFileModal = $modal.open({
+                    templateUrl: 'src/app/files/preview-file/template.html',
+                    windowClass: 'preview-file',
+                    backdrop: 'static',
+                    controller: 'App.Files.PreviewFileController',
+                    resolve: {
+                        obj: function () {
+                            return obj
+                        }
+                    }
+                })
+            }
+            else {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: '仅仅允许预览10MB以下文件。',
+                    closeable: false
+                })
+            }
+
+
+        }
+
+    }
+]).directive('ngEnter', function () {
   return function(scope, element, attrs) {
     element.bind("keydown keypress", function(event) {
       if (event.which === 13) {
