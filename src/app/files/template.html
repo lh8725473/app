@@ -147,7 +147,10 @@
 		ps-open="discussOpened">
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
-	    <h2 class="col-sm-12">讨论{{test}}</h2>
+	    <button id="user-discuss-right-close" type="button" class="bootbox-close-button close">
+        ×
+      </button>
+	    <h3>讨论{{test}}</h3>
 	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
@@ -162,7 +165,7 @@
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12">
 			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
-			<a id="user-discuss-right-close" class="button" >Close</a>
+			
 			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 				发表
 			</button>

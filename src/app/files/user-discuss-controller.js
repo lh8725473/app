@@ -13,12 +13,8 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
   	})
-
-    $scope.scrollbarConfig = {
-      autoResize: true,
-      scrollTo: 'end'
-    }
-
+    
+    //监听讨论的文件ID
     $scope.$watch('discuss_file_id', function (new_file_id) {
       discuss_file_id = new_file_id
       if(discuss_file_id){
@@ -28,10 +24,14 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       } 
     })
   	
+  	//讨论发表内容
   	$scope.discussContent = ''
+  	//讨论字数
   	$scope.discussCount = 0
-  	$scope.discussButton = false
+  	//发表按钮是否隐藏
+  	$scope.discussButton = true
   	
+  	//发表讨论
   	$scope.createUserDiscuss = function(){
   		UserDiscuss.createUserDiscuss({
   			obj_id : discuss_file_id
@@ -44,6 +44,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   		})
   	}
   	
+  	//输入讨论框监控
   	$scope.changeDiscussInput = function(discussContent){
   		$scope.discussCount = discussContent.length
   		if(discussContent.length>200){
