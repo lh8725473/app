@@ -289,11 +289,17 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.discuss_file_id = file_id
       $scope.discussOpened = true
     }
+    
+    //监听message 讨论文件file_id
+    $scope.$on('message_file', function($event, message_file) {
+      $scope.discuss_file_id = message_file
+      $scope.discussOpened = true
+      console.log($scope.discuss_file_id)
+    })
 
     $scope.stopPropagation = function($event, obj) {
       $event.stopPropagation()
       obj.checked = !obj.checked
-
     }
 
     //邀请协作人

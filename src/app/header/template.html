@@ -15,10 +15,58 @@
 			管理控制台
 		</div>
 		<div class="notif_box" class="message-notice pull-right">
-			<span class="notice" title="通知"></span>
-			<label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
-			<span class="message" title="消息"></span>
-			<label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
+		  <div class="message-dropdown" dropdown>
+		    <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
+        <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
+        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+           <li ng-click = "messageDetail(message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }">
+             <a>
+              <div>
+                <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
+                <div class="message-content">
+                  <div class="message-tittle-date">
+                    <label class="message-tittle">{{message.title}}</label>
+                    <label class="message-date">{{message.format_date}}</span>
+                  </div>
+                  <div class="message-msg">
+                    {{message.content}}
+                  </div>
+                  <div class="message-action">
+                    <label class="message-read" ng-click = "toIsRead($event, message)"></label>
+                    <label class="message-delete" ng-click = "deleteMessage($event, message)"></span>
+                  </div>
+                </div>
+              </div>
+             </a>
+           </li>
+        </perfect-scrollbar>
+		  </div>
+		  <div class="notice-dropdown" dropdown>
+			 <span class="notice dropdown-toggle" title="通知" ng-click = "openNoticeList()"></span>
+			 <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
+			 <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }">
+             <a>
+              <div>
+                <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
+                <div class="message-content">
+                  <div class="message-tittle-date">
+                    <label class="message-tittle">{{message.title}}</label>
+                    <label class="message-date">{{message.format_date}}</span>
+                  </div>
+                  <div class="message-msg">
+                    {{message.content}}
+                  </div>
+                  <div class="message-action">
+                    <label class="message-read" ng-click = "toIsRead($event, message)"></label>
+                    <label class="message-delete" ng-click = "deleteMessage($event, message)"></span>
+                  </div>
+                </div>
+              </div>
+             </a>
+           </li>
+       </perfect-scrollbar>
+		  </div>
 		</div>
 	</div>
 	<div class="header-search" role="navigation">

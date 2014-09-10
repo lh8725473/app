@@ -14,7 +14,7 @@ angular.module('App.Contacts').controller('App.Contacts.Controller', [
 
         //联系人列表
        $scope.contactList = Contact.getContactList();
-
+/*
         //添加联系人
         $scope.addContact = function(){
             var addContactModal = $modal.open({
@@ -104,7 +104,7 @@ angular.module('App.Contacts').controller('App.Contacts.Controller', [
                 }
             }
         ]
-
+*/
         //删除联系人
         $scope.deleteContact = function(contact){
             var deleteContactModal = $modal.open({

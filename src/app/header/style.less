@@ -46,6 +46,109 @@
                 line-height: 63px;
                 padding: 0 10px;
             }
+            .dropdown-menu{
+                min-width: 400px;
+                height: 230px;
+                overflow-y: hidden;
+                li{
+                   height: 50px;
+                   margin-right: 5px;
+                   border-bottom: 1px solid #CFCFCF;
+                   padding: 5px;
+                   &.isRead{
+                       opacity: 0.6;
+                   }
+                   a{
+                       height: 100%;
+                       div{
+                           .message-userpic{
+                               margin-top: 5px;
+                               float: left;
+                               margin-left: 5px;
+                           }
+                           .message-content{
+                               float: left;
+                               margin-left: 10px;
+                               font-size: 12px;
+                               width: 340px;
+                               cursor: pointer;
+                               .message-tittle-date{
+                                   font-size: 12px;
+                                   .message-tittle{
+                                       color: #565656;
+                                       width: 210px;
+                                       cursor: pointer;
+                                       text-overflow: ellipsis;
+                                       white-space: nowrap;
+                                       overflow: hidden;
+                                   }
+                                   .message-date{
+                                       float: right;
+                                       color: #565656;
+                                       cursor: pointer;
+                                   }
+                               }
+                               .message-msg{
+                                  text-overflow: ellipsis;
+                                  white-space: nowrap;
+                                  color: #767676;
+                                  overflow: hidden;
+                                  width: 270px;
+                                  float: left;
+                               }
+                               .message-action{
+                                   float: right;
+                                   width: 50px;
+                                   height: 18px;
+                                   .message-read{
+                                       cursor: pointer;
+                                       width: 18px;
+                                       height: 18px;
+                                       background: url('../../images/message_checkbox_btn.png') no-repeat;
+                                       background-position: 0px -55px;
+                                   }
+                                   .message-read:hover{
+                                       background-position: 0px 0px;
+                                   }
+                                   .message-delete{
+                                       cursor: pointer;
+                                       width: 18px;
+                                       height: 18px;
+                                       background: url('../../images/message_checkbox_btn.png') no-repeat;
+                                       background-position: 0px -36px;
+                                       :hover{
+                                           background-position: 0px -18px;
+                                       }
+                                   }
+                                   .message-delete:hover{
+                                       background-position: 0px -18px;
+                                   }
+                               }
+                           }
+                       }
+                   }
+                }
+            }
+            
+            .scroller{
+                min-width: 400px;
+                height: 230px;
+                overflow-y: hidden;
+            }
+            
+            .notice-dropdown{
+                .dropdown-menu{
+                    left: -340px;
+                }
+                float: left;
+            }
+            .message-dropdown{
+                .dropdown-menu{
+                    left: -375px;
+                }
+                float: left;
+            }
+            
             .notice{
                 background: url('../../images/topbar_notification_icon.png') no-repeat;
                 height: 21px;
@@ -57,7 +160,7 @@
             .message{
                 background: url('../../images/topbar_notification_icon.png') no-repeat;
                 background-position: -13px -4px;
-                margin-right: 20px;
+                margin-right: 15px;
                 height: 24px;
                 width: 20px;
                 cursor: pointer;
