@@ -62,7 +62,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           			}
         		})			
   			})
-  		})
+  		}, function (error) {
+	          Notification.show({
+	              title: '失败',
+	              type: 'danger',
+	              msg: error.data.result,
+	              closeable: false
+	          })
+	      }
+  		)
   	}
   	
   	//群组是否展开查看用户
@@ -92,7 +100,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           closeable: true
         })
   		  user.permission_value = permission_value;
-  		})
+  		}, function (error) {
+            Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+            })
+        }
+  		)
   	}
   	
   	//改变群组权限
@@ -117,7 +133,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           closeable: true
         })
         group.permission_value = permission_value;
-      })
+      }, function (error) {
+	            Notification.show({
+	                title: '失败',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+      )
   	}
   	
   	//移除用户协作
@@ -157,7 +181,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               type: 'success',
               msg: '删除协作成功',
               closeable: true
-            })
+            }, function (error) {
+                  Notification.show({
+                      title: '失败',
+                      type: 'danger',
+                      msg: error.data.result,
+                      closeable: false
+                  })
+              }            
+            )
             $modalInstance.close()
           })
         };
@@ -194,7 +226,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           type: 'success',
           msg: '删除协作成功',
           closeable: true
-        })
+        }, function (error) {
+	            Notification.show({
+	                title: '失败',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+        )
       })
   	}
 
@@ -222,7 +262,15 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               closeable: true
             })
             $modalInstance.close()
-          })
+          }, function (error) {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result,
+                    closeable: false
+                })
+            }
+          )
         };
 
         $scope.cancel = function() {

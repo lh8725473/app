@@ -148,7 +148,15 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
                     break
                   }
                 }
-              })
+              }, function (error) {
+                    Notification.show({
+                        title: '失败',
+                        type: 'danger',
+                        msg: error.data.result,
+                        closeable: false
+                    })
+                }
+              )
             }
           })  
           $modalInstance.close()

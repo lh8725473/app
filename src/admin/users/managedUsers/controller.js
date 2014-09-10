@@ -264,7 +264,15 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
             msg: '删除用户成功',
             closeable: true
           })
-        })
+        }, function (error) {
+            Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+            })
+        }
+        )
       })
     }
 

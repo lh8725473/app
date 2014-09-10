@@ -151,7 +151,15 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', [
                         $scope.userListData.push(user)
                       }
                   })
-                })
+                }, function (error) {
+                      Notification.show({
+                          title: '失败',
+                          type: 'danger',
+                          msg: error.data.result,
+                          closeable: false
+                      })
+                  }
+                )
 
                 //显示数据
                 $scope.shownData = $scope.userListData

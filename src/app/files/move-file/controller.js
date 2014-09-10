@@ -60,7 +60,15 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
           parent_id: $scope.folderTree.currentNode.id
         }).$promise.then(function() {
           moved(file_id)
-        })
+        }, function (error) {
+              Notification.show({
+                  title: 'Ê§°Ü',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
+              })
+          }
+        )
       } else {
         Files.updateFile({
           file_id: file_id
@@ -68,7 +76,15 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
           parent_id: $scope.folderTree.currentNode.id
         }).$promise.then(function() {
           moved(file_id)
-        })
+        }, function (error) {
+	            Notification.show({
+	                title: 'Ê§°Ü',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+        )
       }
     }
 

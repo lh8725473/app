@@ -36,7 +36,15 @@ angular.module('App.LinkShare').controller('App.LinkShare.InputPasswordControlle
         $scope.neddPassword = false
         $rootScope.$broadcast('password', md5.createHash(password));
         $cookieStore.put('password', md5.createHash(password))
-      })
+      }, function (error) {
+            Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+            })
+        }
+      )
     }
   }
 ])

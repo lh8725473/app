@@ -250,7 +250,15 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }).$promise.then(function() {
           $scope.checkedObj.file_name = renameInputValue
           $scope.checkedObj.rename = false;
-        })
+        }, function (error) {
+	            Notification.show({
+	                title: '失败',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+        )
       }
     }
 
@@ -300,6 +308,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.stopPropagation = function($event, obj) {
       $event.stopPropagation()
       obj.checked = !obj.checked
+
     }
 
     //邀请协作人

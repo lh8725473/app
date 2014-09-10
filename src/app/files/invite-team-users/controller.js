@@ -190,7 +190,15 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }).$promise.then(function(resUser) {
           $modalInstance.close()
-        })
+        }, function (error) {
+            Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+            })
+        }
+        )
       }
 
       $scope.ok = function() {
