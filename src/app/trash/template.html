@@ -19,7 +19,7 @@
       <span>名称</span>
     </div>
     <div class="title-state col">
-      <span>修改时间</span>           
+      <span>删除时间</span>           
     </div>
     <div class="title-size col">
       <span>大小</span>      
@@ -44,9 +44,7 @@
               <a ng-show = "!recycle.folder&&!recycle.isPreview" ng-class = "{ noPreview: !recycle.isPreview }">
                 {{recycle.file_name}}
               </a>
-              <div class="tag">
-                <span>+添加标签</span>
-              </div>
+            
             </div>
           </div>
           <div class="state-td"> {{recycle.create_uname}}于{{recycle.format_date}}更新 </div>

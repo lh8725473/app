@@ -493,6 +493,12 @@
 
 //邀请协作人
 .invite-team-users{
+    h3{
+      margin-left: 15px;
+    }
+    h5{
+      margin-top: 24px;
+    }
     .modal-dialog {
         width: 100%;
         .modal-content {
@@ -539,10 +545,23 @@
             padding: 0;
             width: 92%;
         }
-        .dropdown-menu{
-            width: 100%;
-            text-align: center;
+        .dropdown{
+          button{
+            text-align: left;
+            span.caret{
+              float: right;
+              margin-top: 8px;
+            }
+          }
+          .dropdown-menu{
+              width: 100%;
+              text-align: left;
+              li{
+                cursor:pointer;
+              }
+          }
         }
+        
         .selectedItem{
             background: none repeat scroll 0 0 #eee;
             border: 1px solid #ccc;
@@ -596,6 +615,7 @@
                 width: 15px;
              }
         }
+      
     }
 }
 
@@ -606,13 +626,23 @@
         .input-group{
             margin-bottom: 5px;
         }
-        .dropdown-menu{
-            text-align: center;
-            width: 100%;
-            li{
-                cursor: pointer;
+        .dropdown{
+          button{
+            text-align: left;
+            span.caret{
+              float: right;
+              margin-top: 8px;
             }
+          }
+          .dropdown-menu{
+              text-align: left;
+              width: 100%;
+              li{
+                  cursor: pointer;
+              }
+          }
         }
+        
         .input-password{
             margin-top: 5px;
         }
