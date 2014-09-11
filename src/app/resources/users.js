@@ -57,7 +57,14 @@ angular.module('App.Resources').factory('Users', [
         params: {
           action: 'info'
         }
+      },
+      avatar: {
+        method: "PUT",
+        params: {
+          action: 'avatar'
+        }
       }
+      
     })
   }  
 ])
