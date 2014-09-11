@@ -7,6 +7,10 @@
         .dropdown-menu{
             li{
                 cursor: pointer;
+                a:hover{
+                    color: #666;
+                    background-color: #EFEFEF;
+                }
             }
         }
         .user-info{
@@ -18,16 +22,21 @@
                 top:30px;
             }
         }
-        
+
+        .slogan {
+            font-size: 12px;
+            margin: 6.5px 20px;
+        }
+
         .to-admin-control{
             cursor: pointer;
             border-right: 1px solid #2273cc;
             border-left: 1px solid #1b599b;
-            font-size: 15px;
+            font-size: 14px;
             padding-right: 10px;
             padding-left: 10px;
             height: 22px;
-            margin-top: 4px;
+            margin-top: 5.5px;
             line-height: 1.3;
         }
         
@@ -46,109 +55,6 @@
                 line-height: 63px;
                 padding: 0 10px;
             }
-            .dropdown-menu{
-                min-width: 400px;
-                height: 230px;
-                overflow-y: hidden;
-                li{
-                   height: 50px;
-                   margin-right: 5px;
-                   border-bottom: 1px solid #CFCFCF;
-                   padding: 5px;
-                   &.isRead{
-                       opacity: 0.6;
-                   }
-                   a{
-                       height: 100%;
-                       div{
-                           .message-userpic{
-                               margin-top: 5px;
-                               float: left;
-                               margin-left: 5px;
-                           }
-                           .message-content{
-                               float: left;
-                               margin-left: 10px;
-                               font-size: 12px;
-                               width: 340px;
-                               cursor: pointer;
-                               .message-tittle-date{
-                                   font-size: 12px;
-                                   .message-tittle{
-                                       color: #565656;
-                                       width: 210px;
-                                       cursor: pointer;
-                                       text-overflow: ellipsis;
-                                       white-space: nowrap;
-                                       overflow: hidden;
-                                   }
-                                   .message-date{
-                                       float: right;
-                                       color: #565656;
-                                       cursor: pointer;
-                                   }
-                               }
-                               .message-msg{
-                                  text-overflow: ellipsis;
-                                  white-space: nowrap;
-                                  color: #767676;
-                                  overflow: hidden;
-                                  width: 270px;
-                                  float: left;
-                               }
-                               .message-action{
-                                   float: right;
-                                   width: 50px;
-                                   height: 18px;
-                                   .message-read{
-                                       cursor: pointer;
-                                       width: 18px;
-                                       height: 18px;
-                                       background: url('../../images/message_checkbox_btn.png') no-repeat;
-                                       background-position: 0px -55px;
-                                   }
-                                   .message-read:hover{
-                                       background-position: 0px 0px;
-                                   }
-                                   .message-delete{
-                                       cursor: pointer;
-                                       width: 18px;
-                                       height: 18px;
-                                       background: url('../../images/message_checkbox_btn.png') no-repeat;
-                                       background-position: 0px -36px;
-                                       :hover{
-                                           background-position: 0px -18px;
-                                       }
-                                   }
-                                   .message-delete:hover{
-                                       background-position: 0px -18px;
-                                   }
-                               }
-                           }
-                       }
-                   }
-                }
-            }
-            
-            .scroller{
-                min-width: 400px;
-                height: 230px;
-                overflow-y: hidden;
-            }
-            
-            .notice-dropdown{
-                .dropdown-menu{
-                    left: -340px;
-                }
-                float: left;
-            }
-            .message-dropdown{
-                .dropdown-menu{
-                    left: -375px;
-                }
-                float: left;
-            }
-            
             .notice{
                 background: url('../../images/topbar_notification_icon.png') no-repeat;
                 height: 21px;
@@ -160,7 +66,7 @@
             .message{
                 background: url('../../images/topbar_notification_icon.png') no-repeat;
                 background-position: -13px -4px;
-                margin-right: 15px;
+                margin-right: 20px;
                 height: 24px;
                 width: 20px;
                 cursor: pointer;
@@ -244,9 +150,9 @@
         
         .userpic {
             float: right;
-            margin-top: -2px;
-            width: 26px;
-            height: 26px;
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
         }
         
     }
@@ -266,8 +172,8 @@
         
         .search{
             position: relative;
-            left: 153px;
-            top: 8px;
+            left: 95px;
+            top: 7px;
             width: 450px;
             .search-text{
                 background: url("../../images/search_icon.png") no-repeat scroll 10px 10px white;
