@@ -122,6 +122,13 @@ angular.module('App.Header').controller('App.Header.Controller', [
     	
     $scope.user = Users.getUserById({id: $scope.id})
     
+    //重载用户头像
+    $scope.$on('updateUserImg', function() {
+      var avatar = $scope.user.avatar
+      $scope.user.avatar = ''
+      $scope.user.avatar = avatar + '&_=' + new Date().getTime()
+    })
+    
     //个人信息
     $scope.userInfoWin = function(){
       var userInfoModal = $modal.open({

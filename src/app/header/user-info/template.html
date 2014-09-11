@@ -8,8 +8,14 @@
   <form role="form" class="form-horizontal link-share-content">
     <h5>个人设置</h5>
     <div class="form-group user-info">
-      <div class="col-sm-3">
-        <img ng-src="{{userInfo.avatar}}" />
+      <div class="col-sm-3 updateImg" ng-click = "updateImg()" title="点击上传新头像">
+        <img ng-src="{{userInfo.avatar}}" height="64px" width="64px"/>
+        <div class="upload-div"
+          ng-file-drop="onFileSelect($files)"
+          ng-file-drag-over-class="drop-box-over"
+          ng-file-drag-over-delay="100"
+          ng-file-select="onFileSelect($files)" title="点击上传新头像">
+        </div>
       </div>
       <div class="col-sm-9">
         <div class="form-group">
