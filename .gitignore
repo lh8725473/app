@@ -6,3 +6,4 @@ node_modules/
 .project
 src/app/app.css
 src/admin/admin.css
+src/linkShare/app.css
