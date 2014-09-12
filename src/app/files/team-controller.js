@@ -185,6 +185,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         resolve: {
           user: function() {
             return user
+          },
+          users: function() {
+            return $scope.users
           }
         }
       })
@@ -195,97 +198,28 @@ angular.module('App.Files').controller('App.Files.TeamController', [
       '$scope',
       '$modalInstance',
       'user',
+      'users',
       function(
         $scope,
         $modalInstance,
-        user
+        user,
+        users
       ) {
-             
+        $scope.users = users
+        $scope.user = user
+
         $scope.ok = function() {
           Share.deleteShare({
             id : folderId,
-            user_id : user.user_id,
-            obj_id : user.obj_id
+            user_id : $scope.user.user_id,
+            obj_id : $scope.user.obj_id
           }).$promise.then(function(reFolder) {
-            Notification.show({
-              title: '成功',
-              type: 'success',
-              msg: '删除协作成功',
-              closeable: true
-            }, function (error) {
-              Notification.show({
-                title: '失败',
-                type: 'danger',
-                msg: error.data.result,
-                closeable: false
-              })
-              }            
-            )
-            $modalInstance.close()
-          })
-        };
-
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
-        }
-      }
-    ]
-
-  	
-  	//移除群组协作
-  	$scope.deleteGroupShare = function(group){
-      var deleteGroupShareModal = $modal.open({
-        templateUrl: 'src/app/files/delete-share-user-confim.html',
-        windowClass: 'delete-share-user',
-        backdrop: 'static',
-        controller: deleteGroupShareController,
-        resolve: {
-          group: function() {
-            return group
-          }
-        }
-      })
-
-
-  		Folders.deleteGroup({
-        folder_id : folderId,
-        group_id : group.group_id,
-        obj_id : group.obj_id
-      }).$promise.then(function() {
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: '删除协作成功',
-          closeable: true
-        }, function (error) {
-          Notification.show({
-            title: '失败',
-            type: 'danger',
-            msg: error.data.result,
-            closeable: false
-          })
-	        }
-        )
-      })
-  	}
-
-    // deleteGroupShare file
-    var deleteGroupShareController = [
-      '$scope',
-      '$modalInstance',
-      'group',
-      function(
-        $scope,
-        $modalInstance,
-        group
-      ) {
-             
-        $scope.ok = function() {
-          Folders.deleteGroup({
-            folder_id : folderId,
-            group_id : group.group_id,
-            obj_id : group.obj_id
-          }).$promise.then(function(reFolder) {
+            for (var i = 0; i < $scope.users.length; ++i) {
+              if ($scope.users[i].user_id == $scope.user.user_id) {
+                $scope.users.splice(i, 1)
+                break
+              }
+            }
             Notification.show({
               title: '成功',
               type: 'success',
@@ -309,20 +243,97 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
       }
     ]
-    
-    //邀请协作人
-    $scope.inviteTeamUsers = function() {
-      var addUserModal = $modal.open({
-        templateUrl: 'src/app/files/invite-team-users/template.html',
-        windowClass: 'invite-team-users',
+
+  	
+  	//移除群组协作
+  	$scope.deleteGroupShare = function(group){
+      var deleteGroupShareModal = $modal.open({
+        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        windowClass: 'delete-share-user',
         backdrop: 'static',
-        controller: 'App.Files.InviteTeamUsersController',
+        controller: deleteGroupShareController,
         resolve: {
-          folderid: function() {
-            return folderId
+          group: function() {
+            return group
+          },
+          groups: function() {
+            return $scope.groups
           }
         }
       })
-    }
+
+/*
+  		Folders.deleteGroup({
+        folder_id : folderId,
+        group_id : group.group_id,
+        obj_id : group.obj_id
+      }).$promise.then(function() {
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '删除协作成功',
+          closeable: true
+        }, function (error) {
+	            Notification.show({
+	                title: '失败',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+        )
+      }) */
+  	}
+
+    // deleteGroupShare file
+    var deleteGroupShareController = [
+      '$scope',
+      '$modalInstance',
+      'group',
+      'groups',
+      function(
+        $scope,
+        $modalInstance,
+        group,
+        groups
+      ) {
+        $scope.group = group
+        $scope.groups = groups
+
+        $scope.ok = function() {
+          Folders.deleteGroup({
+            folder_id : folderId,
+            group_id : $scope.group.group_id,
+            obj_id : $scope.group.obj_id
+          }).$promise.then(function(reFolder) {
+            for (var i = 0; i < $scope.groups.length; ++i) {
+              if ($scope.groups[i].group_id == $scope.group.group_id) {
+                $scope.groups.splice(i, 1)
+                break
+              }
+            }
+            Notification.show({
+              title: '成功',
+              type: 'success',
+              msg: '删除协作成功',
+              closeable: true
+            })
+            $modalInstance.close()
+          }, function (error) {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result,
+                    closeable: false
+                })
+            }
+          )
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
   }
 ])

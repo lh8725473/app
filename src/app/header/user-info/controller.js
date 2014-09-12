@@ -24,15 +24,23 @@ angular.module('App.Header').controller('App.Header.UserInfoController', [
     
     //修改个人信息
     $scope.updateInfo = function(){
-      if($scope.new_password != $scope.confim_password){
+      var msg = ""
+      if($scope.userInfo.new_password != $scope.userInfo.confim_password){
+        msg = "新密码与确认密码不一致";
+      }
+      else if($scope.userInfo.new_password.length < 6 || $scope.userInfo.new_password.length > 16){
+        msg = "密码长度必须为6-16位";
+      }
+      if(msg != ""){
         Notification.show({
           title : '失败',
           type : 'danger',
-          msg : "新密码与确认密码不一致",
+          msg : msg,
           closeable : false
         })
         return;
       }
+
       Users.updateUserInfo({},{
         real_name : $scope.userInfo.real_name,
         phone : $scope.userInfo.phone,
