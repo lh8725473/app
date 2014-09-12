@@ -35,16 +35,13 @@
           <div class="img-name-td">
             <img ng-src = "{{recycle.smallIcon}}" height="42px" width="42px"/>
             <div class="file-name">
-              <a ui-sref="files({folderId: recycle.file_id})" ng-show = "recycle.folder">
+              <a  ng-show = "recycle.folder">
                 {{recycle.folder_name}}
               </a>
-              <a ng-show = "!recycle.folder&&recycle.isPreview" ng-click = "previewFile(recycle)">
+              <a ng-show = "!recycle.folder" >
                 {{recycle.file_name}}
               </a>
-              <a ng-show = "!recycle.folder&&!recycle.isPreview" ng-class = "{ noPreview: !recycle.isPreview }">
-                {{recycle.file_name}}
-              </a>
-            
+
             </div>
           </div>
           <div class="state-td"> {{recycle.create_uname}}于{{recycle.format_date}}更新 </div>
