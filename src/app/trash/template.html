@@ -8,8 +8,8 @@
   </div>
   <div class="buttonGroup">
     <button ng-click="emptyRecycle()" class="btn btn-default">清空</button>
-    <button ng-click='revertRecycle()' class="btn btn-default">还原</button>
-    <button ng-click='deleteRecycle()' class="btn btn-default">彻底删除</button>
+    <button ng-click='revertRecycle()' class="btn btn-default" ng-disabled = "!revertButton">还原</button>
+    <button ng-click='deleteRecycle()' class="btn btn-default" ng-disabled = "!deleteButton">彻底删除</button>
   </div>
   <div class="title">
     <div class="title-checkbox col">
