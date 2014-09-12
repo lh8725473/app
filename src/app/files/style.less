@@ -300,9 +300,9 @@
     }
     
     .groups{
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-right: 6px;
+        padding: 5px 24px 5px 16px;
+        font-size: 12px;
+        color: #666;
         .group-div{
             height: 25px;
             padding-bottom: 5px;
@@ -310,11 +310,14 @@
             .img{
                 cursor: pointer;
                 float: left;
-                width: 50px;
+                width: 44px;
+                margin-right: 11px;
             }
             .group-name{
                 float: left;
                 width: 85px;
+                height: 24px;
+                line-height: 24px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -323,7 +326,10 @@
             .group-permission{
                 float: left;
                 width: 80px;
+                height: 24px;
+                line-height: 24px;
                 position: relative;
+                color: #1f69ba;
                 span{
                     cursor: pointer;
                 }
@@ -334,10 +340,12 @@
                     width: 85px;
                     min-width: 85px;
                     > li > a{
-                        padding: 3px 8px;
+                      font-size: 11px;
+                      padding: 3px 8px;
                     }
-                    > li > a:hover{
-                      background-color: #EFEFEF;
+                    > li > a:hover {
+                      color: #262626;
+                      background-color: #E3E3E3;
                     }
                 }
             }
@@ -345,11 +353,15 @@
                 cursor: pointer;
                 display: none;
                 float: right;
+                height: 24px;
+                line-height: 24px;
             }
         }
-        .group-div:hover{
-            background-color: #ebf1f7;
+
+        > .col-sm-12 {
+          padding-left: 42px;
         }
+        
         .group-div:hover .caret{
             display: inline-block;
         }
@@ -359,13 +371,21 @@
         .group-user{
             padding-top: 5px;
             padding-bottom: 5px;
+            img {
+              margin-right: 11px;
+            }
         }
     }
+    .groups:hover {
+      background-color: #ebf1f7;
+    }
+
     .users{
-        padding-left: 30px;
+        padding-left: 36px;
         padding-top: 5px;
         padding-bottom: 5px;
-        padding-right: 12px;
+        padding-right: 24px;
+        height: 34px;
         font-size: 12px;
         color: #666;
         .img{
@@ -375,6 +395,8 @@
         .user-name{
             float: left;
             width: 85px;
+            height: 24px;
+            line-height: 24px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -384,6 +406,8 @@
             float: left;
             position: relative;
             width: 80px;
+            height: 24px;
+            line-height: 24px;
             color: #1f69ba;
             span{
                 cursor: pointer;
@@ -395,7 +419,12 @@
                 width: 85px;
                 min-width: 85px;
                 > li > a{
-                    padding: 3px 8px;
+                  font-size: 11px;
+                  padding: 3px 8px;
+                }
+                > li > a:hover {
+                  color: #262626;
+                  background-color: #E3E3E3;
                 }
             }
         }
@@ -403,6 +432,8 @@
             float: right;
             cursor: pointer;
             display: none; 
+            height: 24px;
+            line-height: 24px;
         }
     }
     .users:hover{
@@ -415,13 +446,16 @@
             display: inline-block;
         }
     .arrows-img{
-        background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
+        background: url("../../images/arrows.png") no-repeat scroll rgba(0, 0, 0, 0);
+        background-position: 0 -69px;
         cursor: pointer;
         float: left;
         height: 8px;
-        margin-top: 8px;
+        margin-top: 3px;
+        margin-right: 5px;
         transition: -moz-transform 0.2s ease 0s;
         width: 15px;
+        height: 15px;
     }
 }
 
@@ -501,6 +535,7 @@
     }
     .modal-dialog {
         width: 100%;
+
         .modal-content {
             border: none;
             border-radius: none;
@@ -524,10 +559,10 @@
         }
     }
     .invite-form{
+        height: 500px;
         .invite-content{
             width: 360px;
         }
-        height: 460px;
         .input-from-group{
             margin-bottom: 5px;
         }
@@ -549,9 +584,9 @@
           button{
             text-align: left;
             span.caret{
-              float: right;
-              margin-top: 8px;
+              margin-left: 250px;
             }
+            
           }
           .dropdown-menu{
               width: 100%;
@@ -560,6 +595,12 @@
                 cursor:pointer;
               }
           }
+        }
+
+        textarea.comment-input {
+          height: 54px;
+          font-size: 12px;
+          color: #666;
         }
         
         .selectedItem{
@@ -630,8 +671,7 @@
           button{
             text-align: left;
             span.caret{
-              float: right;
-              margin-top: 8px;
+              margin-left: 238px;
             }
           }
           .dropdown-menu{

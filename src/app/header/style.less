@@ -7,6 +7,10 @@
         .dropdown-menu{
             li{
                 cursor: pointer;
+                a:hover {
+                  color: #262626;
+                  background-color: #EFEFEF;
+                }
             }
         }
         .user-info{
@@ -258,22 +262,19 @@
     
     .header-search{
         background: url("../../images/web_topbar_gray.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        float: left;
         height: 48px;
-        
+        width: 100%;
         .logo{
             height: 32px;
             width: 147px;
-            position: relative;
-            left: 20px;
-            top: 8px;
+            margin: 8px 0 0 20px; 
             background: url("../../images/logo.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
         }
         
         .search{
-            position: relative;
-            left: 153px;
-            top: 8px;
             width: 450px;
+            margin: 7px 0 7px 240px;
             .search-text{
                 background: url("../../images/search_icon.png") no-repeat scroll 10px 10px white;
                 float: left;
