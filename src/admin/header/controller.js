@@ -15,9 +15,9 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.backToindex = function(){
   	  window.location.href = 'index.html'
   	}
-
+    
+    //搜索内部用户
     function doSearch(searchInputValue) {
-      $rootScope.searchInputValue = searchInputValue
       $state.go('users.managedUsers', {
         k: searchInputValue
       })

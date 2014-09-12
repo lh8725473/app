@@ -1,19 +1,23 @@
 angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
   '$scope',
+  '$rootScope',
   '$modalInstance',
   'Cloud',
   'folderid',
   'CONFIG',
   '$timeout',
-   "Share",
+  'Share',
+  'Notification',
   function(
     $scope,
+    $rootScope,
     $modalInstance,
     Cloud,
     folderid,
     CONFIG,
     $timeout,
-    Share
+    Share,
+    Notification
   ) {
       $scope.broad = false
       //分享文件夹ID
@@ -190,15 +194,21 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }).$promise.then(function(resUser) {
           $modalInstance.close()
+          Notification.show({
+            title: '成功',
+            type: 'success',
+            msg: '邀请成功',
+            closeable: true
+          })
+          $rootScope.$broadcast('inviteDone');
         }, function (error) {
-            Notification.show({
-                title: '失败',
-                type: 'danger',
-                msg: error.data.result,
-                closeable: false
-            })
-        }
-        )
+          Notification.show({
+            title: '失败',
+            type: 'danger',
+            msg: error.data.result,
+            closeable: false
+          })
+        })
       }
 
       $scope.ok = function() {

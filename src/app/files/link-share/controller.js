@@ -22,7 +22,9 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         $scope.selectedEmails = []
 
         $scope.today = function() {
-          $scope.dt = new Date()
+          var today = new Date()
+          today.setTime(today.getTime()+ (7*24*60*60*1000)) 
+          $scope.dt = today
         };
         $scope.today()
 

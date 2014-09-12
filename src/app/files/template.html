@@ -180,7 +180,7 @@
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
 			<span class="pull-left">全部协作人</span>
-			<a class="pull-right">增加协作人</a>
+			<a class="pull-right" ng-click = "inviteTeamUsers()">增加协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">

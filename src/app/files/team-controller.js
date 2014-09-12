@@ -48,30 +48,61 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   			angular.forEach($scope.groups, function(group){
   				group.show = false
   				//群组权限
-        		angular.forEach($scope.permission_key, function(key, index) {
-          			if(key == group.permission){
-            			group.permission_value = $scope.permission_value[index]
-          			}
-        		})			
+      		angular.forEach($scope.permission_key, function(key, index) {
+      			if(key == group.permission){
+        			group.permission_value = $scope.permission_value[index]
+      			}
+      		})			
   			})
   			angular.forEach($scope.users, function(user){
   				//人员权限
+  				if(user.owner_uid == user.user_id){//拥有者
+  				  user.permission_value = '拥有者'
+  				}else{
         		angular.forEach($scope.permission_key, function(key, index) {
-          			if(key == user.permission){
-            			user.permission_value = $scope.permission_value[index]
-          			}
-        		})			
+              if(key == user.permission){
+                user.permission_value = $scope.permission_value[index]
+              }                    
+        		})	  
+  				}
   			})
-  		}, function (error) {
-	          Notification.show({
-	              title: '失败',
-	              type: 'danger',
-	              msg: error.data.result,
-	              closeable: false
-	          })
-	      }
-  		)
+  		})
   	}
+  	
+  	//邀请协作成功后重新渲染
+  	$scope.$on('inviteDone', function($event, $files) {
+  	  if(folderId != 0){  
+    	  $scope.shareObj = Folders.queryShareObj({
+          folder_id : folderId
+        })
+        
+        $scope.shareObj.$promise.then(function(shareObj){
+          $scope.users = shareObj.list.users
+          $scope.groups = shareObj.list.groups
+          angular.forEach($scope.groups, function(group){
+            group.show = false
+            //群组权限
+            angular.forEach($scope.permission_key, function(key, index) {
+              if(key == group.permission){
+                group.permission_value = $scope.permission_value[index]
+              }
+            })      
+          })
+          angular.forEach($scope.users, function(user){
+            //人员权限
+            if(user.owner_uid == user.user_id){//拥有者
+              user.permission_value = '拥有者'
+            }else{
+              angular.forEach($scope.permission_key, function(key, index) {
+                if(key == user.permission){
+                  user.permission_value = $scope.permission_value[index]
+                }                    
+              })    
+            }     
+          })
+        })
+  	  }
+  	})
   	
   	//群组是否展开查看用户
   	$scope.changeGroupshow = function(group){
@@ -101,12 +132,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         })
   		  user.permission_value = permission_value;
   		}, function (error) {
-            Notification.show({
-                title: '失败',
-                type: 'danger',
-                msg: error.data.result,
-                closeable: false
-            })
+          Notification.show({
+            title: '失败',
+            type: 'danger',
+            msg: error.data.result,
+            closeable: false
+          })
         }
   		)
   	}
@@ -134,12 +165,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         })
         group.permission_value = permission_value;
       }, function (error) {
-	            Notification.show({
-	                title: '失败',
-	                type: 'danger',
-	                msg: error.data.result,
-	                closeable: false
-	            })
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
 	        }
       )
   	}
@@ -147,7 +178,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//移除用户协作
   	$scope.deleteUserShare = function(user){
       var deleteUserShareModal = $modal.open({
-        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        templateUrl: 'src/app/files/delete-share-user-confim.html',
         windowClass: 'delete-share-user',
         backdrop: 'static',
         controller: deleteUserShareController,
@@ -182,12 +213,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               msg: '删除协作成功',
               closeable: true
             }, function (error) {
-                  Notification.show({
-                      title: '失败',
-                      type: 'danger',
-                      msg: error.data.result,
-                      closeable: false
-                  })
+              Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+              })
               }            
             )
             $modalInstance.close()
@@ -204,7 +235,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//移除群组协作
   	$scope.deleteGroupShare = function(group){
       var deleteGroupShareModal = $modal.open({
-        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        templateUrl: 'src/app/files/delete-share-user-confim.html',
         windowClass: 'delete-share-user',
         backdrop: 'static',
         controller: deleteGroupShareController,
@@ -227,12 +258,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           msg: '删除协作成功',
           closeable: true
         }, function (error) {
-	            Notification.show({
-	                title: '失败',
-	                type: 'danger',
-	                msg: error.data.result,
-	                closeable: false
-	            })
+          Notification.show({
+            title: '失败',
+            type: 'danger',
+            msg: error.data.result,
+            closeable: false
+          })
 	        }
         )
       })
@@ -263,12 +294,12 @@ angular.module('App.Files').controller('App.Files.TeamController', [
             })
             $modalInstance.close()
           }, function (error) {
-                Notification.show({
-                    title: '失败',
-                    type: 'danger',
-                    msg: error.data.result,
-                    closeable: false
-                })
+              Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+              })
             }
           )
         };
@@ -278,5 +309,20 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
       }
     ]
+    
+    //邀请协作人
+    $scope.inviteTeamUsers = function() {
+      var addUserModal = $modal.open({
+        templateUrl: 'src/app/files/invite-team-users/template.html',
+        windowClass: 'invite-team-users',
+        backdrop: 'static',
+        controller: 'App.Files.InviteTeamUsersController',
+        resolve: {
+          folderid: function() {
+            return folderId
+          }
+        }
+      })
+    }
   }
 ])

@@ -18,10 +18,10 @@
     </div>
     <div class="top-bar-bottom"></div>
     <div class="buttonGroup">
-      <button ng-click="upload()" class="btn btn-default" ng-disabled="isRoot">
+      <button ng-click="upload()" class="btn btn-default" ng-disabled="isRoot || !uploadButton">
         上传文件
       </button>
-      <button ng-click='downloadFile()' class="btn btn-default">
+      <button ng-click='downloadFile()' class="btn btn-default" ng-disabled = "!dowloadButton">
         下载文件
       </button>
     </div>

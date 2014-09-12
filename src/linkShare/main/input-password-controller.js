@@ -8,6 +8,7 @@ angular.module('App.LinkShare').controller('App.LinkShare.InputPasswordControlle
   '$state',
   'md5',
   '$cookieStore',
+  'Notification',
   function(
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ angular.module('App.LinkShare').controller('App.LinkShare.InputPasswordControlle
     $modal,
     $state,
     md5,
-    $cookieStore
+    $cookieStore,
+    Notification
   ) {
     
     $scope.$on('neddPassword', function($event, neddPassword) {
