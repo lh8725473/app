@@ -158,10 +158,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //新建文件夹
-    $scope.createFolderName = ''
+    $scope.createFolderData = {
+      createFolderName:''
+    }
     $scope.showCreateFolderDiv = false
     $scope.showCreateFolder = function() {
-      $scope.createFolderName = ''
+      $scope.createFolderData.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
     $scope.cancelCreate = function() {

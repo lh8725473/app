@@ -48,9 +48,9 @@
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
-							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
+							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderData.createFolderName" >
 							<div class="create-buttonGroup col-sm-6">
-								<button ng-click="createFolder(createFolderName)" class="btn btn-default">
+								<button ng-click="createFolder(createFolderData.createFolderName)" class="btn btn-default">
 									确定
 								</button>
 								<button ng-click="cancelCreate()" class="btn btn-default">
