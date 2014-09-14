@@ -10,6 +10,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   '$timeout',
   '$modal',
   'Notification',
+  '$state',
   function(
     $scope,
     $rootScope,
@@ -21,7 +22,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
     Message,
     $timeout,
     $modal,
-    Notification
+    Notification,
+    $state
   ) {
     $scope.toLogin = function(){
       $cookieStore.removeCookie('accessToken')
@@ -128,6 +130,22 @@ angular.module('App.Header').controller('App.Header.Controller', [
       $scope.user.avatar = ''
       $scope.user.avatar = avatar + '&_=' + new Date().getTime()
     })
+    
+    //搜索文件或者文件夹
+    function doSearch(searchFilesValue) {
+      $state.go('files', {
+        k: searchFilesValue
+      })
+      $rootScope.$broadcast('searchFilesValue', searchFilesValue);
+    }
+    
+    $scope.searchByKeyDown = function($event, searchFilesValue){
+      if ($event.which === 13) {
+        doSearch(searchFilesValue)
+      }
+    }
+    
+    $scope.searchByButton = doSearch
     
     //个人信息
     $scope.userInfoWin = function(){

@@ -72,9 +72,9 @@
 	</div>
 	<div class="header-search" role="navigation">
 		<div class="logo pull-left"></div>
-		<div class="search">
-			<input type="text" placeholder="搜索文件" class="search-text form-control">
-			<button class="search-button btn btn-default">
+		<div class="search pull-left">
+			<input type="text" placeholder="搜索文件或者文件夹" class="search-text form-control" ng-model = "searchFilesValue" ng-keydown = "searchByKeyDown($event,searchFilesValue)">
+			<button class="search-button btn btn-default" ng-click = "searchByButton(searchFilesValue)">
 				搜索
 			</button>
 		</div>

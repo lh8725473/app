@@ -87,6 +87,23 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
     })
     
     $scope.linkDetail.$promise.then(function(linkDetail) {
+      if(linkDetail.permission == '0000001'){//仅上传权限
+        $scope.uploadButton = true
+        $scope.dowloadButton = false
+      }
+      if(linkDetail.permission == '0000100'){//仅预览权限
+        $scope.uploadButton = false
+        $scope.dowloadButton = false
+      }
+      if(linkDetail.permission == '0001110'){//仅预览权限
+        $scope.uploadButton = false
+        $scope.dowloadButton = true
+      }
+      if(linkDetail.permission == '0001111'){//可预览、下载和上传权限
+        $scope.uploadButton = true
+        $scope.dowloadButton = true
+      }
+      
       if(linkDetail.comment==''){
         linkDetail.comment = 'Ta很懒什么也没留下'
       }

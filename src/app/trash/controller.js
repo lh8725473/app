@@ -50,11 +50,22 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
       })
     })
     
+    $scope.revertButton = false
+    $scope.deleteButton = false
     //点击选择或者取消选中文件
     $scope.selectRecycle = function($event, recycle){
       //阻止时间冒泡
       $event.stopPropagation()
       recycle.checked = !recycle.checked
+      for (var i = 0; i < $scope.recycleList.length; i++) {
+        if($scope.recycleList[i].checked){
+          $scope.revertButton = true
+          $scope.deleteButton = true
+          break
+        }
+        $scope.revertButton = false
+        $scope.deleteButton = false
+      }
     }
     
     //全部选择状态
@@ -64,6 +75,15 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
       angular.forEach($scope.recycleList, function(recycle) {
         recycle.checked = !$scope.selectedAll
       })
+      for (var i = 0; i < $scope.recycleList.length; i++) {
+        if($scope.recycleList[i].checked){
+          $scope.revertButton = true
+          $scope.deleteButton = true
+          break
+        }
+        $scope.revertButton = false
+        $scope.deleteButton = false
+      }
     }
      
     //清空回收站
