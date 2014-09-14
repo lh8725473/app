@@ -51,12 +51,12 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
           });
         })(file);
         $scope.files.push(file)
-        $q.all($scope.files.map(function(file) {
-          return file.upload
-        })).finally(function() {
-          $rootScope.$broadcast('uploadFilesDone');
-        })
       }
+      $q.all($scope.files.map(function(file) {
+        return file.upload
+      })).finally(function() {
+        $rootScope.$broadcast('uploadFilesDone');
+      })
     })
     
     $scope.$on('uploadNewFile', function($event, $files, file_id) {
