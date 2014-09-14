@@ -178,7 +178,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//移除用户协作
   	$scope.deleteUserShare = function(user){
       var deleteUserShareModal = $modal.open({
-        templateUrl: 'src/app/files/delete-share-user-confim.html',
+        templateUrl: 'src/app/files/delete-share-user-confirm.html',
         windowClass: 'delete-share-user',
         backdrop: 'static',
         controller: deleteUserShareController,
@@ -248,7 +248,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//移除群组协作
   	$scope.deleteGroupShare = function(group){
       var deleteGroupShareModal = $modal.open({
-        templateUrl: 'src/app/Files/delete-share-user-confim.html',
+        templateUrl: 'src/app/files/delete-share-user-confirm.html',
         windowClass: 'delete-share-user',
         backdrop: 'static',
         controller: deleteGroupShareController,
