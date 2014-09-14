@@ -19,8 +19,8 @@
 	  
 	</div>
 	<div class="buttonGroup">
-       <button ng-click="upload()" class="btn btn-default">上传文件</button>
-		<button ng-click='showCreateFolder()' class="btn btn-default">
+    <button ng-click="upload()" class="btn btn-default">上传文件</button>
+		<button ng-click="showCreateFolder()" class="btn btn-default">
 			新建文件夹
 		</button>
 	</div>
@@ -79,12 +79,12 @@
 								</div>
 							</div>
 							<div class="rename-form" ng-show = "obj.rename">
-								<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
+								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue" >
 								<div class="rename-buttonGroup">
-									<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+									<button ng-click="renameFile($event, obj)" class="btn btn-default">
 										确定
 									</button>
-									<button ng-click="cancleRenameFile()" class="btn btn-default">
+									<button ng-click="cancleRenameFile($event, obj)" class="btn btn-default">
 										取消
 									</button>
 								</div>
@@ -101,7 +101,7 @@
 							<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
 							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
 							  <span>{{obj.user_count}}</span>
-							<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
+							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj.file_id)"></div>
 							  <span>{{obj.discuss_count}} </span>		
 						</div>
 					</div>
@@ -179,7 +179,7 @@
 	</div>
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
-			<span class="pull-left">全部协作人</span>
+			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
 			<a class="pull-right" ng-click = "inviteTeamUsers()">增加协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >

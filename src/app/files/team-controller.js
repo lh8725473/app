@@ -29,17 +29,17 @@ angular.module('App.Files').controller('App.Files.TeamController', [
     })
   	
   	//当前所在文件夹目录
-  	var folderId = $state.params.folderId || 0;
+  	var folder_id = $state.params.folderId || 0;
   	
-  	if(folderId == 0){
+  	if(folder_id == 0){
   		$scope.isRoot = true
   	}else{
   		$scope.isRoot = false
   	}
   	
-  	if(folderId != 0){
+  	if(folder_id != 0){
   		$scope.shareObj = Folders.queryShareObj({
-  			folder_id : folderId
+  			folder_id : folder_id
   		})
   	
   		$scope.shareObj.$promise.then(function(shareObj){
@@ -71,9 +71,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	
   	//邀请协作成功后重新渲染
   	$scope.$on('inviteDone', function($event, $files) {
-  	  if(folderId != 0){  
+  	  if(folder_id != 0){  
     	  $scope.shareObj = Folders.queryShareObj({
-          folder_id : folderId
+          folder_id : folder_id
         })
         
         $scope.shareObj.$promise.then(function(shareObj){
@@ -118,7 +118,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   			}
   		})
   		Share.update({
-  			id : folderId
+  			id : folder_id
   		},{
   			user_id : user.user_id,
   			permission : user.permission,
@@ -151,7 +151,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
       })
       Folders.updateGroup({
-        folder_id : folderId
+        folder_id : folder_id
       },{
         group_id : group.group_id,
         permission : group.permission,
@@ -210,7 +210,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
 
         $scope.ok = function() {
           Share.deleteShare({
-            id : folderId,
+            id : folder_id,
             user_id : $scope.user.user_id,
             obj_id : $scope.user.obj_id
           }).$promise.then(function(reFolder) {
@@ -264,7 +264,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
 
 /*
   		Folders.deleteGroup({
-        folder_id : folderId,
+        folder_id : folder_id,
         group_id : group.group_id,
         obj_id : group.obj_id
       }).$promise.then(function() {
@@ -302,7 +302,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
 
         $scope.ok = function() {
           Folders.deleteGroup({
-            folder_id : folderId,
+            folder_id : folder_id,
             group_id : $scope.group.group_id,
             obj_id : $scope.group.obj_id
           }).$promise.then(function(reFolder) {
@@ -335,5 +335,27 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
       }
     ]
+    
+    //邀请协作人
+    $scope.inviteTeamUsers = function() {
+      var addUserModal = $modal.open({
+        templateUrl: 'src/app/files/invite-team-users/template.html',
+        windowClass: 'invite-team-users',
+        backdrop: 'static',
+        controller: 'App.Files.InviteTeamUsersController',
+        resolve: {
+          folder_id: function() {
+            return folder_id
+          },
+          folder_name: function() {
+            return Folders.folderView({
+              folder_id: folder_id
+            }).$promise.then(function(folder) {
+              return folder.folder_name
+            })
+          }
+        }
+      })
+    }
   }
 ])
