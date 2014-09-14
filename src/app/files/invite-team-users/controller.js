@@ -59,9 +59,10 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       //删除选中的人员
       $scope.deleteSelectedUser = function(user) {
         for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
-          if ((user.user_id && $scope.invitedList.userList[i].user_id == user.user_id) || (user.email && $scope.invitedList.userList[i].email == user.email))
+          if ((user.user_id && $scope.invitedList.userList[i].user_id == user.user_id) || (user.email && $scope.invitedList.userList[i].email == user.email)){
             user.selected = false
-          break
+            break
+          }
         }
         $scope.invitedList.userList.splice(i, 1)
       }
@@ -69,9 +70,10 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       //删除选中的组
       $scope.deleteSelectedGroup = function(group) {
         for (var i = 0; i < $scope.invitedList.groupList.length; ++i) {
-          if ($scope.invitedList.groupList[i].group_id == group.group_id)
+          if ($scope.invitedList.groupList[i].group_id == group.group_id){
             group.selected = false
-          break
+            break
+          }
         }
         $scope.invitedList.groupList.splice(i, 1)
       }
