@@ -164,7 +164,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
-    $scope.cancleCreate = function() {
+    $scope.cancelCreate = function() {
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
     $scope.createFolder = function(createFolderName) {
@@ -316,7 +316,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     }
 
-    $scope.cancleRenameFile = function($event, obj) {
+    $scope.cancelRenameFile = function($event, obj) {
       $event.stopPropagation()
       obj.rename = false
     }
