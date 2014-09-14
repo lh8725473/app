@@ -1,3 +1,3 @@
 angular.module('App.Files', ["ngClipboard"]).config(['ngClipProvider', function(ngClipProvider) {
-    ngClipProvider.setPath("../admin/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+    ngClipProvider.setPath("./bower_components/zeroclipboard/dist/ZeroClipboard.swf");
   }]);

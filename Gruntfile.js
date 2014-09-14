@@ -59,6 +59,14 @@ module.exports = function(grunt) {
           src: ['fonts/**'],
           dest: 'production/css/'
         }]
+      },
+      ZeroClipboard: {
+        files: [{
+          expand: true,
+          cwd: './',
+          src: ['bower_components/zeroclipboard/dist/ZeroClipboard.swf'],
+          dest: 'production/'
+        }]
       }
     },
     clean: {
