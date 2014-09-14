@@ -1,7 +1,7 @@
 <div class="sidebar-view" ng-controller="App.Sidebar.Controller">
   <ul class="nav nav-sidebar">
     <li ng-class="{ active: $state.includes('files') }">
-      <a ui-sref="files" class="files">
+      <a ui-sref="files({folderId:0})" class="files">
         <span class="files-img"></span>
           所有文件
       </a>
