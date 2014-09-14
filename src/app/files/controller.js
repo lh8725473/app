@@ -15,6 +15,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
   'UserDiscuss',
   '$stateParams',
   'Search',
+  'Cloud',
   function(
     $scope,
     $state,
@@ -31,7 +32,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     Utils,
     UserDiscuss,
     $stateParams,
-    Search
+    Search,
+    Cloud
   ) {
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
@@ -156,8 +158,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //新建文件夹
+    $scope.createFolderName = ''
     $scope.showCreateFolderDiv = false
     $scope.showCreateFolder = function() {
+      $scope.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
     $scope.cancleCreate = function() {
@@ -267,30 +271,39 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.renameFileForm = function() {
       $scope.checkedObj.rename = true
       if ($scope.checkedObj.isFolder == 1) { //文件夹
-        $scope.renameInputValue = $scope.checkedObj.folder_name
+        $scope.checkedObj.renameInputValue = $scope.checkedObj.folder_name
       } else {
-        $scope.renameInputValue = $scope.checkedObj.file_name
+        var file_name = $scope.checkedObj.file_name
+        //获取后缀名
+        var extStart = file_name.lastIndexOf(".")
+        var ext = file_name.substring(extStart,file_name.length)
+        $scope.checkedObj.renameInputValue = file_name.substring(0, extStart)
       }
     }
 
-    $scope.renameFile = function(renameInputValue) {
-      if ($scope.checkedObj.isFolder == 1) { //文件夹
+    $scope.renameFile = function($event, obj) {
+      $event.stopPropagation()
+      if (obj.isFolder == 1) { //文件夹
         FolderAction.updateFolder({
-          folder_id: $scope.checkedObj.folder_id
+          folder_id: obj.folder_id
         }, {
-          folder_name: renameInputValue
+          folder_name: obj.renameInputValue
         }).$promise.then(function() {
-          $scope.checkedObj.folder_name = renameInputValue
-          $scope.checkedObj.rename = false;
+          obj.folder_name = obj.renameInputValue
+          obj.rename = false;
         })
       } else {
+        var file_name = obj.file_name
+        //获取后缀名
+        var extStart = file_name.lastIndexOf(".")
+        var ext = file_name.substring(extStart,file_name.length)
         Files.updateFile({
-          file_id: $scope.checkedObj.file_id
+          file_id: obj.file_id
         }, {
-          file_name: renameInputValue
+          file_name: obj.renameInputValue + ext
         }).$promise.then(function() {
-          $scope.checkedObj.file_name = renameInputValue
-          $scope.checkedObj.rename = false;
+          obj.file_name = obj.renameInputValue + ext
+          obj.rename = false;
         }, function (error) {
             Notification.show({
               title: '失败',
@@ -303,8 +316,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     }
 
-    $scope.cancleRenameFile = function() {
-      $scope.checkedObj.rename = false
+    $scope.cancleRenameFile = function($event, obj) {
+      $event.stopPropagation()
+      obj.rename = false
     }
 
 
@@ -359,8 +373,11 @@ angular.module('App.Files').controller('App.Files.Controller', [
         backdrop: 'static',
         controller: 'App.Files.InviteTeamUsersController',
         resolve: {
-          folderid: function() {
+          folder_id: function() {
             return obj.folder_id
+          },
+          folder_name: function() {
+            return obj.folder_name
           }
         }
       })
@@ -379,7 +396,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
             return obj
           },
           users: function() {
-            return Users.query().$promise;
+            return Cloud.cloudUserList().$promise.then(function(cloudUser) {
+              return cloudUser.list.users
+            })
           }
         }
       })

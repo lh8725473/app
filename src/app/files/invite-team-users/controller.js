@@ -3,7 +3,8 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
   '$rootScope',
   '$modalInstance',
   'Cloud',
-  'folderid',
+  'folder_id',
+  'folder_name',
   'CONFIG',
   '$timeout',
   'Share',
@@ -13,7 +14,8 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
     $rootScope,
     $modalInstance,
     Cloud,
-    folderid,
+    folder_id,
+    folder_name,
     CONFIG,
     $timeout,
     Share,
@@ -21,7 +23,9 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
   ) {
       $scope.broad = false
       //分享文件夹ID
-      $scope.folderid = folderid
+      $scope.folder_id = folder_id
+      //分享文件夹名字
+      $scope.folder_name = folder_name
       //权限
       $scope.permission_key = CONFIG.PERMISSION_KEY
       $scope.permission_value = CONFIG.PERMISSION_VALUE
@@ -55,7 +59,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       //删除选中的人员
       $scope.deleteSelectedUser = function(user) {
         for (var i = 0; i < $scope.invitedList.userList.length; ++i) {
-          if ($scope.invitedList.userList[i].user_id == user.user_id || $scope.invitedList.userList[i].email == user.email)
+          if ((user.user_id && $scope.invitedList.userList[i].user_id == user.user_id) || (user.email && $scope.invitedList.userList[i].email == user.email))
             user.selected = false
           break
         }
@@ -74,7 +78,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
 
       //协作 人员和组的接口
       $scope.cloudUserList = Cloud.cloudUserList({
-        folder_id: $scope.folderid
+        folder_id: $scope.folder_id
       })
 
       $scope.cloudUserList.$promise.then(function(cloudUser) {
@@ -187,7 +191,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           permission: $scope.selectedPermissionKey,
           obj_type: "folder",
           comment: $scope.comment,
-          obj_id: $scope.folderid,
+          obj_id: $scope.folder_id,
           list: {
             users: toUserList,
             groups: toGroupList
@@ -213,7 +217,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
 
       $scope.ok = function() {
         console.log(currentNode)
-        $modalInstance.close(folderid)
+        $modalInstance.close(folder_id)
       }
 
       $scope.cancel = function() {
