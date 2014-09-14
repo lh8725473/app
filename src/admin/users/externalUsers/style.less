@@ -6,26 +6,28 @@
   .buttonGroup{
       border-bottom: 1px solid #afafaf;
       margin-left: 40px;
+      margin-right: 40px;
       padding-bottom: 9px;
       padding-left: 57px;
       padding-top: 9px;
-      width: 90%;
       height: 53px;
   }
   .groupGridStyle {
-    bottom: 40px;
+    bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
     top: 53px;
-    width: 90%;
     padding-left: 97px;
+    padding-right: 97px;
     .ngVerticalBarVisible{
         width: 0;
     }
     .ngCellText{
-        border-bottom: 1px solid #cfcfcf;
+        border-bottom: 1px solid #E8E8E8;
         padding-top: 20px;
+        font-size: 12px;
+        color: #666;
      }
      .ngHeaderCell{
         border-bottom: 1px solid #afafaf;
@@ -33,6 +35,8 @@
      .user-name{
         padding-top: 10px;
         padding-bottom: 9px;
+        font-size: 14px;
+        color: #000;
      }
      .groups-name{
         padding-top: 10px;
@@ -49,8 +53,11 @@
         padding-left: 0px;
      }
      
-     .ngRow.even {     
+     .ngRow {     
          background-color: white;
+      }
+      .ngRow:hover {
+        background-color: #ebf1f7;
       }
       
       .ngTopPanel {
