@@ -33,7 +33,7 @@ angular.module('App.Widgets').factory('Notification', [
       show: function(notification) {
         var notificationModal = $modal.open({
           backdrop: false,
-          templateUrl: 'src/admin/widgets/notification/template.html',
+          templateUrl: 'src/app/widgets/notification/template.html',
           windowClass: 'notification-modal-view',
           controller: notificationModalController,
           resolve: {
