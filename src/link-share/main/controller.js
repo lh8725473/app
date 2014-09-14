@@ -192,7 +192,7 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
     //上传文件
     $scope.upload = function() {
       var uploadModal = $modal.open({
-        templateUrl: 'src/linkShare/main/modal-upload.html',
+        templateUrl: 'src/link-share/main/modal-upload.html',
         windowClass: 'modal-upload',
         backdrop: 'static',
         controller: uploadModalController,

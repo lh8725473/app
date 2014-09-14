@@ -102,6 +102,9 @@
     </style>
 
     <script type="text/javascript">
+      var config = {
+        API_ROOT: 'http://101.231.216.75:8888/api'
+      }
       function createCookie(name, value, days) {
         if (days) {
           var date = new Date();
@@ -219,7 +222,7 @@
             'device_info' : 'browser'
           };
           $.ajax({
-            url : 'http://101.231.216.75:8888/api' + '/user/login',
+            url : config.API_ROOT + '/user/login',
             type : 'post',
             dataType : 'json',
             data : data
@@ -279,7 +282,7 @@
               'device_info' : 'browser'
             };
             $.ajax({
-              url : 'http://101.231.216.75:8888/api' + '/user/login',
+              url : config.API_ROOT + '/user/login',
               type : 'post',
               dataType : 'json',
               data : data

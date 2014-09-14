@@ -67,7 +67,7 @@ angular.module('App', [
     $stateProvider
       .state('shares', {
         url: '/:key/:folderId',
-        templateUrl: 'src/linkShare/main/template.html'
+        templateUrl: 'src/link-share/main/template.html'
       })
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     $httpProvider.interceptors.push('httpInterceptor')
