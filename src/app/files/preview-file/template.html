@@ -1,7 +1,7 @@
 <div class="modal-body">
   <div class="preview-view col-sm-10">
     <div class="modal-header">
-      <button class="btn btn-default upload-new-version" type="button" ng-click="cancel()">
+      <button class="btn btn-default upload-new-version" type="button" ng-click="upload()">
                    上传新版本
       </button>
       <h3 class="modal-title">"{{obj.file_name}}"文件预览</h3>
@@ -12,7 +12,7 @@
     <div class="txt-preview" ng-show = "fileType == 'txt'" ng-bind-html = "previewValue">
 
     </div>
-    <div class="office-preview" ng-show = "fileType == 'office'" ng-bind-html = "previewValue">
+    <div class="office-preview" ng-show = "fileType == 'office' || fileType == 'pdf'" ng-bind-html = "previewValue">
 
     </div>
   </div>
@@ -46,11 +46,16 @@
       <label class="pull-right">{{discussCount}}/200</label>
     </div>
     <div class="version" ng-show = "navType == 'ver'">
-      <div ng-repeat="fileHistory in fileHistoryList" class="disc-item">
-        <div class="disc-box">
-          <div class="disc-name">{{fileHistory.file_name}}</div>
-          <div class="disc-time">{{fileHistory.format_size}}</div>
-          <div class="disc-content">{{fileHistory.content}}</div>
+      <div ng-repeat="fileHistory in fileHistoryList" class="version-item">
+        <div class="time-user">
+          <div class="version-time">{{fileHistory.format_date}}</div>
+          <div class="version-user">{{fileHistory.user_name}}</div>
+        </div>
+        <div class="name-size-action">
+          <div class="version-size">{{fileHistory.format_size}}</div>
+          <div class="version-action">
+            <a ng-click = "downLoadHistory(fileHistory)">下载</a>
+          </div>
         </div>
       </div>
     </div>

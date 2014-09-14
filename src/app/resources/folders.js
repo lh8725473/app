@@ -49,6 +49,13 @@ angular.module('App.Resources').factory('Folders', [
           action: 'deleteGroup',
           folder_id: 0
         }
+      },
+      folderView: {
+        method: "GET",
+        params: {
+          action: 'view',
+          folder_id: 0
+        }
       }
     })
   }  

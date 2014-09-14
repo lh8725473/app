@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         files: {
           'src/admin/admin.css': 'src/admin/admin.less',
           'src/app/app.css': 'src/app/app.less',
-          'src/linkShare/app.css': 'src/linkShare/app.less'
+          'src/link-share/link-share.css': 'src/link-share/link-share.less'
         },
         options: {
           modifyVars: {
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         files: {
           'src/admin/admin.css': 'src/admin/admin.less',
           'src/app/app.css': 'src/app/app.less',
-          'src/linkShare/app.css': 'src/linkShare/app.less'
+          'src/link-share/link-share.css': 'src/link-share/link-share.less'
         },
         options: {
           modifyVars: {
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
         files: {
           'production/admin.html': ['src/admin/**/*.html'],
           'production/index.html': ['src/app/**/*.html'],
-          'production/link.html': ['src/linkShare/**/*.html']
+          'production/link.html': ['src/link-share/**/*.html']
         }
       },
       options: {

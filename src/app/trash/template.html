@@ -8,18 +8,18 @@
   </div>
   <div class="buttonGroup">
     <button ng-click="emptyRecycle()" class="btn btn-default">清空</button>
-    <button ng-click='revertRecycle()' class="btn btn-default">还原</button>
-    <button ng-click='deleteRecycle()' class="btn btn-default">彻底删除</button>
+    <button ng-click='revertRecycle()' class="btn btn-default" ng-disabled = "!revertButton">还原</button>
+    <button ng-click='deleteRecycle()' class="btn btn-default" ng-disabled = "!deleteButton">彻底删除</button>
   </div>
   <div class="title">
     <div class="title-checkbox col">
       <input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
     </div>
     <div class="title-name col">
-      <span>名称</span>
+      <span>文件名</span>
     </div>
     <div class="title-state col">
-      <span>修改时间</span>           
+      <span>删除时间</span>           
     </div>
     <div class="title-size col">
       <span>大小</span>      
@@ -35,18 +35,13 @@
           <div class="img-name-td">
             <img ng-src = "{{recycle.smallIcon}}" height="42px" width="42px"/>
             <div class="file-name">
-              <a ui-sref="files({folderId: recycle.file_id})" ng-show = "recycle.folder">
+              <a  ng-show = "recycle.folder">
                 {{recycle.folder_name}}
               </a>
-              <a ng-show = "!recycle.folder&&recycle.isPreview" ng-click = "previewFile(recycle)">
+              <a ng-show = "!recycle.folder" >
                 {{recycle.file_name}}
               </a>
-              <a ng-show = "!recycle.folder&&!recycle.isPreview" ng-class = "{ noPreview: !recycle.isPreview }">
-                {{recycle.file_name}}
-              </a>
-              <div class="tag">
-                <span>+添加标签</span>
-              </div>
+
             </div>
           </div>
           <div class="state-td"> {{recycle.create_uname}}于{{recycle.format_date}}更新 </div>

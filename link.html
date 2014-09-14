@@ -9,14 +9,14 @@
   <title>Admin Console of Act</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- build:css css/linkShare/linkShare.css -->
+  <!-- build:css css/link-share/link-share.css -->
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="src/linkShare/app.css">
+  <link rel="stylesheet" type="text/css" href="src/link-share/link-share.css">
   <!-- endbuild -->
   
 </head>
 <body>
-  <div class="header" ng-include="'src/linkShare/header/template.html'"></div>
+  <div class="header" ng-include="'src/link-share/header/template.html'"></div>
   <div class="main container">
     
     <div class="col-sm-8 col-sm-offset-2 right-main" ui-view></div>
@@ -40,7 +40,7 @@
     </div>
   </div>
   
-  <div class="upload-progress-dialog" style="display: block;" ng-include="'src/linkShare/upload-progress-dialog/template.html'"></div>
+  <div class="upload-progress-dialog" style="display: block;" ng-include="'src/link-share/upload-progress-dialog/template.html'"></div>
 
   <script id="template/modal/window.html" type="text/ng-template">
     <div tabindex="-1" role="dialog" class="modal fade" ng-class="{in: animate}" ng-style="{'z-index': 1050 + index*10, display: 'block'}" ng-click="close($event)">
@@ -50,7 +50,7 @@
     </div>
   </script>
 
-  <!-- build:js js/linkShare.js -->
+  <!-- build:js js/link-share.js -->
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
 
@@ -60,7 +60,7 @@
 
   <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script type="text/javascript" src="src/linkShare/ui-bootstrap-fix.js"></script>
+  <script type="text/javascript" src="src/link-share/ui-bootstrap-fix.js"></script>
   <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload.js"></script>
 
   <script type="text/javascript" src="bower_components/angular-md5/angular-md5.js"></script>
@@ -69,31 +69,31 @@
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="bower_components/ng-context-menu/dist/ng-context-menu.js"></script>
 
-  <script type="text/javascript" src="src/linkShare/widgets/widgets.js"></script>
-  <script type="text/javascript" src="src/linkShare/widgets/notification/factory.js"></script>
-  <script type="text/javascript" src="src/linkShare/widgets/utils/factory.js"></script>
+  <script type="text/javascript" src="src/link-share/widgets/widgets.js"></script>
+  <script type="text/javascript" src="src/link-share/widgets/notification/factory.js"></script>
+  <script type="text/javascript" src="src/link-share/widgets/utils/factory.js"></script>
   <!-- resources -->
-  <script type="text/javascript" src="src/linkShare/resources/resources.js"></script>
-  <script type="text/javascript" src="src/linkShare/resources/users.js"></script>
-  <script type="text/javascript" src="src/linkShare/resources/share.js"></script>
-  <script type="text/javascript" src="src/linkShare/resources/folders.js"></script>
+  <script type="text/javascript" src="src/link-share/resources/resources.js"></script>
+  <script type="text/javascript" src="src/link-share/resources/users.js"></script>
+  <script type="text/javascript" src="src/link-share/resources/share.js"></script>
+  <script type="text/javascript" src="src/link-share/resources/folders.js"></script>
 
   
-  <script type="text/javascript" src="src/linkShare/main/module.js"></script>
-  <script type="text/javascript" src="src/linkShare/main/controller.js"></script>
-  <script type="text/javascript" src="src/linkShare/main/input-password-controller.js"></script>
+  <script type="text/javascript" src="src/link-share/main/module.js"></script>
+  <script type="text/javascript" src="src/link-share/main/controller.js"></script>
+  <script type="text/javascript" src="src/link-share/main/input-password-controller.js"></script>
   
-  <script type="text/javascript" src="src/linkShare/header/module.js"></script>
-  <script type="text/javascript" src="src/linkShare/header/controller.js"></script>
+  <script type="text/javascript" src="src/link-share/header/module.js"></script>
+  <script type="text/javascript" src="src/link-share/header/controller.js"></script>
   
-  <script type="text/javascript" src="src/linkShare/upload-progress-dialog/module.js"></script>
-  <script type="text/javascript" src="src/linkShare/upload-progress-dialog/controller.js"></script>
+  <script type="text/javascript" src="src/link-share/upload-progress-dialog/module.js"></script>
+  <script type="text/javascript" src="src/link-share/upload-progress-dialog/controller.js"></script>
   
-  <script type="text/javascript" src="src/linkShare/sidebar/module.js"></script>
-  <script type="text/javascript" src="src/linkShare/sidebar/controller.js"></script>
+  <script type="text/javascript" src="src/link-share/sidebar/module.js"></script>
+  <script type="text/javascript" src="src/link-share/sidebar/controller.js"></script>
 
-  <script type="text/javascript" src="src/linkShare/config.js"></script>
-  <script type="text/javascript" src="src/linkShare/app.js"></script>
+  <script type="text/javascript" src="src/link-share/config.js"></script>
+  <script type="text/javascript" src="src/link-share/app.js"></script>
   <!-- endbuild -->
 </body>
 </html>

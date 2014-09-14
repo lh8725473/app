@@ -19,8 +19,8 @@
 	  
 	</div>
 	<div class="buttonGroup">
-       <button ng-click="upload()" class="btn btn-default">上传文件</button>
-		<button ng-click='showCreateFolder()' class="btn btn-default">
+    <button ng-click="upload()" class="btn btn-default">上传文件</button>
+		<button ng-click="showCreateFolder()" class="btn btn-default">
 			新建文件夹
 		</button>
 	</div>
@@ -29,7 +29,7 @@
 	    <input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
 	  </div>
 	  <div class="title-name col">
-	    <span>名称</span>
+	    <span>文件名</span>
 	  </div>
 	  <div class="title-state col">
 	    <span>状态</span>           
@@ -44,16 +44,16 @@
       <span>分享</span>          
     </div>
   </div>
-  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList">
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
-							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderName" >
+							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderData.createFolderName" >
 							<div class="create-buttonGroup col-sm-6">
-								<button ng-click="createFolder(createFolderName)" class="btn btn-default">
+								<button ng-click="createFolder(createFolderData.createFolderName)" class="btn btn-default">
 									确定
 								</button>
-								<button ng-click="cancleCreate()" class="btn btn-default">
+								<button ng-click="cancelCreate()" class="btn btn-default">
 									取消
 								</button>
 							</div>
@@ -79,12 +79,12 @@
 								</div>
 							</div>
 							<div class="rename-form" ng-show = "obj.rename">
-								<input type="text" class="rename-file form-control col-sm-8" ng-model = "renameInputValue" >
+								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue" >
 								<div class="rename-buttonGroup">
-									<button ng-click="renameFile(renameInputValue)" class="btn btn-default">
+									<button ng-click="renameFile($event, obj)" class="btn btn-default">
 										确定
 									</button>
-									<button ng-click="cancleRenameFile()" class="btn btn-default">
+									<button ng-click="cancelRenameFile($event, obj)" class="btn btn-default">
 										取消
 									</button>
 								</div>
@@ -101,7 +101,7 @@
 							<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
 							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
 							  <span>{{obj.user_count}}</span>
-							<div class = "discuss-ico" ng-hide = "obj.folder" ></div>
+							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj.file_id)"></div>
 							  <span>{{obj.discuss_count}} </span>		
 						</div>
 					</div>
@@ -147,8 +147,11 @@
 		ps-open="discussOpened">
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
-	    <h2 class="col-sm-12">讨论{{test}}</h2>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+	    <button id="user-discuss-right-close" type="button" class="bootbox-close-button close">
+        ×
+      </button>
+	    <h3>讨论{{test}}</h3>
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
 		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
@@ -162,7 +165,7 @@
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12">
 			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
-			<a id="user-discuss-right-close" class="button" >Close</a>
+			
 			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 				发表
 			</button>
@@ -176,8 +179,8 @@
 	</div>
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
-			<span class="pull-left">全部协作人</span>
-			<a class="pull-right">增加协作人</a>
+			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
+			<a class="pull-right" ng-click = "inviteTeamUsers()">邀请协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">

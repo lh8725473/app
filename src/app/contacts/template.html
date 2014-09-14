@@ -6,33 +6,18 @@
     </div>
     <div class="top-bar-bottom">
     </div>
-    <div class="content-tab">
-        <div class="contact-toolbar-button">
-            <button id="addContact" ng-click="addContact();">
-                添加联系人
-            </button>
-        </div>
-    </div>
-
 
     <table class="gridtable">
-        <tr>
-            <th>联系人名字</th><th>&nbsp;</th><th>联系人用户名</th><th>联系人邮箱</th>
+        <tr class="contact-title">
+            <th width="150px">姓名</th><th width="150px">邮箱地址</th><th width="150px">手机号码</th><th width="70px">更多</th>
         </tr>
-        <tr ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
-            <td>{{contact.contact_name}}</td>
-            <td width="70px">
-                <input type="image" name="updateContact" src="images/edit.png" title="编辑" ng-click="updateContact(contact);" class="actionbutton"/>&nbsp;
+        <tr class="contact-item" ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
+            <td class="contact-name"><img ng-src="{{contact.avatar}}" class="img-avatar"/>&nbsp;{{contact.contact_name}}</td>
+            <td>{{contact.contact_email}}</td>
+            <td>{{contact.phone}}</td>
+            <td>
                 <input type="image" name="deleteContact"  src="images/delete.png" title="删除" ng-click="deleteContact(contact);" class="actionbutton"/>
             </td>
-            <td>{{contact.contact_uname}}</td>
-            <td>{{contact.contact_email}}</td>
         </tr>
     </table>
-
-
-
-
-
-
 </div>

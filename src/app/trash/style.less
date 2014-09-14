@@ -1,6 +1,6 @@
 //文件列表
 .trash-view {
-  margin-right: 260px;
+  margin-right: 300px;
   height: 100%;
   position: relative;
   min-width: 600px;
@@ -16,7 +16,8 @@
   }
   .file-row{
     height: 65px;
-    border-bottom: 1px solid #cfcfcf; 
+    border-bottom: 1px solid #E8E8E8; 
+    margin-right: 40px;
   }
   .file-row:hover{
       background-color: #ebf1f7;
@@ -72,8 +73,10 @@
   .title{
      height: 39px; 
      margin-left: 40px;
+     margin-right: 40px;
      border-bottom: 1px solid #afafaf;
      color: #676767;
+     font-weight: bold;
      .title-checkbox{
          padding: 8px;
      }
@@ -125,19 +128,21 @@
            width: 25%;
            float: left;
            padding-top: 22px;
-           padding-left: 5px;
            text-overflow: ellipsis;
            white-space: nowrap;
            overflow: hidden; 
+           font-size: 12px;
+           color: #666;
        }
        .file-sise-td{
            width: 13%;
            float: left;
            padding-top: 22px;
-           padding-left: 8px;
            text-overflow: ellipsis;
            white-space: nowrap;
            overflow: hidden; 
+           font-size: 12px;
+           color: #666;
            span{
               text-overflow: ellipsis;
               white-space: nowrap;
@@ -203,7 +208,7 @@
     float: left;
     padding-top: 10px;
     min-width: 315px;
-    padding-left: 8px;
+    
     .rename-form{
         float: left;
         width: 260px; 
@@ -222,7 +227,13 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       padding-left: 8px;
-      padding-top: 5px;
+      padding-top: 11px;
+      a{
+        color: #333;
+      }
+      a:hover{
+        color: #333;
+      }
     }
     .tag{
       color: white;

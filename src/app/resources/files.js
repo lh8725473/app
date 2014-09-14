@@ -43,10 +43,11 @@ angular.module('App.Resources').factory('Files', [
       }
     })
     angular.extend(Files, {
-      preview: function(file_id) {
+      preview: function(file_id, refresh) {
         var deferred = $q.defer()
+        var param = (refresh == true)?'?refresh=true':''
         $http({
-          url: CONFIG.API_ROOT + '/file/preview/' + file_id,
+          url: CONFIG.API_ROOT + '/file/preview/' + file_id + param,
           method: 'GET'
         }).then(function(response) {
           deferred.resolve($sce.trustAsHtml(response.data))

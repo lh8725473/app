@@ -5,7 +5,7 @@
       <div class="dialog-btn btn-max" ng-show="!isMax" ng-click="max()"></div>
       <div class="dialog-btn btn-min" ng-show="isMax" ng-click="min()"></div>
   </div>
-  <div class="dialog-body" ng-show="isMax">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="" ng-show="isMax">
       <div class="progress-item" id="ddupload_file_1_progress" ng-repeat="file in files">
           <img class="file-icon" src="./images/file_icon.png">
           <span class="file-name" title="webappdigger.png">{{file.name}}</span>
@@ -21,5 +21,5 @@
           <span class="delete-upload dialog-btn" ng-hide = "file.progress == 100" ng-click="file.upload.abort()">          
           </span>
       </div>
-  </div>
+  </perfect-scrollbar>
 </div>

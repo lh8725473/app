@@ -22,6 +22,7 @@
     <div class="sidebar" ng-include="'src/admin/sidebar/template.html'"></div>
     <div class="right-main" ui-view></div>
   </div>
+  <div class="no-right-view" ng-show="noRight" ng-include="'src/admin/501/template.html'"></div>
   <!-- build:js js/admin.js -->
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
@@ -35,7 +36,6 @@
   <script type="text/javascript" src="bower_components/es5-shim/es5-shim.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-  <script type="text/javascript" src="bower_components/mb-scrollbar/mb-scrollbar.js"></script>
   <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
   <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>

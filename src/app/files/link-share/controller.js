@@ -22,7 +22,9 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         $scope.selectedEmails = []
 
         $scope.today = function() {
-          $scope.dt = new Date()
+          var today = new Date()
+          today.setTime(today.getTime()+ (7*24*60*60*1000)) 
+          $scope.dt = today
         };
         $scope.today()
 
@@ -139,7 +141,15 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
           }).$promise.then(function(linkShare) {
             $scope.link = linkShare.link
             $scope.code_src = linkShare.code_src
-          })
+          }, function (error) {
+                Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result,
+                    closeable: false
+                })
+            }
+          )
         }
 
         //生成链接与发送链接邀请form切换

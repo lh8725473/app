@@ -188,7 +188,15 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
               $scope.groupListData.push(group)
             }
           })
-        })
+        }, function (error) {
+	            Notification.show({
+	                title: '失败',
+	                type: 'danger',
+	                msg: error.data.result,
+	                closeable: false
+	            })
+	        }
+        )
       
         $scope.selectedData = [];
         
@@ -267,7 +275,15 @@ angular.module('App.Users.ManagedUsers.EditUser').controller('App.Users.ManagedU
               $scope.folderListData.push(folder)
             }
           })
-        })
+        }, function (error) {
+              Notification.show({
+                  title: '失败',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
+              })
+          }
+        )
       
         $scope.selectedData = [];
         
