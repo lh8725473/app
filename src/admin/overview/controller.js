@@ -9,17 +9,6 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
     OverView,
     Utils
   ) {
-
-    function bytes(bytes, label) {
-      if (bytes == 0) return '';
-      var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
-      var e = Math.floor(Math.log(bytes) / Math.log(1024));
-      var value = ((bytes / Math.pow(1024, Math.floor(e))).toFixed(2));
-      e = (e < 0) ? (-e) : e;
-      if (label) value += ' ' + s[e];
-      return value;
-    }
-
     OverView.loginCount().$promise.then(function(loginCount) {
       $scope.loginCountConfig = {
         options: {
@@ -135,7 +124,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
         options: {
           tooltip: {
             formatter: function() {
-              return '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+              return '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + Utils.formateSize(this.point.y, true) + '</b><br/>'
             }
           }
         },
@@ -179,7 +168,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           },
           tooltip: {
             formatter: function() {
-              return  '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+              return  '<span style ="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + Utils.formateSize(this.point.y, true) + '</b><br/>'
             }
           }
         },
@@ -213,7 +202,7 @@ angular.module('App.Overview').controller('App.Overview.Controller', [
           tooltip: {
             formatter: function() {
               return '<span style="font-size: 10px">' + this.point.name + '</span><br/>' +
-                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + bytes(this.point.y, true) + '</b><br/>'
+                '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + Utils.formateSize(this.point.y, true) + '</b><br/>'
             }
           }
         },
