@@ -231,20 +231,22 @@
             var expiresin = responseJSON.result['expires_in'];
             var user_name = responseJSON.result['user_name'];
             var user_pic = responseJSON.result['avatar'];
-            var user_id = responseJSON.result['user_id'];
-
+            var user_id = responseJSON.result['user_id']; 
+            var role_id = responseJSON.result['role_id'];
             if ($('#checkbox')[0].checked == true) {
               createCookie('accessToken', token, 30);
               createCookie('userName', user_name, 30);
               createCookie('userpic', user_pic, 30);
               createCookie('userId', user_id, 30);
               createCookie('userType', 'qxt', 30);
+              createCookie('roleId', role_id, 30);
             } else {
               createCookie('accessToken', token);
               createCookie('userName', user_name);
               createCookie('userPic', user_pic);
               createCookie('userId', user_id);
               createCookie('userType', 'qxt');
+              createCookie('roleId', role_id);
             }
 
             window.location.href = 'index.html';

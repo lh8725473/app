@@ -12,7 +12,7 @@
       </ul>
 			<img class="userpic" ng-src="{{user.avatar}}" alt="" />
 		</div>
-		<div class="to-admin-control pull-right" ng-click = "toadmin()">
+		<div class="to-admin-control pull-right" ng-click = "toadmin()" ng-show="roleId == 1">
 			管理控制台
 		</div>
 		<div class="notif_box" class="message-notice pull-right">

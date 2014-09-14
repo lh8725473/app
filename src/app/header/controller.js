@@ -38,8 +38,9 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.noticeCount = 0
   	$scope.showMessageCount = !!$scope.messageCount
   	$scope.showMoticeCount = !!$scope.noticeCount
+    $scope.roleId = $cookieStore.readCookie('roleId')
   	
-  	$scope.pollForMessages = function(){
+    $scope.pollForMessages = function(){
   		$scope.unreadCount = Message.getUnreadMessagesCount()
   		$scope.unreadCount.$promise.then(function(){
   			$scope.messageCount = $scope.unreadCount.message
