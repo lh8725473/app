@@ -44,7 +44,7 @@
       <span>分享</span>          
     </div>
   </div>
-  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList">
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
@@ -151,7 +151,7 @@
         ×
       </button>
 	    <h3>讨论{{test}}</h3>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
 		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
