@@ -1,9 +1,14 @@
 .sidebar-view {
     float: left;
-    width: 260px;
+    width: 199px;
     height: 100%;
+    .nav > li > a {
+        color: #7B7B7B;
+    }
     .nav > li > a:hover,
     .nav > li > a:focus {
+        transition: all 0.3s;
+        color: #7B7B7B;
         text-decoration: none;
         background-color: #d6dce2;
     }
@@ -49,8 +54,11 @@
         position: absolute;
     }
     .active{
+        transition: all 0.3s;
         background-color: #d6dce2;
         border-left: 5px solid #1f69ba;
-        
+        a{
+            padding-right: 5px;
+        }
     }
 }

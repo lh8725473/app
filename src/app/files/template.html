@@ -29,7 +29,7 @@
 	    <input type="checkbox" ng-click = "selectedAllswitch()" ng-model = "selectedAll"/>
 	  </div>
 	  <div class="title-name col">
-	    <span>名称</span>
+	    <span>文件名</span>
 	  </div>
 	  <div class="title-state col">
 	    <span>状态</span>           
@@ -180,7 +180,7 @@
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
 			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
-			<a class="pull-right" ng-click = "inviteTeamUsers()">增加协作人</a>
+			<a class="pull-right" ng-click = "inviteTeamUsers()">邀请协作人</a>
 		</div>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">

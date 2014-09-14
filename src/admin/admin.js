@@ -5,7 +5,6 @@ angular.module('App', [
   'ui.bootstrap',
   'ngAnimate',
   'ngCookies',
-  'mb-scrollbar',
   'pascalprecht.translate',
   'highcharts-ng',
 

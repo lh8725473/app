@@ -45,20 +45,34 @@ table.gridtable {
   border-collapse: collapse;
   width:95%;
   line-height: 24px;
+  tr.contact-title {
+    border-color: #afafaf;
+  }
 }
 table.gridtable tr {
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid #E8E8E8;
   border-left: none;
   border-right: none;
   border-top:none;
 }
+table.gridtable tr.contact-item {
+  font-size: 13px;
+  color: #666;
+  .contact-name {
+    font-size: 14px;
+    color: #333;
+  }
+}
+table.gridtable tr.contact-item:hover {
+  background-color: #ebf1f7;
+}
+
 table.gridtable th {
   //color: #333333;
   //font-weight: bold;
   font-size:14px;
-  color: #999999;
+  color: #676767;
   padding: 8px;
-  border-bottom: 3px solid #e8e8e8;
 }
 table.gridtable td {
   color: #999999;
