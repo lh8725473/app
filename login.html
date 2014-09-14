@@ -101,10 +101,11 @@
 
     </style>
 
+    <!-- build:js js/global/config.js -->
+    <script type="text/javascript" src="src/global/_config.js"></script>
+    <!-- endbuild -->
+
     <script type="text/javascript">
-      var config = {
-        API_ROOT: 'http://101.231.216.75:8888/api'
-      }
       function createCookie(name, value, days) {
         if (days) {
           var date = new Date();
@@ -222,7 +223,7 @@
             'device_info' : 'browser'
           };
           $.ajax({
-            url : config.API_ROOT + '/user/login',
+            url : CONFIG.API_ROOT + '/user/login',
             type : 'post',
             dataType : 'json',
             data : data

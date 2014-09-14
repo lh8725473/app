@@ -23,6 +23,11 @@
     <div class="right-main" ui-view></div>
   </div>
   <div class="no-right-view" ng-show="noRight" ng-include="'src/admin/501/template.html'"></div>
+
+  <!-- build:js js/global/config.js -->
+  <script type="text/javascript" src="src/global/_config.js"></script>
+  <!-- endbuild -->
+  
   <!-- build:js js/admin.js -->
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
@@ -79,7 +84,8 @@
   <script type="text/javascript" src="src/admin/reports/controller.js"></script>
   <script type="text/javascript" src="src/admin/settings/module.js"></script>
   <script type="text/javascript" src="src/admin/settings/controller.js"></script>
-  <script type="text/javascript" src="src/admin/config.js"></script>
+  
+  <script type="text/javascript" src="src/global/config.js"></script>
   <script type="text/javascript" src="src/admin/admin.js"></script>
   <!-- endbuild -->
 </body>
