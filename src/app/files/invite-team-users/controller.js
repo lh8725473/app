@@ -65,6 +65,13 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }
         $scope.invitedList.userList.splice(i, 1)
+        
+        if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
+          $scope.disableBtn = false;
+        }
+        else {
+          $scope.disableBtn = true;
+        }
       }
 
       //删除选中的组
@@ -76,6 +83,13 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }
         $scope.invitedList.groupList.splice(i, 1)
+        
+        if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
+          $scope.disableBtn = false;
+        }
+        else {
+          $scope.disableBtn = true;
+        }
       }
 
       //协作 人员和组的接口
@@ -119,6 +133,12 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
         }
         $scope.invitedList.userList.push(user)
         $scope.inviteInputValue = ''
+        
+        if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
+          $scope.disableBtn = false;
+        }else {
+          $scope.disableBtn = true;
+        }
       }
 
       //右侧列表是否显示
@@ -127,6 +147,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       }
 
       //右侧列表选择协作人或组
+      $scope.disableBtn = true;
       $scope.inviteBySelect = function(groupOrUser, selected) {
         if (selected) { //取消组或者协作人
           if (groupOrUser.group_id) { //取消的是组
@@ -159,7 +180,13 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
             $scope.invitedList.userList.push(groupOrUser)
           }
         }
-
+        
+        if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
+          $scope.disableBtn = false;
+        }
+        else {
+          $scope.disableBtn = true;
+        }
       }
 
       //邀请联系人comment
