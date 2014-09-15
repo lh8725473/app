@@ -76,7 +76,7 @@
           全选
         </div>
       </div>
-      <div class="groups-users">  
+        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userList" suppress-scroll-x = "true">
         <div class="groups-div">
           <div class="group" ng-repeat="group in groupList">
             <input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
@@ -97,7 +97,7 @@
             <span class="group-name">{{user.real_name}}</span>
           </div>
         </div>
-      </div>
+        </perfect-scrollbar>
     </div>
   </div>
 </div>

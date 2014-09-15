@@ -1,23 +1,24 @@
 ﻿<div class="contacts-view" ng-controller="App.Contacts.Controller">
-    <div class="top-bar">
-        <div class="pull-left root-path" ng-class = "{ isRoot: isRoot }">
-            <a>联系人</a>
-        </div>
-    </div>
-    <div class="top-bar-bottom">
-    </div>
-
-    <table class="gridtable">
-        <tr class="contact-title">
-            <th width="150px">姓名</th><th width="150px">邮箱地址</th><th width="150px">手机号码</th><th width="70px">更多</th>
-        </tr>
-        <tr class="contact-item" ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
-            <td class="contact-name"><img ng-src="{{contact.avatar}}" class="img-avatar"/>&nbsp;{{contact.contact_name}}</td>
-            <td>{{contact.contact_email}}</td>
-            <td>{{contact.phone}}</td>
-            <td>
-                <input type="image" name="deleteContact"  src="images/delete.png" title="删除" ng-click="deleteContact(contact);" class="actionbutton"/>
-            </td>
-        </tr>
-    </table>
+	<div class="top-bar">
+		<div class="pull-left root-path" ng-class="{ isRoot: isRoot }">
+			<a>联系人</a>
+		</div>
+	</div>
+	<div class="top-bar-bottom">
+	</div>
+	<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="contactList">
+		<table class="gridtable">
+			<tr class="contact-title">
+				<th width="150px">姓名</th>
+				<th width="150px">邮箱地址</th>
+				<th width="150px">手机号码</th>
+			</tr>
+			<tr class="contact-item" ng-repeat="contact in contactList" ng-mouseover="displayContactAction();">
+				<td class="contact-name">
+					<img ng-src="{{contact.avatar}}" class="img-avatar" />&nbsp;{{contact.contact_name}}</td>
+				<td>{{contact.contact_email}}</td>
+				<td>{{contact.phone}}</td>
+			</tr>
+		</table>
+	</perfect-scrollbar>
 </div>

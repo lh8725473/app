@@ -177,11 +177,13 @@
 	<div class="groups-users" ng-show = "isRoot">
 		根目录下不能邀请协作人
 	</div>
+	
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
 			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
 			<a class="pull-right" ng-click = "inviteTeamUsers()">邀请协作人</a>
 		</div>
+		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="shareObj.list.users">
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">
 				<div class="img" ng-click = "changeGroupshow(group)">
@@ -234,5 +236,6 @@
 				<span class="" ng-click = "deleteUserShare(user)">X</span>
 			</div>
 		</div>
+		</perfect-scrollbar>
 	</div>
 </div>

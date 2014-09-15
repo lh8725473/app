@@ -287,6 +287,15 @@
     right: 0;
     top: 0;
     bottom: 0;
+    .scroller{
+        overflow-y: hidden;
+        bottom: 0;
+        left: 0;
+        margin-left: 0;
+        right: 0;
+        top: 36px;
+        position: absolute;
+    }
     .groups-users-header{
       height: 36px;
       line-height: 36px;
@@ -644,9 +653,16 @@
             .user{
                 padding: 5px;
             }
-            .groups-users{
-              height: 350px;
-              overflow-y: auto;
+            .scroller{
+              overflow-x: hidden;  
+              overflow-y: hidden;
+              bottom: 0;
+              left: 0;
+              margin-left: 15px;
+              right: 0;
+              top: 55px;
+              position: absolute;
+              padding-right: 5px;
               .group-name{
                   max-width: 90px;
               }   
