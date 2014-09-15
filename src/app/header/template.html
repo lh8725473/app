@@ -20,7 +20,7 @@
         <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
         <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
-           <div class="no-message" ng-show = "messageList.length == 0">暂无消息</div>
+           <div class="no-message" ng-show = "messageList.length == 0"></div>
            <li ng-click = "messageDetail(message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
              <a>
               <div>
@@ -47,7 +47,7 @@
        <span class="notice dropdown-toggle" title="通知" ng-click = "openNoticeList()"></span>
        <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
-          <div class="no-notice" ng-show = "noticeList.length == 0">暂无通知</div>
+          <div class="no-notice" ng-show = "noticeList.length == 0"></div>
           <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
              <a>
               <div>
