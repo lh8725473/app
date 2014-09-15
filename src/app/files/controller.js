@@ -228,36 +228,83 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //删除单个文件或者文件夹(右键删除)	
     $scope.deleteObj = function() {
-      for (var i = 0; i < $scope.objList.length; ++i) {
-        if ($scope.objList[i].checked == true)
-          break
-      }
-      if ($scope.objList[i].isFolder == 1) { //文件夹
-        FolderAction.deleteFolder({
-          folder_id: $scope.objList[i].folder_id
-        }).$promise.then(function() {
-          $scope.objList.splice(i, 1)
-          Notification.show({
-            title: '成功',
-            type: 'success',
-            msg: '删除文件成功',
-            closeable: true
-          })
-        })
-      } else { //文件
-        Files.deleteFile({
-          file_id: $scope.objList[i].file_id
-        }).$promise.then(function() {
-          $scope.objList.splice(i, 1)
-          Notification.show({
-            title: '成功',
-            type: 'success',
-            msg: '创建文件夹成功',
-            closeable: true
-          })
-        })
-      }
+      var deleteRecycleModal = $modal.open({
+        templateUrl: 'src/app/files/delete-file-confirm.html',
+        windowClass: 'delete-file',
+        backdrop: 'static',
+        controller: deleteObjController,
+        resolve: {
+          objList: function() {
+            return $scope.objList
+          }
+        }
+      })
     }
+    
+    // deleteObj file
+    var deleteObjController = [
+      '$scope',
+      '$modalInstance',
+      'objList',
+      function(
+        $scope,
+        $modalInstance,
+        objList
+      ) {
+        
+        $scope.objList = objList
+        $scope.ok = function() {   
+          for (var i = 0; i < $scope.objList.length; ++i) {
+            if ($scope.objList[i].checked == true)
+            break
+          }
+          if ($scope.objList[i].isFolder == 1) { //文件夹
+            FolderAction.deleteFolder({
+              folder_id: $scope.objList[i].folder_id
+            }).$promise.then(function() {
+              $scope.objList.splice(i, 1)
+              Notification.show({
+                title: '成功',
+                type: 'success',
+                msg: '删除文件夹成功',
+                closeable: true
+              })
+            }, function (error) {
+                 Notification.show({
+                   title: '失败',
+                   type: 'danger',
+                   msg: error.data.result,
+                   closeable: false
+                 })
+            })
+          } else { //文件
+            Files.deleteFile({
+              file_id: $scope.objList[i].file_id
+            }).$promise.then(function() {
+              $scope.objList.splice(i, 1)
+              Notification.show({
+                title: '成功',
+                type: 'success',
+                msg: '删除文件成功',
+                closeable: true
+              })
+            }, function (error) {
+                Notification.show({
+                  title: '失败',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
+                })
+            })
+          }
+          $modalInstance.close()
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
 
     //下载单个文件或者文件夹
     $scope.dowloadFile = function() {
