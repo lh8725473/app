@@ -27,6 +27,11 @@ angular.module('App.Header').controller('App.Header.Controller', [
   ) {
     $scope.toLogin = function(){
       $cookieStore.removeCookie('accessToken')
+      $cookieStore.removeCookie('userName')
+      $cookieStore.removeCookie('userPic')
+      $cookieStore.removeCookie('userId')
+      $cookieStore.removeCookie('userType')
+      $cookieStore.removeCookie('roleId')
       window.location.href = "login.html"
     }
     
