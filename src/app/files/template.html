@@ -101,7 +101,7 @@
 							<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
 							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
 							  <span>{{obj.user_count}}</span>
-							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj.file_id)"></div>
+							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj)"></div>
 							  <span>{{obj.discuss_count}} </span>		
 						</div>
 					</div>
