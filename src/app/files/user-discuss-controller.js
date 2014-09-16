@@ -32,17 +32,25 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	$scope.discussButton = true
   	
   	//发表讨论
-  	$scope.createUserDiscuss = function(){
-  		UserDiscuss.createUserDiscuss({
-  			obj_id : discuss_file_id
-  		},{
-  			content	:$scope.discussContent
-  		}).$promise.then(function(userDiscuss){
-  			$scope.discussContent = ''
-  			$scope.discussCount = 0
-  			$scope.userDiscussList.push(userDiscuss)
-  		})
-  	}
+    $scope.createUserDiscuss = function(){
+      UserDiscuss.createUserDiscuss({
+        obj_id : obj.file_id
+      },{
+        content :$scope.discussContent
+      }).$promise.then(function(userDiscuss){
+        $scope.discussContent = ''
+        $scope.discussCount = 0
+        $scope.discussButton = true
+        $scope.userDiscussList.push(userDiscuss)
+      })
+    }
+    
+    //回车发表讨论
+    $scope.createUserDiscussByPress = function($event){
+      if($event.which === 13){//回车事件
+        $scope.createUserDiscuss()
+      }
+    }
   	
   	//输入讨论框监控
   	$scope.changeDiscussInput = function(discussContent){

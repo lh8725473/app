@@ -66,6 +66,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	
   	//点击单个消息
   	$scope.messageDetail = function(message){
+  	  $scope.pollForMessages()
   	  $rootScope.$broadcast('message_file', message.obj_id);
   	}
   	
@@ -81,6 +82,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
         id : message.id
       }).$promise.then(function() {
         message.is_read = 'true'
+        $scope.pollForMessages()
         Notification.show({
           title: '成功',
           type: 'success',
@@ -103,12 +105,13 @@ angular.module('App.Header').controller('App.Header.Controller', [
       Message.deleteMessage({
         id : message.id
       }).$promise.then(function() {
-        for (var i = 0; i < $scope.noticeList.length; ++i) {
-          if ($scope.noticeList[i].id == message.id) {
-            $scope.noticeList.splice(i, 1)
+        for (var i = 0; i < $scope.messageList.length; ++i) {
+          if ($scope.messageList[i].id == message.id) {
+            $scope.messageList.splice(i, 1)
             break
           }
         }
+        $scope.pollForMessages()
         Notification.show({
           title: '成功',
           type: 'success',

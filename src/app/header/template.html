@@ -22,7 +22,7 @@
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
            <div class="no-message" ng-show = "messageList.length == 0"></div>
            <li ng-click = "messageDetail(message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
-             <a>
+             <a ui-sref="files({folderId: message.folder_id})">
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
                 <div class="message-content">
@@ -48,8 +48,8 @@
        <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
           <div class="no-notice" ng-show = "noticeList.length == 0"></div>
-          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
-             <a>
+          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0" >
+             <a ui-sref="files({folderId: message.folder_id})">
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
                 <div class="message-content">

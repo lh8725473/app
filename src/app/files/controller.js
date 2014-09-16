@@ -412,8 +412,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
     
     //监听message 讨论文件file_id
-    $scope.$on('message_file', function($event, message_file) {
-      $scope.discuss_file_id = message_file
+    $scope.$on('message_file', function($event, message_file_id) {
+      $scope.discuss_file_id = message_file_id
       $scope.discussOpened = true
     })
 

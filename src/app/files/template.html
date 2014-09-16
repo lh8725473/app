@@ -174,8 +174,14 @@
 	</div>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">
-	<div class="groups-users" ng-show = "isRoot">
-		根目录下不能邀请协作人
+	<div class="no-groups-users" ng-show = "isRoot">
+		<div class="groups-users-header col-sm-12">
+      <span class="pull-left">全新的分享方式 </span>
+    </div>
+    <div class="h4_add_guide pull-left col-sm-12">协作分享</div>
+    <div class="add_guide pull-left col-sm-12"></div>
+    <div class="h4_add_link pull-left col-sm-12">链接分享</div>
+    <div class="add_link pull-left col-sm-12"></div>
 	</div>
 	
 	<div class="groups-users" ng-hide = "isRoot">
