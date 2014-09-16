@@ -210,6 +210,11 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //右键菜单
     $scope.onRightClick = function(obj) {
+      if(obj.isFolder == 1){
+        $scope.show_discuss_menu = false
+      }else{
+        $scope.show_discuss_menu = true
+      }
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
         obj.checked = false
@@ -401,8 +406,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     // 打开讨论 默认是关闭的
     $scope.discussOpened = false
-    $scope.openUserDiscuss = function(file_id) {
-      $scope.discuss_file_id = file_id
+    $scope.openUserDiscuss = function(obj) { 
+      $scope.discuss_file_id = obj.file_id
       $scope.discussOpened = true
     }
     
