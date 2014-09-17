@@ -218,7 +218,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         $scope.show_download_menu = false
       }else{
         $scope.show_discuss_menu = true
-        $scope.show_download_menu = false
+        $scope.show_download_menu = true
       }
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
