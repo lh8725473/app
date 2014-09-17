@@ -195,7 +195,7 @@
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">
 				<div class="img" ng-click = "changeGroupshow(group)">
-					<span class="arrows-img"></span>
+					<span class="arrows-img" ng-class="{ group_show: group.show }"></span>
 					<img  width="24px" height="24px" src="./images/grouplist_icon.png"/>
 				</div>
 				<div class="group-name">

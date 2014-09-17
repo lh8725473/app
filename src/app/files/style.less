@@ -450,6 +450,14 @@
             float: left;
             width: 35px;
         }
+        .img:hover .arrows-img{
+            transform:rotate(90deg);
+            -sand-transform: rotate(90deg);/* IE */
+            -ms-transform: rotate(90deg); /* IE */
+            -moz-transform:rotate(90deg); /* Firefox 4 */
+            -webkit-transform:rotate(90deg); /* Safari and Chrome */
+            -o-transform:rotate(90deg); /* Opera */
+        }
         .user-name{
             float: left;
             width: 85px;
@@ -512,8 +520,16 @@
         margin-top: 3px;
         margin-right: 5px;
         transition: -moz-transform 0.2s ease 0s;
+        -moz-transition:-moz-transform 0.2s; /* Firefox 4 */
+        -webkit-transition:-webkit-transform 0.2s; /* Safari and Chrome */
+        -o-transition:-o-transform 0.2s; /* Opera */
+        -ms-transition:-ms-transform 0.2s; /* IE */
+        -sand-transition:-sand-transform 0.2s; /* IE */
         width: 15px;
         height: 15px;
+        &.group_show{
+            background-position: 0 -108px;
+        }
     }
 }
 
