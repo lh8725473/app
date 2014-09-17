@@ -166,12 +166,15 @@ angular.module('App.Files').controller('App.Files.Controller', [
       createFolderName:''
     }
     $scope.showCreateFolderDiv = false
+    $scope.myInputFocus = false
     $scope.showCreateFolder = function() {
       $scope.createFolderData.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
+      $scope.myInputFocus= !$scope.myInputFocus;
     }
     $scope.cancelCreate = function() {
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
+      $scope.myInputFocus= !$scope.myInputFocus;
     }
     $scope.createFolder = function(createFolderName) {
       FolderAction.createFolder({
@@ -329,6 +332,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //重命名文件或文件夹
     $scope.renameInputValue = ""
     $scope.renameFileForm = function() {
+      $scope.checkedObj.focus = true
       $scope.checkedObj.rename = true
       if ($scope.checkedObj.isFolder == 1) { //文件夹
         $scope.checkedObj.renameInputValue = $scope.checkedObj.folder_name
@@ -550,5 +554,21 @@ angular.module('App.Files').controller('App.Files.Controller', [
         event.preventDefault();
       }
     });
+  };
+}).directive('focusMe', function($timeout, $parse) {
+  return {
+    link: function(scope, element, attrs) {
+      var model = $parse(attrs.focusMe);
+      scope.$watch(model, function(value) {
+        if(value === true) { 
+          $timeout(function() {
+            element[0].focus(); 
+          });
+        }
+      });
+      element.bind('blur', function() {
+        scope.$apply(model.assign(scope, false));
+      })
+    }
   };
 });

@@ -48,7 +48,7 @@
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
-							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderData.createFolderName" >
+							<input type="text" placeholder="文件夹名称" class="create-folder form-control col-sm-8" ng-model = "createFolderData.createFolderName" ng-enter = "createFolder(createFolderData.createFolderName)" focus-me="myInputFocus">
 							<div class="create-buttonGroup col-sm-6">
 								<button ng-click="createFolder(createFolderData.createFolderName)" class="btn btn-default">
 									确定
@@ -79,7 +79,7 @@
 								</div>
 							</div>
 							<div class="rename-form" ng-show = "obj.rename">
-								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue" >
+								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue"  focus-me = "obj.focus">
 								<div class="rename-buttonGroup">
 									<button ng-click="renameFile($event, obj)" class="btn btn-default">
 										确定
@@ -117,12 +117,12 @@
 									删除
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_download_menu">
 								<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
 									移动
 								</a>
 							</li>
-							<li ng-show = "show_download_menu">
+							<li>
 								<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
 									重命名
 								</a>
