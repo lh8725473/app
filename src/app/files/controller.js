@@ -555,7 +555,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     });
   };
-}).directive('focusMe', function($timeout, $parse) {
+}).directive('focusMe',['$timeout', '$parse' , function($timeout, $parse) {
   return {
     link: function(scope, element, attrs) {
       var model = $parse(attrs.focusMe);
@@ -571,4 +571,4 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
   };
-});
+}]);
