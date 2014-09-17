@@ -212,8 +212,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.onRightClick = function(obj) {
       if(obj.isFolder == 1){
         $scope.show_discuss_menu = false
+        $scope.show_download_menu = false
       }else{
         $scope.show_discuss_menu = true
+        $scope.show_download_menu = false
       }
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
