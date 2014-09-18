@@ -164,8 +164,7 @@
 		    </div>
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12">
-			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
-			
+			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent" ng-keydown = "createUserDiscussByPress($event)"></textarea>		
 			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 				发表
 			</button>

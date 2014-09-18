@@ -34,7 +34,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	//发表讨论
     $scope.createUserDiscuss = function(){
       UserDiscuss.createUserDiscuss({
-        obj_id : obj.file_id
+        obj_id : discuss_file_id
       },{
         content :$scope.discussContent
       }).$promise.then(function(userDiscuss){
@@ -48,6 +48,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     //回车发表讨论
     $scope.createUserDiscussByPress = function($event){
       if($event.which === 13){//回车事件
+        $event.preventDefault()
         $scope.createUserDiscuss()
       }
     }

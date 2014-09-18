@@ -124,6 +124,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
       //回车发表讨论
       $scope.createUserDiscussByPress = function($event){
         if($event.which === 13){//回车事件
+          $event.preventDefault()
           $scope.createUserDiscuss()
         }
       }
