@@ -19,8 +19,10 @@
 	  
 	</div>
 	<div class="buttonGroup">
-    <button ng-click="upload()" class="btn btn-default">上传文件</button>
-		<button ng-click="showCreateFolder()" class="btn btn-default">
+    <button ng-click="upload()" class="btn btn-default" ng-disabled="!folder_upload">
+              上传文件
+    </button>
+		<button ng-click="showCreateFolder()" class="btn btn-default" ng-disabled="!folder_delete">
 			新建文件夹
 		</button>
 	</div>
@@ -65,7 +67,7 @@
 						<div class="img-name-td">
 							<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
 							<div class="file-name" ng-hide = "obj.rename">
-								<a ui-sref="files({folderId: obj.file_id})" ng-show = "obj.folder">
+								<a ui-sref="files({folderId: obj.file_id, p: obj.permission})" ng-show = "obj.folder">
 									{{obj.folder_name}}
 								</a>
 								<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
@@ -98,8 +100,8 @@
 						</div>
 						<div class="permission-td"> {{obj.permission_value}} </div>
 						<div class="action-td">
-							<div class = "link-share-ico" ng-click = "linkShare($event, obj)"></div>
-							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)"></div>
+							<div class = "link-share-ico" ng-click = "linkShare($event, obj)" ng-class = "{ is_edit: obj.is_edit }"></div>
+							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)" ng-class = "{ is_edit: obj.is_edit }"></div>
 							  <span>{{obj.user_count}}</span>
 							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj)"></div>
 							  <span>{{obj.discuss_count}} </span>		
@@ -188,7 +190,7 @@
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
 			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
-			<div class="pull-right invite" ng-click = "inviteTeamUsers()"></div>
+			<div class="pull-right invite" ng-click = "inviteTeamUsers()" ng-show = "folder_delete"></div>
 		</div>
 		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="shareObj.list.users">
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
@@ -222,7 +224,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="users col-sm-12" ng-repeat="user in users">
+		<div class="users col-sm-12" ng-repeat="user in users" ng-class = "{ is_owner: user.is_owner , not_edit : !folder_edit }" >
 			<div class="img">
 				<img  width="24px" height="24px" ng-src="{{user.avatar}}"/>
 			</div>
@@ -232,7 +234,7 @@
 			<div class="user-permission" dropdown is-open="user.isopen">
 				<span class="group-permission dropdown-toggle">{{user.permission_value}}<span class="caret"></span></span>
 				<ul class="dropdown-menu" role="menu">
-					<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeUserPermission(user, value)">
+					<li role="presentation" ng-repeat="value in user.permission_value_list" ng-click = "changeUserPermission(user, value)">
 						<a role="menuitem" tabindex="-1">
 							{{value}}
 						</a>

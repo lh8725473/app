@@ -55,11 +55,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     })
 
     //是否为根目录
-    if (folderId == 0) {
-      $scope.isRoot = true
-    } else {
-      $scope.isRoot = false
-    }
+    $scope.isRoot = (folderId == 0) ? true : false
 
     //fileList data
     $scope.objList = Folders.getObjList({
@@ -75,7 +71,34 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     })
     
-
+    //根目录(当前目录)下按钮权限
+    $scope.folder_owner = true
+    $scope.folder_delete = true
+    $scope.folder_edit = true
+    $scope.folder_getLink = true
+    $scope.folder_preview = true
+    $scope.folder_download = true
+    $scope.folder_upload = true
+   
+    //当前目录下权限
+    $scope.$on('folder_permission', function($event, folder_permission) {
+      var folder_owner = folder_permission.substring(0, 1)  //协同拥有者 or 拥有者1
+      var folder_delete =  folder_permission.substring(1, 2)  //删除权限
+      var folder_edit =  folder_permission.substring(2, 3)  //编辑权限
+      var folder_getLink =  folder_permission.substring(3, 4)  //链接权限
+      var folder_preview =  folder_permission.substring(4, 5)  //预览权限
+      var folder_download =  folder_permission.substring(5, 6)  //下载权限
+      var folder_upload =  folder_permission.substring(6, 7)  //上传权限
+      //权限列表
+      $scope.folder_owner = (folder_owner == '1') ? true : false
+      $scope.folder_delete = (folder_delete == '1') ? true : false
+      $scope.folder_edit = (folder_edit == '1') ? true : false
+      $scope.folder_getLink = (folder_getLink == '1') ? true : false
+      $scope.folder_preview = (folder_preview == '1') ? true : false
+      $scope.folder_download = (folder_download == '1') ? true : false
+      $scope.folder_upload = (folder_upload == '1') ? true : false
+    })
+    
     $scope.$on('uploadFilesDone', function() {
       $scope.objList = Folders.getObjList({
         folder_id: folderId
@@ -101,11 +124,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           obj.rename = false
 
           //对象是否是文件夹
-          if (obj.isFolder == 1) {
-              obj.folder = true
-          } else {
-              obj.folder = false
-          }
+          obj.folder = (obj.isFolder == 1) ? true : false
 
           //对象是否能被预览
           var fileType = Utils.getFileTypeByName(obj.file_name)
@@ -146,6 +165,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
               }
             }
           })
+          
+          //权限列表
+          var is_owner = obj.permission.substring(0, 1)  //协同拥有者 or 拥有者1
+          var is_delete =  obj.permission.substring(1, 2)  //删除权限
+          var is_edit =  obj.permission.substring(2, 3)  //编辑权限
+          var is_getLink =  obj.permission.substring(3, 4)  //链接权限
+          var is_preview =  obj.permission.substring(4, 5)  //预览权限
+          var is_download =  obj.permission.substring(5, 6)  //下载权限
+          var is_upload =  obj.permission.substring(6, 7)  //上传权限
+          
+          obj.is_owner = (is_owner == '1') ? true : false
+          obj.is_delete = (is_delete == '1') ? true : false
+          obj.is_edit = (is_edit == '1') ? true : false
+          obj.is_getLink = (is_getLink == '1') ? true : false
+          obj.is_preview = (is_getLink == '1') ? true : false
+          obj.is_download = (is_getLink == '1') ? true : false
+          obj.is_upload = (is_upload == '1') ? true : false
+          
       })
     }
     $scope.objList.$promise.then(function() {
@@ -431,6 +468,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //邀请协作人
     $scope.inviteTeamUsers = function($event, obj) {
       $event.stopPropagation()
+      if(!obj.is_edit){//无编辑权限
+        return
+      }
       var addUserModal = $modal.open({
         templateUrl: 'src/app/files/invite-team-users/template.html',
         windowClass: 'invite-team-users',
@@ -450,6 +490,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //链接分享
     $scope.linkShare = function($event, obj) {
       $event.stopPropagation()
+      if(!obj.is_edit){//无编辑权限
+        return
+      }
       var linkShareModal = $modal.open({
         templateUrl: 'src/app/files/link-share/template.html',
         windowClass: 'link-share',
@@ -492,19 +535,34 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //上传
     $scope.upload = function() {
-      var uploadModal = $modal.open({
-        templateUrl: 'src/app/files/modal-upload.html',
-        windowClass: 'modal-upload',
-        backdrop: 'static',
-        controller: uploadModalController,
-        resolve: {}
-      })
-
-      uploadModal.result.then(function($files) {
-        $rootScope.$broadcast('uploadFiles', $files);
+      $scope.space_info = Users.getSpaceinfo()
+      $scope.space_info.$promise.then(function(user_space) {
+        var user_total_size = user_space.total_size;
+        var user_used_size = user_space.used_size;
+        $scope.user_unused_size = user_total_size - user_used_size;
+  
+        if ($scope.user_unused_size > 0) {
+          var uploadModal = $modal.open({
+            templateUrl: 'src/app/files/modal-upload.html',
+            windowClass: 'modal-upload',
+            backdrop: 'static',
+            controller: uploadModalController,
+            resolve: {}
+          })
+          uploadModal.result.then(function($files) {
+            $rootScope.$broadcast('uploadFiles', $files);
+          })
+        } else {
+          Notification.show({
+            title: '上传失败',
+            type: 'danger',
+            msg: '您的剩余空间不够',
+            closeable: false
+          })
+        }
       })
     }
-
+    
     //检查预览的文件大小及类型
     function CheckFileValid (obj) {
       var fileSize = obj.file_size;

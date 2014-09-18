@@ -1,19 +1,25 @@
 angular.module('App.Files').controller('App.Files.TeamController', [
   '$scope',
+  '$rootScope',
   'CONFIG',
   '$state',
+  '$stateParams',
   'Folders',
   'Share',
   'Notification',
   '$modal',
+  '$cookies',
   function(
     $scope,
+    $rootScope,
     CONFIG,
     $state,
+    $stateParams,
     Folders,
     Share,
     Notification,
-    $modal
+    $modal,
+    $cookies
   ) {
   	//权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
@@ -30,19 +36,39 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	
   	//当前所在文件夹目录
   	var folder_id = $state.params.folderId || 0;
+     	
+  	//是否为根目录
+    $scope.isRoot = (folder_id == 0) ? true : false
   	
-  	if(folder_id == 0){
-  		$scope.isRoot = true
-  	}else{
-  		$scope.isRoot = false
-  	}
-  	
+  	//对当前目录下的权限
+    var folder_permission = ''
+    
   	if(folder_id != 0){
   		$scope.shareObj = Folders.queryShareObj({
   			folder_id : folder_id
   		})
   	
   		$scope.shareObj.$promise.then(function(shareObj){
+  		  //对当前目录下的权限
+        folder_permission = shareObj.permission
+        var folder_owner = folder_permission.substring(0, 1)  //协同拥有者 or 拥有者1
+        var folder_delete =  folder_permission.substring(1, 2)  //删除权限
+        var folder_edit =  folder_permission.substring(2, 3)  //编辑权限
+        var folder_getLink =  folder_permission.substring(3, 4)  //链接权限
+        var folder_preview =  folder_permission.substring(4, 5)  //预览权限
+        var folder_download =  folder_permission.substring(5, 6)  //下载权限
+        var folder_upload =  folder_permission.substring(6, 7)  //上传权限
+        //权限列表
+        $scope.folder_owner = (folder_owner == '1') ? true : false
+        $scope.folder_delete = (folder_delete == '1') ? true : false
+        $scope.folder_edit = (folder_edit == '1') ? true : false
+        $scope.folder_getLink = (folder_getLink == '1') ? true : false
+        $scope.folder_preview = (folder_preview == '1') ? true : false
+        $scope.folder_download = (folder_download == '1') ? true : false
+        $scope.folder_upload = (folder_upload == '1') ? true : false
+        
+        $rootScope.$broadcast('folder_permission', folder_permission);
+  		  	  
   			$scope.users = shareObj.list.users
   			$scope.groups = shareObj.list.groups
   			angular.forEach($scope.groups, function(group){
@@ -58,13 +84,26 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   				//人员权限
   				if(user.owner_uid == user.user_id){//拥有者
   				  user.permission_value = '拥有者'
+  				  user.is_owner = true
   				}else{
         		angular.forEach($scope.permission_key, function(key, index) {
               if(key == user.permission){
                 user.permission_value = $scope.permission_value[index]
               }                    
-        		})	  
+        		})
+  				  if(user.user_id == $cookies.userId){//不能操作自己用户
+  				    user.is_owner = true
+  				  }
+  				  if(parseInt(folder_permission) < parseInt(user.permission)){//不能操作大于自身权限的用户
+  				    user.is_owner = true
+  				  }
   				}
+  				
+          if($scope.folder_owner){//不能给予别人比自己大的权限
+            user.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+          }else{
+            user.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+          }			
   			})
   		})
   	}
@@ -92,13 +131,26 @@ angular.module('App.Files').controller('App.Files.TeamController', [
             //人员权限
             if(user.owner_uid == user.user_id){//拥有者
               user.permission_value = '拥有者'
+              user.is_owner = true
             }else{
+              if(user.user_id == $cookies.userId){//不能操作自己
+                user.is_owner = true
+              }
+              if(parseInt(folder_permission) < parseInt(user.permission)){//不能操作大于自身权限的用户
+                user.is_owner = true
+              }
               angular.forEach($scope.permission_key, function(key, index) {
                 if(key == user.permission){
                   user.permission_value = $scope.permission_value[index]
                 }                    
               })    
-            }     
+            }
+            
+            if($scope.folder_owner){//不能给予别人比自己大的权限
+              user.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            }else{
+              user.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            } 
           })
         })
   	  }
@@ -345,6 +397,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         controller: 'App.Files.InviteTeamUsersController',
         resolve: {
           folder_id: function() {
+            return folder_id
+          },
+          folder_permission: function() {
             return folder_id
           },
           folder_name: function() {
