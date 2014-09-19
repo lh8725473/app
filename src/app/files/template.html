@@ -67,7 +67,7 @@
 						<div class="img-name-td">
 							<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
 							<div class="file-name" ng-hide = "obj.rename">
-								<a ui-sref="files({folderId: obj.file_id, p: obj.permission})" ng-show = "obj.folder" title="{{obj.folder_name}}">
+								<a ui-sref="files({folderId: obj.folder_id,})" ng-show = "obj.folder" title="{{obj.folder_name}}">
 									{{obj.folder_name}}
 								</a>
 								<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)" title="{{obj.file_name}}">
@@ -92,7 +92,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="state-td"> {{obj.create_uname}}于{{obj.format_date}}更新 </div>
+						<div class="state-td"> {{obj.action}}</div>
 						<div class="file-sise-td">
 						  <img src="images/file_icon.png" ng-show = "obj.folder"/>
 						  <span ng-show = "obj.folder">{{obj.file_count}}</span>
@@ -100,10 +100,10 @@
 						</div>
 						<div class="permission-td"> {{obj.permission_value}} </div>
 						<div class="action-td">
-							<div class = "link-share-ico" ng-click = "linkShare($event, obj)" ng-class = "{ is_edit: obj.is_edit }"></div>
+							<div class = "link-share-ico" ng-click = "linkShare($event, obj)" ng-class = "{ is_edit: obj.is_getLink }"></div>
 							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)" ng-class = "{ is_edit: obj.is_edit }"></div>
 							  <span>{{obj.user_count}}</span>
-							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj)"></div>
+							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj)" ng-class = "{ is_edit: obj.is_preview }"></div>
 							  <span>{{obj.discuss_count}} </span>		
 						</div>
 					</div>

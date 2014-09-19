@@ -118,72 +118,67 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //渲染文件列表
     function refreshList(){
       angular.forEach($scope.objList, function(obj) {
-          //对象是否被选中
-          obj.checked = false
-          //对象是否显示重名输入框
-          obj.rename = false
+        //权限列表
+        var is_owner = obj.permission.substring(0, 1)  //协同拥有者 or 拥有者1
+        var is_delete =  obj.permission.substring(1, 2)  //删除权限
+        var is_edit =  obj.permission.substring(2, 3)  //编辑权限
+        var is_getLink =  obj.permission.substring(3, 4)  //链接权限
+        var is_preview =  obj.permission.substring(4, 5)  //预览权限
+        var is_download =  obj.permission.substring(5, 6)  //下载权限
+        var is_upload =  obj.permission.substring(6, 7)  //上传权限
+        
+        obj.is_owner = (is_owner == '1') ? true : false
+        obj.is_delete = (is_delete == '1') ? true : false
+        obj.is_edit = (is_edit == '1') ? true : false
+        obj.is_getLink = (is_getLink == '1') ? true : false
+        obj.is_preview = (is_preview == '1') ? true : false
+        obj.is_download = (is_getLink == '1') ? true : false
+        obj.is_upload = (is_upload == '1') ? true : false
+      
+        //对象是否被选中
+        obj.checked = false
+        //对象是否显示重名输入框
+        obj.rename = false
 
-          //对象是否是文件夹
-          obj.folder = (obj.isFolder == 1) ? true : false
+        //对象是否是文件夹
+        obj.folder = (obj.isFolder == 1) ? true : false
 
-          //对象是否能被预览
-          var fileType = Utils.getFileTypeByName(obj.file_name)
-          obj.isPreview = !fileType ? false : true
-//        if (!fileType) {
-//            obj.isPreview = false
-//        } else {
-//            obj.isPreview = true
-//        }
-
-          //文件图像
-          if (obj.isFolder == 1) { //文件夹
-              if (obj.isShared == 1) {
-                  obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
-                  obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
-              } else {
-                  obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
-                  obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
-              }
-          } else {
-              var ext;
-              if (obj.isFolder == 1) {
-                  ext = 'folder';
-              } else {
-                  ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
-              }
-              var icon = Utils.getIconByExtension(ext);
-              obj.smallIcon = icon.small;
-              obj.largeIcon = icon.large;
-          }
-
-          //文件权限
-          angular.forEach($scope.permission_key, function(key, index) {
-            if(obj.owner_uid == $cookies.userId){//拥有者
-              obj.permission_value = '拥有者'
-            }else{
-              if (key == obj.permission) {
-                obj.permission_value = $scope.permission_value[index]
-              }
+        //对象是否能被预览
+        var fileType = Utils.getFileTypeByName(obj.file_name || obj.folder_name)
+        obj.isPreview = (fileType && obj.is_preview) ? true : false
+        
+        //文件图像
+        if (obj.isFolder == 1) { //文件夹
+            if (obj.isShared == 1) {
+                obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
+                obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
+            } else {
+                obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
+                obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
             }
-          })
-          
-          //权限列表
-          var is_owner = obj.permission.substring(0, 1)  //协同拥有者 or 拥有者1
-          var is_delete =  obj.permission.substring(1, 2)  //删除权限
-          var is_edit =  obj.permission.substring(2, 3)  //编辑权限
-          var is_getLink =  obj.permission.substring(3, 4)  //链接权限
-          var is_preview =  obj.permission.substring(4, 5)  //预览权限
-          var is_download =  obj.permission.substring(5, 6)  //下载权限
-          var is_upload =  obj.permission.substring(6, 7)  //上传权限
-          
-          obj.is_owner = (is_owner == '1') ? true : false
-          obj.is_delete = (is_delete == '1') ? true : false
-          obj.is_edit = (is_edit == '1') ? true : false
-          obj.is_getLink = (is_getLink == '1') ? true : false
-          obj.is_preview = (is_getLink == '1') ? true : false
-          obj.is_download = (is_getLink == '1') ? true : false
-          obj.is_upload = (is_upload == '1') ? true : false
-          
+        } else {
+            var ext;
+            if (obj.isFolder == 1) {
+                ext = 'folder';
+            } else {
+                ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
+            }
+            var icon = Utils.getIconByExtension(ext);
+            obj.smallIcon = icon.small;
+            obj.largeIcon = icon.large;
+        }
+
+        //文件权限
+        angular.forEach($scope.permission_key, function(key, index) {
+          if(obj.owner_uid == $cookies.userId){//拥有者
+            obj.permission_value = '拥有者'
+          }else{
+            if (key == obj.permission) {
+              obj.permission_value = $scope.permission_value[index]
+            }
+          }
+        })
+     
       })
     }
     $scope.objList.$promise.then(function() {
@@ -251,23 +246,52 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //右键菜单
     $scope.onRightClick = function(obj) {
+      var obj_permission = obj.permission;
+      var obj_owner = obj_permission.substring(0, 1)  //协同拥有者 or 拥有者1
+      var obj_delete =  obj_permission.substring(1, 2)  //删除权限
+      var obj_edit =  obj_permission.substring(2, 3)  //编辑权限
+      var obj_getLink =  obj_permission.substring(3, 4)  //链接权限
+      var obj_preview =  obj_permission.substring(4, 5)  //预览权限
+      var obj_download =  obj_permission.substring(5, 6)  //下载权限
+      var obj_upload =  obj_permission.substring(6, 7)  //上传权限
+      //权限列表
+      var obj_owner = (obj_owner == '1') ? true : false
+      var obj_delete = (obj_delete == '1') ? true : false
+      var obj_edit = (obj_edit == '1') ? true : false
+      var obj_getLink = (obj_getLink == '1') ? true : false
+      var obj_preview = (obj_preview == '1') ? true : false
+      var obj_download = (obj_download == '1') ? true : false
+      var obj_upload = (obj_upload == '1') ? true : false
+      
       //权限判断
-      if((obj.permission == '1111111' || obj.permission == '0111111') && obj.isShareObj == 0 ){//有权限操作或者是原始分享目录
+      if(obj.owner_uid == $cookies.userId){//拥有者
         $scope.show_delete_menu = true
         $scope.show_rename_menu = true
-        $scope.show_remove_menu = true       
+        $scope.show_remove_menu = true 
       }else{
-        $scope.show_delete_menu = false
-        $scope.show_rename_menu = false
-        $scope.show_remove_menu = false
+        if(obj_delete && obj.isShareObj == 0){
+          $scope.show_delete_menu = true
+          $scope.show_rename_menu = true
+          $scope.show_remove_menu = true
+        }else{
+          $scope.show_delete_menu = false
+          $scope.show_rename_menu = false
+          $scope.show_remove_menu = false
+        }
       }
+      
       if(obj.isFolder == 1){
         $scope.show_discuss_menu = false
         $scope.show_download_menu = false
       }else{
         $scope.show_discuss_menu = true
-        $scope.show_download_menu = true
+        if(obj_download){
+          $scope.show_download_menu = true
+        }else{
+          $scope.show_download_menu = false
+        }
       }
+      
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
         obj.checked = false
@@ -460,7 +484,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     // 打开讨论 默认是关闭的
     $scope.discussOpened = false
-    $scope.openUserDiscuss = function(obj) { 
+    $scope.openUserDiscuss = function(obj) {
+      if(!obj.is_preview){//讨论权限
+        return
+      }
       $scope.discuss_file_id = obj.file_id
       $scope.discussOpened = true
     }
@@ -504,7 +531,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //链接分享
     $scope.linkShare = function($event, obj) {
       $event.stopPropagation()
-      if(!obj.is_edit){//无编辑权限
+      if(!obj.is_getLink){//无编辑权限
         return
       }
       var linkShareModal = $modal.open({
