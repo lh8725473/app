@@ -564,21 +564,29 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
     
     //检查预览的文件大小及类型
-    function CheckFileValid (obj) {
+    function checkFileValid (obj) {
       var fileSize = obj.file_size;
       var fileType = Utils.getFileTypeByName(obj.file_name);
       if ('office' == fileType) {
-        //10MB = 10485760 Byte
+        //office文档最大预览为10M
         if (fileSize > 10485760) {
           return false;
         }
       }
+      else
+        if('pdf'==fileType){
+          //pdf设置最大预览为50M
+          if(fileSize>52428800)
+          {
+            return false;
+          }
+        }
       return true;
     }
     
     //文件预览
     $scope.previewFile = function (obj) {
-      var validFile = CheckFileValid(obj);
+      var validFile = checkFileValid(obj);
       if (validFile) {
         var previewFileModal = $modal.open({
           templateUrl: 'src/app/files/preview-file/template.html',
@@ -601,6 +609,22 @@ angular.module('App.Files').controller('App.Files.Controller', [
         })
       }
     }
+    
+    //添加标签
+    $scope.createTag = function(obj){
+      var createTagModal = $modal.open({
+        templateUrl: 'src/app/files/create-tag/template.html',
+        windowClass: 'createTag',
+        backdrop: false,
+        controller: 'App.Files.CreateTagController',
+        resolve: {
+          obj: function() {
+            return obj
+          }
+        }
+      })
+    }
+    
     }
 ]).directive('ngEnter', function () {
   return function(scope, element, attrs) {
