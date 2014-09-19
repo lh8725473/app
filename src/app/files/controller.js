@@ -128,11 +128,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
           //对象是否能被预览
           var fileType = Utils.getFileTypeByName(obj.file_name)
-          if (!fileType) {
-              obj.isPreview = false
-          } else {
-              obj.isPreview = true
-          }
+          obj.isPreview = !fileType ? false : true
+//        if (!fileType) {
+//            obj.isPreview = false
+//        } else {
+//            obj.isPreview = true
+//        }
 
           //文件图像
           if (obj.isFolder == 1) { //文件夹
@@ -250,6 +251,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //右键菜单
     $scope.onRightClick = function(obj) {
+      //权限判断
+      if((obj.permission == '1111111' || obj.permission == '0111111') && obj.isShareObj == 0 ){//有权限操作或者是原始分享目录
+        $scope.show_delete_menu = true
+        $scope.show_rename_menu = true
+        $scope.show_remove_menu = true       
+      }else{
+        $scope.show_delete_menu = false
+        $scope.show_rename_menu = false
+        $scope.show_remove_menu = false
+      }
       if(obj.isFolder == 1){
         $scope.show_discuss_menu = false
         $scope.show_download_menu = false
@@ -482,6 +493,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
           },
           folder_name: function() {
             return obj.folder_name
+          },
+          folder_permission: function(){
+            return obj.permission
           }
         }
       })
@@ -564,21 +578,29 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
     
     //检查预览的文件大小及类型
-    function CheckFileValid (obj) {
+    function checkFileValid (obj) {
       var fileSize = obj.file_size;
       var fileType = Utils.getFileTypeByName(obj.file_name);
       if ('office' == fileType) {
-        //10MB = 10485760 Byte
+        //office文档最大预览为10M
         if (fileSize > 10485760) {
           return false;
         }
       }
+      else
+        if('pdf'==fileType){
+          //pdf设置最大预览为50M
+          if(fileSize>52428800)
+          {
+            return false;
+          }
+        }
       return true;
     }
     
     //文件预览
     $scope.previewFile = function (obj) {
-      var validFile = CheckFileValid(obj);
+      var validFile = checkFileValid(obj);
       if (validFile) {
         var previewFileModal = $modal.open({
           templateUrl: 'src/app/files/preview-file/template.html',
@@ -591,8 +613,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
             }
           }
         })
-      }
-      else {
+      }else {
         Notification.show({
           title: '失败',
           type: 'danger',
@@ -601,6 +622,22 @@ angular.module('App.Files').controller('App.Files.Controller', [
         })
       }
     }
+    
+    //添加标签
+    $scope.createTag = function(obj){
+      var createTagModal = $modal.open({
+        templateUrl: 'src/app/files/create-tag/template.html',
+        windowClass: 'create-tag',
+        backdrop: false,
+        controller: 'App.Files.CreateTagController',
+        resolve: {
+          obj: function() {
+            return obj
+          }
+        }
+      })
+    }
+    
     }
 ]).directive('ngEnter', function () {
   return function(scope, element, attrs) {

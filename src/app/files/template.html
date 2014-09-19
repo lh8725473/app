@@ -67,13 +67,13 @@
 						<div class="img-name-td">
 							<img ng-src = "{{obj.smallIcon}}" height="42px" width="42px"/>
 							<div class="file-name" ng-hide = "obj.rename">
-								<a ui-sref="files({folderId: obj.file_id, p: obj.permission})" ng-show = "obj.folder">
+								<a ui-sref="files({folderId: obj.file_id, p: obj.permission})" ng-show = "obj.folder" title="{{obj.folder_name}}">
 									{{obj.folder_name}}
 								</a>
-								<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)">
+								<a ng-show = "!obj.folder&&obj.isPreview" ng-click = "previewFile(obj)" title="{{obj.file_name}}">
 									{{obj.file_name}}
 								</a>
-								<a ng-show = "!obj.folder&&!obj.isPreview" ng-class = "{ noPreview: !obj.isPreview }">
+								<a ng-show = "!obj.folder&&!obj.isPreview" ng-class = "{ noPreview: !obj.isPreview }" title="{{obj.file_name}}">
 									{{obj.file_name}}
 								</a>
 								<div class="tag">
@@ -114,26 +114,31 @@
 									下载
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_delete_menu">
 								<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
 									删除
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_remove_menu">
 								<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
 									移动
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_rename_menu">
 								<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
 									重命名
 								</a>
 							</li>
 							<li ng-show = "show_discuss_menu">
-								<a ng-click="openUserDiscuss(checkedObj)" class="large button">
+								<a ng-click="openUserDiscuss($event, checkedObj)" class="large button">
 									讨论
 								</a>
 							</li>
+							<li>
+                <a ng-click="createTag(checkedObj)" class="large button">
+                                              添加标签                          
+                </a>
+              </li>
 						</ul>
 					</div>
 			</div>

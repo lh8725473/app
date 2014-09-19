@@ -31,6 +31,12 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       //权限
       $scope.permission_key = CONFIG.PERMISSION_KEY
       $scope.permission_value = CONFIG.PERMISSION_VALUE
+      
+      if(folder_permission != '1111111'){
+        $scope.permission_value_list =['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+      }else{
+        $scope.permission_value_list = $scope.permission_value
+      }
 
       $scope.permissions = []
       angular.forEach($scope.permission_key, function(key, index) {
