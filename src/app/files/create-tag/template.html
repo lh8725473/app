@@ -2,16 +2,20 @@
 	<button class="bootbox-close-button close" type="button" ng-click="cancel()">
 		×
 	</button>
-	<h3 class="modal-title">添加标签</h3>
+	<h3 class="modal-title">设置标签</h3>
 </div>
 <div class="modal-body">
-	添加标签
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">
-		移动
-	</button>
-	<button class="btn btn-default" ng-click="cancel()">
-		取消
-	</button>
+	<div class="tag-list">
+		<div class="tag">
+			<span class="tag-name ng-binding">tony1</span>
+			<span ng-click="deleteSelectedGroup(group)" class="fa fa-times delete-tag">x</span>
+		</div>
+		<div class="tag" ng-repeat="tag in obj.tag-list"></div>
+	</div>
+	<div class="empty-tag-list">没有标签</div>
+	<div class="add-tag-title">添加一个标签</div>
+	<div class="add-tag-form">
+		<input type="text" placeholder="每个文件最多3个标签，每个标签不超过8个字" class="form-control add-tag-input" maxlength="8">
+		<button class="btn btn-primary add-tag-button">添加</button>
+	</div>
 </div>

@@ -114,17 +114,17 @@
 									下载
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_delete_menu">
 								<a class="pointer" role="menuitem" tabindex="2" ng-click="deleteObj()">
 									删除
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_remove_menu">
 								<a class="pointer" role="menuitem" tabindex="3" ng-click="moveFile()">
 									移动
 								</a>
 							</li>
-							<li>
+							<li ng-show = "show_rename_menu">
 								<a class="pointer" role="menuitem" tabindex="4" ng-click="renameFileForm()">
 									重命名
 								</a>

@@ -2,92 +2,48 @@ angular.module('App.Files').controller('App.Files.CreateTagController', [
   '$scope',
   '$modalInstance',
   'obj',
-  'Folders',
-  'Files',
   function(
     $scope,
     $modalInstance,
-    obj,
-    Folders,
-    Files
+    obj
   ) {
     $scope.obj = obj
-
-    $scope.treedata = Folders.getTree({
-      type: 'tree'
-    })
-
-    // FCUK code
-    var treeId = $scope.treeId = 'folderTree';
-    $scope[treeId] = $scope[treeId] || {};
-
-    //if node head clicks,
-    $scope[treeId].selectNodeHead = $scope[treeId].selectNodeHead || function(selectedNode) {
-
-      //Collapse or Expand
-      selectedNode.collapsed = !selectedNode.collapsed;
-    };
-
-    //if node label clicks,
-    $scope[treeId].selectNodeLabel = $scope[treeId].selectNodeLabel || function(selectedNode) {
-
-      //remove highlight from previous node
-      if ($scope[treeId].currentNode && $scope[treeId].currentNode.selected) {
-        $scope[treeId].currentNode.selected = undefined;
-      }
-
-      //set highlight to selected node
-      selectedNode.selected = 'selected';
-
-      //set currentNode
-      $scope[treeId].currentNode = selectedNode;
-    };
-    // FCUK code end
-
-    $scope.$watch('abc.currentNode', function(newObj, oldObj) {
-      if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
-        //          console.log('Node Selected!!');
-        //          console.log($scope.folderTree.currentNode);
-      }
-    }, false);
-
-    $scope.ok = function() {
-      var file_id = $scope.obj.file_id
-      if ($scope.obj.folder) {
-        Folders.update({
-          folder_id: file_id
-        }, {
-          parent_id: $scope.folderTree.currentNode.id
-        }).$promise.then(function() {
-          moved(file_id)
-        }, function (error) {
-              Notification.show({
-                  title: 'ʧ��',
-                  type: 'danger',
-                  msg: error.data.result,
-                  closeable: false
-              })
-          }
-        )
-      } else {
-        Files.updateFile({
-          file_id: file_id
-        }, {
-          parent_id: $scope.folderTree.currentNode.id
-        }).$promise.then(function() {
-          moved(file_id)
-        }, function (error) {
-	            Notification.show({
-	                title: 'ʧ��',
-	                type: 'danger',
-	                msg: error.data.result,
-	                closeable: false
-	            })
-	        }
-        )
-      }
+    
+    //创建标签的标签名
+    $scope.tag_name = ''
+    
+    //创建标签
+    $scope.createTag = function(){
+      Tag.createTag({},{
+        obj_id : obj.file_name,
+        obj_type : (obj.isFolder == 1) ? 'folder' : 'file',
+        tag_name : $scope.tag_name
+      }).$promise.then(function() {
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '添加标签成功',
+          closeable: true
+        })
+      }, function (error) {
+           Notification.show({
+             title: '失败',
+             type: 'danger',
+             msg: error.data.result,
+             closeable: false
+           })
+      })
     }
-
+    
+    //删除标签
+    $scope.deleteTag = function (){
+      Tag.deleteTag({},{
+        obj_id : obj.file_name,
+        obj_type : (obj.isFolder == 1) ? 'folder' : 'file',
+        tag_name : $scope.tag_name
+      })
+    }
+    
     function moved(file_id) {
       $modalInstance.close(file_id)
     }

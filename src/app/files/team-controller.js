@@ -400,7 +400,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
             return folder_id
           },
           folder_permission: function() {
-            return folder_id
+            return folder_permission
           },
           folder_name: function() {
             return Folders.folderView({

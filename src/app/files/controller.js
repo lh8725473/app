@@ -128,11 +128,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
           //对象是否能被预览
           var fileType = Utils.getFileTypeByName(obj.file_name)
-          if (!fileType) {
-              obj.isPreview = false
-          } else {
-              obj.isPreview = true
-          }
+          obj.isPreview = !fileType ? false : true
+//        if (!fileType) {
+//            obj.isPreview = false
+//        } else {
+//            obj.isPreview = true
+//        }
 
           //文件图像
           if (obj.isFolder == 1) { //文件夹
@@ -250,6 +251,16 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //右键菜单
     $scope.onRightClick = function(obj) {
+      //权限判断
+      if((obj.permission == '1111111' || obj.permission == '0111111') && obj.isShareObj == 0 ){//有权限操作或者是原始分享目录
+        $scope.show_delete_menu = true
+        $scope.show_rename_menu = true
+        $scope.show_remove_menu = true       
+      }else{
+        $scope.show_delete_menu = false
+        $scope.show_rename_menu = false
+        $scope.show_remove_menu = false
+      }
       if(obj.isFolder == 1){
         $scope.show_discuss_menu = false
         $scope.show_download_menu = false
@@ -482,6 +493,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
           },
           folder_name: function() {
             return obj.folder_name
+          },
+          folder_permission: function(){
+            return obj.permission
           }
         }
       })
@@ -599,8 +613,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
             }
           }
         })
-      }
-      else {
+      }else {
         Notification.show({
           title: '失败',
           type: 'danger',
@@ -614,7 +627,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.createTag = function(obj){
       var createTagModal = $modal.open({
         templateUrl: 'src/app/files/create-tag/template.html',
-        windowClass: 'createTag',
+        windowClass: 'create-tag',
         backdrop: false,
         controller: 'App.Files.CreateTagController',
         resolve: {
