@@ -16,6 +16,12 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', [
     //groupList data
     $scope.groupList = Group.query()
     
+    //加载动画
+    $scope.loading = true
+    $scope.groupList.$promise.then(function() {
+      $scope.loading = false
+    })
+    
     //group grid
     $scope.groupGridOptions = {
       data : 'groupList',

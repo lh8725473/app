@@ -20,9 +20,10 @@
         <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
         <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
-           <div class="no-message" ng-show = "messageList.length == 0">暂无消息</div>
+           <loading-indicator ng-show="loading"></loading-indicator>
+           <div class="no-message" ng-show = "messageList.length == 0"></div>
            <li ng-click = "messageDetail(message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
-             <a>
+             <a ui-sref="files({folderId: message.folder_id})">
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
                 <div class="message-content">
@@ -47,9 +48,10 @@
        <span class="notice dropdown-toggle" title="通知" ng-click = "openNoticeList()"></span>
        <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
-          <div class="no-notice" ng-show = "noticeList.length == 0">暂无通知</div>
-          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
-             <a>
+          <loading-indicator ng-show="loading"></loading-indicator>
+          <div class="no-notice" ng-show = "noticeList.length == 0"></div>
+          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0" >
+             <a ui-sref="files({folderId: message.folder_id})">
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
                 <div class="message-content">
@@ -74,7 +76,7 @@
   </div>
   <div class="header-search" role="navigation">
     <div class="logo pull-left"></div>
-    <div class="search pull-left">
+    <div class="search">
       <input type="text" placeholder="搜索文件或者文件夹" class="search-text form-control" ng-model = "searchFilesValue" ng-keydown = "searchByKeyDown($event,searchFilesValue)">
       <button class="search-button btn btn-default" ng-click = "searchByButton(searchFilesValue)">
         搜索

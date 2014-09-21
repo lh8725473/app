@@ -28,7 +28,8 @@
         ×
       </button>
     </ul>
-    <div class="discuss" ng-show = "navType == 'dis'">
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" suppress-scroll-x = "true"> 
+    <div class="discuss">
       <div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
         <img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
         <div class="disc-box">
@@ -38,26 +39,28 @@
         </div>
       </div>
     </div>
-    <div class="disc-inputbox">
-        <textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent"></textarea>
+    </perfect-scrollbar>
+    <div class="disc-inputbox" ng-show = "navType == 'dis'">
+      <textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-keydown = "createUserDiscussByPress($event)" ng-model = "discussContent"></textarea>
       <button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
         发表
       </button>
-      <label class="pull-right">{{discussCount}}/200</label>
+      <label class="pull-right" >{{discussCount}}/200</label>
     </div>
-    <div class="version" ng-show = "navType == 'ver'">
+    <perfect-scrollbar class="version" wheel-propagation="true" wheel-speed="50" refresh-on-change="fileHistoryList" ng-show = "navType == 'ver'" suppress-scroll-x = "true">
       <div ng-repeat="fileHistory in fileHistoryList" class="version-item">
-        <div class="time-user">
-          <div class="version-time">{{fileHistory.format_date}}</div>
-          <div class="version-user">{{fileHistory.user_name}}</div>
+        <div class="time-user row">
+          <div class="version-time pull-left">{{fileHistory.format_date}}</div>
+          <div class="version-user pull-right">{{fileHistory.user_name}}</div>
         </div>
         <div class="name-size-action">
-          <div class="version-size">{{fileHistory.format_size}}</div>
-          <div class="version-action">
-            <a ng-click = "downLoadHistory(fileHistory)">下载</a>
+          <div class="version-size pull-left">{{fileHistory.format_size}}</div>
+          <div class="version-action pull-right" ng-click = "downLoadHistory(fileHistory)">
+            
           </div>
         </div>
       </div>
-    </div>
+
+    </perfect-scrollbar>
   </div>
 </div>

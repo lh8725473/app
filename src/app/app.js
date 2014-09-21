@@ -15,6 +15,9 @@ angular.module('App', [
   'pageslide-directive',
   'ui.select2',
 
+  // global components
+  'ACT.LoadingIndictor',
+
   // Config
   'App.Config',
 

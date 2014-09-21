@@ -6,7 +6,7 @@ angular.module('App.Widgets').factory('Utils', [
     CONFIG
   ) {
 	return {
-		getIconByExtension : function(ext) {
+		getIconByExtension : function(ext) {//获取文件夹或者文件的图标
 			var icons = CONFIG.ICONS;
 			var path = CONFIG.ICONS_PATH;
 			//默认
@@ -39,7 +39,7 @@ angular.module('App.Widgets').factory('Utils', [
 				large : path + icon.large
 			}
 		},
-		getFileTypeByName : function(name){
+		getFileTypeByName : function(name){//是否为预览类型
 			var extStart = name.lastIndexOf(".");
 			var ext = name.substring(extStart + 1, name.length);
 			ext = ext.toLowerCase();
@@ -70,7 +70,7 @@ angular.module('App.Widgets').factory('Utils', [
 
 			return false;
 		},
-		formateSize: function(size){
+		formateSize: function(size){//格式化byte大小
 		  var name = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
       var pos = 0;
       while (size >= 1204) {

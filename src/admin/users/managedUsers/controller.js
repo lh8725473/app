@@ -19,6 +19,9 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     CONFIG,
     $rootScope
   ) {
+    
+    //加载动画
+    $scope.loading = true
     //addUser window
     $scope.addUser = function() {
       var addUserModal = $modal.open({
@@ -206,9 +209,16 @@ angular.module('App.Users.ManagedUsers').controller('App.Users.ManagedUsers.Cont
     if ($stateParams.k) {
       $scope.userList = Users.query({
         keyword: $stateParams.k
-      })      
+      }) 
+      $scope.userList.$promise.then(function() {
+        $scope.loading = false
+      })
+
     } else {
       $scope.userList = Users.query()     
+      $scope.userList.$promise.then(function() {
+        $scope.loading = false
+      })
     }
 
     $scope.gridOptions = {

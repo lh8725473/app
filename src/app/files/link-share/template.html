@@ -2,7 +2,7 @@
   <button class="bootbox-close-button close" type="button" ng-click="cancel()">
     ×
   </button>
-  <h3 class="modal-title">"{{obj.file_name}}"链接分享</h3>
+  <h3 class="modal-title">"{{obj.file_name || obj.folder_name}}"链接分享</h3>
 </div>
 <div class="modal-body">
   <form role="form" class="form-horizontal link-share-content" ng-show = "linkCreateOrSend">

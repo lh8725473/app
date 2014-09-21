@@ -27,12 +27,20 @@ angular.module('App.Header').controller('App.Header.Controller', [
   ) {
     $scope.toLogin = function(){
       $cookieStore.removeCookie('accessToken')
+      $cookieStore.removeCookie('userName')
+      $cookieStore.removeCookie('userPic')
+      $cookieStore.removeCookie('userId')
+      $cookieStore.removeCookie('userType')
+      $cookieStore.removeCookie('roleId')
       window.location.href = "login.html"
     }
     
   	$scope.toadmin = function(){
   	  window.location.href = "admin.html"
   	}
+  	
+  	//加载动画
+  	$scope.loading = true
   	
   	$scope.messageCount = 0
   	$scope.noticeCount = 0
@@ -56,17 +64,26 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	
   	//message 列表
   	$scope.openMessageList = function(){
+  	  $scope.loading = true
   	  $scope.messageList = Message.getMessageList()
+  	  $scope.messageList.$promise.then(function() {
+        $scope.loading = false
+      })
   	}
-  	
+  	 	
   	//点击单个消息
   	$scope.messageDetail = function(message){
+  	  $scope.pollForMessages()
   	  $rootScope.$broadcast('message_file', message.obj_id);
   	}
   	
   	//notice 列表
   	$scope.openNoticeList = function(){
+  	  $scope.loading = true
       $scope.noticeList = Message.getNoticeList()
+      $scope.noticeList.$promise.then(function() {
+        $scope.loading = false
+      })
     }
   	
   	//message标记为已读
@@ -76,6 +93,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
         id : message.id
       }).$promise.then(function() {
         message.is_read = 'true'
+        $scope.pollForMessages()
         Notification.show({
           title: '成功',
           type: 'success',
@@ -98,12 +116,13 @@ angular.module('App.Header').controller('App.Header.Controller', [
       Message.deleteMessage({
         id : message.id
       }).$promise.then(function() {
-        for (var i = 0; i < $scope.noticeList.length; ++i) {
-          if ($scope.noticeList[i].id == message.id) {
-            $scope.noticeList.splice(i, 1)
+        for (var i = 0; i < $scope.messageList.length; ++i) {
+          if ($scope.messageList[i].id == message.id) {
+            $scope.messageList.splice(i, 1)
             break
           }
         }
+        $scope.pollForMessages()
         Notification.show({
           title: '成功',
           type: 'success',

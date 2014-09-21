@@ -10,7 +10,8 @@ angular.module('App.Resources').factory('Folders', [
         method: "GET",
         params: {
           action: 'objList',
-          folder_id: 0
+          folder_id: 0,
+          _ : new Date().getTime()
         },
         isArray: true
       },

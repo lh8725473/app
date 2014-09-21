@@ -38,6 +38,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
+    
+    //加载动画
+    $scope.loading = true
 
     $scope.permissions = []
     angular.forEach($scope.permission_key, function(key, index) {
@@ -55,16 +58,36 @@ angular.module('App.Files').controller('App.Files.Controller', [
     })
 
     //是否为根目录
-    if (folderId == 0) {
-      $scope.isRoot = true
-    } else {
-      $scope.isRoot = false
-    }
+    $scope.isRoot = (folderId == 0) ? true : false
 
     //fileList data
+    // var pageSize = 30
+    var objListPage = 1
     $scope.objList = Folders.getObjList({
-      folder_id: folderId
-    })     
+      folder_id: folderId,
+      page: objListPage
+    })
+    $scope.objList.$promise.then(function() {
+      $scope.loading = false
+    })
+
+    $scope.onFileListScroll = function(scrollTop, scrollHeight) {
+      if (scrollTop == scrollHeight && !$scope.loading) {
+        objListPage++
+        $scope.loading = true
+        var objList = Folders.getObjList({
+          folder_id: folderId,
+          page: objListPage
+        })
+        objList.$promise.then(function(){
+          $scope.loading = false
+          for (var i = 0; i < objList.length; i++) {
+            $scope.objList.push(objList[i]);
+          }
+          refreshList()
+        })
+      }
+    }
     
     $scope.$on('searchFilesValue', function($event, searchFilesValue) {
       $scope.objList = Search.query({
@@ -75,7 +98,34 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     })
     
-
+    //根目录(当前目录)下按钮权限
+    $scope.folder_owner = true
+    $scope.folder_delete = true
+    $scope.folder_edit = true
+    $scope.folder_getLink = true
+    $scope.folder_preview = true
+    $scope.folder_download = true
+    $scope.folder_upload = true
+   
+    //当前目录下权限
+    $scope.$on('folder_permission', function($event, folder_permission) {
+      var folder_owner = folder_permission.substring(0, 1)  //协同拥有者 or 拥有者1
+      var folder_delete =  folder_permission.substring(1, 2)  //删除权限
+      var folder_edit =  folder_permission.substring(2, 3)  //编辑权限
+      var folder_getLink =  folder_permission.substring(3, 4)  //链接权限
+      var folder_preview =  folder_permission.substring(4, 5)  //预览权限
+      var folder_download =  folder_permission.substring(5, 6)  //下载权限
+      var folder_upload =  folder_permission.substring(6, 7)  //上传权限
+      //权限列表
+      $scope.folder_owner = (folder_owner == '1') ? true : false
+      $scope.folder_delete = (folder_delete == '1') ? true : false
+      $scope.folder_edit = (folder_edit == '1') ? true : false
+      $scope.folder_getLink = (folder_getLink == '1') ? true : false
+      $scope.folder_preview = (folder_preview == '1') ? true : false
+      $scope.folder_download = (folder_download == '1') ? true : false
+      $scope.folder_upload = (folder_upload == '1') ? true : false
+    })
+    
     $scope.$on('uploadFilesDone', function() {
       $scope.objList = Folders.getObjList({
         folder_id: folderId
@@ -95,53 +145,67 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //渲染文件列表
     function refreshList(){
       angular.forEach($scope.objList, function(obj) {
-          //对象是否被选中
-          obj.checked = false
-          //对象是否显示重名输入框
-          obj.rename = false
+        //权限列表
+        var is_owner = obj.permission.substring(0, 1)  //协同拥有者 or 拥有者1
+        var is_delete =  obj.permission.substring(1, 2)  //删除权限
+        var is_edit =  obj.permission.substring(2, 3)  //编辑权限
+        var is_getLink =  obj.permission.substring(3, 4)  //链接权限
+        var is_preview =  obj.permission.substring(4, 5)  //预览权限
+        var is_download =  obj.permission.substring(5, 6)  //下载权限
+        var is_upload =  obj.permission.substring(6, 7)  //上传权限
+        
+        obj.is_owner = (is_owner == '1') ? true : false
+        obj.is_delete = (is_delete == '1') ? true : false
+        obj.is_edit = (is_edit == '1') ? true : false
+        obj.is_getLink = (is_getLink == '1') ? true : false
+        obj.is_preview = (is_preview == '1') ? true : false
+        obj.is_download = (is_getLink == '1') ? true : false
+        obj.is_upload = (is_upload == '1') ? true : false
+      
+        //对象是否被选中
+        obj.checked = false
+        //对象是否显示重名输入框
+        obj.rename = false
 
-          //对象是否是文件夹
-          if (obj.isFolder == 1) {
-              obj.folder = true
-          } else {
-              obj.folder = false
+        //对象是否是文件夹
+        obj.folder = (obj.isFolder == 1) ? true : false
+
+        //对象是否能被预览
+        var fileType = Utils.getFileTypeByName(obj.file_name || obj.folder_name)
+        obj.isPreview = (fileType && obj.is_preview) ? true : false
+        
+        //文件图像
+        if (obj.isFolder == 1) { //文件夹
+            if (obj.isShared == 1) {
+                obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
+                obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
+            } else {
+                obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
+                obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
+            }
+        } else {
+            var ext;
+            if (obj.isFolder == 1) {
+                ext = 'folder';
+            } else {
+                ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
+            }
+            var icon = Utils.getIconByExtension(ext);
+            obj.smallIcon = icon.small;
+            obj.largeIcon = icon.large;
+        }
+
+        //文件权限
+        angular.forEach($scope.permission_key, function(key, index) {
+          if(obj.owner_uid == $cookies.userId){//拥有者
+            obj.permission_value = '拥有者'
+          }else{
+            if (key == obj.permission) {
+              obj.permission_value = $scope.permission_value[index]
+            }
           }
-
-          //对象是否能被预览
-          var fileType = Utils.getFileTypeByName(obj.file_name)
-          if (!fileType) {
-              obj.isPreview = false
-          } else {
-              obj.isPreview = true
-          }
-
-          //文件图像
-          if (obj.isFolder == 1) { //文件夹
-              if (obj.isShared == 1) {
-                  obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
-                  obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
-              } else {
-                  obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
-                  obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
-              }
-          } else {
-              var ext;
-              if (obj.isFolder == 1) {
-                  ext = 'folder';
-              } else {
-                  ext = obj.file_name.slice(obj.file_name.lastIndexOf('.') + 1);
-              }
-              var icon = Utils.getIconByExtension(ext);
-              obj.smallIcon = icon.small;
-              obj.largeIcon = icon.large;
-          }
-
-          //文件权限
-          angular.forEach($scope.permission_key, function(key, index) {
-              if (key == obj.permission) {
-                  obj.permission_value = $scope.permission_value[index]
-              }
-          })
+        })
+     
       })
     }
     $scope.objList.$promise.then(function() {
@@ -159,12 +223,14 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //新建文件夹
     $scope.createFolderData = {
-      createFolderName:''
+      createFolderName:'',
+      myInputFocus: false
     }
     $scope.showCreateFolderDiv = false
     $scope.showCreateFolder = function() {
       $scope.createFolderData.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
+      $scope.createFolderData.myInputFocus= !$scope.createFolderData.myInputFocus;
     }
     $scope.cancelCreate = function() {
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
@@ -206,6 +272,52 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //右键菜单
     $scope.onRightClick = function(obj) {
+      var obj_permission = obj.permission;
+      var obj_owner = obj_permission.substring(0, 1)  //协同拥有者 or 拥有者1
+      var obj_delete =  obj_permission.substring(1, 2)  //删除权限
+      var obj_edit =  obj_permission.substring(2, 3)  //编辑权限
+      var obj_getLink =  obj_permission.substring(3, 4)  //链接权限
+      var obj_preview =  obj_permission.substring(4, 5)  //预览权限
+      var obj_download =  obj_permission.substring(5, 6)  //下载权限
+      var obj_upload =  obj_permission.substring(6, 7)  //上传权限
+      //权限列表
+      var obj_owner = (obj_owner == '1') ? true : false
+      var obj_delete = (obj_delete == '1') ? true : false
+      var obj_edit = (obj_edit == '1') ? true : false
+      var obj_getLink = (obj_getLink == '1') ? true : false
+      var obj_preview = (obj_preview == '1') ? true : false
+      var obj_download = (obj_download == '1') ? true : false
+      var obj_upload = (obj_upload == '1') ? true : false
+      
+      //权限判断
+      if(obj.owner_uid == $cookies.userId){//拥有者
+        $scope.show_delete_menu = true
+        $scope.show_rename_menu = true
+        $scope.show_remove_menu = true 
+      }else{
+        if(obj_delete && obj.isShareObj == 0){
+          $scope.show_delete_menu = true
+          $scope.show_rename_menu = true
+          $scope.show_remove_menu = true
+        }else{
+          $scope.show_delete_menu = false
+          $scope.show_rename_menu = false
+          $scope.show_remove_menu = false
+        }
+      }
+      
+      if(obj.isFolder == 1){
+        $scope.show_discuss_menu = false
+        $scope.show_download_menu = false
+      }else{
+        $scope.show_discuss_menu = true
+        if(obj_download){
+          $scope.show_download_menu = true
+        }else{
+          $scope.show_download_menu = false
+        }
+      }
+      
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
         obj.checked = false
@@ -224,36 +336,83 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //删除单个文件或者文件夹(右键删除)	
     $scope.deleteObj = function() {
-      for (var i = 0; i < $scope.objList.length; ++i) {
-        if ($scope.objList[i].checked == true)
-          break
-      }
-      if ($scope.objList[i].isFolder == 1) { //文件夹
-        FolderAction.deleteFolder({
-          folder_id: $scope.objList[i].folder_id
-        }).$promise.then(function() {
-          $scope.objList.splice(i, 1)
-          Notification.show({
-            title: '成功',
-            type: 'success',
-            msg: '删除文件成功',
-            closeable: true
-          })
-        })
-      } else { //文件
-        Files.deleteFile({
-          file_id: $scope.objList[i].file_id
-        }).$promise.then(function() {
-          $scope.objList.splice(i, 1)
-          Notification.show({
-            title: '成功',
-            type: 'success',
-            msg: '创建文件夹成功',
-            closeable: true
-          })
-        })
-      }
+      var deleteRecycleModal = $modal.open({
+        templateUrl: 'src/app/files/delete-file-confirm.html',
+        windowClass: 'delete-file',
+        backdrop: 'static',
+        controller: deleteObjController,
+        resolve: {
+          objList: function() {
+            return $scope.objList
+          }
+        }
+      })
     }
+    
+    // deleteObj file
+    var deleteObjController = [
+      '$scope',
+      '$modalInstance',
+      'objList',
+      function(
+        $scope,
+        $modalInstance,
+        objList
+      ) {
+        
+        $scope.objList = objList
+        $scope.ok = function() {   
+          for (var i = 0; i < $scope.objList.length; ++i) {
+            if ($scope.objList[i].checked == true)
+            break
+          }
+          if ($scope.objList[i].isFolder == 1) { //文件夹
+            FolderAction.deleteFolder({
+              folder_id: $scope.objList[i].folder_id
+            }).$promise.then(function() {
+              $scope.objList.splice(i, 1)
+              Notification.show({
+                title: '成功',
+                type: 'success',
+                msg: '删除文件夹成功',
+                closeable: true
+              })
+            }, function (error) {
+                 Notification.show({
+                   title: '失败',
+                   type: 'danger',
+                   msg: error.data.result,
+                   closeable: false
+                 })
+            })
+          } else { //文件
+            Files.deleteFile({
+              file_id: $scope.objList[i].file_id
+            }).$promise.then(function() {
+              $scope.objList.splice(i, 1)
+              Notification.show({
+                title: '成功',
+                type: 'success',
+                msg: '删除文件成功',
+                closeable: true
+              })
+            }, function (error) {
+                Notification.show({
+                  title: '失败',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
+                })
+            })
+          }
+          $modalInstance.close()
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
 
     //下载单个文件或者文件夹
     $scope.dowloadFile = function() {
@@ -271,6 +430,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //重命名文件或文件夹
     $scope.renameInputValue = ""
     $scope.renameFileForm = function() {
+      $scope.checkedObj.focus = true
       $scope.checkedObj.rename = true
       if ($scope.checkedObj.isFolder == 1) { //文件夹
         $scope.checkedObj.renameInputValue = $scope.checkedObj.folder_name
@@ -345,19 +505,29 @@ angular.module('App.Files').controller('App.Files.Controller', [
             break
           }
         }
+        
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '移动文件成功',
+          closeable: true
+        })
       })
     }
 
     // 打开讨论 默认是关闭的
     $scope.discussOpened = false
-    $scope.openUserDiscuss = function(file_id) {
-      $scope.discuss_file_id = file_id
+    $scope.openUserDiscuss = function(obj) {
+      if(!obj.is_preview){//讨论权限
+        return
+      }
+      $scope.discuss_file_id = obj.file_id
       $scope.discussOpened = true
     }
     
     //监听message 讨论文件file_id
-    $scope.$on('message_file', function($event, message_file) {
-      $scope.discuss_file_id = message_file
+    $scope.$on('message_file', function($event, message_file_id) {
+      $scope.discuss_file_id = message_file_id
       $scope.discussOpened = true
     })
 
@@ -369,6 +539,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //邀请协作人
     $scope.inviteTeamUsers = function($event, obj) {
       $event.stopPropagation()
+      if(!obj.is_edit){//无编辑权限
+        return
+      }
       var addUserModal = $modal.open({
         templateUrl: 'src/app/files/invite-team-users/template.html',
         windowClass: 'invite-team-users',
@@ -380,6 +553,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
           },
           folder_name: function() {
             return obj.folder_name
+          },
+          folder_permission: function(){
+            return obj.permission
           }
         }
       })
@@ -388,6 +564,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //链接分享
     $scope.linkShare = function($event, obj) {
       $event.stopPropagation()
+      if(!obj.is_getLink){//无编辑权限
+        return
+      }
       var linkShareModal = $modal.open({
         templateUrl: 'src/app/files/link-share/template.html',
         windowClass: 'link-share',
@@ -430,35 +609,58 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //上传
     $scope.upload = function() {
-      var uploadModal = $modal.open({
-        templateUrl: 'src/app/files/modal-upload.html',
-        windowClass: 'modal-upload',
-        backdrop: 'static',
-        controller: uploadModalController,
-        resolve: {}
-      })
-
-      uploadModal.result.then(function($files) {
-        $rootScope.$broadcast('uploadFiles', $files);
+      $scope.space_info = Users.getSpaceinfo()
+      $scope.space_info.$promise.then(function(user_space) {
+        var user_total_size = user_space.total_size;
+        var user_used_size = user_space.used_size;
+        $scope.user_unused_size = user_total_size - user_used_size;
+  
+        if ($scope.user_unused_size > 0) {
+          var uploadModal = $modal.open({
+            templateUrl: 'src/app/files/modal-upload.html',
+            windowClass: 'modal-upload',
+            backdrop: 'static',
+            controller: uploadModalController,
+            resolve: {}
+          })
+          uploadModal.result.then(function($files) {
+            $rootScope.$broadcast('uploadFiles', $files);
+          })
+        } else {
+          Notification.show({
+            title: '上传失败',
+            type: 'danger',
+            msg: '您的剩余空间不够',
+            closeable: false
+          })
+        }
       })
     }
-
+    
     //检查预览的文件大小及类型
-    function CheckFileValid (obj) {
+    function checkFileValid (obj) {
       var fileSize = obj.file_size;
       var fileType = Utils.getFileTypeByName(obj.file_name);
       if ('office' == fileType) {
-        //10MB = 10485760 Byte
+        //office文档最大预览为10M
         if (fileSize > 10485760) {
           return false;
         }
       }
+      else
+        if('pdf'==fileType){
+          //pdf设置最大预览为50M
+          if(fileSize>52428800)
+          {
+            return false;
+          }
+        }
       return true;
     }
     
     //文件预览
     $scope.previewFile = function (obj) {
-      var validFile = CheckFileValid(obj);
+      var validFile = checkFileValid(obj);
       if (validFile) {
         var previewFileModal = $modal.open({
           templateUrl: 'src/app/files/preview-file/template.html',
@@ -471,8 +673,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
             }
           }
         })
-      }
-      else {
+      }else {
         Notification.show({
           title: '失败',
           type: 'danger',
@@ -481,6 +682,22 @@ angular.module('App.Files').controller('App.Files.Controller', [
         })
       }
     }
+    
+    //添加标签
+    $scope.createTag = function(obj){
+      var createTagModal = $modal.open({
+        templateUrl: 'src/app/files/create-tag/template.html',
+        windowClass: 'create-tag',
+        backdrop: false,
+        controller: 'App.Files.CreateTagController',
+        resolve: {
+          obj: function() {
+            return obj
+          }
+        }
+      })
+    }
+    
     }
 ]).directive('ngEnter', function () {
   return function(scope, element, attrs) {
@@ -493,4 +710,22 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     });
   };
-});
+}).directive('focusMe',['$timeout', '$parse' , function($timeout, $parse) {
+  return {
+    scope: {
+      'focus': '=focusMe'
+    },
+    link: function(scope, element) {
+      scope.$watch('focus', function(value) {
+        if(value === true) { 
+          $timeout(function() {
+            element[0].focus(); 
+          });
+        }
+      });
+      element.bind('blur', function() {
+        scope.focus = false
+      })
+    }
+  };
+}])

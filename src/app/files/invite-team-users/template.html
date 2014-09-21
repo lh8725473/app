@@ -9,7 +9,7 @@
     <form role="form" class="form-horizontal invite-content" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
       <div class="form-group input-from-group">
         <div class="col-sm-12">
-          <input type="name" class="form-control" name="username" placeholder="输入姓名或者邮箱" ng-model="inviteInputValue" ng-enter="inviteBypress(inviteInputValue)">
+          <input type="name" class="form-control" name="username" placeholder="输入邮箱回车邀请外部用户" ng-model="inviteInputValue" ng-enter="inviteBypress(inviteInputValue)">
         </div>
       </div>
       <div class="form-group or-from-group">
@@ -24,7 +24,7 @@
       </div>
       <h5>已选取</h5>
       <div class="form-group">
-        <div class="col-sm-12 selected-groups-users">
+        <perfect-scrollbar class="selected-groups-users" wheel-propagation="true" wheel-speed="50" refresh-on-change="invitedList.userList" suppress-scroll-x = "true"> 
           <div class="selectedItem" ng-repeat="group in invitedList.groupList">
             <span class="selectedName">{{group.group_name}}</span>
             <span class="fa fa-times deleteSelected" ng-click = "deleteSelectedGroup(group)">x</span>
@@ -33,7 +33,7 @@
             <span class="selectedName">{{user.real_name}}</span>
             <span class="fa fa-times deleteSelected" ng-click = "deleteSelectedUser(user)">x</span>
           </div>
-        </div>
+        </perfect-scrollbar>
       </div>
       <h5>访问权限</h5>
       <div class="form-group">
@@ -44,7 +44,7 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">        
-              <li role="presentation" ng-repeat="value in permission_value" ng-click = "selectedPermission(value)">
+              <li role="presentation" ng-repeat="value in permission_value_list" ng-click = "selectedPermission(value)">
                 <a role="menuitem" tabindex="-1">
                   {{value}}
                 </a>
@@ -61,7 +61,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <input type="button" class="btn btn-primary form-control" ng-click="createShare()" value="发送邀请"></input>
+          <input type="button" class="btn btn-primary form-control" ng-disabled="disableBtn"  ng-click="createShare()" value="发送邀请" >
         </div>
       </div>
     </form>
@@ -76,7 +76,7 @@
           全选
         </div>
       </div>
-      <div class="groups-users">  
+        <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userList" suppress-scroll-x = "true">
         <div class="groups-div">
           <div class="group" ng-repeat="group in groupList">
             <input type="checkbox" ng-click = "inviteBySelect(group, group.selected)" ng-model = "group.selected"/>
@@ -97,7 +97,7 @@
             <span class="group-name">{{user.real_name}}</span>
           </div>
         </div>
-      </div>
+        </perfect-scrollbar>
     </div>
   </div>
 </div>

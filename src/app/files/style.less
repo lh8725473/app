@@ -25,6 +25,7 @@
     height: 65px;
     border-bottom: 1px solid #E8E8E8; 
     overflow: hidden;
+    font-size: 14px;
   }
   .file-row:hover{
       background-color: #ebf1f7;
@@ -128,7 +129,6 @@
            float: left;
            padding-top: 22px;
            padding-left: 5px;
-           font-size: 12px;
            color: #666; 
        }
        .file-sise-td{
@@ -136,7 +136,6 @@
            float: left;
            padding-top: 22px;
            padding-left: 8px; 
-           font-size: 12px;
            color: #666;
        }
        .permission-td{
@@ -144,7 +143,6 @@
            float: left;
            padding-left: 8px; 
            padding-top: 22px; 
-           font-size: 12px;
            color: #666;
        }
        .action-td{
@@ -153,8 +151,7 @@
            padding-top: 22px;
            padding-left: 8px;
            span{
-             margin-left: 3px;
-             font-size: 12px;
+             margin-left: 2px;
              color: #666;
            } 
        }
@@ -223,22 +220,32 @@
       white-space: nowrap;
       padding-left: 8px;
       padding-top: 5px;
+      font-size: 15px;
       a{
         color: #333;
         font-weight: 500;
       }
       a:hover{
         color: #1f69ba;
+        text-decoration: underline;
       }
     }
     .tag{
-      color: #fff;
+      color: #888;
       font-size: 10px;
       span{
         display: inline-block;       
-        background-color: #c2c2c2;
+        // background-color: #c2c2c2;
         padding: 1px 4px;
         border-radius: 1px;
+        border: 1px solid #E0E0E0;
+        transition: background 0.25s linear 0s;
+        margin-right: 2px;
+      }
+      .add-tag:hover{
+        cursor: pointer;
+        background: #448DE8;
+        color: #fff;  
       }
     }  
   }
@@ -253,7 +260,9 @@
     background-position: 0px -38px;
     height:19px;
     width: 16px;
-    cursor: pointer;  
+    &.is_edit{
+       cursor: pointer; 
+    }  
   }
   .share-ico{
     float: left;
@@ -261,8 +270,10 @@
     background-position: 0px 0px;
     height:19px;
     width: 16px;
-    cursor: pointer;
-    margin-left: 10px;  
+    margin-left: 10px;
+    &.is_edit{
+       cursor: pointer; 
+    }  
   }
   .discuss-ico{
     float: left;  
@@ -270,8 +281,10 @@
     background-position: 0px -19px;
     height:19px;
     width: 16px;
-    cursor: pointer;
-    margin-left: 10px;  
+    margin-left: 10px;
+    &.is_edit{
+       cursor: pointer; 
+    } 
   }
   
   .position-fixed {
@@ -287,12 +300,65 @@
     right: 0;
     top: 0;
     bottom: 0;
+    .h4_add_guide{
+        width: 100%;
+        border-bottom: 1px solid #e8e8e8;
+        padding: 0;
+        margin-left: 15px;
+    }
+    .add_guide{
+        width: 100%;
+        margin-left: 20px;
+        height: 305px;
+        background: url("../../images/web_main_guide_add.png") no-repeat scroll rgba(0, 0, 0, 0);
+    }
+    .h4_add_link{
+        width: 100%;
+        border-bottom: 1px solid #e8e8e8;
+        padding: 0;
+        margin-left: 15px;
+    }
+    .add_link{
+        width: 100%;
+        height: 250px;
+        margin-left: 20px;
+        background: url("../../images/web_main_guide_link.png") no-repeat scroll rgba(0, 0, 0, 0);
+    }
+    .scroller{
+        overflow-y: hidden;
+        bottom: 0;
+        left: 0;
+        margin-left: 0;
+        right: 0;
+        top: 46px;
+        position: absolute;
+    }
+    .empty-scroller{
+        overflow-y: hidden;
+        overflow-x: hidden;
+        bottom: 0;
+        left: 0;
+        margin-left: 0;
+        right: 0;
+        top: 46px;
+        position: absolute;
+    }
     .groups-users-header{
       height: 36px;
       line-height: 36px;
       margin-bottom: 10px;
       color: #555;
       background-color: #E8ECF0;
+      .invite{
+        background: url("../../images/file_invite_contact_btn_off.png") no-repeat scroll rgba(0, 0, 0, 0);
+        cursor: pointer;
+        height: 17px;
+        width: 20px;
+        margin-top: 10px;
+      }
+      .invite:hover{
+        background: url("../../images/file_invite_contact_btn_pressed.png") no-repeat scroll rgba(0, 0, 0, 0);  
+      }
       a{
         cursor: pointer;
         text-decoration: none;
@@ -397,6 +463,14 @@
             float: left;
             width: 35px;
         }
+        .img:hover .arrows-img{
+            transform:rotate(90deg);
+            -sand-transform: rotate(90deg);/* IE */
+            -ms-transform: rotate(90deg); /* IE */
+            -moz-transform:rotate(90deg); /* Firefox 4 */
+            -webkit-transform:rotate(90deg); /* Safari and Chrome */
+            -o-transform:rotate(90deg); /* Opera */
+        }
         .user-name{
             float: left;
             width: 85px;
@@ -441,15 +515,54 @@
             line-height: 24px;
         }
     }
+    .users.is_owner .user-permission span{
+        cursor: auto;
+    }
+    .users.not_edit .user-permission span{
+        cursor: auto;
+    }
+    
+    .users.is_owner{
+        .user-permission{
+            color: #000000;
+        }
+        .dropdown-menu{
+            display: none;
+        }
+    }
+    .users.not_edit{
+        .dropdown-menu{
+            display: none;
+        }
+    }
+    
     .users:hover{
-            background-color: #ebf1f7;
-        }
-        .users:hover .caret{
-            display: inline-block;
-        }
-        .users:hover .delete-user{
-            display: inline-block;
-        }
+        background-color: #ebf1f7;
+    }
+    .users.is_owner:hover{
+        background-color : white;
+    }
+    .users.not_edit:hover{
+        background-color : white;
+    }
+    .users:hover .caret{
+        display: inline-block;
+    }
+    .users:hover .delete-user{
+        display: inline-block;
+    }
+    .users.is_owner:hover .caret{
+        display: none;
+    }  
+    .users.is_owner:hover .delete-user{
+        display: none;
+    }
+    .users.not_edit:hover .caret{
+        display: none;
+    }  
+    .users.not_edit:hover .delete-user{
+        display: none;
+    }
     .arrows-img{
         background: url("../../images/arrows.png") no-repeat scroll rgba(0, 0, 0, 0);
         background-position: 0 -69px;
@@ -459,8 +572,16 @@
         margin-top: 3px;
         margin-right: 5px;
         transition: -moz-transform 0.2s ease 0s;
+        -moz-transition:-moz-transform 0.2s; /* Firefox 4 */
+        -webkit-transition:-webkit-transform 0.2s; /* Safari and Chrome */
+        -o-transition:-o-transform 0.2s; /* Opera */
+        -ms-transition:-ms-transform 0.2s; /* IE */
+        -sand-transition:-sand-transform 0.2s; /* IE */
         width: 15px;
         height: 15px;
+        &.group_show{
+            background-position: 0 -108px;
+        }
     }
 }
 
@@ -471,26 +592,6 @@
 .snap-content {
    background-color: #fff;
    border-left: 1px solid #ccc;
-}
-
-//移动文件夹
-.move-file-modal-view{
-    div[data-tree-model] li .expanded {
-        background-image: url("../../images/tree_ico.png");
-        background-repeat: no-repeat;
-        padding: 1px 10px;
-    }
-    
-    div[data-tree-model] li .collapsed {
-        background-image: url("../../images/tree_ico.png");
-        background-repeat: no-repeat;
-        padding: 1px 10px;
-    }
-    div[data-tree-model] li .normal {
-        background-image: url("../../images/tree_ico.png");
-        background-repeat: no-repeat;
-        padding: 1px 10px;
-    }
 }
 
 //讨论
@@ -527,291 +628,6 @@
         bottom: 70px;
         height: 130px;
         position: absolute;
-    }
-}
-
-//邀请协作人
-.invite-team-users{
-    h3{
-      margin-left: 15px;
-    }
-    h5{
-      margin-top: 24px;
-    }
-    .modal-dialog {
-        width: 100%;
-
-        .modal-content {
-            border: none;
-            border-radius: none;
-            background: transparent;
-             box-shadow: none;
-        }
-    }
-    .invite-team-users-inner {
-//      transition:width 0.5s;
-//      -moz-transition:width 0.5s; /* Firefox 4 */
-//      -webkit-transition:width 0.5s; /* Safari and Chrome */
-//      -o-transition:width 0.5s; /* Opera */
-        width: 400px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 6px;
-        margin: 0 auto;
-        background: white;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        &.broad {
-            width: 700px;
-        }
-    }
-    .invite-form{
-        height: 500px;
-        .invite-content{
-            width: 360px;
-        }
-        .input-from-group{
-            margin-bottom: 5px;
-        }
-        .or-from-group{
-            margin-bottom: 5px;
-            text-align: center;
-        }
-        .select-from-group{
-            margin-bottom: 5px;
-        }
-        .selected-groups-users{
-            border: 1px solid #e5e5e5;
-            margin-left: 15px;
-            height: 76px;
-            padding: 0;
-            width: 92%;
-        }
-        .dropdown{
-          button{
-            text-align: left;
-            span.caret{
-              margin-left: 250px;
-            }
-            
-          }
-          .dropdown-menu{
-              width: 100%;
-              text-align: left;
-              li{
-                cursor:pointer;
-              }
-          }
-        }
-
-        textarea.comment-input {
-          height: 54px;
-          font-size: 12px;
-          color: #666;
-        }
-        
-        .selectedItem{
-            background: none repeat scroll 0 0 #eee;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            float: left;
-            margin: 5px;
-            padding: 3px;
-            .deleteSelected{
-                padding: 5px;
-                cursor: pointer;
-            }
-        }
-        form{
-            height: 100%;
-            h5{
-              border-bottom: 1px solid #e5e5e5;  
-            }
-        }
-        .select-invite{
-            height: 100%;
-            border-left: 1px solid #e5e5e5;
-            width: 300px;
-            .form-group{
-                height: 20px;
-            }
-            .group{
-                padding: 5px;
-                .group-user{
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                    padding-left: 25px;
-                }
-            }
-            .user{
-                padding: 5px;
-            }
-            .groups-users{
-              height: 350px;
-              overflow-y: auto;
-              .group-name{
-                  max-width: 90px;
-              }   
-            }
-             .arrows-img{
-                background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
-                cursor: pointer;
-                float: right;
-                height: 8px;
-                margin-top: 8px;
-                transition: -moz-transform 0.2s ease 0s;
-                width: 15px;
-             }
-        }
-      
-    }
-}
-
-//链接分享
-.link-share{
-    .modal-dialog{
-        width: 350px;
-        .input-group{
-            margin-bottom: 5px;
-        }
-        .dropdown{
-          button{
-            text-align: left;
-            span.caret{
-              margin-left: 238px;
-            }
-          }
-          .dropdown-menu{
-              text-align: left;
-              width: 100%;
-              li{
-                  cursor: pointer;
-              }
-          }
-        }
-        
-        .input-password{
-            margin-top: 5px;
-        }
-        .code_src{
-            margin-right: 5px;
-        }
-    }
-}
-
-//文件预览
-.preview-file{
-    .preview-file-inner{
-        width: 600px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 6px;
-        margin: 0 auto;
-        background: white;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        &.broad {
-            width: 900px;
-        }
-    }
-    
-    .modal-dialog{
-        height: 90%;
-        width: 90%;
-    }
-    .modal-content{
-        height: 100%;
-    }
-    .upload-new-version{
-        float: right;
-        padding: 4px 6px;
-    }
-    .preview-view{
-        height: 100%;
-        .image-preview{
-            text-align: center;
-            bottom: 0;
-            left: 13px;
-            position: absolute;
-            right: 14px;
-            top: 40px;
-            img{
-                height: 100%;
-                width: 70%;
-            }
-        }
-        .txt-preview{
-            word-break: break-all;
-            bottom: 0;
-            left: 13px;
-            position: absolute;
-            right: 14px;
-            top: 40px;
-            overflow-y: auto;
-        }
-        .office-preview{
-            border: 1px solid #e5e5e5;
-            bottom: 0;
-            left: 13px;
-            position: absolute;
-            right: 14px;
-            top: 40px;
-        }
-    }
-    .modal-body{
-        position: relative;
-        height: 100%;
-    }
-    .preview-action{
-        position: absolute;
-        bottom: 0;
-    }
-    .modal-header{
-        padding: 0;
-    }
-    .discuss-version-view{
-        border-left: 1px solid #e5e5e5;
-        height: 100%;
-        .nav-sidebar{
-            .ver{
-              margin-left: 15px;  
-            }
-            li{
-               float: left;
-               cursor: pointer;
-               &.active{
-                   border-bottom: 2px solid #428bca;
-               }
-            }
-        }
-        .discuss{
-          position: absolute;
-          top: 30px;
-          left: 15px;
-          right: 0;
-          bottom: 110px;
-          overflow-y: auto;
-          .disc-item{
-            padding: 10px;
-            img{
-              float: left;
-            }
-            .disc-box{
-              margin-left: 35px;
-              .disc-name{
-                color: #c0c0c0;
-                font-size: 12px;
-              }
-            .disc-time{
-                color: #c0c0c0;
-                font-size: 12px;
-            }
-          }
-          }
-        }
-        
-        
-        .disc-inputbox{
-          bottom: 0;
-          height: 100px;
-          position: absolute;
-        }
     }
 }
 

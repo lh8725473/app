@@ -4,12 +4,14 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
   'obj',
   'users',
   'Share',
+  'Notification',
   function(  
     $scope,
     $modalInstance,
     obj,
     users,
-    Share
+    Share,
+    Notification
   ) {
         $scope.emailSelectOptions = {
           'multiple': true,
@@ -18,7 +20,8 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
             return user.email
           })
         }
-
+        
+        //发送链接邮件数组
         $scope.selectedEmails = []
 
         $scope.today = function() {
@@ -86,14 +89,30 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
             $scope.linkSharePassword = ""
           }
         }
-
-        $scope.sendEmail = function() {
+        
+        //发送链接邮件
+        $scope.sendEmail = function() {       
+          if($scope.selectedEmails.length == 0){
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: "发送人不能为空",
+              closeable: false
+            })
+            return;
+          }
+    
           Share.sendEmail({},{
             obj_name : obj.file_name,
             link : $scope.link,
             emails : $scope.selectedEmails
           }).$promise.then(function() {
-            alert("发送邮件成功")
+            Notification.show({
+              title: '成功',
+              type: 'success',
+              msg: "发送邮件成功",
+              closeable: true
+            })
             $modalInstance.dismiss('cancel')
           })
         }
@@ -142,12 +161,12 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
             $scope.link = linkShare.link
             $scope.code_src = linkShare.code_src
           }, function (error) {
-                Notification.show({
-                    title: '失败',
-                    type: 'danger',
-                    msg: error.data.result,
-                    closeable: false
-                })
+              Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+              })
             }
           )
         }

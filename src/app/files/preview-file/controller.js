@@ -52,6 +52,10 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
             $scope.previewValue = htmlData
           })
         }
+        
+        $scope.fileHistoryList = Files.history({
+          file_id : obj.file_id
+        })
       })
       
       //上传新版本
@@ -112,8 +116,17 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
         }).$promise.then(function(userDiscuss){
           $scope.discussContent = ''
           $scope.discussCount = 0
+          $scope.discussButton = true
           $scope.userDiscussList.push(userDiscuss)
         })
+      }
+      
+      //回车发表讨论
+      $scope.createUserDiscussByPress = function($event){
+        if($event.which === 13){//回车事件
+          $event.preventDefault()
+          $scope.createUserDiscuss()
+        }
       }
     
       //输入讨论框监控
