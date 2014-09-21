@@ -84,6 +84,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
           for (var i = 0; i < objList.length; i++) {
             $scope.objList.push(objList[i]);
           }
+          refreshList()
         })
       }
     }
@@ -727,4 +728,4 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
     }
   };
-}]);
+}])

@@ -91,9 +91,9 @@ module.exports = function(grunt) {
     inline_angular_templates: {
       production: {
         files: {
-          'production/admin.html': ['src/admin/**/*.html'],
-          'production/index.html': ['src/app/**/*.html'],
-          'production/link.html': ['src/link-share/**/*.html']
+          'production/admin.html': ['src/admin/**/*.html', 'src/global/**/*.html'],
+          'production/index.html': ['src/app/**/*.html', 'src/global/**/*.html'],
+          'production/link.html': ['src/link-share/**/*.html', 'src/global/**/*.html']
         }
       },
       options: {
