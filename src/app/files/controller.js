@@ -61,12 +61,32 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.isRoot = (folderId == 0) ? true : false
 
     //fileList data
+    // var pageSize = 30
+    var objListPage = 1
     $scope.objList = Folders.getObjList({
-      folder_id: folderId
+      folder_id: folderId,
+      page: objListPage
     })
     $scope.objList.$promise.then(function() {
       $scope.loading = false
     })
+
+    $scope.onFileListScroll = function(scrollTop, scrollHeight) {
+      if (scrollTop == scrollHeight && !$scope.loading) {
+        objListPage++
+        $scope.loading = true
+        var objList = Folders.getObjList({
+          folder_id: folderId,
+          page: objListPage
+        })
+        objList.$promise.then(function(){
+          $scope.loading = false
+          for (var i = 0; i < objList.length; i++) {
+            $scope.objList.push(objList[i]);
+          }
+        })
+      }
+    }
     
     $scope.$on('searchFilesValue', function($event, searchFilesValue) {
       $scope.objList = Search.query({
