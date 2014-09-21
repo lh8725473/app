@@ -26,6 +26,7 @@
     </div>
   </div>
   <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+  <loading-indicator ng-show="loading"></loading-indicator>
   <div class="folder-grid">
     <div class="table">
         <div class="file-row" ng-repeat="recycle in recycleList" ng-class = "{ selected: recycle.checked }" ng-click = "selectRecycle($event, recycle)">

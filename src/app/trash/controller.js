@@ -15,6 +15,13 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
     //回收站文件列表
     $scope.recycleList = Trash.getRecycleList()
     
+    $scope.recycleList.$promise.then(function() {
+      $scope.loading = false
+    })
+    
+    //加载动画
+    $scope.loading = true
+    
     $scope.recycleList.$promise.then(function(recycleList) {
       angular.forEach(recycleList, function(recycle){
         //对象是否被选中
