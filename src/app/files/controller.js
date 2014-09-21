@@ -38,7 +38,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
-
+    
+    //加载动画
     $scope.loading = true
 
     $scope.permissions = []

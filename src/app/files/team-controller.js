@@ -43,10 +43,17 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   	//对当前目录下的权限
     var folder_permission = ''
     
+    //加载动画
+    $scope.loading = true
+    
   	if(folder_id != 0){
   		$scope.shareObj = Folders.queryShareObj({
   			folder_id : folder_id
   		})
+  		
+  		$scope.shareObj.$promise.then(function() {
+        $scope.loading = false
+      })
   	
   		$scope.shareObj.$promise.then(function(shareObj){
   		  //对当前目录下的权限

@@ -11,6 +11,12 @@ angular.module('App.Users.ExternalUsers').controller('App.Users.ExternalUsers.Co
 	) {
 		//externalUserList data
 		$scope.externalUserList = ExternalUser.query()
+		
+		//加载动画
+    $scope.loading = true
+    $scope.externalUserList.$promise.then(function() {
+      $scope.loading = false
+    })
 
 		//externalUser grid
 		$scope.externalUserGridOptions = {

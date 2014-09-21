@@ -13,6 +13,9 @@ angular.module('App', [
 
   // Widget
   'App.Widgets',
+  
+  // global components
+  'ACT.LoadingIndictor',
 
   // Components
   'App.Header',

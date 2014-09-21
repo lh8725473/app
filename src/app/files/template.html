@@ -200,6 +200,7 @@
 			<div class="pull-right invite" ng-click = "inviteTeamUsers()" ng-show = "folder_delete"></div>
 		</div>
 		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="shareObj.list.users">
+		<loading-indicator ng-show="loading"></loading-indicator>
 		<div class="groups col-sm-12" ng-repeat="group in groups" >
 			<div class="group-div">
 				<div class="img" ng-click = "changeGroupshow(group)">

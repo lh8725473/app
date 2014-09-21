@@ -39,6 +39,9 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	  window.location.href = "admin.html"
   	}
   	
+  	//加载动画
+  	$scope.loading = true
+  	
   	$scope.messageCount = 0
   	$scope.noticeCount = 0
   	$scope.showMessageCount = !!$scope.messageCount
@@ -61,9 +64,13 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	
   	//message 列表
   	$scope.openMessageList = function(){
+  	  $scope.loading = true
   	  $scope.messageList = Message.getMessageList()
+  	  $scope.messageList.$promise.then(function() {
+        $scope.loading = false
+      })
   	}
-  	
+  	 	
   	//点击单个消息
   	$scope.messageDetail = function(message){
   	  $scope.pollForMessages()
@@ -72,7 +79,11 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	
   	//notice 列表
   	$scope.openNoticeList = function(){
+  	  $scope.loading = true
       $scope.noticeList = Message.getNoticeList()
+      $scope.noticeList.$promise.then(function() {
+        $scope.loading = false
+      })
     }
   	
   	//message标记为已读
