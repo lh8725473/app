@@ -46,7 +46,7 @@
       <span>分享</span>          
     </div>
   </div>
-  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList" on-scroll="onFileListScroll(scrollTop, scrollHeight)">
   	<loading-indicator ng-show="loading"></loading-indicator>
 		<div class="folder-grid">
 			<div class="table">

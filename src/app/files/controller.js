@@ -66,6 +66,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.objList.$promise.then(function() {
       $scope.loading = false
     })
+
+    $scope.onFileListScroll = function(scrollTop, scrollHeight) {
+    }
     
     $scope.$on('searchFilesValue', function($event, searchFilesValue) {
       $scope.objList = Search.query({
