@@ -47,7 +47,6 @@
     </div>
   </div>
   <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList" on-scroll="onFileListScroll(scrollTop, scrollHeight)">
-  	<loading-indicator ng-show="loading"></loading-indicator>
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
@@ -145,6 +144,7 @@
 					</div>
 			</div>
 		</div>
+  	<loading-indicator ng-show="loading"></loading-indicator>
 	</perfect-scrollbar>
 	<pageslide
 		ps-speed="0.5"
