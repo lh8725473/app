@@ -2,10 +2,14 @@ angular.module('App.Files').controller('App.Files.CreateTagController', [
   '$scope',
   '$modalInstance',
   'obj',
+  'Tag',
+  'Notification',
   function(
     $scope,
     $modalInstance,
-    obj
+    obj,
+    Tag,
+    Notification
   ) {
     $scope.obj = obj
     
@@ -14,11 +18,31 @@ angular.module('App.Files').controller('App.Files.CreateTagController', [
     
     //创建标签
     $scope.createTag = function(){
+      if($scope.tag_name == ''){
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: '标签不能为空',
+          closeable: false
+        })
+        return     
+      }
+      if($scope.obj.tags.length == 3){
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: '标签个数不能超过3个',
+          closeable: false
+        })
+        return
+      }
+      
       Tag.createTag({},{
-        obj_id : obj.file_name,
+        obj_id : (obj.isFolder == 1) ? obj.folder_id : obj.file_id,
         obj_type : (obj.isFolder == 1) ? 'folder' : 'file',
         tag_name : $scope.tag_name
-      }).$promise.then(function() {
+      }).$promise.then(function(tag) {
+        $scope.obj.tags.push(tag)
         Notification.show({
           title: '成功',
           type: 'success',
@@ -36,11 +60,32 @@ angular.module('App.Files').controller('App.Files.CreateTagController', [
     }
     
     //删除标签
-    $scope.deleteTag = function (){
-      Tag.deleteTag({},{
-        obj_id : obj.file_name,
-        obj_type : (obj.isFolder == 1) ? 'folder' : 'file',
-        tag_name : $scope.tag_name
+    $scope.deleteTag = function (tag){
+      Tag.deleteTag({
+        tag_id : tag.tag_id,
+        obj_id : (obj.isFolder == 1) ? obj.folder_id : obj.file_id,
+        obj_type : (obj.isFolder == 1) ? 'folder' : 'file'
+      }).$promise.then(function() {
+        for (var i = 0; i < obj.tags.length; ++i) {
+          if (obj.tags[i].tag_id == tag.tag_id) {
+            obj.tags.splice(i, 1)
+            break
+          }
+        }
+        
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '删除标签成功',
+          closeable: true
+        })
+      }, function (error) {
+         Notification.show({
+           title: '失败',
+           type: 'danger',
+           msg: error.data.result,
+           closeable: false
+         })
       })
     }
     

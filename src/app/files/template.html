@@ -77,7 +77,8 @@
 									{{obj.file_name}}
 								</a>
 								<div class="tag">
-									<span>+添加标签</span>
+								  <span ng-repeat = "tag in obj.tags" ng-show = "obj.tags.length != 0">{{tag.tag_name}}</span>
+									<span class="add-tag" ng-show = "obj.tags.length == 0" ng-click = "createTag(obj)" >+添加标签</span>
 								</div>
 							</div>
 							<div class="rename-form" ng-show = "obj.rename">

@@ -5,7 +5,7 @@ angular.module('App.Resources').factory('Tag', [
     $resource,
     CONFIG
   ) {
-    return $resource(CONFIG.API_ROOT + '/tag/:action', {}, {
+    return $resource(CONFIG.API_ROOT + '/tag/:action/:tag_id', {}, {
       createTag: {
         method: "POST",
         params: {

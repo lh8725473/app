@@ -479,6 +479,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
             break
           }
         }
+        
+        Notification.show({
+          title: '成功',
+          type: 'success',
+          msg: '移动文件成功',
+          closeable: true
+        })
       })
     }
 
