@@ -62,7 +62,7 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
           moved(file_id)
         }, function (error) {
               Notification.show({
-                  title: 'Ê§°Ü',
+                  title: 'å¤±è´¥',
                   type: 'danger',
                   msg: error.data.result,
                   closeable: false
@@ -77,12 +77,12 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
         }).$promise.then(function() {
           moved(file_id)
         }, function (error) {
-	            Notification.show({
-	                title: 'Ê§°Ü',
-	                type: 'danger',
-	                msg: error.data.result,
-	                closeable: false
-	            })
+            Notification.show({
+              title: 'å¤±è´¥',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
 	        }
         )
       }
