@@ -196,18 +196,17 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     //新建文件夹
     $scope.createFolderData = {
-      createFolderName:''
+      createFolderName:'',
+      myInputFocus: false
     }
     $scope.showCreateFolderDiv = false
-    $scope.myInputFocus = false
     $scope.showCreateFolder = function() {
       $scope.createFolderData.createFolderName = ''
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
-      $scope.myInputFocus= !$scope.myInputFocus;
+      $scope.createFolderData.myInputFocus= !$scope.createFolderData.myInputFocus;
     }
     $scope.cancelCreate = function() {
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
-      $scope.myInputFocus= !$scope.myInputFocus;
     }
     $scope.createFolder = function(createFolderName) {
       FolderAction.createFolder({
@@ -679,9 +678,11 @@ angular.module('App.Files').controller('App.Files.Controller', [
   };
 }).directive('focusMe',['$timeout', '$parse' , function($timeout, $parse) {
   return {
-    link: function(scope, element, attrs) {
-      var model = $parse(attrs.focusMe);
-      scope.$watch(model, function(value) {
+    scope: {
+      'focus': '=focusMe'
+    },
+    link: function(scope, element) {
+      scope.$watch('focus', function(value) {
         if(value === true) { 
           $timeout(function() {
             element[0].focus(); 
@@ -689,7 +690,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       });
       element.bind('blur', function() {
-        scope.$apply(model.assign(scope, false));
+        scope.focus = false
       })
     }
   };
