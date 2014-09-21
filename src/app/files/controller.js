@@ -39,6 +39,8 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
 
+    $scope.loading = true
+
     $scope.permissions = []
     angular.forEach($scope.permission_key, function(key, index) {
       var permissionMap = {
@@ -60,7 +62,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //fileList data
     $scope.objList = Folders.getObjList({
       folder_id: folderId
-    })     
+    })
+    $scope.objList.$promise.then(function() {
+      $scope.loading = false
+    })
     
     $scope.$on('searchFilesValue', function($event, searchFilesValue) {
       $scope.objList = Search.query({
