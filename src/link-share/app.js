@@ -7,6 +7,7 @@ angular.module('App', [
   'pascalprecht.translate',
   'angular-md5',
   'angularFileUpload',
+  'perfect_scrollbar',
 
   // Config
   'App.Config',

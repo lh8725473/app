@@ -575,12 +575,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
         resolve: {
           obj: function() {
             return obj
-          },
-          users: function() {
-            return Cloud.cloudUserList().$promise.then(function(cloudUser) {
-              return cloudUser.list.users
-            })
           }
+//        users: function() {
+//          return Cloud.cloudUserList().$promise.then(function(cloudUser) {
+//            return cloudUser.list.users
+//          })
+//        }
         }
       })
     }

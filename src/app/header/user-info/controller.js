@@ -41,13 +41,13 @@ angular.module('App.Header').controller('App.Header.UserInfoController', [
                     msg = "密码长度必须为6-16位"
                 }
                 if (msg != "") {
-                    Notification.show({
-                        title: '失败',
-                        type: 'danger',
-                        msg: msg,
-                        closeable: false
-                    })
-                    return
+                  Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: msg,
+                    closeable: false
+                  })
+                  return
                 }
             }
 
@@ -58,42 +58,47 @@ angular.module('App.Header').controller('App.Header.UserInfoController', [
                 old_password: $scope.userInfo.old_password
             }).$promise.then(function() {
                 $modalInstance.close()
+                Notification.show({
+                  title: '成功',
+                  type: 'success',
+                  msg: '保存成功',
+                  closeable: false
+                })
             }, function(error) {
                 Notification.show({
-                    title: '失败',
-                    type: 'danger',
-                    msg: error.data.result,
-                    closeable: false
+                  title: '失败',
+                  type: 'danger',
+                  msg: error.data.result,
+                  closeable: false
                 })
             })
         }
 
         //更新用户头像
         $scope.updateImg = function() {
-            $scope.onFileSelect = function($files) {
-                var file = $files[0];
-                (function(file) {
-                    file.upload = $upload.upload({
-                        url: CONFIG.API_ROOT + '/user/avatar?token=' + $cookies.accessToken,
-                        method: 'POST',
-                        withCredentials: true,
-                        data: {
-                            file_name: file.name
-                        },
-                        file: file,
-                        fileFormDataName: 'Filedata',
-                    }).progress(function(evt) {
-                        file.progress = parseInt(100.0 * evt.loaded / evt.total)
-                    }).success(function(data, status, headers, config) {
-                        var avatar = $scope.userInfo.avatar
-                        $scope.userInfo.avatar = ''
-                        $scope.userInfo.avatar = avatar + '&_=' + new Date().getTime()
-                        $rootScope.$broadcast('updateUserImg');
-                        file.progress = 100
-                    });
-                })(file);
-
-            };
+          $scope.onFileSelect = function($files) {
+            var file = $files[0];
+            (function(file) {
+              file.upload = $upload.upload({
+                url: CONFIG.API_ROOT + '/user/avatar?token=' + $cookies.accessToken,
+                method: 'POST',
+                withCredentials: true,
+                data: {
+                    file_name: file.name
+                },
+                file: file,
+                fileFormDataName: 'Filedata',
+              }).progress(function(evt) {
+                file.progress = parseInt(100.0 * evt.loaded / evt.total)
+              }).success(function(data, status, headers, config) {
+                var avatar = $scope.userInfo.avatar
+                $scope.userInfo.avatar = ''
+                $scope.userInfo.avatar = avatar + '&_=' + new Date().getTime()
+                $rootScope.$broadcast('updateUserImg');
+                file.progress = 100
+              });
+            })(file);
+          };
         }
 
         $scope.cancel = function() {

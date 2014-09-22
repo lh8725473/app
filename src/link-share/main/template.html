@@ -12,7 +12,7 @@
           {{path.name}}
         </a>
       </div>
-      <div class="pull-right">
+      <div class="pull-right expiration-date">
         链接有效至{{linkDetail.expiration_date}}
       </div>
     </div>
@@ -39,6 +39,7 @@
         <span>大小</span>
       </div>
     </div>
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
     <div class="folder-grid">
       <div class="table">
         <div class="file-row" ng-repeat="linkShare in linkShareList" ng-class = "{ selected: linkShare.checked }" ng-click = "selectRecycle($event, linkShare)">
@@ -57,9 +58,6 @@
               <a ng-show = "!linkShare.folder&&!linkShare.isPreview" ng-class = "{ noPreview: !linkShare.isPreview }">
                 {{linkShare.file_name}}
               </a>
-              <div class="tag">
-                <span>+添加标签</span>
-              </div>
             </div>
           </div>
           <div class="state-td">
@@ -73,6 +71,7 @@
         </div>
       </div>
     </div>
+    </perfect-scrollbar>
   </div>
   <div class="link-detail col-sm-3">
       <div class="img-name-email">

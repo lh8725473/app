@@ -2,24 +2,40 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
   '$scope',
   '$modalInstance',
   'obj',
-  'users',
   'Share',
   'Notification',
+  'Cloud',
   function(  
     $scope,
     $modalInstance,
     obj,
-    users,
     Share,
-    Notification
-  ) {
+    Notification,
+    Cloud
+  ) {   
+        var users = Cloud.cloudUserList().$promise.then(function(cloudUser) {
+          return cloudUser.list.users
+        })
+        
         $scope.emailSelectOptions = {
           'multiple': true,
           'simple_tags': true,
           'tags': users.map(function(user) {
-            return user.email
-          })
+             return user.email
+           })
         }
+        
+//      Cloud.cloudUserList().$promise.then(function(cloudUser) {
+//        var users = cloudUser.list.users
+//        
+//        $scope.emailSelectOptions = {
+//          'multiple': true,
+//          'simple_tags': true,
+//          'tags': users.map(function(user) {
+//            return user.email
+//          })
+//        }
+//      })
         
         //发送链接邮件数组
         $scope.selectedEmails = []
