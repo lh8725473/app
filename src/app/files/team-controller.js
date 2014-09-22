@@ -85,7 +85,20 @@ angular.module('App.Files').controller('App.Files.TeamController', [
       			if(key == group.permission){
         			group.permission_value = $scope.permission_value[index]
       			}
-      		})			
+      		})
+      		
+      		if(parseInt(folder_permission) < parseInt(group.permission)){//不能操作大于自身权限的用户
+            group.is_edit = true
+          }
+          if(!$scope.folder_edit){//没有编辑权限
+            group.is_edit = true
+          }
+          
+          if($scope.folder_owner){//不能给予别人比自己大的权限
+            group.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+          }else{
+            group.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+          } 
   			})
   			angular.forEach($scope.users, function(user){
   				//人员权限
@@ -104,6 +117,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   				  if(parseInt(folder_permission) < parseInt(user.permission)){//不能操作大于自身权限的用户
   				    user.is_owner = true
   				  }
+  				  if(!$scope.folder_edit){//没有编辑权限
+              user.is_owner = true
+            }
   				}
   				
           if($scope.folder_owner){//不能给予别人比自己大的权限
@@ -132,7 +148,14 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               if(key == group.permission){
                 group.permission_value = $scope.permission_value[index]
               }
-            })      
+            })
+            
+            if(parseInt(folder_permission) < parseInt(group.permission)){//不能操作大于自身权限的用户
+              group.is_owner = true
+            }
+            if(!$scope.folder_edit){//没有编辑权限
+              group.is_owner = true
+            }
           })
           angular.forEach($scope.users, function(user){
             //人员权限
@@ -140,17 +163,20 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               user.permission_value = '拥有者'
               user.is_owner = true
             }else{
-              if(user.user_id == $cookies.userId){//不能操作自己
+              angular.forEach($scope.permission_key, function(key, index) {
+                if(key == user.permission){
+                  user.permission_value = $scope.permission_value[index]
+                }                    
+              })
+              if(user.user_id == $cookies.userId){//不能操作自己用户
                 user.is_owner = true
               }
               if(parseInt(folder_permission) < parseInt(user.permission)){//不能操作大于自身权限的用户
                 user.is_owner = true
               }
-              angular.forEach($scope.permission_key, function(key, index) {
-                if(key == user.permission){
-                  user.permission_value = $scope.permission_value[index]
-                }                    
-              })    
+              if(!$scope.folder_edit){//没有编辑权限
+                user.is_owner = true
+              }   
             }
             
             if($scope.folder_owner){//不能给予别人比自己大的权限

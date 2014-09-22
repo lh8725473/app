@@ -450,7 +450,31 @@
     .groups:hover {
       background-color: #ebf1f7;
     }
-
+    
+    .groups.not_edit .group-permission span{
+      cursor: auto;
+    }
+    
+    .groups.not_edit{
+        .group-permission{
+            color: #666;
+        }
+        .dropdown-menu{
+            display: none;
+        }
+    }
+    
+    .groups.not_edit:hover{
+        background-color : white;
+    }
+    
+    .groups.not_edit:hover .caret{
+        display: none;
+    }  
+    .groups.not_edit:hover .delete-group{
+        display: none;
+    }
+            
     .users{
         padding-left: 36px;
         padding-top: 5px;
@@ -524,7 +548,7 @@
     
     .users.is_owner{
         .user-permission{
-            color: #000000;
+            color: #666;
         }
         .dropdown-menu{
             display: none;

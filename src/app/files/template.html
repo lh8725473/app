@@ -131,7 +131,7 @@
 								</a>
 							</li>
 							<li ng-show = "show_discuss_menu">
-								<a ng-click="openUserDiscuss($event, checkedObj)" class="large button">
+								<a ng-click="openUserDiscuss(checkedObj)" class="large button">
 									讨论
 								</a>
 							</li>
@@ -201,7 +201,7 @@
 		</div>
 		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="shareObj.list.users">
 		<loading-indicator ng-show="loading"></loading-indicator>
-		<div class="groups col-sm-12" ng-repeat="group in groups" >
+		<div class="groups col-sm-12" ng-repeat="group in groups" ng-class = "{not_edit : !folder_edit , not_edit : group.is_edit }">
 			<div class="group-div">
 				<div class="img" ng-click = "changeGroupshow(group)">
 					<span class="arrows-img" ng-class="{ group_show: group.show }"></span>
@@ -214,7 +214,7 @@
 				<div class="group-permission" dropdown is-open="group.isopen">
 					<span class="dropdown-toggle">{{group.permission_value}}<span class="caret"></span></span>
 					<ul class="dropdown-menu" role="menu">
-						<li role="presentation" ng-repeat="value in permission_value" ng-click = "changeGroupPermission(group, value)">
+						<li role="presentation" ng-repeat="value in group.permission_value_list" ng-click = "changeGroupPermission(group, value)">
 							<a role="menuitem" tabindex="-1">
 								{{value}}
 							</a>
