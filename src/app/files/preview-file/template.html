@@ -6,8 +6,9 @@
       </button>
       <h3 class="modal-title">"{{obj.file_name}}"文件预览</h3>
     </div>
+    <loading-indicator ng-show="loading"></loading-indicator>
     <div class="image-preview" ng-show = "fileType == 'image'">
-      <img ng-src="{{imageSrc}}" alt="null"/>
+      <img ng-src="{{imageSrc}}" alt=""/>
     </div>
     <div class="txt-preview" ng-show = "fileType == 'txt'" ng-bind-html = "previewValue">
 

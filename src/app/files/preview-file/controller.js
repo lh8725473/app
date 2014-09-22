@@ -27,6 +27,9 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
       $scope.obj = obj
       //右侧菜单 讨论or版本
       $scope.navType = 'dis'
+      
+      //加载动画
+      $scope.loading = true
 
       $scope.changeNavType = function(navType) {
         $scope.navType = navType
@@ -38,6 +41,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
         $scope.imageSrc = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token=' + $cookies.accessToken
       } else {//office或者pdf预览
         Files.preview(obj.file_id).then(function(htmlData) {
+          $scope.loading = false
           $scope.previewValue = htmlData
         })
       }

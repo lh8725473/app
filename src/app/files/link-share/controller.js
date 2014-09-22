@@ -152,7 +152,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
           Share.getLink({}, {
             comment: $scope.comment,
             expiration: $scope.dt,
-            obj_id: $scope.obj.file_id,
+            obj_id: ($scope.obj.isFolder == '1') ? $scope.obj.folder_id : $scope.obj.file_id,
             obj_name: $scope.obj.file_name,
             obj_type: $scope.type,
             password: $scope.linkSharePassword,
