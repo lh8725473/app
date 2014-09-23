@@ -2,6 +2,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
   '$scope',
   '$modalInstance',
   'obj',
+  'users',
   'Share',
   'Notification',
   'Cloud',
@@ -9,14 +10,12 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
     $scope,
     $modalInstance,
     obj,
+    users,
     Share,
     Notification,
     Cloud
   ) {   
-        var users = Cloud.cloudUserList().$promise.then(function(cloudUser) {
-          return cloudUser.list.users
-        })
-        
+    
         $scope.emailSelectOptions = {
           'multiple': true,
           'simple_tags': true,
@@ -119,7 +118,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
           }
     
           Share.sendEmail({},{
-            obj_name : obj.file_name,
+            obj_name : (obj.isFolder == 1) ? obj.folder_name : obj.file_name,
             link : $scope.link,
             emails : $scope.selectedEmails
           }).$promise.then(function() {
@@ -129,7 +128,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
               msg: "发送邮件成功",
               closeable: true
             })
-            $modalInstance.dismiss('cancel')
+            $modalInstance.close()
           })
         }
 
@@ -202,7 +201,7 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         }
 
         $scope.cancel = function() {
-          $modalInstance.dismiss('cancel')
+          $modalInstance.close()
         }
   }
 ])

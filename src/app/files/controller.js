@@ -562,27 +562,36 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     //链接分享
+    var isOpen = false//hack 阻止重复打开弹出框
     $scope.linkShare = function($event, obj) {
       $event.stopPropagation()
       if(!obj.is_getLink){//无编辑权限
         return
       }
-      var linkShareModal = $modal.open({
-        templateUrl: 'src/app/files/link-share/template.html',
-        windowClass: 'link-share',
-        backdrop: 'static',
-        controller: 'App.Files.LinkShareController',
-        resolve: {
-          obj: function() {
-            return obj
+      if(!isOpen){
+        isOpen = true
+        var linkShareModal = $modal.open({
+          templateUrl: 'src/app/files/link-share/template.html',
+          windowClass: 'link-share',
+          backdrop: 'static',
+          controller: 'App.Files.LinkShareController',
+          resolve: {
+            obj: function() {
+              return obj
+            },
+            users: function() {
+              return Cloud.cloudUserList().$promise.then(function(cloudUser) {
+                return cloudUser.list.users
+              })
+           }
           }
-//        users: function() {
-//          return Cloud.cloudUserList().$promise.then(function(cloudUser) {
-//            return cloudUser.list.users
-//          })
-//        }
-        }
-      })
+        })
+        
+        linkShareModal.result.then(function() {
+          isOpen = false    
+        })
+      }
+      
     }
 
     // upload file
