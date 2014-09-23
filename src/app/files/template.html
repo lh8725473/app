@@ -173,7 +173,7 @@
 		    </div>
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12">
-	    <textarea ng-model="message.content"
+	    <textarea
       ng-trim="false"
       rows="5"
       cols="100"  
@@ -185,13 +185,7 @@
       ></textarea>
       <span ng-show="!isAtListHidden" auto-follow="true">
         <ul class="list-at-user">
-          <li ng-click="autoComplete('aaaa')">
-            aaaaa
-          </li>
-          <li ng-click="autoComplete('user')">
-            bbb
-          </li>
-          <li ng-repeat="user in users | limitTo: 5"
+          <li ng-repeat="user in userList | filter: query.text | limitTo: 4"
             ng-click="autoComplete(user)">
             <span>{{ user.user_name }}</span>
           </li>

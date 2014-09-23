@@ -12,7 +12,12 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     Users
   ) {
     
-    $scope.users = Users.query()
+    $scope.userList = Users.query()     
+    $scope.userList.$promise.then(function() {
+      angular.forEach($scope.userList, function(user) {
+        user.username = user.user_name
+      })
+    })
     
   	var discuss_file_id = $scope.discuss_file_id || 0;
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({

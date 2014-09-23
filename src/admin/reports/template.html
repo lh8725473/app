@@ -1,3 +1,75 @@
 <div class="reports-view" ng-controller="App.Reports.Controller">
-  reports
+    <div class="top-bar">
+        <div class="pull-left">
+          <span>活动日志</span>
+        </div>
+    </div>
+    <div class="top-bar-bottom">
+    </div>
+    <div class="buttonGroup">
+            <span>开始日期:</span>
+            <input type="text" class="input-medium search-query">
+            <span>截止日期:</span>
+            <input type="text" class="input-medium search-query">
+
+            <button ng-click="" class="btn btn-default" type="submit">Search</button>
+            <button ng-click="" class="btn btn-default">导出</button>
+
+    </div>
+    <div class="title">
+        <div class="title-time col">
+            <span>时间</span>
+        </div>
+        <div class="title-user col">
+            <span>用户名</span>
+        </div>
+        <div class="title-mail col">
+            <span>邮箱</span>
+        </div>
+        <div class="title-opreate col">
+            <span>操作</span>
+        </div>
+        <div class="title-file col">
+            <span>文件</span>
+        </div>
+        <div class="title-fileExt col">
+            <span>种类</span>
+        </div>
+        <div class="title-location col">
+            <span>位置</span>
+        </div>
+    </div>
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="logList"
+                       on-scroll="">
+        <div class="log-grid">
+            <div class="log-row row">
+                <div class="log-time col">
+                    <span>2014年10月1日 下午12:00</span>
+                </div>
+                <div class="log-user col">
+                    <span>用户名</span>
+                </div>
+                <div class="log-mail col">
+                    <span>Misaya@sharpinteract.com</span>
+                </div>
+                <div class="log-opreate col">
+                    <span>删除</span>
+                </div>
+                <div class="log-file col">
+                    <span>我的文件文件.doc</span>
+                </div>
+                <div class="log-fileExt col">
+                    <span>.doc</span>
+                </div>
+                <div class="log-location col">
+                    <span>所有文件\我的文件\</span>
+                </div>
+            </div>
+        </div>
+        <loading-indicator ng-show="loading"></loading-indicator>
+    </perfect-scrollbar>
+    <div class="main-bottom">
+        <div> 版权所有©2013 上海灵利信息技术有限公司</div>
+        <div> 沪网文[2011]0682-074增值电信业务经营许可证编号:沪B2-20080012</div>
+    </div>
 </div>
