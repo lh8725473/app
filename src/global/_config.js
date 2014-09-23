@@ -1,10 +1,10 @@
 var CONFIG = {
 
   // develop
-  // API_ROOT: 'http://101.231.216.75:8888/api',
+  API_ROOT: 'http://101.231.216.75:8888/api',
 
   // production
-  API_ROOT: '/api',
+  // API_ROOT: '/api',
 
   // localhost
   // API_ROOT: 'http://localhost/api',
