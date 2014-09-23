@@ -57,13 +57,13 @@ angular.module('App.Header').controller('App.Header.UserInfoController', [
                 new_password: $scope.userInfo.new_password,
                 old_password: $scope.userInfo.old_password
             }).$promise.then(function() {
-                $modalInstance.close()
                 Notification.show({
                   title: '成功',
                   type: 'success',
                   msg: '保存成功',
                   closeable: false
                 })
+                $modalInstance.close($scope.userInfo.real_name)
             }, function(error) {
                 Notification.show({
                   title: '失败',

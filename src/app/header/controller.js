@@ -176,6 +176,10 @@ angular.module('App.Header').controller('App.Header.Controller', [
         controller: 'App.Header.UserInfoController',
         resolve: {}
       })
+      
+      userInfoModal.result.then(function(real_name) {
+        $scope.user.real_name = real_name  
+      })
     }
   }
 ])

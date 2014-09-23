@@ -39,6 +39,7 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
             method: 'POST',
             withCredentials: true,
             data: {
+              file_size: file.size,
               file_name: file.name,
               folder_id: folder_id
             },

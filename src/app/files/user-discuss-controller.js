@@ -3,12 +3,17 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   'CONFIG',
   'Share',
   'UserDiscuss',
+  'Users',
   function(
     $scope,
     CONFIG,
     Share,
-    UserDiscuss
+    UserDiscuss,
+    Users
   ) {
+    
+    $scope.users = Users.query()
+    
   	var discuss_file_id = $scope.discuss_file_id || 0;
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
