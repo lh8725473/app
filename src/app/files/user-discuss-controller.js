@@ -4,14 +4,20 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   'Share',
   'UserDiscuss',
   'Users',
+  'Files',
+  'Utils',
+  '$modal',
   function(
     $scope,
     CONFIG,
     Share,
     UserDiscuss,
-    Users
+    Users,
+    Files,
+    Utils,
+    $modal
   ) {
-    
+      
     $scope.userList = Users.query()     
     $scope.userList.$promise.then(function() {
       angular.forEach($scope.userList, function(user) {
@@ -19,18 +25,29 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       })
     })
     
+    
   	var discuss_file_id = $scope.discuss_file_id || 0;
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
   	})
-    
+   
     //监听讨论的文件ID
     $scope.$watch('discuss_file_id', function (new_file_id) {
+      $scope.loading = true
       discuss_file_id = new_file_id
       if(discuss_file_id){
       	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
         	obj_id : discuss_file_id
       	})
+      	
+      	$scope.userDiscussList.$promise.then(function(){
+      	  $scope.loading = false
+      	})
+      	
+      	//预览的文件
+      	$scope.file = Files.view({
+          file_id : discuss_file_id
+        })
       } 
     })
   	
@@ -72,6 +89,52 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   			$scope.discussButton = false
   		}
   	}
+  	
+  	//检查预览的文件大小及类型
+    function checkFileValid (obj) {
+      var fileSize = obj.file_size;
+      var fileType = Utils.getFileTypeByName(obj.file_name);
+      if ('office' == fileType) {
+        //office文档最大预览为10M
+        if (fileSize > 10485760) {
+          return false;
+        }
+      }
+      else
+        if('pdf'==fileType){
+          //pdf设置最大预览为50M
+          if(fileSize>52428800)
+          {
+            return false;
+          }
+        }
+      return true;
+    }
+    
+    //文件预览
+    $scope.previewFile = function () {
+      var validFile = checkFileValid($scope.file);
+      if (validFile) {
+        var previewFileModal = $modal.open({
+          templateUrl: 'src/app/files/preview-file/template.html',
+          windowClass: 'preview-file',
+          backdrop: 'static',
+          controller: 'App.Files.PreviewFileController',
+          resolve: {
+            obj: function () {
+              return $scope.file
+            }
+          }
+        })
+      }else {
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: '仅仅允许预览10MB以下文件。',
+          closeable: false
+        })
+      }
+    }
   	
   }
 ])

@@ -168,10 +168,11 @@
 	      </button>
 	    </ul>
 	    <div class="preview-file">
-	    	<div class="file-name">新建文本文档.txt</div>
-	    	<div class="preview">预览></div>
+	    	<div class="file-name">{{file.file_name}}</div>
+	    	<div class="preview" ng-click = "previewFile()">预览></div>
 	    </div>
 	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
+	     <loading-indicator ng-show="loading"></loading-indicator>
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
 		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>

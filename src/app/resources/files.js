@@ -12,6 +12,13 @@ angular.module('App.Resources').factory('Files', [
     CONFIG
   ) {
     var Files = $resource(CONFIG.API_ROOT + '/file/:action/:file_id', {}, {
+      view:{
+        method: "GET",
+        params: {
+          action: 'view',
+          file_id: ''
+        }
+      },
       deleteFile: {
         method: "DELETE",
         params: {
