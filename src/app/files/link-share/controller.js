@@ -78,19 +78,21 @@ angular.module('App.Files').controller('App.Files.LinkShareController', [
         $scope.obj = obj
 
         //链接对象类型
-        if ($scope.obj.folder) {
-          $scope.type = "folder"
-        } else {
-          $scope.type = "file"
-        }
+        $scope.type = ($scope.obj.folder) ? "folder" : "file"
 
         //链接分享权限
         $scope.linkSharePermissionValue = "仅预览"
         $scope.linkSharePermissionKey = "0000100"
 
         //链接分享权限List
-        $scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
-        $scope.linkSharePermissionKeyList = ["0000100", "0000001", "0001110", "0001111"]
+        if($scope.obj.folder){//文件夹
+          $scope.linkSharePermissionValueList = ["仅预览", "仅上传", "可预览和下载", "可预览、下载和上传"]
+          $scope.linkSharePermissionKeyList = ["0000100", "0000001", "0001110", "0001111"]
+        }else{//文件
+          $scope.linkSharePermissionValueList = ["仅预览", "可预览和下载"]
+          $scope.linkSharePermissionKeyList = ["0000100", "0001110"]
+        }
+        
 
         //是否设置访问权限
         $scope.linkSharePasswordShow = false
