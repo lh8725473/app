@@ -87,22 +87,42 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
     })
     
     $scope.linkDetail.$promise.then(function(linkDetail) {
-      if(linkDetail.permission == '0000001'){//仅上传权限
+      //权限列表
+      var is_owner = linkDetail.permission.substring(0, 1)  //协同拥有者 or 拥有者1
+      var is_delete =  linkDetail.permission.substring(1, 2)  //删除权限
+      var is_edit =  linkDetail.permission.substring(2, 3)  //编辑权限
+      var is_getLink =  linkDetail.permission.substring(3, 4)  //链接权限
+      var is_preview =  linkDetail.permission.substring(4, 5)  //预览权限
+      var is_download =  linkDetail.permission.substring(5, 6)  //下载权限
+      var is_upload =  linkDetail.permission.substring(6, 7)  //上传权限
+      
+      linkDetail.is_owner = (is_owner == '1') ? true : false
+      linkDetail.is_delete = (is_delete == '1') ? true : false
+      linkDetail.is_edit = (is_edit == '1') ? true : false
+      linkDetail.is_getLink = (is_getLink == '1') ? true : false
+      linkDetail.is_preview = (is_preview == '1') ? true : false
+      linkDetail.is_download = (is_getLink == '1') ? true : false
+      linkDetail.is_upload = (is_upload == '1') ? true : false
+      
+      if(linkDetail.is_upload){
         $scope.uploadButton = true
-        $scope.dowloadButton = false
       }
-      if(linkDetail.permission == '0000100'){//仅预览权限
-        $scope.uploadButton = false
-        $scope.dowloadButton = false
-      }
-      if(linkDetail.permission == '0001110'){//仅预览权限
-        $scope.uploadButton = false
-        $scope.dowloadButton = true
-      }
-      if(linkDetail.permission == '0001111'){//可预览、下载和上传权限
-        $scope.uploadButton = true
-        $scope.dowloadButton = true
-      }
+//    if(linkDetail.permission == '0000001'){//仅上传权限
+//      $scope.uploadButton = true
+//      $scope.dowloadButton = false
+//    }
+//    if(linkDetail.permission == '0000100'){//仅预览权限
+//      $scope.uploadButton = false
+//      $scope.dowloadButton = false
+//    }
+//    if(linkDetail.permission == '0001110'){//可预览和下载
+//      $scope.uploadButton = false
+//      $scope.dowloadButton = true
+//    }
+//    if(linkDetail.permission == '0001111'){//可预览、下载和上传权限
+//      $scope.uploadButton = true
+//      $scope.dowloadButton = true
+//    }
       
       if(linkDetail.comment==''){
         linkDetail.comment = 'Ta很懒什么也没留下'
@@ -111,6 +131,23 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
     
     $scope.linkShareList.$promise.then(function(linkShareList) {
       angular.forEach(linkShareList, function(linkShare){
+        //权限列表
+//      var is_owner = linkShare.permission.substring(0, 1)  //协同拥有者 or 拥有者1
+//      var is_delete =  linkShare.permission.substring(1, 2)  //删除权限
+//      var is_edit =  linkShare.permission.substring(2, 3)  //编辑权限
+//      var is_getLink =  linkShare.permission.substring(3, 4)  //链接权限
+//      var is_preview =  linkShare.permission.substring(4, 5)  //预览权限
+//      var is_download =  linkShare.permission.substring(5, 6)  //下载权限
+//      var is_upload =  linkShare.permission.substring(6, 7)  //上传权限
+//      
+//      linkShare.is_owner = (is_owner == '1') ? true : false
+//      linkShare.is_delete = (is_delete == '1') ? true : false
+//      linkShare.is_edit = (is_edit == '1') ? true : false
+//      linkShare.is_getLink = (is_getLink == '1') ? true : false
+//      linkShare.is_preview = (is_preview == '1') ? true : false
+//      linkShare.is_download = (is_getLink == '1') ? true : false
+//      linkShare.is_upload = (is_upload == '1') ? true : false
+        
         //对象是否被选中
         linkShare.checked = false
         
@@ -120,6 +157,10 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
         } else {
           linkShare.folder = false
         }
+        
+        //对象是否能被预览
+        var fileType = Utils.getFileTypeByName(linkShare.file_name || linkShare.folder_name)
+        linkShare.isPreview = fileType ? true : false
         
         //文件图像
         if (linkShare.isFolder == 1) { //文件夹
@@ -154,6 +195,29 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
       //阻止事件冒泡
       $event.stopPropagation()
       linkShare.checked = !linkShare.checked
+      
+      //暂不支持批量下载  与文件夹下载
+      var i = 0
+      angular.forEach($scope.linkShareList, function(linkShare){
+        if(linkShare.checked){
+          i++;
+        }
+      })
+      
+      if(i != 1){
+        $scope.dowloadButton = false
+      }else{
+        for (var i = 0; i < $scope.linkShareList.length; ++i) {
+          if ($scope.linkShareList[i].checked == true)
+            break
+        }
+        $scope.checkedObj = $scope.linkShareList[i]
+        if($scope.checkedObj.isFolder == 1 ){
+          $scope.dowloadButton = false
+        }else{
+          $scope.dowloadButton = true
+        }
+       }     
     }
     
     //全部选择状态
@@ -163,6 +227,7 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
       angular.forEach($scope.linkShareList, function(linkShare) {
         linkShare.checked = !$scope.selectedAll
       })
+      $scope.dowloadButton = false
     }
     
     //外部链接文件夹路径
@@ -224,6 +289,52 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
           $modalInstance.dismiss('cancel')
         }
       }
-    ]  
+    ]
+    
+    //检查预览的文件大小及类型
+    function checkFileValid (obj) {
+      var fileSize = obj.file_size;
+      var fileType = Utils.getFileTypeByName(obj.file_name);
+      if ('office' == fileType) {
+        //office文档最大预览为10M
+        if (fileSize > 10485760) {
+          return false;
+        }
+      }
+      else
+        if('pdf'==fileType){
+          //pdf设置最大预览为50M
+          if(fileSize>52428800)
+          {
+            return false;
+          }
+        }
+      return true;
+    }
+     
+    //文件预览
+    $scope.previewFile = function (obj) {
+      var validFile = checkFileValid(obj);
+      if (validFile) {
+        var previewFileModal = $modal.open({
+          templateUrl: 'src/link-share/main/preview-file/template.html',
+          windowClass: 'preview-file',
+          backdrop: 'static',
+          controller: 'App.LinkShare.PreviewFileController',
+          resolve: {
+            obj: function () {
+              return obj
+            }
+          }
+        })
+      }else {
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: '仅仅允许预览10MB以下文件。',
+          closeable: false
+        })
+      }
+    }
   }
 ])

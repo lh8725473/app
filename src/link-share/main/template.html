@@ -18,10 +18,10 @@
     </div>
     <div class="top-bar-bottom"></div>
     <div class="buttonGroup">
-      <button ng-click="upload()" class="btn btn-default" ng-disabled="isRoot || !uploadButton">
+      <button ng-click="upload()" class="btn btn-default" ng-disabled="isRoot || !uploadButton" ng-show = "linkDetail.obj_type == 'folder'">
         上传文件
       </button>
-      <button ng-click='downloadFile()' class="btn btn-default" ng-disabled = "!dowloadButton">
+      <button ng-click='downloadFile()' class="btn btn-default" ng-disabled = "!dowloadButton" ng-show = "linkDetail.is_download">
         下载文件
       </button>
     </div>
@@ -79,8 +79,8 @@
           <img ng-src = "{{linkDetail.owner_avatar}}" height="50px" width="50px"/>
         </div>
         <div class="name-email">
-          <label>{{linkDetail.owner_uname}}</label><br/>
-          <label>{{linkDetail.email}}</label>
+          <div><label class="owner-uname" title="{{linkDetail.owner_uname}}">{{linkDetail.owner_uname}}</label></div>
+          <div><label class="email" title="{{linkDetail.email}}">{{linkDetail.email}}</label></div>
         </div>
       </div>
       <div class="explain-title">
