@@ -19,7 +19,7 @@
       <div class="message-dropdown" dropdown>
         <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
         <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
-        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
+        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="true">
            <loading-indicator ng-show="loading"></loading-indicator>
            <div class="no-message" ng-show = "messageList.length == 0"></div>
            <li ng-click = "messageDetail(message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
@@ -35,8 +35,8 @@
                     {{message.content}}
                   </div>
                   <div class="message-action">
-                    <label class="message-read" ng-click = "toIsRead($event, message)"></label>
-                    <label class="message-delete" ng-click = "deleteMessage($event, message)"></span>
+                    <label class="message-read" ng-click = "toIsRead($event, message)" title="标记为已读"></label>
+                    <label class="message-delete" ng-click = "deleteMessage($event, message)" title="删除"></span>
                   </div>
                 </div>
               </div>

@@ -156,10 +156,21 @@
 		ps-open="discussOpened">
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
-	    <button id="user-discuss-right-close" type="button" class="bootbox-close-button close">
-        ×
-      </button>
-	    <h3>讨论{{test}}</h3>
+		<ul class="nav nav-sidebar">
+	      <li class="disc active" ng-class="{ active: navType == 'dis'}" ng-click = "changeNavType('dis')">
+	        讨论
+	      </li>
+	      <li class="ver" ng-class="{ active: navType == 'ver'}" ng-click = "changeNavType('ver')">
+	        版本
+	      </li>
+	      <button id="user-discuss-right-close" type="button" class="bootbox-close-button close">
+	        ×
+	      </button>
+	    </ul>
+	    <div class="preview-file">
+	    	<div class="file-name">新建文本文档.txt</div>
+	    	<div class="preview">预览></div>
+	    </div>
 	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
@@ -197,6 +208,7 @@
 				发表
 			</button>
 			<label class="pull-right">{{discussCount}}/200</label>
+			<label class="tip pull-left">可以@协作人</label>
 		</div>
 	</div>
 </div>

@@ -51,14 +51,25 @@
                 padding: 0 10px;
             }
             .dropdown-menu{
+                width: 430px;
+                height: 280px;
                 min-width: 400px;
-                height: 210px;
                 overflow-y: hidden;
+                border-radius: 0 0 5px 5px;
+                z-index: 10001;
+                top: 20px;
+                right: 291px !important;
+                border-bottom: 10px solid #fff;
+                box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
+                .scroller {
+                    margin: 20px 0;
+                }
                 li{
                    height: 50px;
-                   margin-right: 5px;
+                   margin-right: 0;
                    border-bottom: 1px solid #CFCFCF;
-                   padding: 5px;
+                   padding: 5px 0 5px 5px;
+                   margin-right: 10px;
                    &.isRead{
                        opacity: 0.6;
                    }
@@ -74,22 +85,32 @@
                                float: left;
                                margin-left: 10px;
                                font-size: 12px;
-                               width: 340px;
+                               width: 360px;
                                cursor: pointer;
                                .message-tittle-date{
+                                  height: 14px;
+                                  margin-top: 4px;
                                    font-size: 12px;
+                                   label {
+                                      margin-bottom: 0;
+                                   }
                                    .message-tittle{
                                        color: #565656;
                                        width: 210px;
+                                       height: 14px;
+                                       line-height: 14px;
                                        cursor: pointer;
                                        text-overflow: ellipsis;
                                        white-space: nowrap;
                                        overflow: hidden;
+                                       font-size: 14px;
+                                       margin-bottom: 0;
                                    }
                                    .message-date{
                                        float: right;
                                        color: #565656;
                                        cursor: pointer;
+                                       margin-bottom: 0;
                                    }
                                }
                                .message-msg{
@@ -132,6 +153,9 @@
                        }
                    }
                 }
+                li:hover {
+                  background-color: #ebf1f7;
+                }
             }
             
             .scroller{
@@ -154,13 +178,13 @@
             
             .notice-dropdown{
                 .dropdown-menu{
-                    left: -340px;
+                    left: -377px;
                 }
                 float: left;
             }
             .message-dropdown{
                 .dropdown-menu{
-                    left: -375px;
+                    left: -413px;
                 }
                 float: left;
             }
@@ -207,7 +231,7 @@
         
         .username {
             margin-right: 40px;
-            margin-top: 5px;
+            margin-top: 7px;
             font-size: 14px;
             float: right;
             margin-left: 8px;

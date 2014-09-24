@@ -47,20 +47,21 @@
         }
         .txt-preview{
             word-break: break-all;
-            bottom: 0;
+            bottom: 20px;
             left: 13px;
             position: absolute;
             right: 14px;
-            top: 40px;
+            top: 65px;
             overflow-y: auto;
         }
         .office-preview{
             border: 1px solid #e5e5e5;
-            bottom: 0;
+            bottom: 20px;
             left: 13px;
             position: absolute;
             right: 14px;
-            top: 40px;
+            top: 65px;
+            margin: 0 15px;
         }
     }
     .modal-body{
@@ -76,6 +77,7 @@
         padding: 0;
         height: 50px;
         border-bottom-color: #C3C3C3;
+        background-color: #F0F0F0;
         h3 {
             height: 50px;
             line-height: 50px;
@@ -84,7 +86,7 @@
         }
     }
     .discuss-version-view{
-        border-left: 1px solid #e5e5e5;
+        border-left: 1px solid #c3c3c3;
         height: 100%;
         padding: 0;
         .nav-sidebar{
@@ -111,7 +113,7 @@
           top: 36px;
           left: 0;
           right: 0;
-          bottom: 110px;
+          bottom: 160px;
           padding-top: 12px;
           padding-left: 10px;
           overflow-y: hidden;
@@ -121,16 +123,23 @@
             padding: 10px;
             img{
               float: left;
+              border-radius: 3px;
             }
             .disc-box{
               margin-left: 35px;
               .disc-name{
-                color: #c0c0c0;
-                font-size: 12px;
+                color: #A0A0A0;
+                font-size: 14px;
+                height: 14px;
+                line-height: 14px;
+                margin-bottom: 3px;
               }
             .disc-time{
                 color: #c0c0c0;
                 font-size: 12px;
+            }
+            .disc-content {
+                color: #4A4A4A;
             }
           }
           }
@@ -138,18 +147,21 @@
         
         .version{
             position: absolute;
-            top: 30px;
-            left: 15px;
+            top: 36px;
+            left: 0;
             right: 0;
             bottom: 0;
+            padding: 10px 20px 20px 20px;
             overflow-y: hidden;
             overflow-x: hidden;
             padding-right: 15px;
             .version-item{
-                height: 40px;
+                height: 48px;
                 border-bottom: 1px solid #e5e5e5;
+                margin-bottom: 10px;
                 .row{
-                    margin: 0;
+                    margin: 0 0 3px 0;
+                    // margin-bottom: 5px;
                 }
                 .version-action{
                     cursor: pointer;

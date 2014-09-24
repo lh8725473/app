@@ -289,6 +289,7 @@
   
   .position-fixed {
     position: fixed;
+    z-index: 1000;
   }
   
 }
@@ -619,14 +620,53 @@
 }
 
 //讨论
+.ng-pageslide {
+  border-left: 1px solid #E8E8E8;
+  box-shadow: -3px 0 8px rgba(176, 176, 176, 0.7);
+  height: auto !important;
+}
 .user-discuss-view {
-    padding: 5px;
+    height: 36px;
+      height: 36px;
+      width: 100%;
+      border-bottom: 1px solid #C3C3C3;
+      background-color: #E9EDF1;
+    .nav-sidebar {
+      li {
+        height: 36px;
+        line-height: 36px;
+        font-size: 16px;
+        float: left;
+        color: #8A8B8B;
+        margin: 0 20px;
+      }
+      li.active {
+        color: #1F6ABD;
+      }
+      button {
+        font-size: 24px;
+        margin: 6px 20px 0 0;
+      }
+    }
+    .preview-file {
+      height: 36px;
+      line-height: 36px;
+      padding: 0 20px;
+      background-color: #E9E9E9;
+      font-size: 16px;
+      color: #9A9A9A;
+      .file-name {
+        float: left;
+      }
+      .preview {
+        float: right;
+      }
+    }
     img{
         float: left;
+        border-radius: 3px;
     }
-    textarea{
-        height: 70px;
-    }
+   
     .list-at-user {
         width: 100%;
         max-width: 198px;
@@ -653,7 +693,7 @@
         bottom: 140px;
         overflow-y: hidden;
         position: absolute;
-        top: 64px;
+        top: 74px;
         left: 0;
         right: 0;
     }
@@ -663,23 +703,57 @@
         .disc-box{
             margin-left: 35px;
             .disc-name{
-                color: #c0c0c0;
-                font-size: 12px;
+              color: #A0A0A0;
+              font-size: 14px;
+              height: 14px;
+              line-height: 14px;
+              margin-bottom: 3px;
             }
             .disc-time{
-                color: #c0c0c0;
-                font-size: 12px;
+              color: #c0c0c0;
+              font-size: 12px;
+            }
+            .disc-content {
+              color: #4A4A4A;
             }
         }
     }
     .disc-inputbox{
         background-color: white;
         bottom: 0px;
-        height: 130px;
+        height: 140px;
         position: absolute;
+        padding: 0;
+        textarea {
+          box-sizing: border-box;
+          padding: 5px 10px;
+          width: 100%;
+          height: 90px;
+          border: 1px solid #C3C3C3;
+          border-left: none;
+          border-right: none;
+        }
+        textarea:focus {
+          outline: none;
+          border-color: #B8B8B8;
+          box-shadow: 0 -3px 5px #c3c3c3;
+        }
         label{
-            margin-top: 5px;
-            margin-right: 5px;
+          margin-top: 13px;
+          margin-right: 5px;
+          font-size: 12px;
+          font-weight: lighter;
+          color: #777;
+        }
+        label.tip {
+          margin-left:20px;
+        }
+        button {
+          padding: 5px 10px;
+          margin-top: 4px;
+          margin-right: 20px;
+          color: #fff;
+          background-color: #1F6ABD;
         }
     }
 }
