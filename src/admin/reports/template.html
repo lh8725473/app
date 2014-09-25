@@ -7,14 +7,28 @@
     <div class="top-bar-bottom">
     </div>
     <div class="buttonGroup">
-            <span>开始日期:</span>
-            <input type="text" class="input-medium search-query">
-            <span>截止日期:</span>
-            <input type="text" class="input-medium search-query">
+            <span>开始日期</span>
+            <p class="input-group date-picker">
+              <input type="text" class="form-control date-input" datepicker-popup="{{format}}" ng-model="startDate" is-open="openStart" min-date="" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'startDate')">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button> 
+              </span>
+            </p>
+         
+            <span>截止日期</span>
+            <p class="input-group date-picker">
+              <input type="text" class="form-control date-input" datepicker-popup="{{format}}" ng-model="endDate" is-open="openEnd" min-date="" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event, 'endDate')">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button> 
+              </span>
+            </p>
 
-            <button ng-click="" class="btn btn-default" type="submit">Search</button>
-            <button ng-click="" class="btn btn-default">导出</button>
-
+            <button ng-click="searchUserLog()" class="btn btn-primary search-btn">搜索</button>
+            <button ng-click="exportUserLog()" class="btn btn-default export-btn">导出</button>
     </div>
     <div class="title">
         <div class="title-time col">
@@ -39,30 +53,30 @@
             <span>位置</span>
         </div>
     </div>
-    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="logList"
-                       on-scroll="">
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userLogList"
+                       on-scroll="onUserLogListScroll(scrollTop, scrollHeight)">
         <div class="log-grid">
-            <div class="log-row row">
+            <div class="log-row" ng-repeat="userLog in userLogList" >
                 <div class="log-time col">
-                    <span>2014年10月1日 下午12:00</span>
+                    <span>{{userLog.create_date}}</span>
                 </div>
                 <div class="log-user col">
-                    <span>用户名</span>
+                    <span>{{userLog.real_name}}</span>
                 </div>
                 <div class="log-mail col">
-                    <span>Misaya@sharpinteract.com</span>
+                    <span title="{{userLog.email}}">{{userLog.email}}</span>
                 </div>
                 <div class="log-opreate col">
-                    <span>删除</span>
+                    <span>{{userLog.action}}</span>
                 </div>
                 <div class="log-file col">
-                    <span>我的文件文件.doc</span>
+                    <span title="{{userLog.obj_name}}">{{userLog.obj_name}}</span>
                 </div>
                 <div class="log-fileExt col">
-                    <span>.doc</span>
+                    <span>{{userLog.obj_type}}</span>
                 </div>
                 <div class="log-location col">
-                    <span>所有文件\我的文件\</span>
+                    <span title="{{userLog.path}}">{{userLog.path}}</span>
                 </div>
             </div>
         </div>
