@@ -65,6 +65,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	//message 列表
   	$scope.openMessageList = function(){
   	  $scope.loading = true
+  	  $scope.message_show = true
+  	  $scope.notice_show = false
   	  $scope.messageList = Message.getMessageList()
   	  $scope.messageList.$promise.then(function() {
         $scope.loading = false
@@ -80,6 +82,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	//notice 列表
   	$scope.openNoticeList = function(){
   	  $scope.loading = true
+  	  $scope.message_show = false
+      $scope.notice_show = true
       $scope.noticeList = Message.getNoticeList()
       $scope.noticeList.$promise.then(function() {
         $scope.loading = false

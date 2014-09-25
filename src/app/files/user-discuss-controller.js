@@ -7,6 +7,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   'Files',
   'Utils',
   '$modal',
+  'Folders',
   function(
     $scope,
     CONFIG,
@@ -15,15 +16,16 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     Users,
     Files,
     Utils,
-    $modal
+    $modal,
+    Folders
   ) {
       
-    $scope.userList = Users.query()     
-    $scope.userList.$promise.then(function() {
-      angular.forEach($scope.userList, function(user) {
-        user.username = user.user_name
-      })
-    })
+//  $scope.userList = Users.query()     
+//  $scope.userList.$promise.then(function() {
+//    angular.forEach($scope.userList, function(user) {
+//      user.username = user.user_name
+//    })
+//  })
     
     
   	var discuss_file_id = $scope.discuss_file_id || 0;
@@ -44,9 +46,22 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       	  $scope.loading = false
       	})
       	
-      	//预览的文件
+      	//讨论的文件
       	$scope.file = Files.view({
           file_id : discuss_file_id
+        })
+      	
+      	//文件关联的协作人
+      	$scope.file.$promise.then(function(){
+      	  $scope.shareObj = Folders.queryShareObj({
+            folder_id : $scope.file.folder_id
+          })
+          $scope.shareObj.$promise.then(function(shareObj){
+            $scope.userList = shareObj.list.users
+            angular.forEach($scope.userList, function(user){
+              user.username = user.user_name
+            })
+          })
         })
       } 
     })

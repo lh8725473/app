@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>全携通</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+    <!-- build:css css/regist/regist.css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- endbuild -->
+    <!-- build:js js/regist.js -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbuild -->
+		<style>
+			a {
+				cursor: pointer;
+			}
+
+			label {
+				font-weight: normal;
+			}
+
+			button {
+				background-color: #4A9AFD;
+				color: #FFFFFF;
+			}
+
+			button:hover {
+				background-color: #2685FC;
+				color: #FFFFFF;
+			}
+
+			button:focus {
+				background-color: #2685FC;
+				color: #FFFFFF;
+			}
+
+			.btn:hover, .btn:hover {
+				background-color: #2685FC;
+				color: #FFFFFF;
+			}
+
+			.main {
+				margin-top: 50px;
+			}
+
+			.register {
+				margin-top: 7px;
+			}
+
+			.input-group .input-group-addon {
+				background-color: #FFFFFF;
+				border: 0 none;
+				color: #ACB4BF;
+				padding-right: 0;
+			}
+
+			.input-group input {
+				background-color: #FFFFFF;
+				border: 0 none;
+				padding-right: 0;
+			}
+
+			.input-group {
+				border: 1px solid #CCCCCC;
+				border-radius: 4px;
+			}
+
+			.input-group.input-group-focus {
+				border-color: #66AFE9;
+			}
+			.form-control:focus {
+				border-color: #CCCCCC;
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+			}
+			.input-group:focus {
+				border-color: #66AFE9;
+			}
+
+			.wrapper {
+				margin: 0 auto;
+				max-width: 340px;
+				text-align: center;
+				position: relative;
+				top: 80px;
+			}
+
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			.checkbox {
+				margin-top: -8px;
+			}
+
+			.form-back {
+				height: 400px;
+				margin-top: -25px;
+				background: url(images/form-back.png) no-repeat top;
+			}
+
+		</style>
+
+		<script type="text/javascript">
+			$(window).load(function() {
+				var accessToken = readCookie('accessToken');
+				if (accessToken) {
+					window.location.href = 'index.html#cid=1';
+				}
+				$('#logohome').click(function(e) {
+					window.location.href = 'home';
+				});
+			});
+			$(document).ready(function() {
+
+				//errorMsg
+				function errorMsg(str) {
+					$('.errorMsg').find('p').text(str);
+					$('.errorMsg').css('left', ($(window).width() * 0.5 - $('.errorMsg').width() * 0.75) + 'px');
+					$('.errorMsg').css('top', $(window).height() * 0.1);
+					$(".errorMsg").fadeIn();
+					setTimeout(function() {
+						$(".errorMsg").fadeOut();
+					}, 2000);
+				}
+
+
+				$('input').focus(function() {
+					$(this).parents('.input-group').addClass('input-group-focus')
+				})
+
+				$('input').blur(function() {
+					$(this).parents('.input-group').removeClass('input-group-focus')
+				})
+
+				$('#login').click(function() {
+					var userName = $('#username')[0].value;
+					var passWord = $('#password')[0].value;
+					if (!userName) {
+						errorMsg('请输入用户名');
+						return false;
+					}
+					if (!passWord) {
+						errorMsg('请输入密码');
+						return false;
+					}
+					var data = {
+						'client_id' : 'JsQCsjF3yr7KACyT',
+						'client_secret' : 'bqGeM4Yrjs3tncJZ',
+						'user_name' : userName,
+						'password' : passWord,
+						'response_type' : 'token',
+						'grant_type' : 'password',
+						'device_type' : '1',
+						'device_name' : 'web',
+						'device_info' : 'browser'
+					};
+					$.ajax({
+						url : CloudDisk.Setting.HOST + '/user/login',
+						type : 'post',
+						dataType : 'json',
+						data : data
+					}).done(function(responseJSON) {
+						var token = responseJSON.result['access_token'];
+						var expiresin = responseJSON.result['expires_in'];
+						var user_name = responseJSON.result['user_name'];
+						var user_pic = responseJSON.result['avatar'];
+						var user_id = responseJSON.result['user_id'];
+
+						if ($('#checkbox')[0].checked == true) {
+							createCookie('accessToken', token, 30);
+							createCookie('userName', user_name, 30);
+							createCookie('userpic', user_pic, 30);
+							createCookie('userId', user_id, 30);
+							createCookie('userType', 'qxt', 30);
+						} else {
+							createCookie('accessToken', token);
+							createCookie('userName', user_name);
+							createCookie('userPic', user_pic);
+							createCookie('userId', user_id);
+							createCookie('userType', 'qxt');
+						}
+
+						window.location.href = 'index.html#cid=1';
+					}).fail(function(xhr, status, error) {
+						var err = eval('(' + xhr.responseText + ')');
+						if (err.result == 'Error: Parameter user_name does not exist') {
+							errorMsg('用户名或密码不正确');
+						} else if (err.result == 'Error: Parameter user_name or password is invalid') {
+							errorMsg('用户名或密码不正确');
+						}
+					});
+				});
+
+				$(document).keypress(function(e) {
+					if (e.keyCode === 13) {
+						var userName = $('#username')[0].value;
+						var passWord = $('#password')[0].value;
+						if (!userName) {
+							errorMsg('请输入用户名');
+							return false;
+						}
+						if (!passWord) {
+							errorMsg('请输入密码');
+							return false;
+						}
+						var data = {
+							'client_id' : 'JsQCsjF3yr7KACyT',
+							'client_secret' : 'bqGeM4Yrjs3tncJZ',
+							'user_name' : userName,
+							'password' : passWord,
+							'response_type' : 'token',
+							'grant_type' : 'password',
+							'device_type' : '1',
+							'device_name' : 'web',
+							'device_info' : 'browser'
+						};
+						$.ajax({
+							url : CloudDisk.Setting.HOST + '/user/login',
+							type : 'post',
+							dataType : 'json',
+							data : data
+						}).done(function(responseJSON) {
+							var token = responseJSON.result['access_token'];
+							var expiresin = responseJSON.result['expires_in'];
+							var user_name = responseJSON.result['user_name'];
+							var user_pic = responseJSON.result['avatar'];
+							var user_id = responseJSON.result['user_id'];
+							if ($('#checkbox')[0].checked == true) {
+								createCookie('accessToken', token, 30);
+								createCookie('userName', user_name, 30);
+								createCookie('userPic', user_pic, 30);
+								createCookie('userId', user_id, 30);
+								createCookie('userType', 'qxt', 30);
+							} else {
+								createCookie('accessToken', token);
+								createCookie('userName', user_name);
+								createCookie('userPic', user_pic);
+								createCookie('userId', user_id);
+								createCookie('userType', 'qxt');
+							}
+							window.location.href = 'index.html#cid=1';
+						}).fail(function(xhr, status, error) {
+							var err = eval('(' + xhr.responseText + ')');
+							if (err.result == 'Error: Parameter user_name does not exist') {
+								errorMsg('用户名不存在');
+							} else if (err.result == 'Error: Parameter user_name or password is invalid') {
+								errorMsg('用户名或密码不正确');
+							}
+						});
+					}
+				});
+			});
+		</script>
+
+	</head>
+	<body>
+		<div class="main container text-center">
+			<img src="images/logo.jpg" style="position:relative;cursor: pointer;" id="logohome"/>
+			<div class="form-back">
+				<div class="wrapper">
+					<form id="" class="form" roll="form">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+								<input type="email" placeholder="Email" id="inputEmail3" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+								<input type="text" maxlength="50" id="username" placeholder="用户名" class="form-control" tabindex="1" autocapitalize="off" autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+								<input type="password" maxlength="50" id="password" placeholder="密码" class="form-control" tabindex="1" autocapitalize="off" autocomplete="off">
+							</div>
+						</div>
+						<div class="checkbox text-center">
+							<span class="agree">点击注册表示同意&nbsp;《<a class="show_agree" href="#agreement">服务条款</a>》</span>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-block" id="">注&nbsp;&nbsp;&nbsp;册</button>
+						</div>
+						<div class="register">
+							<label class="pull-left"> 
+								已有账号？
+								<a class= "" href="login.html">立即登录</a>
+							</label>
+							<a class="pull-right" href="home">
+								返回首页
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+		<div class="footer text-center">
+			<a href="#agreement">服务条款</a>
+			&nbsp;
+			<a href="#privacy">隐私政策</a>
+			&nbsp;
+			<span style="color: #999999">版权所有 ©2014  上海灵利信息技术有限公司</span>
+		</div>
+		<div class="alert alert-dismissable alert-danger errorMsg" style="display: none; position: fixed; z-index: 10002;">
+			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">
+				×
+			</button>
+			<p style="margin-right: 15px;">
+
+			</p>
+		</div>
+	</body>
+</html>

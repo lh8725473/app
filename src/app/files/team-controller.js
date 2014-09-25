@@ -51,11 +51,8 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   			folder_id : folder_id
   		})
   		
-  		$scope.shareObj.$promise.then(function() {
-        $scope.loading = false
-      })
-  	
   		$scope.shareObj.$promise.then(function(shareObj){
+  		  $scope.loading = false
   		  //对当前目录下的权限
         folder_permission = shareObj.permission
         var folder_owner = folder_permission.substring(0, 1)  //协同拥有者 or 拥有者1
