@@ -135,6 +135,15 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
 
       //输入框输入增加协作人或组
       $scope.inviteBypress = function(inviteInputValue) {
+        if(inviteInputValue.replace(/^\s+|\s+$/g, "") == ''){
+          Notification.show({
+            title: '失败',
+            type: 'danger',
+            msg: "邀请人邮箱不能为空",
+            closeable: false
+          })
+          return
+        }
         var user = {
           real_name: inviteInputValue,
           email: inviteInputValue

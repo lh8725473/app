@@ -32,7 +32,13 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
   	})
-   
+  	
+    //右侧菜单 讨论or版本
+    $scope.navType = 'dis'
+    $scope.changeNavType = function(navType) {
+      $scope.navType = navType
+    }
+    
     //监听讨论的文件ID
     $scope.$watch('discuss_file_id', function (new_file_id) {
       $scope.loading = true
@@ -52,7 +58,9 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         })
       	
       	//文件关联的协作人
-      	$scope.file.$promise.then(function(){
+      	$scope.file.$promise.then(function(file){
+      	  var fileType = Utils.getFileTypeByName(file.file_name)
+      	  $scope.isPreview = fileType ? true : false
       	  $scope.shareObj = Folders.queryShareObj({
             folder_id : $scope.file.folder_id
           })

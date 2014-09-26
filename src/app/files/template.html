@@ -157,7 +157,7 @@
 	</pageslide>
 	<div class="user-discuss-view" id="user-discuss-right" ng-controller="App.Files.UserDiscussController">
 		<ul class="nav nav-sidebar">
-	      <li class="disc active" ng-class="{ active: navType == 'dis'}" ng-click = "changeNavType('dis')">
+	      <li class="disc" ng-class="{ active: navType == 'dis'}" ng-click = "changeNavType('dis')">
 	        讨论
 	      </li>
 	      <li class="ver" ng-class="{ active: navType == 'ver'}" ng-click = "changeNavType('ver')">
@@ -169,7 +169,7 @@
 	    </ul>
 	    <div class="preview-file">
 	    	<div class="file-name">{{file.file_name}}</div>
-	    	<div class="preview" ng-click = "previewFile()">预览></div>
+	    	<div class="preview" ng-click = "previewFile()" ng-show = "isPreview">预览></div>
 	    </div>
 	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
 	     <loading-indicator ng-show="loading"></loading-indicator>

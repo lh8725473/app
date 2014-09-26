@@ -445,6 +445,15 @@ angular.module('App.Files').controller('App.Files.Controller', [
 
     $scope.renameFile = function($event, obj) {
       $event.stopPropagation()
+      if(obj.renameInputValue.replace(/^\s+|\s+$/g, "") == ''){
+        Notification.show({
+          title: '失败',
+          type: 'danger',
+          msg: '文件或文件夹名不能为空',
+          closeable: false
+        })
+        return
+      }
       if (obj.isFolder == 1) { //文件夹
         FolderAction.updateFolder({
           folder_id: obj.folder_id
@@ -453,7 +462,14 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }).$promise.then(function() {
           obj.folder_name = obj.renameInputValue
           obj.rename = false;
-        })
+        }, function (error) {
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
+          })
       } else {
         var file_name = obj.file_name
         //获取后缀名

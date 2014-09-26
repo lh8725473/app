@@ -21,7 +21,12 @@ angular.module('App.Header').controller('App.Header.UserInfoController', [
     ) {
         //个人设置信息
         $scope.userInfo = Users.getUserInfo()
-
+        
+        $scope.userInfo.$promise.then(function() {
+          //避免图片缓存
+          $scope.userInfo.avatar = $scope.userInfo.avatar + '&_=' + new Date().getTime()
+        })
+        
         //修改个人信息
         $scope.updateInfo = function(userInfo) {
             var msg = ""

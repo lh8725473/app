@@ -48,14 +48,19 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.showMoticeCount = !!$scope.noticeCount
     $scope.roleId = $cookieStore.readCookie('roleId')
   	
+  	function refreshMessage(){
+  	  $scope.unreadCount = Message.getUnreadMessagesCount()
+      $scope.unreadCount.$promise.then(function(){
+        $scope.messageCount = $scope.unreadCount.message
+        $scope.noticeCount = $scope.unreadCount.notice
+        $scope.showMessageCount = $scope.messageCount != 0
+        $scope.showMoticeCount = $scope.noticeCount != 0
+      })
+  	}
+  	
+  	//循环刷新消息
     $scope.pollForMessages = function(){
-  		$scope.unreadCount = Message.getUnreadMessagesCount()
-  		$scope.unreadCount.$promise.then(function(){
-  			$scope.messageCount = $scope.unreadCount.message
-  			$scope.noticeCount = $scope.unreadCount.notice
-			  $scope.showMessageCount = $scope.messageCount != 0
-			  $scope.showMoticeCount = $scope.noticeCount != 0
-  		})
+  		refreshMessage()
   		$timeout($scope.pollForMessages, 100000)
   	}
   	
@@ -74,9 +79,12 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	}
   	 	
   	//点击单个消息
+  	$scope.messageOpen = false
   	$scope.messageDetail = function(message){
-  	  $scope.pollForMessages()
-  	  $rootScope.$broadcast('message_file', message.obj_id);
+  	  $scope.messageOpen = !$scope.messageOpen
+  	  $rootScope.$broadcast('message_file', message.obj_id)
+  	  message.is_read = 'true'
+  	  refresh()
   	}
   	
   	//notice 列表
@@ -97,13 +105,13 @@ angular.module('App.Header').controller('App.Header.Controller', [
         id : message.id
       }).$promise.then(function() {
         message.is_read = 'true'
-        $scope.pollForMessages()
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: "已标记为已读",
-          closeable: true
-        })
+        refreshMessage()
+//      Notification.show({
+//        title: '成功',
+//        type: 'success',
+//        msg: "已标记为已读",
+//        closeable: true
+//      })
       }, function(error) {
         Notification.show({
           title: '失败',
@@ -126,7 +134,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
             break
           }
         }
-        $scope.pollForMessages()
+        refreshMessage()
         Notification.show({
           title: '成功',
           type: 'success',
@@ -172,7 +180,9 @@ angular.module('App.Header').controller('App.Header.Controller', [
     $scope.searchByButton = doSearch
     
     //个人信息
+    $scope.userInfoMenuOpen = false
     $scope.userInfoWin = function(){
+      $scope.userInfoMenuOpen = !$scope.userInfoMenuOpen
       var userInfoModal = $modal.open({
         templateUrl: 'src/app/header/user-info/template.html',
         windowClass: 'user-info',

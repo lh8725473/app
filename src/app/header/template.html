@@ -1,7 +1,7 @@
 <div class="header-view" ng-controller="App.Header.Controller">
   <div class="header-top">
     <div class="slogan pull-left">云时代的高效协作平台</div>
-    <div class="user-info pull-right" dropdown is-open="status.isopen">
+    <div class="user-info pull-right" dropdown is-open="userInfoMenuOpen">
       <div class="username dropdown-toggle" ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
         <span>{{user.real_name}}</span>
         <div class="personalInfor"></div>
@@ -12,11 +12,9 @@
       </ul>
       <img class="userpic" ng-src="{{user.avatar}}" alt="" />
     </div>
-    <div class="to-admin-control pull-right" ng-click = "toadmin()">
-      管理控制台
-    </div>
+    <div class="to-admin-control pull-right" ng-click = "toadmin()" ng-show = "roleId == '1'">管理控制台</div>
     <div class="notif_box" class="message-notice pull-right">
-      <div class="message-dropdown" dropdown ng-class="{ active: message_show }">
+      <div class="message-dropdown" dropdown ng-class="{ active: message_show }" is-open="messageOpen">
         <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
         <label class="message-count letter-count" ng-show = "showMessageCount" ng-click = "openMessageList()">{{messageCount}}</label>
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="true">
@@ -44,7 +42,7 @@
            </li>
         </perfect-scrollbar>
       </div>
-      <div class="notice-dropdown" dropdown ng-class="{ active: notice_show }">
+      <div class="notice-dropdown" dropdown ng-class="{ active: notice_show }" is-open="noticeOpen">
        <span class="notice dropdown-toggle" title="通知" ng-click = "openNoticeList()"></span>
        <label class="message-count notice-count" ng-show = "showMoticeCount" ng-click = "openNoticeList()">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="">
@@ -78,9 +76,7 @@
     <div class="logo pull-left"></div>
     <div class="search">
       <input type="text" placeholder="搜索文件或者文件夹" class="search-text form-control" ng-model = "searchFilesValue" ng-keydown = "searchByKeyDown($event,searchFilesValue)">
-      <button class="search-button btn btn-default" ng-click = "searchByButton(searchFilesValue)">
-        搜索
-      </button>
+      <button class="search-button btn btn-default" ng-click = "searchByButton(searchFilesValue)">搜索</button>
     </div>
   </div>
 </div>

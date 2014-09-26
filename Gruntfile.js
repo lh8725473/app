@@ -41,6 +41,7 @@ module.exports = function(grunt) {
           'production/admin.html': 'admin.html',
           'production/index.html': 'index.html',
           'production/login.html': 'login.html',
+          'production/invite.html': 'invite.html',
           'production/link.html': 'link.html'
         }
       },
@@ -74,7 +75,7 @@ module.exports = function(grunt) {
       production: ['production/']
     },
     useminPrepare: {
-      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html'],
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/invite.html', 'production/link.html'],
       options: {
         root: './',
         dest: 'production/'
@@ -86,7 +87,7 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/link.html']
+      html: ['production/admin.html', 'production/index.html', 'production/login.html', 'production/invite.html', 'production/link.html']
     },
     inline_angular_templates: {
       production: {

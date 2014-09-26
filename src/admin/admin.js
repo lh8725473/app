@@ -53,10 +53,11 @@ angular.module('App', [
         if(rejection.status == 401){//401 accessToken 无效
           $cookieStore.removeCookie('accessToken')
           window.location.href = CONFIG.LOGIN_PATH
-        } else if (rejection.status == 501) {
-          $rootScope.noRight = true
-          $rootScope.noRightMsg = rejection.data.result
-        }
+        } 
+//      else if (rejection.status == 501) {
+//        $rootScope.noRight = true
+//        $rootScope.noRightMsg = rejection.data.result
+//      }
         return $q.reject(rejection)
       }
     }

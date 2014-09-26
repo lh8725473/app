@@ -4,12 +4,14 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
   'Trash',
   'Utils',
   '$modal',
+  'Notification',
   function(
     $scope,
     CONFIG,
     Trash,
     Utils,
-    $modal
+    $modal,
+    Notification
   ) {
     
     //回收站文件列表
@@ -176,12 +178,12 @@ angular.module('App.Trash').controller('App.Trash.Controller', [
                   }
                 }
               }, function (error) {
-                    Notification.show({
-                        title: '失败',
-                        type: 'danger',
-                        msg: error.data.result,
-                        closeable: false
-                    })
+                  Notification.show({
+                    title: '失败',
+                    type: 'danger',
+                    msg: error.data.result,
+                    closeable: false
+                  })
                 }
               )
             }
