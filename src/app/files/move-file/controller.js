@@ -4,12 +4,14 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
   'obj',
   'Folders',
   'Files',
+  'Notification',
   function(
     $scope,
     $modalInstance,
     obj,
     Folders,
-    Files
+    Files,
+    Notification
   ) {
     $scope.obj = obj
 
@@ -61,12 +63,12 @@ angular.module('App.Files').controller('App.Files.MoveFileController', [
         }).$promise.then(function() {
           moved(file_id)
         }, function (error) {
-              Notification.show({
-                  title: '失败',
-                  type: 'danger',
-                  msg: error.data.result,
-                  closeable: false
-              })
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
           }
         )
       } else {

@@ -128,12 +128,22 @@ angular.module('App.Header').controller('App.Header.Controller', [
       Message.deleteMessage({
         id : message.id
       }).$promise.then(function() {
-        for (var i = 0; i < $scope.messageList.length; ++i) {
-          if ($scope.messageList[i].id == message.id) {
-            $scope.messageList.splice(i, 1)
-            break
+        if(message.type == 'notice'){
+          for (var i = 0; i < $scope.noticeList.length; ++i) {
+            if ($scope.noticeList[i].id == message.id) {
+              $scope.noticeList.splice(i, 1)
+              break
+            }
+          }
+        }else{
+          for (var i = 0; i < $scope.messageList.length; ++i) {
+            if ($scope.messageList[i].id == message.id) {
+              $scope.messageList.splice(i, 1)
+              break
+            }
           }
         }
+        
         refreshMessage()
         Notification.show({
           title: '成功',
