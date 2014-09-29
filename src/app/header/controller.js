@@ -82,9 +82,8 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.messageOpen = false
   	$scope.messageDetail = function(message){
   	  $scope.messageOpen = !$scope.messageOpen
+  	  $scope.toIsRead ('', message)
   	  $rootScope.$broadcast('message_file', message.obj_id)
-  	  message.is_read = 'true'
-  	  refresh()
   	}
   	
   	//notice 列表
@@ -100,18 +99,14 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	
   	//message标记为已读
   	$scope.toIsRead = function($event, message){
-  	  $event.stopPropagation()
+  	  if($event){
+  	    $event.stopPropagation()
+  	  }
       Message.toIsRead({
         id : message.id
       }).$promise.then(function() {
         message.is_read = 'true'
         refreshMessage()
-//      Notification.show({
-//        title: '成功',
-//        type: 'success',
-//        msg: "已标记为已读",
-//        closeable: true
-//      })
       }, function(error) {
         Notification.show({
           title: '失败',

@@ -50,7 +50,7 @@
             <img ng-src = "{{linkShare.smallIcon}}" height="42px" width="42px"/>
             <div class="file-name">
               <a ui-sref="shares({folderId: linkShare.file_id})" ng-show = "linkShare.folder">
-                {{linkShare.file_name}}{{linkShare.file_id}}
+                {{linkShare.file_name}}
               </a>
               <a ng-show = "!linkShare.folder&&linkShare.isPreview" ng-click = "previewFile(linkShare)">
                 {{linkShare.file_name}}
@@ -79,7 +79,7 @@
           <img ng-src = "{{linkDetail.owner_avatar}}" height="50px" width="50px"/>
         </div>
         <div class="name-email">
-          <div><label class="owner-uname" title="{{linkDetail.owner_uname}}">{{linkDetail.owner_uname}}</label></div>
+          <div><label class="owner-uname" title="{{linkDetail.owner_uname}}">{{linkDetail.real_name}}</label></div>
           <div><label class="email" title="{{linkDetail.email}}">{{linkDetail.email}}</label></div>
         </div>
       </div>

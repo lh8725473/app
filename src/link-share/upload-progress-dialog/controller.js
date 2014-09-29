@@ -6,6 +6,8 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
   '$state',
   'CONFIG',
   'Utils',
+  '$q',
+  '$rootScope',
   function(
     $scope,
     $upload,
@@ -13,7 +15,9 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
     $cookieStore,
     $state,
     CONFIG,
-    Utils
+    Utils,
+    $q,
+    $rootScope
   ) {
       
     $scope.shown = false
@@ -52,6 +56,11 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
         })(file);
         $scope.files.push(file)
       }
+      $q.all($scope.files.map(function(file) {
+        return file.upload
+      })).finally(function() {
+        $rootScope.$broadcast('uploadFilesDone');
+      })
     })
 
     $scope.max = function() {

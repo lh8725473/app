@@ -35,6 +35,43 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
       folder_id : $scope.folderId
     })
     
+    //渲染文件列表
+    function refreshList(linkShareList){
+      angular.forEach(linkShareList, function(linkShare){
+        //对象是否被选中
+        linkShare.checked = false
+      
+        //对象是否是文件夹
+        if (linkShare.isFolder == 1) {
+          linkShare.folder = true
+        } else {
+          linkShare.folder = false
+        }
+      
+        //文件图像
+        if (linkShare.isFolder == 1) { //文件夹
+          if (linkShare.isShared == 1) {
+            linkShare.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
+            linkShare.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
+          } else {
+            linkShare.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
+            linkShare.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
+          }
+        } else {
+          var ext;
+          if (linkShare.isFolder == 1) {
+            ext = 'folder';
+          } else {
+            ext = linkShare.file_name.slice(linkShare.file_name.lastIndexOf('.') + 1);
+          }
+          var icon = Utils.getIconByExtension(ext);
+          linkShare.smallIcon = icon.small;
+          linkShare.largeIcon = icon.large;
+        }
+      })
+    }
+    
+    
     //外部链接文件列表(需要密码时)
     $scope.$on('password', function($event, password) {
       $scope.linkShareList = Share.getLinkShareList({
@@ -42,38 +79,7 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
         pwd : password
       })
       $scope.linkShareList.$promise.then(function(linkShareList) {
-        angular.forEach(linkShareList, function(linkShare){
-          //对象是否被选中
-          linkShare.checked = false
-        
-          //对象是否是文件夹
-          if (linkShare.isFolder == 1) {
-            linkShare.folder = true
-          } else {
-            linkShare.folder = false
-          }
-        
-          //文件图像
-          if (linkShare.isFolder == 1) { //文件夹
-            if (linkShare.isShared == 1) {
-              linkShare.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small_share;
-              linkShare.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large_share;
-            } else {
-              linkShare.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
-              linkShare.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
-            }
-          } else {
-            var ext;
-            if (linkShare.isFolder == 1) {
-              ext = 'folder';
-            } else {
-              ext = linkShare.file_name.slice(linkShare.file_name.lastIndexOf('.') + 1);
-            }
-            var icon = Utils.getIconByExtension(ext);
-            linkShare.smallIcon = icon.small;
-            linkShare.largeIcon = icon.large;
-          }
-        })
+        refreshList(linkShareList)
       },function(error) {
         var neddPassword = true;
         $rootScope.$broadcast('neddPassword', neddPassword);
@@ -107,22 +113,6 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
       if(linkDetail.is_upload){
         $scope.uploadButton = true
       }
-//    if(linkDetail.permission == '0000001'){//仅上传权限
-//      $scope.uploadButton = true
-//      $scope.dowloadButton = false
-//    }
-//    if(linkDetail.permission == '0000100'){//仅预览权限
-//      $scope.uploadButton = false
-//      $scope.dowloadButton = false
-//    }
-//    if(linkDetail.permission == '0001110'){//可预览和下载
-//      $scope.uploadButton = false
-//      $scope.dowloadButton = true
-//    }
-//    if(linkDetail.permission == '0001111'){//可预览、下载和上传权限
-//      $scope.uploadButton = true
-//      $scope.dowloadButton = true
-//    }
       
       if(linkDetail.comment==''){
         linkDetail.comment = 'Ta很懒什么也没留下'
@@ -131,22 +121,6 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
     
     $scope.linkShareList.$promise.then(function(linkShareList) {
       angular.forEach(linkShareList, function(linkShare){
-        //权限列表
-//      var is_owner = linkShare.permission.substring(0, 1)  //协同拥有者 or 拥有者1
-//      var is_delete =  linkShare.permission.substring(1, 2)  //删除权限
-//      var is_edit =  linkShare.permission.substring(2, 3)  //编辑权限
-//      var is_getLink =  linkShare.permission.substring(3, 4)  //链接权限
-//      var is_preview =  linkShare.permission.substring(4, 5)  //预览权限
-//      var is_download =  linkShare.permission.substring(5, 6)  //下载权限
-//      var is_upload =  linkShare.permission.substring(6, 7)  //上传权限
-//      
-//      linkShare.is_owner = (is_owner == '1') ? true : false
-//      linkShare.is_delete = (is_delete == '1') ? true : false
-//      linkShare.is_edit = (is_edit == '1') ? true : false
-//      linkShare.is_getLink = (is_getLink == '1') ? true : false
-//      linkShare.is_preview = (is_preview == '1') ? true : false
-//      linkShare.is_download = (is_getLink == '1') ? true : false
-//      linkShare.is_upload = (is_upload == '1') ? true : false
         
         //对象是否被选中
         linkShare.checked = false
@@ -268,6 +242,18 @@ angular.module('App.LinkShare').controller('App.LinkShare.Controller', [
         $rootScope.$broadcast('uploadFiles', $files);
       })
     }
+    
+    //上传成功后刷新列表
+    $scope.$on('uploadFilesDone', function() {
+      $scope.linkShareList = Share.getLinkShareList({
+        key : $scope.key,
+        pwd : $cookieStore.get('password'),
+        folder_id : $scope.folderId
+      })
+      $scope.linkShareList.$promise.then(function(linkShareList) {
+         refreshList(linkShareList)
+       })
+    })
     
     // upload file
     var uploadModalController = [

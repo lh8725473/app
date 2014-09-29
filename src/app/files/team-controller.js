@@ -92,9 +92,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           }
           
           if($scope.folder_owner){//不能给予别人比自己大的权限
-            group.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            group.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
           }else{
-            group.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            group.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
           } 
   			})
   			angular.forEach($scope.users, function(user){
@@ -120,9 +120,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   				}
   				
           if($scope.folder_owner){//不能给予别人比自己大的权限
-            user.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            user.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
           }else{
-            user.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+            user.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
           }			
   			})
   		})
@@ -177,9 +177,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
             }
             
             if($scope.folder_owner){//不能给予别人比自己大的权限
-              user.permission_value_list = ['协同拥有者','编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+              user.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
             }else{
-              user.permission_value_list = ['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+              user.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
             } 
           })
         })
