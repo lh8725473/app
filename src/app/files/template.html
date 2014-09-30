@@ -171,7 +171,7 @@
 	    	<div class="file-name">{{file.file_name}}</div>
 	    	<div class="preview" ng-click = "previewFile()" ng-show = "isPreview">预览></div>
 	    </div>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList">
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'">
 	     <loading-indicator ng-show="loading"></loading-indicator>
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
@@ -184,7 +184,7 @@
 		    	</div>
 		    </div>
 		   </perfect-scrollbar>
-	    <div class="disc-inputbox col-sm-12">
+	    <div class="disc-inputbox col-sm-12" ng-show = "navType == 'dis'">
 	    <textarea
       ng-trim="false"
       rows="5"
@@ -211,6 +211,22 @@
 			<label class="pull-right">{{discussCount}}/200</label>
 			<label class="tip pull-left">可以@协作人</label>
 		</div>
+		<perfect-scrollbar class="version" wheel-propagation="true" wheel-speed="20" refresh-on-change="fileHistoryList" ng-show = "navType == 'ver'" suppress-scroll-x = "true" >
+      <div ng-repeat="fileHistory in fileHistoryList" class="version-item">
+        <div class="time-user row">
+          <div class="version-time pull-left">{{fileHistory.format_date}}</div>
+          <div class="version-user pull-right">{{fileHistory.user_name}}</div>
+        </div>
+        <div class="name-size-action">
+          <div class="version-size pull-left">{{fileHistory.format_size}}</div>
+          <div class="version-action pull-right" ng-click = "downLoadHistory(fileHistory)">
+            
+          </div>
+        </div>
+      </div>
+
+    </perfect-scrollbar>
+		
 	</div>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">

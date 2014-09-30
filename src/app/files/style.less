@@ -643,6 +643,10 @@
       li.active {
         color: #1F6ABD;
       }
+      li:hover{
+        color: #1F6ABD;
+        cursor: pointer;
+      }
       button {
         font-size: 24px;
         margin: 6px 20px 0 0;
@@ -758,6 +762,36 @@
           margin-right: 20px;
           color: #fff;
           background-color: #1F6ABD;
+        }
+    }
+    
+    .version{
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+//      padding: 5px 10px 10px 10px;
+        overflow-y: hidden;
+        padding-right: 15px;
+        .version-item{
+            height: 48px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            .row{
+                margin: 0 0 3px 0;
+                // margin-bottom: 5px;
+            }
+            .version-action{
+                cursor: pointer;
+                width: 19px;
+                height: 17px;
+                background: url("../../images/download_btn_off.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);;
+            }
+            .version-action:hover{
+                background: url("../../images/download_btn_on.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);;
+            }
         }
     }
 }
