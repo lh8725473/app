@@ -75,6 +75,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	  $scope.messageList = Message.getMessageList()
   	  $scope.messageList.$promise.then(function() {
         $scope.loading = false
+        $scope.messageOpen = true
       })
   	}
   	 	
@@ -94,6 +95,7 @@ angular.module('App.Header').controller('App.Header.Controller', [
       $scope.noticeList = Message.getNoticeList()
       $scope.noticeList.$promise.then(function() {
         $scope.loading = false
+        $scope.noticeOpen = true
       })
     }
   	

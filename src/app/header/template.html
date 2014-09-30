@@ -14,9 +14,9 @@
     </div>
     <div class="to-admin-control pull-right" ng-click = "toadmin()" ng-show = "roleId == '1'">管理控制台</div>
     <div class="notif_box" class="message-notice pull-right">
-      <div class="message-dropdown" dropdown ng-class="{ active: message_show }" is-open="messageOpen">
-        <span class="message dropdown-toggle" title="消息" ng-click = "openMessageList()"></span>
-        <label class="message-count letter-count" ng-show = "showMessageCount" ng-click = "openMessageList()">{{messageCount}}</label>
+      <div class="message-dropdown" dropdown ng-class="{ active: message_show }" is-open="messageOpen" ng-click = "openMessageList()">
+        <span class="message dropdown-toggle" title="消息"></span>
+        <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="true">
            <loading-indicator ng-show="loading"></loading-indicator>
            <div class="no-message" ng-show = "messageList.length == 0"></div>
@@ -42,9 +42,9 @@
            </li>
         </perfect-scrollbar>
       </div>
-      <div class="notice-dropdown" dropdown ng-class="{ active: notice_show }" is-open="noticeOpen">
-       <span class="notice dropdown-toggle" title="通知" ng-click = "openNoticeList()"></span>
-       <label class="message-count notice-count" ng-show = "showMoticeCount" ng-click = "openNoticeList()">{{noticeCount}}</label>
+      <div class="notice-dropdown" dropdown ng-class="{ active: notice_show }" is-open="noticeOpen" ng-click = "openNoticeList()">
+       <span class="notice dropdown-toggle" title="通知"></span>
+       <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="">
           <loading-indicator ng-show="loading"></loading-indicator>
           <div class="no-notice" ng-show = "noticeList.length == 0"></div>
