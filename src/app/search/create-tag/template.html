@@ -1,0 +1,20 @@
+<div class="modal-header">
+	<button class="bootbox-close-button close" type="button" ng-click="cancel()">
+		×
+	</button>
+	<h3 class="modal-title">设置标签</h3>
+</div>
+<div class="modal-body">
+	<div class="tag-list" ng-show = "obj.tags.length != 0">
+		<div class="tag" ng-repeat="tag in obj.tags">
+		  <span class="tag-name">{{tag.tag_name}}</span>
+      <span ng-click="deleteTag(tag)" class="fa fa-times delete-tag">x</span>
+		</div>
+	</div>
+	<div class="empty-tag-list" ng-show = "obj.tags.length == 0">没有标签</div>
+	<div class="add-tag-title">添加一个标签</div>
+	<div class="add-tag-form">
+		<input type="text" placeholder="每个文件最多3个标签，每个标签不超过6个字" class="form-control add-tag-input" maxlength="6" ng-model = "tag_name">
+		<button class="btn btn-primary add-tag-button" ng-click = "createTag()">添加</button>
+	</div>
+</div>

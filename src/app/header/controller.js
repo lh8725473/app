@@ -170,10 +170,9 @@ angular.module('App.Header').controller('App.Header.Controller', [
     
     //搜索文件或者文件夹
     function doSearch(searchFilesValue) {
-      $state.go('files', {
-        k: searchFilesValue
+      $state.go('search', {
+        key: searchFilesValue
       })
-      $rootScope.$broadcast('searchFilesValue', searchFilesValue);
     }
     
     $scope.searchByKeyDown = function($event, searchFilesValue){

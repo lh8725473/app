@@ -1,8 +1,8 @@
-<div class="files-view" ng-controller="App.Files.Controller">
+<div class="files-view" ng-controller="App.Search.Controller">
 	<div class="top-bar">
 		<div class="pull-left root-path" ng-class = "{ isRoot: isRoot }"> 
 			<a ui-sref="files({folderId: 0})">
-				根目录
+				搜索结果
 			</a>
 		</div>
 		<div class="folder-crumb pull-left" ng-repeat="path in folderPath">
@@ -46,7 +46,7 @@
       <span>分享</span>          
     </div>
   </div>
-  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="objList" on-scroll="onFileListScroll(scrollTop, scrollHeight)">
+  <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="objList" on-scroll="onFileListScroll(scrollTop, scrollHeight)">
 		<div class="folder-grid">
 			<div class="table">
 					<div ng-show = "showCreateFolderDiv" class="create-folder-div">
@@ -171,7 +171,7 @@
 	    	<div class="file-name">{{file.file_name}}</div>
 	    	<div class="preview" ng-click = "previewFile()" ng-show = "isPreview">预览></div>
 	    </div>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList">
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList">
 	     <loading-indicator ng-show="loading"></loading-indicator>
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
@@ -218,7 +218,7 @@
 		<div class="groups-users-header col-sm-12">
       <span class="pull-left">全新的分享方式 </span>
     </div>
-    <perfect-scrollbar class="empty-scroller" wheel-propagation="true" wheel-speed="20" suppress-scroll-x = "true">
+    <perfect-scrollbar class="empty-scroller" wheel-propagation="true" wheel-speed="50" suppress-scroll-x = "true">
       <div class="h4_add_guide pull-left col-sm-12">协作分享</div>
       <div class="add_guide pull-left col-sm-12"></div>
       <div class="h4_add_link pull-left col-sm-12">链接分享</div>
@@ -231,7 +231,7 @@
 			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>
 			<div class="pull-right invite" ng-click = "inviteTeamUsers()" ng-show = "folder_delete"></div>
 		</div>
-		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="shareObj.list.users">
+		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="shareObj.list.users">
 		<loading-indicator ng-show="loading"></loading-indicator>
 		<div class="groups col-sm-12" ng-repeat="group in groups" ng-class = "{not_edit : !folder_edit , not_edit : group.is_edit }">
 			<div class="group-div">

@@ -1,4 +1,4 @@
-angular.module('App.Files').controller('App.Files.Controller', [
+angular.module('App.Search').controller('App.Search.Controller', [
   '$scope',
   '$state',
   '$rootScope',
@@ -63,10 +63,10 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //fileList data
     // var pageSize = 30
     var objListPage = 1
-    $scope.objList = Folders.getObjList({
-      folder_id: folderId,
-      page: objListPage
+    $scope.objList = Search.query({
+        keyword: $state.params.key 
     })
+ 
     $scope.objList.$promise.then(function() {
       $scope.loading = false
     })
@@ -88,7 +88,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         })
       }
     }
-    
+      
     //根目录(当前目录)下按钮权限
     $scope.folder_owner = true
     $scope.folder_delete = true
@@ -726,22 +726,4 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     });
   };
-}).directive('focusMe',['$timeout', '$parse' , function($timeout, $parse) {
-  return {
-    scope: {
-      'focus': '=focusMe'
-    },
-    link: function(scope, element) {
-      scope.$watch('focus', function(value) {
-        if(value === true) { 
-          $timeout(function() {
-            element[0].focus(); 
-          });
-        }
-      });
-      element.bind('blur', function() {
-        scope.focus = false
-      })
-    }
-  };
-}])
+})
