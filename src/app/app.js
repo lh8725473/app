@@ -35,6 +35,7 @@ angular.module('App', [
   'App.Files',
   'App.Contacts',
   'App.Trash',
+  'App.Search',
   'App.UploadProgressDialog'
 
 
@@ -135,6 +136,10 @@ angular.module('App', [
       .state('trash', {
         url: '/trash',
         templateUrl: 'src/app/trash/template.html'
+      })
+      .state('search', {
+        url: '/search/:key',
+        templateUrl: 'src/app/search/template.html'
       })
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'

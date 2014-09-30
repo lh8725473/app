@@ -52,11 +52,6 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       	  $scope.loading = false
       	})
       	
-      	//历史版本
-      	$scope.fileHistoryList = Files.history({
-          file_id : discuss_file_id
-        })
-      	
       	//讨论的文件
       	$scope.file = Files.view({
           file_id : discuss_file_id
@@ -162,19 +157,6 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
           closeable: false
         })
       }
-    }
-    
-    //下载历史版本
-    $scope.downLoadHistory = function(fileHistory){
-      var hiddenIframeID = 'hiddenDownloader'
-      var iframe = $('#' + hiddenIframeID)[0]
-      if (iframe == null) {
-        iframe = document.createElement('iframe')
-        iframe.id = hiddenIframeID
-        iframe.style.display = 'none'
-        document.body.appendChild(iframe)
-      }
-      iframe.src = CONFIG.API_ROOT + '/file/get/' + fileHistory.file_id + '?token=' + $cookies.accessToken + '&v=' + fileHistory.version_id
     }
   	
   }

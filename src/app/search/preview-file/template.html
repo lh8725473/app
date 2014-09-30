@@ -29,7 +29,7 @@
         ×
       </button>
     </ul>
-    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" suppress-scroll-x = "true"> 
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="50" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" suppress-scroll-x = "true"> 
     <div class="discuss">
       <div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
         <img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
@@ -49,7 +49,7 @@
       <label class="pull-left">可@协作人</label>
       <label class="pull-right" >{{discussCount}}/200</label>
     </div>
-    <perfect-scrollbar class="version" wheel-propagation="true" wheel-speed="20" refresh-on-change="fileHistoryList" ng-show = "navType == 'ver'" suppress-scroll-x = "true">
+    <perfect-scrollbar class="version" wheel-propagation="true" wheel-speed="50" refresh-on-change="fileHistoryList" ng-show = "navType == 'ver'" suppress-scroll-x = "true">
       <div ng-repeat="fileHistory in fileHistoryList" class="version-item">
         <div class="time-user row">
           <div class="version-time pull-left">{{fileHistory.format_date}}</div>
