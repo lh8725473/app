@@ -1,7 +1,7 @@
 <div class="files-view" ng-controller="App.Search.Controller">
 	<div class="top-bar">
 		<div class="pull-left root-path" ng-class = "{ isRoot: isRoot }"> 
-			<a ui-sref="files({folderId: 0})">
+			<a>
 				搜索结果
 			</a>
 		</div>
@@ -19,12 +19,12 @@
 	  
 	</div>
 	<div class="buttonGroup">
-    <button ng-click="upload()" class="btn btn-default" ng-disabled="!folder_upload">
+    <!--<button ng-click="upload()" class="btn btn-default" ng-disabled="!folder_upload">
               上传文件
     </button>
 		<button ng-click="showCreateFolder()" class="btn btn-default" ng-disabled="!folder_delete">
 			新建文件夹
-		</button>
+		</button>-->
 	</div>
 	<div class="title">
 	  <div class="title-checkbox col">
