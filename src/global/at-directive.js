@@ -10,4 +10,4 @@ angular.module('Act.at', []).directive('at', [
       }
     }
   }
-])
+]);
