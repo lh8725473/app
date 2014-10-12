@@ -14,7 +14,7 @@ angular.module('App', [
   'snap',
   'pageslide-directive',
   'ui.select2',
-  'At',
+  'Act.at',
 
   // global components
   'ACT.LoadingIndictor',
