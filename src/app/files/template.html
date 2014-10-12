@@ -188,26 +188,7 @@
 		    </div>
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12" ng-show = "navType == 'dis'">
-	    <!--<textarea
-      ng-trim="false"
-      rows="5"
-      cols="100"  
-      flag="@"
-      at-user
-      auto-complete
-      ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent" ng-keydown = "createUserDiscussByPress($event)"
-      style="width: 100%;"
-      ></textarea>
-      <span ng-show="!isAtListHidden" auto-follow="true">
-        <ul class="list-at-user">
-          <li ng-repeat="user in userList | filter: query.text | limitTo: 4"
-            ng-click="autoComplete(user)">
-            <span>{{ user.user_name }}</span>
-          </li>
-        </ul>
-      </span>-->
       <textarea id="inputor" rows="5" cols="20" at="atOptions"></textarea>
-<!--			<textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-model = "discussContent" ng-keydown = "createUserDiscussByPress($event)"></textarea>		-->
 			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 				发表
 			</button>

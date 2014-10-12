@@ -40,8 +40,8 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	
   	$scope.atOptions = {
       at: "@",
-      data: [],
-      limit: Infinity
+      data: [1, 2, 4],
+      limit: 5
     }
   	
     //右侧菜单 讨论or版本
@@ -91,11 +91,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
             angular.forEach($scope.userList, function(user){
               userNameList.push(user.user_name)
             })
-            $scope.atOptions = {
-              at: "@",
-              data: userNameList,
-              limit: Infinity
-            }
+            $scope.atOptions.data = userNameList
           })
         })
       } 
