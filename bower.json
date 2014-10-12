@@ -35,7 +35,7 @@
     "bootstrap-select": "~1.6.2",
     "angular-bootstrap-select": "~0.0.3",
     "angular-md5": "~0.1.7",
-    "angular-perfect-scrollbar": "git@github.com:island205/angular-perfect-scrollbar.git",
+    "angular-perfect-scrollbar": "git@github.com:lh8725473/angular-perfect-scrollbar.git",
     "perfect-scrollbar": "~0.4.11",
     "Angular-At-Directive": "https://github.com/scarletsky/Angular-At-Directive.git"
   },

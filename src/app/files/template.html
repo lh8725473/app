@@ -171,7 +171,7 @@
 	    	<div class="file-name">{{file.file_name}}</div>
 	    	<div class="preview" ng-click = "previewFile()" ng-show = "isPreview">预览></div>
 	    </div>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" to-end = "true">
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" scroll-down = "true">
 	     <loading-indicator ng-show="loading"></loading-indicator>
 		    <div class="disc-item-list col-sm-12">
 		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item" ng-class="{ is_owner: userDiscuss.is_owner }">
