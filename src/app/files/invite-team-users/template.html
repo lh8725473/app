@@ -44,9 +44,9 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">        
-              <li role="presentation" ng-repeat="value in permission_value_list" ng-click = "selectedPermission(value)">
+              <li role="presentation" ng-repeat="value in permission_value_list" ng-click = "selectedPermission(value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
                 <a role="menuitem" tabindex="-1">
-                  {{value}}
+                  {{value.v}}
                 </a>
               </li>
             </ul>

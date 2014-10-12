@@ -8,6 +8,8 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   'Utils',
   '$modal',
   'Folders',
+  '$cookies',
+  'Notification',
   function(
     $scope,
     CONFIG,
@@ -17,7 +19,9 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     Files,
     Utils,
     $modal,
-    Folders
+    Folders,
+    $cookies,
+    Notification
   ) {
       
 //  $scope.userList = Users.query()     
@@ -48,7 +52,12 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         	obj_id : discuss_file_id
       	})
       	
-      	$scope.userDiscussList.$promise.then(function(){
+      	$scope.userDiscussList.$promise.then(function(userDiscussList){
+      	  angular.forEach(userDiscussList, function(userDiscuss) {
+      	    if(userDiscuss.user_id == $cookies.userId){//讨论是否是当前用户
+      	      userDiscuss.is_owner = true
+      	    }
+      	  })
       	  $scope.loading = false
       	})
       	
@@ -78,6 +87,33 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         })
       } 
     })
+  	
+  	//删除讨论
+  	$scope.deleteUserDiscuss = function(userDiscuss){
+  	  UserDiscuss.deleteUserDiscuss({
+        id : userDiscuss.id
+      }).$promise.then(function() {
+        for (var i = 0; i < $scope.userDiscussList.length; ++i) {
+          if ($scope.userDiscussList[i].id == userDiscuss.id) {
+            $scope.userDiscussList.splice(i, 1)
+            break
+          }
+        }
+      }, function (error) {
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
+          }
+        )
+  	}
+  	
+  	//回复讨论
+  	$scope.replyUserDiscuss = function(userDiscuss){
+  	  $scope.discussContent = $scope.discussContent + '@' + userDiscuss.real_name + ' '
+  	}
   	
   	//讨论发表内容
   	$scope.discussContent = ''

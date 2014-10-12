@@ -40,6 +40,10 @@
         margin-top: 20px;
       }
       
+      .logo a{
+        cursor: pointer;
+      }
+      
       li{
         list-style: none outside none;
       }
@@ -59,6 +63,7 @@
       
       .link_list_li a {
         color: #ffffff;
+        font-size: 16px;
       }
       
       .button-group{
@@ -171,7 +176,7 @@
         margin-right: 20px;
       }
       
-      .try-user button{
+      .try-user a{
         width: 230px;
         padding: 10px 20px;
         border-radius: 0;
@@ -263,7 +268,9 @@
 	  <div class="top">
 	    <div class="container top-bar">
 	      <div class="logo pull-left">
-	        <img src="images/home_top_logo_white.png" />
+	        <a href="home.html">
+	          <img src="images/home_top_logo_white.png" />
+	        </a>     
 	      </div>
 	      <div class="pull-right button-group">
           <a class="btn login" href="login.html">登录</a>
@@ -272,7 +279,7 @@
 	      
 	      <div class="link_url pull-right">
           <li class="link_list_li">
-            <a class="" href="../home">首页</a>
+            <a class="" href="home.html">首页</a>
           </li>
           <li class="link_list_li">
             <a class="" href="#apps">功能</a>
@@ -281,7 +288,7 @@
             <a class="" href="#company">业务洽谈</a>
           </li>
           <li class="link_list_li">
-            <a class="" href="#blog">下载</a>
+            <a class="" href="apps.html">下载</a>
           </li>
         </div>    
 	    </div>
@@ -289,19 +296,17 @@
 	      <div class="screenshow-text col-sm-5">
 	        <h3>高效便携的云协作体验</h3>
 	        <li class="">
-            <span class="active" href="../home"> > 大容量云端存储</span>
+            <span class="active" > > 大容量云端存储</span>
           </li>
           <li class="">
-            <span class="" href="#apps"> > 全新协作方式，分享、讨论、任务指派，让移动工作变得更智慧</span>
+            <span class=""> > 全新协作方式，分享、讨论、任务指派，让移动工作变得更智慧</span>
           </li>
           <li class="">
-            <span class="" href="#company"> > 强大的管理员控制，时刻掌握团队动向</span>
+            <span class=""> > 强大的管理员控制，时刻掌握团队动向</span>
           </li>
           <a class="btn login try-out" href="login.html">立即试用</a>
 	      </div>
-	      <div class="top-screenshow col-sm-5 pull-right">
-	        
-	        
+	      <div class="top-screenshow col-sm-5 pull-right">      
 	      </div>
 	    </div>
 	  </div>
@@ -342,7 +347,7 @@
         <h4>立即拥有高效便捷的云协作体验</h4>
         <!--<input type="text" placeholder="姓名" class=""/>
         <input type="text" placeholder="邮件地址"  class=""/>-->
-        <button class="btn btn-warning">免费体验</button>
+        <a class="btn btn-warning" href="login.html">免费体验</a>
       </div>
     </div>
     <div class="provide container">
@@ -358,13 +363,13 @@
 	      <div class="col-sm-4 link-cpoy-right">    
   	      <div class="link_url">
             <li class="link_list_li">
-              <a class="" href="../home">关于我们</a>
+              <a class="" href="#">关于我们</a>
             </li>
             <li class="link_list_li">
-              <a class="" href="#apps">加入我们</a>
+              <a class="" href="#">加入我们</a>
             </li>
             <li class="link_list_li">
-              <a class="" href="#company">使用帮助</a>
+              <a class="" href="#">使用帮助</a>
             </li>
           </div>
           <div class="cpoy-right">
@@ -379,7 +384,7 @@
         </div>
         <div class="col-sm-2 friend-ship-link">
           <div class="link-text">友情链接</div>
-          <div class="link"><a>http://www.sharpinteract.com/</a></div>
+          <div class="link"><a href="http://www.sharpinteract.com/" target="_blank">http://www.sharpinteract.com/</a></div>
         </div>
         <div class="col-sm-2 pull-right two-dimension-code">
           <div class="code-text">官方微信</div>  
@@ -387,8 +392,7 @@
             <img src="images/getqrcode-ACT.jpg" height="70px" width="70px"/>
           </div>
           <div>lingli-qxt</div>
-        </div>
-	      
+        </div>   
 	    </div>
 	  </div>
 	</body>

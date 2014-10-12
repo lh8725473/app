@@ -5,7 +5,7 @@ angular.module('App.Resources').factory('UserDiscuss', [
     $resource,
     CONFIG
   ) {
-    return $resource(CONFIG.API_ROOT + '/userDiscuss/:action?obj_id=:obj_id', {}, {
+    return $resource(CONFIG.API_ROOT + '/userDiscuss/:action/:id', {}, {
       getUserDiscussList: {
         method: "GET",
         params: {
@@ -19,6 +19,13 @@ angular.module('App.Resources').factory('UserDiscuss', [
         params: {
           action: 'create',
           obj_id : 0
+        }
+      },
+      deleteUserDiscuss: {
+        method: "DELETE",
+        params: {
+          action: 'delete',
+          id : ''
         }
       }
     })

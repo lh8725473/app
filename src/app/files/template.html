@@ -171,13 +171,16 @@
 	    	<div class="file-name">{{file.file_name}}</div>
 	    	<div class="preview" ng-click = "previewFile()" ng-show = "isPreview">预览></div>
 	    </div>
-	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'">
+	     <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" to-end = "true">
 	     <loading-indicator ng-show="loading"></loading-indicator>
 		    <div class="disc-item-list col-sm-12">
-		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
+		    	<div ng-repeat="userDiscuss in userDiscussList" class="disc-item" ng-class="{ is_owner: userDiscuss.is_owner }">
 		    		<img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
 		    		<div class="disc-box">
-		    			<div class="disc-name">{{userDiscuss.real_name}}</div>
+		    			<div class="disc-name">{{userDiscuss.real_name}}
+		    			  <div class="delete-disc pull-right" ng-click = "deleteUserDiscuss(userDiscuss)">删除</div>
+		    			  <div class="reply-disc pull-right" ng-click = "replyUserDiscuss(userDiscuss)">回复</div>
+		    			</div>
 		    			<div class="disc-time">{{userDiscuss.format_date}}</div>
 		    			<div class="disc-content">{{userDiscuss.content}}</div>
 		    		</div>

@@ -131,6 +131,7 @@
                    float: right;
                    width: 50px;
                    height: 18px;
+                   display: none;
                   .message-read{
                     cursor: pointer;
                     width: 18px;
@@ -158,6 +159,14 @@
               }
             }
           }
+        }
+        
+        li:hover {
+            background-color: #ebf1f7;
+        }
+        
+        li:hover a div .message-content .message-action{
+            display: block;
         }
       }
       

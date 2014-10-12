@@ -728,6 +728,13 @@
               height: 14px;
               line-height: 14px;
               margin-bottom: 3px;
+              .delete-disc{
+                display: none;
+                margin-left: 10px;
+              }
+              .reply-disc{
+                display: none;  
+              }
             }
             .disc-time{
               color: #c0c0c0;
@@ -738,6 +745,17 @@
             }
         }
     }
+    
+    .disc-item:hover .disc-name .reply-disc{
+        display: block;
+        cursor: pointer;  
+    }
+    
+    .is_owner:hover .disc-name .delete-disc{
+        display: block;
+        cursor: pointer;  
+    }
+    
     .disc-inputbox{
         background-color: white;
         bottom: 0px;
