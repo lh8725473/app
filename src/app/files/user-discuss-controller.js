@@ -22,6 +22,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     Folders,
     $cookies,
     Notification
+    
   ) {
       
 //  $scope.userList = Users.query()     
@@ -36,6 +37,12 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
   	})
+  	
+  	$scope.atOptions = {
+      at: "@",
+      data: [],
+      limit: Infinity
+    }
   	
     //右侧菜单 讨论or版本
     $scope.navType = 'dis'
@@ -79,10 +86,16 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
             folder_id : $scope.file.folder_id
           })
           $scope.shareObj.$promise.then(function(shareObj){
+            var userNameList = []
             $scope.userList = shareObj.list.users
             angular.forEach($scope.userList, function(user){
-              user.username = user.user_name
+              userNameList.push(user.user_name)
             })
+            $scope.atOptions = {
+              at: "@",
+              data: userNameList,
+              limit: Infinity
+            }
           })
         })
       } 
