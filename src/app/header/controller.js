@@ -81,10 +81,11 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	 	
   	//点击单个消息
   	$scope.messageOpen = false
-  	$scope.messageDetail = function(message){
-  	  $scope.messageOpen = !$scope.messageOpen
-  	  $scope.toIsRead ('', message)
-  	  $rootScope.$broadcast('message_file', message.obj_id)
+  	$scope.messageDetail = function($event, message){
+  	  $event.stopPropagation()
+  	  $scope.messageOpen = false
+	    $scope.toIsRead ('', message)
+	    $rootScope.$broadcast('message_file', message.obj_id)
   	}
   	
   	//notice 列表
