@@ -68,12 +68,15 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	$scope.pollForMessages()
   	
   	//message 列表
+  	$scope.no_message = false
   	$scope.openMessageList = function(){
+  	  $scope.no_message = false
   	  $scope.loading = true
   	  $scope.message_show = true
   	  $scope.notice_show = false
   	  $scope.messageList = Message.getMessageList()
-  	  $scope.messageList.$promise.then(function() {
+  	  $scope.messageList.$promise.then(function(messageList) {
+  	    $scope.no_message = (messageList.length == 0) ? true : false
         $scope.loading = false
         $scope.messageOpen = true
       })
@@ -89,12 +92,15 @@ angular.module('App.Header').controller('App.Header.Controller', [
   	}
   	
   	//notice 列表
+  	$scope.no_notice = false
   	$scope.openNoticeList = function(){
+  	  $scope.no_notice = false
   	  $scope.loading = true
   	  $scope.message_show = false
       $scope.notice_show = true
       $scope.noticeList = Message.getNoticeList()
-      $scope.noticeList.$promise.then(function() {
+      $scope.noticeList.$promise.then(function(noticeList) {
+        $scope.no_notice = (noticeList.length == 0) ? true : false
         $scope.loading = false
         $scope.noticeOpen = true
       })

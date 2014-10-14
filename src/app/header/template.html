@@ -19,8 +19,8 @@
         <label class="message-count letter-count" ng-show = "showMessageCount">{{messageCount}}</label>
         <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="true">
            <loading-indicator ng-show="loading"></loading-indicator>
-           <div class="no-message" ng-show = "messageList.length == 0"></div>
-           <li ng-click = "messageDetail($event, message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "messageList.length == 0">
+           <div class="no-message" ng-show = "no_message"></div>
+           <li ng-click = "messageDetail($event, message)" ng-repeat="message in messageList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "no_message">
              <a>
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
@@ -47,8 +47,8 @@
        <label class="message-count notice-count" ng-show = "showMoticeCount">{{noticeCount}}</label>
        <perfect-scrollbar class="dropdown-menu" role="menu" class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="">
           <loading-indicator ng-show="loading"></loading-indicator>
-          <div class="no-notice" ng-show = "noticeList.length == 0"></div>
-          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "noticeList.length == 0" >
+          <div class="no-notice" ng-show = "no_notice"></div>
+          <li ng-repeat="message in noticeList" ng-class = "{ isRead : message.is_read == 'true' }" ng-hide = "no_notice" >
              <a>
               <div>
                 <img class="message-userpic" ng-src="{{message.avatar}}" alt="" height="30px" width="30px"/>
