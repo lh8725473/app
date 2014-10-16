@@ -253,7 +253,27 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
-
+    
+    //批量删除
+    $scope.deleteObjList = function(){
+      var deleteLsit = []
+      angular.forEach($scope.objList, function(obj) {
+        if(obj.checked == true){
+          deleteLsit.push(obj)
+        }
+      })
+    }
+    
+    //批量移动
+    $scope.removeObjList = function(){
+      var removeLsit = []
+      angular.forEach($scope.objList, function(obj) {
+        if(obj.checked == true){
+          removeLsit.push(obj)
+        }
+      })
+    }
+    
     //左键选取对象
     $scope.selectObj = function($event, obj) {
       $event.stopPropagation()
