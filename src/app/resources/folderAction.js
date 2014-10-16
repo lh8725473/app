@@ -17,9 +17,7 @@ angular.module('App.Resources').factory('FolderAction', [
       createFolder: {
         method: "POST",
         params: {
-          action: 'create',
-          folder_name : '',
-          parent_id: 0
+          action: 'create'
         }
       },
       deleteFolder: {

@@ -169,6 +169,10 @@
       }
 
       $(document).ready(function() {
+        $('#logohome').click(function(e) {
+          window.location.href = 'home.html';
+        });
+        
         var key = getUrlParameter('key')
         $.ajax({
           url : CONFIG.API_ROOT + '/user/invite?key=' + key,
