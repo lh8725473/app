@@ -174,7 +174,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
             obj.smallIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.small;
             obj.largeIcon = CONFIG.ICONS_PATH + CONFIG.ICONS.folder.large;
           }
-        } else {
+        } else if(fileType == 'image'){//图片缩略图
+          obj.smallIcon = CONFIG.API_ROOT + '/file/preview/' + obj.file_id + '?token=' + $cookies.accessToken + '&size=48';
+        }else {
           var ext;
           if (obj.isFolder == 1) {
             ext = 'folder';

@@ -134,7 +134,11 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       $scope.inviteInputValue = ""
 
       //输入框输入增加协作人或组
-      $scope.inviteBypress = function(inviteInputValue) {
+      $scope.inviteBypress = function($event, inviteInputValue) {
+        $event.stopPropagation()
+        if($event.which != 13){
+          return
+        }
         if(inviteInputValue.replace(/^\s+|\s+$/g, "") == ''){
           Notification.show({
             title: '失败',
