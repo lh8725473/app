@@ -70,6 +70,14 @@ module.exports = function(grunt) {
           src: ['bower_components/zeroclipboard/dist/ZeroClipboard.swf'],
           dest: 'production/'
         }]
+      },
+      LanguageJson: {
+        files: [{
+          expand: true,
+          cwd: './',
+          src: ['src/admin/locals/*'],
+          dest: 'production/'
+        }]
       }
     },
     clean: {

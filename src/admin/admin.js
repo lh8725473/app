@@ -163,7 +163,7 @@ angular.module('App', [
 
     $translatePartialLoaderProvider.addPart('admin')
     $translateProvider.useLoader('$translatePartialLoader', {
-      urlTemplate: 'src/{part}/header/locals/{lang}.json'
+      urlTemplate: 'src/{part}/locals/{lang}.json'
     });
     $translateProvider.preferredLanguage('zh-CN');
   }
