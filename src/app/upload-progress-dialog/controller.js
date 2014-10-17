@@ -101,6 +101,16 @@ angular.module('App.UploadProgressDialog').controller('App.UploadProgressDialog.
         })(file);
       }
     })
+    
+    //删除上传列表
+    $scope.remove = function(file){
+      for (var i = 0; i < $scope.files.length; ++i) {
+        if(file.name == $scope.files[i].name){
+          $scope.files.splice(i, 1)
+          break
+        }
+      }
+    }
 
     $scope.max = function() {
       $scope.isMax = true

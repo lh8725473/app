@@ -177,7 +177,7 @@ angular.module('App.Users.Groups').controller('App.Users.Groups.Controller', [
                   $scope.shownData = $($scope.userListData).filter(function(index, user) {
                     if (!seachMembersValue || seachMembersValue.trim() === '') {
                       return true
-                    } else if (user.user_name.toLowerCase().indexOf(seachMembersValue.toLowerCase()) != -1) {
+                    } else if (user.real_name.toLowerCase().indexOf(seachMembersValue.toLowerCase()) != -1) {
                       return true
                     } else {
                       return false

@@ -5,7 +5,7 @@
 	<form role="form" class="form-horizontal">
 		<div class="form-group">
 			<div class="col-sm-5">
-				<input type="name" placeholder="输入用户名称查找" class="form-control" ng-model="seachMembersValue" ng-change="seachGroups(seachMembersValue)">
+				<input type="name" placeholder="输入用户名称查找" class="form-control" ng-model="seachMembersValue" ng-change="seachMembers(seachMembersValue)">
 			</div>
 		</div>
 		<div class="form-group">
@@ -15,9 +15,9 @@
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" ng-click="ok(group)">
-		OK
+		确定
 	</button>
-	<button class="btn btn-warning" ng-click="cancel()">
-		Cancel
+	<button class="btn" ng-click="cancel()">
+		取消
 	</button>
 </div>

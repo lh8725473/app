@@ -124,12 +124,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
       $scope.objList.$promise.then(function() {
         refreshList();
 
-        Notification.show({
-          title: '成功',
-          type: 'success',
-          msg: '上传文件成功',
-          closeable: true
-        })
+//      Notification.show({
+//        title: '成功',
+//        type: 'success',
+//        msg: '上传文件成功',
+//        closeable: true
+//      })
       })
     })
 
@@ -191,7 +191,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         //文件权限
         angular.forEach($scope.permission_key, function(key, index) {
           if (obj.owner_uid == $cookies.userId) { //拥有者
-            obj.permission_value = '拥有者'
+            obj.permission_value = obj.isShared == 1? '拥有者':'----'
           } else {
             if (key == obj.permission) {
               obj.permission_value = $scope.permission_value[index]
@@ -255,17 +255,24 @@ angular.module('App.Files').controller('App.Files.Controller', [
       })
       $scope.showCreateFolderDiv = !$scope.showCreateFolderDiv
     }
-    
+
     //批量删除
     $scope.deleteObjList = function(){
-      var deleteLsit = []
+      var deleteLsit = {
+        file_ids : [],
+        folder_ids : []
+      }
       angular.forEach($scope.objList, function(obj) {
         if(obj.checked == true){
-          deleteLsit.push(obj)
+          if(obj.isFolder == 1){
+            deleteLsit.folder_ids.push(obj.folder_id)
+          }else{
+            deleteLsit.file_ids.push(obj.file_id)
+          }
         }
       })
     }
-    
+
     //批量移动
     $scope.removeObjList = function(){
       var removeLsit = []
@@ -275,7 +282,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         }
       })
     }
-    
+
     //左键选取对象
     $scope.selectObj = function($event, obj) {
       $event.stopPropagation()
@@ -321,7 +328,13 @@ angular.module('App.Files').controller('App.Files.Controller', [
       if (obj.isFolder == 1) {
         $scope.show_discuss_menu = false
         $scope.show_download_menu = false
+        if(obj.isShared == 1 && obj.owner_uid != $cookies.userId){
+          $scope.show_quit_menu = true
+        }else{
+          $scope.show_quit_menu = false
+        }
       } else {
+        $scope.show_quit_menu = false
         $scope.show_discuss_menu = true
         if (obj_download) {
           $scope.show_download_menu = true
@@ -346,7 +359,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
     //右键选中的文件
     $scope.checkedObj = ''
 
-    //删除单个文件或者文件夹(右键删除)	
+    //删除单个文件或者文件夹(右键删除)
     $scope.deleteObj = function() {
       var deleteRecycleModal = $modal.open({
         templateUrl: 'src/app/files/delete-file-confirm.html',
@@ -426,6 +439,68 @@ angular.module('App.Files').controller('App.Files.Controller', [
       }
     ]
 
+    //退出协作
+    $scope.quitTeam = function() {
+      var deleteRecycleModal = $modal.open({
+        templateUrl: 'src/app/files/quit-team-confirm.html',
+        windowClass: 'quit-team',
+        backdrop: 'static',
+        controller: quitTeamController,
+        resolve: {
+          objList: function() {
+            return $scope.objList
+          }
+        }
+      })
+    }
+
+    // quitTeam
+    var quitTeamController = [
+      '$scope',
+      '$modalInstance',
+      'objList',
+      function(
+        $scope,
+        $modalInstance,
+        objList
+      ) {
+
+        $scope.objList = objList
+        $scope.ok = function() {
+          for (var i = 0; i < $scope.objList.length; ++i) {
+            if ($scope.objList[i].checked == true)
+              break
+          }
+          FolderAction.quit({
+            folder_id: $scope.objList[i].folder_id
+          },{
+
+          }).$promise.then(function() {
+            $scope.objList.splice(i, 1)
+            Notification.show({
+              title: '成功',
+              type: 'success',
+              msg: '退出协作成功',
+              closeable: true
+            })
+          }, function(error) {
+            Notification.show({
+              title: '失败',
+              type: 'danger',
+              msg: error.data.result,
+              closeable: false
+            })
+          })
+
+          $modalInstance.close()
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel')
+        }
+      }
+    ]
+
     //下载单个文件或者文件夹
     $scope.dowloadFile = function() {
       var hiddenIframeID = 'hiddenDownloader'
@@ -456,7 +531,9 @@ angular.module('App.Files').controller('App.Files.Controller', [
     }
 
     $scope.renameFile = function($event, obj) {
-      $event.stopPropagation()
+      if($event){
+        $event.stopPropagation()
+      }
       if (obj.renameInputValue.replace(/^\s+|\s+$/g, "") == '') {
         Notification.show({
           title: '失败',

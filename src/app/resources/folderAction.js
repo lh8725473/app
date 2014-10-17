@@ -33,6 +33,13 @@ angular.module('App.Resources').factory('FolderAction', [
           action: 'update',
           folder_id: ''
         }
+      },
+      quit: {
+        method: "PUT",
+        params: {
+          action: 'quit',
+          folder_id: ''
+        }
       }
     })
   }  

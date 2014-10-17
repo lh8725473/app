@@ -179,9 +179,11 @@ angular.module('App.Header').controller('App.Header.Controller', [
     
     //搜索文件或者文件夹
     function doSearch(searchFilesValue) {
-      $state.go('search', {
-        key: searchFilesValue
-      })
+      if(searchFilesValue && searchFilesValue.trim() != ''){
+        $state.go('search', {
+          key: searchFilesValue
+        })
+      }
     }
     
     $scope.searchByKeyDown = function($event, searchFilesValue){

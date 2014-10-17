@@ -1,6 +1,6 @@
 <div class="files-view" ng-controller="App.Files.Controller">
 	<div class="top-bar">
-		<div class="pull-left root-path" ng-class = "{ isRoot: isRoot }"> 
+		<div class="pull-left root-path" ng-class = "{ isRoot: isRoot }">
 			<a ui-sref="files({folderId: 0})">
 				根目录
 			</a>
@@ -16,7 +16,7 @@
 		</div>-->
 	</div>
 	<div class="top-bar-bottom">
-	  
+
 	</div>
 	<div class="buttonGroup">
     <button ng-click="upload()" class="btn btn-default" ng-disabled="!folder_upload">上传文件</button>
@@ -32,16 +32,16 @@
 	    <span>文件名</span>
 	  </div>
 	  <div class="title-state col">
-	    <span>状态</span>           
+	    <span>状态</span>
 	  </div>
 	  <div class="title-size col">
-	    <span>大小</span>      
+	    <span>大小</span>
 	  </div>
 	  <div class="title-permission col">
-	    <span>权限</span>          
+	    <span>权限</span>
 	  </div>
 	  <div class="title-action col">
-      <span>分享</span>          
+      <span>分享</span>
     </div>
   </div>
   <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="objList" on-scroll="onFileListScroll(scrollTop, scrollHeight)">
@@ -80,7 +80,7 @@
 								</div>
 							</div>
 							<div class="rename-form" ng-show = "obj.rename">
-								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue"  focus-me = "obj.focus">
+								<input type="text" class="rename-file form-control col-sm-8" ng-model = "obj.renameInputValue" ng-enter="renameFile($event, obj)" focus-me = "obj.focus">
 								<div class="rename-buttonGroup">
 									<button ng-click="renameFile($event, obj)" class="btn btn-default">
 										确定
@@ -103,7 +103,7 @@
 							<div class = "share-ico" ng-show = "obj.folder" ng-click = "inviteTeamUsers($event, obj)" ng-class = "{ is_edit: obj.is_edit }" tooltip-append-to-body="true" tooltip-placement="top" tooltip="邀请协作人"></div>
 							  <span>{{obj.user_count}}</span>
 							<div class = "discuss-ico" ng-hide = "obj.folder" ng-click="openUserDiscuss(obj)" ng-class = "{ is_edit: obj.is_preview }" tooltip-append-to-body="true" tooltip-placement="top" tooltip="讨论"></div>
-							  <span>{{obj.discuss_count}} </span>		
+							  <span>{{obj.discuss_count}} </span>
 						</div>
 					</div>
 					<div class="dropdown position-fixed" id="myMenu">
@@ -135,7 +135,12 @@
 							</li>
 							<li>
                 <a ng-click="createTag(checkedObj)" class="large button">
-                                              添加标签                          
+                                              添加标签
+                </a>
+              </li>
+              <li ng-show = "show_quit_menu">
+                <a ng-click="quitTeam(checkedObj)" class="large button">
+                                              退出协作
                 </a>
               </li>
 						</ul>
@@ -186,7 +191,7 @@
 		    </div>
 		   </perfect-scrollbar>
 	    <div class="disc-inputbox col-sm-12" ng-show = "navType == 'dis'">
-      <textarea id="inputor" rows="5" cols="20" at="atOptions" ng-model = "discussContent"></textarea>
+      <textarea id="inputor" rows="5" cols="20" at="atOptions" ng-change = "changeDiscussInput(discussContent)" ng-keydown = "createUserDiscussByPress($event)" ng-model = "discussContent"></textarea>
 			<button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
 				发表
 			</button>
@@ -202,13 +207,13 @@
         <div class="name-size-action">
           <div class="version-size pull-left">{{fileHistory.format_size}}</div>
           <div class="version-action pull-right" ng-click = "downLoadHistory(fileHistory)">
-            
+
           </div>
         </div>
       </div>
 
     </perfect-scrollbar>
-		
+
 	</div>
 </div>
 <div class="team-collaboration" ng-controller="App.Files.TeamController">
@@ -223,7 +228,7 @@
       <div class="add_link pull-left col-sm-12"></div>
     </perfect-scrollbar>
 	</div>
-	
+
 	<div class="groups-users" ng-hide = "isRoot">
 		<div class="groups-users-header col-sm-12">
 			<span class="pull-left">全部协作人({{shareObj.user_count}})</span>

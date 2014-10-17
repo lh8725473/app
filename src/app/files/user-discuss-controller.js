@@ -22,34 +22,34 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
     Folders,
     $cookies,
     Notification
-    
+
   ) {
-      
-//  $scope.userList = Users.query()     
+
+//  $scope.userList = Users.query()
 //  $scope.userList.$promise.then(function() {
 //    angular.forEach($scope.userList, function(user) {
 //      user.username = user.user_name
 //    })
 //  })
-    
-    
+
+
   	var discuss_file_id = $scope.discuss_file_id || 0;
   	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
   		obj_id : discuss_file_id
   	})
-  	
+
   	$scope.atOptions = {
       at: "@",
-      data: [1, 2, 4],
+      data: [],
       limit: 5
     }
-  	
+
     //右侧菜单 讨论or版本
     $scope.navType = 'dis'
     $scope.changeNavType = function(navType) {
       $scope.navType = navType
     }
-    
+
     //监听讨论的文件ID
     $scope.$watch('discuss_file_id', function (new_file_id) {
       $scope.loading = true
@@ -58,7 +58,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       	$scope.userDiscussList = UserDiscuss.getUserDiscussList({
         	obj_id : discuss_file_id
       	})
-      	
+
       	$scope.userDiscussList.$promise.then(function(userDiscussList){
       	  angular.forEach(userDiscussList, function(userDiscuss) {
       	    if(userDiscuss.user_id == $cookies.userId){//讨论是否是当前用户
@@ -67,17 +67,17 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       	  })
       	  $scope.loading = false
       	})
-      	
+
       	//历史版本
       	$scope.fileHistoryList = Files.history({
           file_id : discuss_file_id
         })
-      	
+
       	//讨论的文件
       	$scope.file = Files.view({
           file_id : discuss_file_id
         })
-      	
+
       	//文件关联的协作人
       	$scope.file.$promise.then(function(file){
       	  var fileType = Utils.getFileTypeByName(file.file_name)
@@ -94,9 +94,9 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
             $scope.atOptions.data = userNameList
           })
         })
-      } 
+      }
     })
-  	
+
   	//删除讨论
   	$scope.deleteUserDiscuss = function(userDiscuss){
   	  UserDiscuss.deleteUserDiscuss({
@@ -118,19 +118,19 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
           }
         )
   	}
-  	
+
   	//回复讨论
   	$scope.replyUserDiscuss = function(userDiscuss){
   	  $scope.discussContent = $scope.discussContent + '@' + userDiscuss.real_name + ' '
   	}
-  	
+
   	//讨论发表内容
   	$scope.discussContent = ''
   	//讨论字数
   	$scope.discussCount = 0
   	//发表按钮是否隐藏
   	$scope.discussButton = true
-  	
+
   	//发表讨论
     $scope.createUserDiscuss = function(){
       UserDiscuss.createUserDiscuss({
@@ -144,7 +144,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         $scope.userDiscussList.push(userDiscuss)
       })
     }
-    
+
     //回车发表讨论
     $scope.createUserDiscussByPress = function($event){
       if($event.which === 13){//回车事件
@@ -152,7 +152,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         $scope.createUserDiscuss()
       }
     }
-  	
+
   	//输入讨论框监控
   	$scope.changeDiscussInput = function(discussContent){
   		$scope.discussCount = discussContent.length
@@ -162,7 +162,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   			$scope.discussButton = false
   		}
   	}
-  	
+
   	//检查预览的文件大小及类型
     function checkFileValid (obj) {
       var fileSize = obj.file_size;
@@ -183,7 +183,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         }
       return true;
     }
-    
+
     //文件预览
     $scope.previewFile = function () {
       var validFile = checkFileValid($scope.file);
@@ -208,7 +208,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
         })
       }
     }
-    
+
     //下载历史版本
     $scope.downLoadHistory = function(fileHistory){
       var hiddenIframeID = 'hiddenDownloader'
@@ -221,6 +221,6 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       }
       iframe.src = CONFIG.API_ROOT + '/file/get/' + fileHistory.file_id + '?token=' + $cookies.accessToken + '&v=' + fileHistory.version_id
     }
-  	
+
   }
 ])
