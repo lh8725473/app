@@ -38,10 +38,17 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   		obj_id : discuss_file_id
   	})
 
+    var atWhoShown = false
   	$scope.atOptions = {
       at: "@",
       data: [],
-      limit: 5
+      limit: 5,
+      onShown: function () {
+        atWhoShown = true
+      },
+      onHidden: function () {
+        atWhoShown = false
+      }
     }
 
     //右侧菜单 讨论or版本
@@ -147,7 +154,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
 
     //回车发表讨论
     $scope.createUserDiscussByPress = function($event){
-      if($event.which === 13){//回车事件
+      if($event.which === 13 && !atWhoShown){//回车事件
         $event.preventDefault()
         $scope.createUserDiscuss()
       }
