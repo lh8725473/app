@@ -191,7 +191,7 @@ angular.module('App.Files').controller('App.Files.Controller', [
         //文件权限
         angular.forEach($scope.permission_key, function(key, index) {
           if (obj.owner_uid == $cookies.userId) { //拥有者
-            obj.permission_value = obj.isShared == 1? '拥有者':'----'
+            obj.permission_value = obj.isShared == 1? 'PERMISSION_VALUE_1':'----'
           } else {
             if (key == obj.permission) {
               obj.permission_value = $scope.permission_value[index]

@@ -15,7 +15,7 @@ var CONFIG = {
 
   //permission
   PERMISSION_KEY: ['1111111', '0111111', '0001111', '0000101', '0001110', '0000100', '0000001'],
-  PERMISSION_VALUE: ['协同拥有者', '编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者'],
+  PERMISSION_VALUE: ['PERMISSION_VALUE_1', 'PERMISSION_VALUE_2', 'PERMISSION_VALUE_3', 'PERMISSION_VALUE_4', 'PERMISSION_VALUE_5', 'PERMISSION_VALUE_6', 'PERMISSION_VALUE_7'],
 
   //有拥有者权限的value与tooltip
   OWNER_PERMISSION_VALUE_TOOLTIP: [{v: '协同拥有者', t : '上传，下载，预览， 分享（包括邀请协作人和链接分享），编辑（包括编辑文档，更改协作人的权限，以及将协作人从文件夹中移除），删除文档'},

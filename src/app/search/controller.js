@@ -38,7 +38,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
     //权限
     $scope.permission_key = CONFIG.PERMISSION_KEY
     $scope.permission_value = CONFIG.PERMISSION_VALUE
-    
+
     //加载动画
     $scope.loading = true
 
@@ -64,9 +64,9 @@ angular.module('App.Search').controller('App.Search.Controller', [
     // var pageSize = 30
     var objListPage = 1
     $scope.objList = Search.query({
-        keyword: $state.params.key 
+        keyword: $state.params.key
     })
- 
+
     $scope.objList.$promise.then(function() {
       $scope.loading = false
     })
@@ -88,7 +88,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         })
       }
     }
-      
+
     //根目录(当前目录)下按钮权限
     $scope.folder_owner = true
     $scope.folder_delete = true
@@ -97,7 +97,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
     $scope.folder_preview = true
     $scope.folder_download = true
     $scope.folder_upload = true
-   
+
     //当前目录下权限
     $scope.$on('folder_permission', function($event, folder_permission) {
       var folder_owner = folder_permission.substring(0, 1)  //协同拥有者 or 拥有者1
@@ -116,7 +116,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
       $scope.folder_download = (folder_download == '1') ? true : false
       $scope.folder_upload = (folder_upload == '1') ? true : false
     })
-    
+
     $scope.$on('uploadFilesDone', function() {
       $scope.objList = Folders.getObjList({
         folder_id: folderId
@@ -132,7 +132,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
          })
        })
     })
-    
+
     //渲染文件列表
     function refreshList(){
       angular.forEach($scope.objList, function(obj) {
@@ -144,7 +144,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         var is_preview =  obj.permission.substring(4, 5)  //预览权限
         var is_download =  obj.permission.substring(5, 6)  //下载权限
         var is_upload =  obj.permission.substring(6, 7)  //上传权限
-        
+
         obj.is_owner = (is_owner == '1') ? true : false
         obj.is_delete = (is_delete == '1') ? true : false
         obj.is_edit = (is_edit == '1') ? true : false
@@ -152,7 +152,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         obj.is_preview = (is_preview == '1') ? true : false
         obj.is_download = (is_getLink == '1') ? true : false
         obj.is_upload = (is_upload == '1') ? true : false
-      
+
         //对象是否被选中
         obj.checked = false
         //对象是否显示重名输入框
@@ -164,7 +164,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         //对象是否能被预览
         var fileType = Utils.getFileTypeByName(obj.file_name || obj.folder_name)
         obj.isPreview = (fileType && obj.is_preview) ? true : false
-        
+
         //文件图像
         if (obj.isFolder == 1) { //文件夹
             if (obj.isShared == 1) {
@@ -189,14 +189,14 @@ angular.module('App.Search').controller('App.Search.Controller', [
         //文件权限
         angular.forEach($scope.permission_key, function(key, index) {
           if(obj.owner_uid == $cookies.userId){//拥有者
-            obj.permission_value = '拥有者'
+            obj.permission_value = 'PERMISSION_VALUE_1'
           }else{
             if (key == obj.permission) {
               obj.permission_value = $scope.permission_value[index]
             }
           }
         })
-     
+
       })
     }
     $scope.objList.$promise.then(function() {
@@ -279,12 +279,12 @@ angular.module('App.Search').controller('App.Search.Controller', [
       var obj_preview = (obj_preview == '1') ? true : false
       var obj_download = (obj_download == '1') ? true : false
       var obj_upload = (obj_upload == '1') ? true : false
-      
+
       //权限判断
       if(obj.owner_uid == $cookies.userId){//拥有者
         $scope.show_delete_menu = true
         $scope.show_rename_menu = true
-        $scope.show_remove_menu = true 
+        $scope.show_remove_menu = true
       }else{
         if(obj_delete && obj.isShareObj == 0){
           $scope.show_delete_menu = true
@@ -296,7 +296,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
           $scope.show_remove_menu = false
         }
       }
-      
+
       if(obj.isFolder == 1){
         $scope.show_discuss_menu = false
         $scope.show_download_menu = false
@@ -308,7 +308,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
           $scope.show_download_menu = false
         }
       }
-      
+
       //取消所有选中状态
       angular.forEach($scope.objList, function(obj) {
         obj.checked = false
@@ -325,7 +325,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
     //右键选中的文件
     $scope.checkedObj = ''
 
-    //删除单个文件或者文件夹(右键删除)	
+    //删除单个文件或者文件夹(右键删除)
     $scope.deleteObj = function() {
       var deleteRecycleModal = $modal.open({
         templateUrl: 'src/app/files/delete-file-confirm.html',
@@ -339,7 +339,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         }
       })
     }
-    
+
     // deleteObj file
     var deleteObjController = [
       '$scope',
@@ -350,9 +350,9 @@ angular.module('App.Search').controller('App.Search.Controller', [
         $modalInstance,
         objList
       ) {
-        
+
         $scope.objList = objList
-        $scope.ok = function() {   
+        $scope.ok = function() {
           for (var i = 0; i < $scope.objList.length; ++i) {
             if ($scope.objList[i].checked == true)
             break
@@ -512,7 +512,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
             break
           }
         }
-        
+
         Notification.show({
           title: '成功',
           type: 'success',
@@ -531,7 +531,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
       $scope.discuss_file_id = obj.file_id
       $scope.discussOpened = true
     }
-    
+
     //监听message 讨论文件file_id
     $scope.$on('message_file', function($event, message_file_id) {
       $scope.discuss_file_id = message_file_id
@@ -593,12 +593,12 @@ angular.module('App.Search').controller('App.Search.Controller', [
            }
           }
         })
-        
+
         linkShareModal.result.then(function() {
-          isOpen = false    
+          isOpen = false
         })
       }
-      
+
     }
 
     // upload file
@@ -630,7 +630,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         var user_total_size = user_space.total_size;
         var user_used_size = user_space.used_size;
         $scope.user_unused_size = user_total_size - user_used_size;
-  
+
         if ($scope.user_unused_size > 0) {
           var uploadModal = $modal.open({
             templateUrl: 'src/app/files/modal-upload.html',
@@ -652,7 +652,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         }
       })
     }
-    
+
     //检查预览的文件大小及类型
     function checkFileValid (obj) {
       var fileSize = obj.file_size;
@@ -673,7 +673,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         }
       return true;
     }
-    
+
     //文件预览
     $scope.previewFile = function (obj) {
       var validFile = checkFileValid(obj);
@@ -698,7 +698,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         })
       }
     }
-    
+
     //添加标签
     $scope.createTag = function(obj){
       var createTagModal = $modal.open({
@@ -713,7 +713,7 @@ angular.module('App.Search').controller('App.Search.Controller', [
         }
       })
     }
-    
+
     }
 ]).directive('ngEnter', function () {
   return function(scope, element, attrs) {

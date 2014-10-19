@@ -31,9 +31,9 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       //权限
       $scope.permission_key = CONFIG.PERMISSION_KEY
       $scope.permission_value = CONFIG.PERMISSION_VALUE
-      
+
       if(folder_permission != '1111111'){
-        $scope.permission_value_list =['编辑者', '查看上传者', '预览上传者', '查看者', '预览者', '上传者']
+        $scope.permission_value_list =['PERMISSION_VALUE_2', 'PERMISSION_VALUE_3', 'PERMISSION_VALUE_4', 'PERMISSION_VALUE_5', 'PERMISSION_VALUE_6', 'PERMISSION_VALUE_7']
       }else{
         $scope.permission_value_list = $scope.permission_value
       }
@@ -73,7 +73,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }
         $scope.invitedList.userList.splice(i, 1)
-        
+
         if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
           $scope.disableBtn = false;
         }
@@ -91,7 +91,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
           }
         }
         $scope.invitedList.groupList.splice(i, 1)
-        
+
         if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
           $scope.disableBtn = false;
         }
@@ -150,7 +150,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
         }
         $scope.invitedList.userList.push(user)
         $scope.inviteInputValue = ''
-        
+
         if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
           $scope.disableBtn = false;
         }else {
@@ -197,7 +197,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
             $scope.invitedList.userList.push(groupOrUser)
           }
         }
-        
+
         if ($scope.invitedList.userList.length > 0 || $scope.invitedList.groupList.length > 0) {
           $scope.disableBtn = false;
         }

@@ -33,24 +33,24 @@ angular.module('App.Files').controller('App.Files.TeamController', [
       }
       $scope.permissions.push(permissionMap)
     })
-  	
+
   	//当前所在文件夹目录
   	var folder_id = $state.params.folderId || 0;
-     	
+
   	//是否为根目录
     $scope.isRoot = (folder_id == 0) ? true : false
-  	
+
   	//对当前目录下的权限
     var folder_permission = ''
-    
+
     //加载动画
     $scope.loading = true
-    
+
   	if(folder_id != 0){
   		$scope.shareObj = Folders.queryShareObj({
   			folder_id : folder_id
   		})
-  		
+
   		$scope.shareObj.$promise.then(function(shareObj){
   		  $scope.loading = false
   		  //对当前目录下的权限
@@ -70,9 +70,9 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         $scope.folder_preview = (folder_preview == '1') ? true : false
         $scope.folder_download = (folder_download == '1') ? true : false
         $scope.folder_upload = (folder_upload == '1') ? true : false
-        
+
         $rootScope.$broadcast('folder_permission', folder_permission);
-  		  	  
+
   			$scope.users = shareObj.list.users
   			$scope.groups = shareObj.list.groups
   			angular.forEach($scope.groups, function(group){
@@ -83,30 +83,30 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         			group.permission_value = $scope.permission_value[index]
       			}
       		})
-      		
+
       		if(parseInt(folder_permission) < parseInt(group.permission)){//不能操作大于自身权限的用户
             group.is_edit = true
           }
           if(!$scope.folder_edit){//没有编辑权限
             group.is_edit = true
           }
-          
+
           if($scope.folder_owner){//不能给予别人比自己大的权限
             group.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
           }else{
             group.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
-          } 
+          }
   			})
   			angular.forEach($scope.users, function(user){
   				//人员权限
   				if(user.owner_uid == user.user_id){//拥有者
-  				  user.permission_value = '拥有者'
+  				  user.permission_value = 'PERMISSION_VALUE_1'
   				  user.is_owner = true
   				}else{
         		angular.forEach($scope.permission_key, function(key, index) {
               if(key == user.permission){
                 user.permission_value = $scope.permission_value[index]
-              }                    
+              }
         		})
   				  if(user.user_id == $cookies.userId){//不能操作自己用户
   				    user.is_owner = true
@@ -118,23 +118,23 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               user.is_owner = true
             }
   				}
-  				
+
           if($scope.folder_owner){//不能给予别人比自己大的权限
             user.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
           }else{
             user.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
-          }			
+          }
   			})
   		})
   	}
-  	
+
   	//邀请协作成功后重新渲染
   	$scope.$on('inviteDone', function($event, $files) {
-  	  if(folder_id != 0){  
+  	  if(folder_id != 0){
     	  $scope.shareObj = Folders.queryShareObj({
           folder_id : folder_id
         })
-        
+
         $scope.shareObj.$promise.then(function(shareObj){
           $scope.users = shareObj.list.users
           $scope.groups = shareObj.list.groups
@@ -146,7 +146,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
                 group.permission_value = $scope.permission_value[index]
               }
             })
-            
+
             if(parseInt(folder_permission) < parseInt(group.permission)){//不能操作大于自身权限的用户
               group.is_owner = true
             }
@@ -157,13 +157,13 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           angular.forEach($scope.users, function(user){
             //人员权限
             if(user.owner_uid == user.user_id){//拥有者
-              user.permission_value = '拥有者'
+              user.permission_value = 'PERMISSION_VALUE_1'
               user.is_owner = true
             }else{
               angular.forEach($scope.permission_key, function(key, index) {
                 if(key == user.permission){
                   user.permission_value = $scope.permission_value[index]
-                }                    
+                }
               })
               if(user.user_id == $cookies.userId){//不能操作自己用户
                 user.is_owner = true
@@ -173,24 +173,24 @@ angular.module('App.Files').controller('App.Files.TeamController', [
               }
               if(!$scope.folder_edit){//没有编辑权限
                 user.is_owner = true
-              }   
+              }
             }
-            
+
             if($scope.folder_owner){//不能给予别人比自己大的权限
               user.permission_value_list = CONFIG.OWNER_PERMISSION_VALUE_TOOLTIP
             }else{
               user.permission_value_list = CONFIG.NOOWNER_PERMISSION_VALUE_TOOLTIP
-            } 
+            }
           })
         })
   	  }
   	})
-  	
+
   	//群组是否展开查看用户
   	$scope.changeGroupshow = function(group){
   		group.show = !group.show
   	}
-  	
+
   	//改变用户权限
   	$scope.changeUserPermission = function(user, permission_value){
   		user.isopen = !user.isopen;
@@ -223,7 +223,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
   		)
   	}
-  	
+
   	//改变群组权限
   	$scope.changeGroupPermission = function(group, permission_value){
   	  group.isopen = !group.isopen;
@@ -256,7 +256,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
 	        }
       )
   	}
-  	
+
   	//移除用户协作
   	$scope.deleteUserShare = function(user){
       var deleteUserShareModal = $modal.open({
@@ -326,7 +326,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
       }
     ]
 
-  	
+
   	//移除群组协作
   	$scope.deleteGroupShare = function(group){
       var deleteGroupShareModal = $modal.open({
@@ -417,7 +417,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
         }
       }
     ]
-    
+
     //邀请协作人
     $scope.inviteTeamUsers = function() {
       var addUserModal = $modal.open({
