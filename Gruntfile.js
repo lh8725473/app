@@ -71,11 +71,19 @@ module.exports = function(grunt) {
           dest: 'production/'
         }]
       },
-      LanguageJson: {
+      LanguageAdminJson: {
         files: [{
           expand: true,
           cwd: './',
           src: ['src/admin/locals/*'],
+          dest: 'production/'
+        }]
+      },
+      LanguageAppJson: {
+        files: [{
+          expand: true,
+          cwd: './',
+          src: ['src/app/locals/*'],
           dest: 'production/'
         }]
       }
