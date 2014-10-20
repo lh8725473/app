@@ -21,8 +21,8 @@
 	<div class="buttonGroup">
     <button ng-click="upload()" class="btn btn-default" ng-disabled="!folder_upload">上传文件</button>
 		<button ng-click="showCreateFolder()" class="btn btn-default" ng-disabled="!folder_delete">新建文件夹</button>
-		<!--<button ng-click="deleteObjList()" class="btn btn-default" ng-disabled="!folder_delete">删除</button>
-    <button ng-click="removeObjList()" class="btn btn-default" ng-disabled="!folder_delete">移动</button>-->
+		<!--<button ng-click="deleteObjList()" class="btn btn-default" ng-show="show_dele_btn">删除</button>-->
+    <!--<button ng-click="removeObjList()" class="btn btn-default" ng-disabled="!folder_delete">移动</button>-->
 	</div>
 	<div class="title">
 	  <div class="title-checkbox col">
@@ -251,7 +251,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation" ng-repeat="value in group.permission_value_list" ng-click = "changeGroupPermission(group, value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
 							<a role="menuitem" tabindex="-1">
-								{{value.v}}
+								{{value.v | translate}}
 							</a>
 						</li>
 					</ul>
@@ -277,9 +277,9 @@
 			<div class="user-permission" dropdown is-open="user.isopen">
 				<span class="group-permission dropdown-toggle">{{user.permission_value | translate}}<span class="caret"></span></span>
 				<ul class="dropdown-menu" role="menu">
-					<li role="presentation" ng-repeat="value in user.permission_value_list" ng-click = "changeUserPermission(user, value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}" >
+					<li role="presentation" ng-repeat="value in user.permission_value_list" ng-click = "changeUserPermission(user, value.v)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}" >
 						<a role="menuitem" tabindex="-1">
-							{{value.v}}
+							{{value.v | translate}}
 						</a>
 					</li>
 				</ul>

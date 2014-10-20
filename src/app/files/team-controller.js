@@ -100,7 +100,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
   			angular.forEach($scope.users, function(user){
   				//人员权限
   				if(user.owner_uid == user.user_id){//拥有者
-  				  user.permission_value = 'PERMISSION_VALUE_1'
+  				  user.permission_value = 'OWNER_PERMISSION_VALUE'
   				  user.is_owner = true
   				}else{
         		angular.forEach($scope.permission_key, function(key, index) {
@@ -157,7 +157,7 @@ angular.module('App.Files').controller('App.Files.TeamController', [
           angular.forEach($scope.users, function(user){
             //人员权限
             if(user.owner_uid == user.user_id){//拥有者
-              user.permission_value = 'PERMISSION_VALUE_1'
+              user.permission_value = 'OWNER_PERMISSION_VALUE'
               user.is_owner = true
             }else{
               angular.forEach($scope.permission_key, function(key, index) {

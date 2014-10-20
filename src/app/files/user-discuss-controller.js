@@ -74,7 +74,15 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
       	    }
       	  })
       	  $scope.loading = false
-      	})
+      	}, function (error) {
+              Notification.show({
+                title: '失败',
+                type: 'danger',
+                msg: error.data.result,
+                closeable: false
+              })
+            }
+      	 )
 
       	//历史版本
       	$scope.fileHistoryList = Files.history({

@@ -271,6 +271,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
           }
         }
       })
+      Files.deleteFileList({
+
+      }, {
+        file_ids : deleteLsit.file_ids,
+        folder_ids : deleteLsit.folder_ids
+      })
     }
 
     //批量移动
@@ -287,6 +293,12 @@ angular.module('App.Files').controller('App.Files.Controller', [
     $scope.selectObj = function($event, obj) {
       $event.stopPropagation()
       obj.checked = !obj.checked
+      $scope.show_dele_btn = false
+      angular.forEach($scope.objList, function(obj) {
+        if(obj.checked == true){
+          $scope.show_dele_btn = true
+        }
+      })
     }
 
     //右键菜单

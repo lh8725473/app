@@ -8,7 +8,7 @@
   <form role="form" class="form-horizontal link-share-content" ng-show = "linkCreateOrSend">
     <h5>链接有效期至</h5>
     <p class="input-group">
-      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" disabled="disabled"/>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="open($event)">
           <i class="glyphicon glyphicon-calendar"></i>
@@ -99,6 +99,6 @@
         </input>
       </div>
     </div>
-    
-  </form> 
+
+  </form>
 </div>

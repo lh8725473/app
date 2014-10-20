@@ -26,6 +26,12 @@ angular.module('App.Resources').factory('Files', [
           file_id: ''
         }
       },
+      deleteFileList: {
+        method: "POST",
+        params: {
+          action: 'delete'
+        }
+      },
       updateFile:{
       	method: "PUT",
         params: {
@@ -64,7 +70,7 @@ angular.module('App.Resources').factory('Files', [
         return deferred.promise;
       }
     })
-    
+
     return Files
-  }  
+  }
 ])
