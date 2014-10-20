@@ -249,7 +249,7 @@
 				<div class="group-permission" dropdown is-open="group.isopen">
 					<span class="dropdown-toggle">{{group.permission_value | translate}}<span class="caret"></span></span>
 					<ul class="dropdown-menu" role="menu">
-						<li role="presentation" ng-repeat="value in group.permission_value_list" ng-click = "changeGroupPermission(group, value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
+						<li role="presentation" ng-repeat="value in group.permission_value_list" ng-click = "changeGroupPermission(group, value.v)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
 							<a role="menuitem" tabindex="-1">
 								{{value.v | translate}}
 							</a>
