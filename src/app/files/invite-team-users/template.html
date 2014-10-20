@@ -9,7 +9,7 @@
     <form role="form" class="form-horizontal invite-content" ng-class="{'col-sm-12':!broad, 'col-sm-8':broad}">
       <div class="form-group input-from-group">
         <div class="col-sm-12">
-          <input type="name" class="form-control" name="username" placeholder="输入邮箱回车邀请外部用户" ng-model="inviteInputValue" ng-keydown="inviteBypress($event, inviteInputValue)">
+          <input type="name" class="form-control" placeholder="输入邮箱回车邀请外部用户" ng-model="inviteInputValue" ng-keydown="inviteBypress($event, inviteInputValue)">
         </div>
       </div>
       <div class="form-group or-from-group">
@@ -24,7 +24,7 @@
       </div>
       <h5>已选取</h5>
       <div class="form-group">
-        <perfect-scrollbar class="selected-groups-users" wheel-propagation="true" wheel-speed="20" refresh-on-change="invitedList.userList" suppress-scroll-x = "true"> 
+        <perfect-scrollbar class="selected-groups-users" wheel-propagation="true" wheel-speed="20" refresh-on-change="invitedList.userList" suppress-scroll-x = "true">
           <div class="selectedItem" ng-repeat="group in invitedList.groupList">
             <span class="selectedName">{{group.group_name}}</span>
             <span class="fa fa-times deleteSelected" ng-click = "deleteSelectedGroup(group)">x</span>
@@ -43,7 +43,7 @@
               {{selectedPermissionValue}}
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu">        
+            <ul class="dropdown-menu" role="menu">
               <li role="presentation" ng-repeat="value in permission_value_list" ng-click = "selectedPermission(value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
                 <a role="menuitem" tabindex="-1">
                   {{value.v}}

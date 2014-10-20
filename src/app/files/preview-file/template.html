@@ -29,7 +29,7 @@
         ×
       </button>
     </ul>
-    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" suppress-scroll-x = "true"> 
+    <perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="20" refresh-on-change="userDiscussList" ng-show = "navType == 'dis'" suppress-scroll-x = "true">
     <div class="discuss">
       <div ng-repeat="userDiscuss in userDiscussList" class="disc-item">
         <img ng-src = "{{userDiscuss.avatar}}" height="30px" width="30px"/>
@@ -42,7 +42,7 @@
     </div>
     </perfect-scrollbar>
     <div class="disc-inputbox" ng-show = "navType == 'dis'">
-      <textarea style="width: 100%;" ng-change = "changeDiscussInput(discussContent)" ng-keydown = "createUserDiscussByPress($event)" ng-model = "discussContent"></textarea>
+      <textarea id="inputor" rows="5" cols="20" at="atOptions" ng-change = "changeDiscussInput(discussContent)" ng-keydown = "createUserDiscussByPress($event)" ng-model = "discussContent"></textarea>
       <button class="btn btn-default pull-right" ng-disabled="discussButton" ng-click = "createUserDiscuss()">
         发表
       </button>
@@ -58,7 +58,7 @@
         <div class="name-size-action">
           <div class="version-size pull-left">{{fileHistory.format_size}}</div>
           <div class="version-action pull-right" ng-click = "downLoadHistory(fileHistory)">
-            
+
           </div>
         </div>
       </div>

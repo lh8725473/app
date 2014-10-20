@@ -1,5 +1,6 @@
 {
   "ADMIN_CONSOLE_OF_ACT": "管理控制台",
+  "OWNER_PERMISSION_VALUE": "拥有者",
   "PERMISSION_VALUE_1": "协同拥有者",
   "PERMISSION_VALUE_2": "编辑者",
   "PERMISSION_VALUE_3": "查看上传者",

@@ -38,6 +38,7 @@ angular.module('App.Files').controller('App.Files.UserDiscussController', [
   		obj_id : discuss_file_id
   	})
 
+    //@配置
     var atWhoShown = false
   	$scope.atOptions = {
       at: "@",

@@ -10,6 +10,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
   '$sce',
   'UserDiscuss',
   '$modal',
+  'Folders',
   function(
     $scope,
     $rootScope,
@@ -21,13 +22,14 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
     $cookies,
     $sce,
     UserDiscuss,
-    $modal
-  ) { 
+    $modal,
+    Folders
+  ) {
       //预览对象
       $scope.obj = obj
       //右侧菜单 讨论or版本
       $scope.navType = 'dis'
-      
+
       //加载动画
       $scope.loading = true
 
@@ -45,7 +47,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $scope.previewValue = htmlData
         })
       }
-      
+
       $scope.$on('uploadNewFileDone', function() {
         $scope.fileType = Utils.getFileTypeByName(obj.file_name)
 
@@ -56,12 +58,12 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
             $scope.previewValue = htmlData
           })
         }
-        
+
         $scope.fileHistoryList = Files.history({
           file_id : obj.file_id
         })
       })
-      
+
       //上传新版本
       var uploadModalController = [
         '$scope',
@@ -98,19 +100,55 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $rootScope.$broadcast('uploadNewFile', $files, obj.file_id);
         })
       }
-      
+
       //预览讨论
       $scope.userDiscussList = UserDiscuss.getUserDiscussList({
         obj_id : obj.file_id
       })
-      
+
+      //讨论的文件
+      $scope.file = Files.view({
+        file_id : obj.file_id
+      })
+
+      //文件关联的协作人
+      $scope.file.$promise.then(function(file){
+        var fileType = Utils.getFileTypeByName(file.file_name)
+        $scope.isPreview = fileType ? true : false
+        $scope.shareObj = Folders.queryShareObj({
+          folder_id : $scope.file.folder_id
+        })
+        $scope.shareObj.$promise.then(function(shareObj){
+          var userNameList = []
+          $scope.userList = shareObj.list.users
+          angular.forEach($scope.userList, function(user){
+            userNameList.push(user.user_name)
+          })
+          $scope.atOptions.data = userNameList
+        })
+      })
+
       //讨论发表内容
       $scope.discussContent = ''
       //讨论字数
       $scope.discussCount = 0
       //发表按钮是否隐藏
       $scope.discussButton = true
-    
+
+      //@配置
+      var atWhoShown = false
+      $scope.atOptions = {
+        at: "@",
+        data: [],
+        limit: 5,
+        onShown: function () {
+          atWhoShown = true
+        },
+        onHidden: function () {
+          atWhoShown = false
+        }
+      }
+
       //发表讨论
       $scope.createUserDiscuss = function(){
         UserDiscuss.createUserDiscuss({
@@ -124,15 +162,15 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $scope.userDiscussList.push(userDiscuss)
         })
       }
-      
+
       //回车发表讨论
       $scope.createUserDiscussByPress = function($event){
-        if($event.which === 13){//回车事件
+        if($event.which === 13 && !atWhoShown){//回车事件
           $event.preventDefault()
           $scope.createUserDiscuss()
         }
       }
-    
+
       //输入讨论框监控
       $scope.changeDiscussInput = function(discussContent){
         $scope.discussCount = discussContent.length
@@ -142,12 +180,12 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           $scope.discussButton = false
         }
       }
-      
+
       //预览历史版本
       $scope.fileHistoryList = Files.history({
         file_id : obj.file_id
       })
-      
+
       //下载历史版本
       $scope.downLoadHistory = function(fileHistory){
         var hiddenIframeID = 'hiddenDownloader'
@@ -160,7 +198,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
         }
         iframe.src = CONFIG.API_ROOT + '/file/get/' + fileHistory.file_id + '?token=' + $cookies.accessToken + '&v=' + fileHistory.version_id
       }
-      
+
       $scope.cancel = function() {
         $modalInstance.dismiss('cancel')
       }
