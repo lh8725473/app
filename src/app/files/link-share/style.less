@@ -9,7 +9,24 @@
           button{
             text-align: left;
             span.caret{
-              margin-left: 238px;
+              float: right;/* IE */
+              margin-top: 8px;/* IE */
+            }
+
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+              .link-share .modal-dialog .dropdown button span.caret {
+                float: right;/* Chrome 4 */
+                margin-top: 8px;/* Chrome 4 */
+                margin-left:0px;/* Chrome 4 */
+              }
+            }
+
+            @-moz-document url-prefix() {
+              .link-share .modal-dialog .dropdown button span.caret {
+                float: right;/* Firefox 4 */
+                margin-top: -10px;/* Firefox 4 */
+                margin-left:0px;/* Firefox 4 */
+              }
             }
           }
           .dropdown-menu{
@@ -20,7 +37,7 @@
               }
           }
         }
-        
+
         .input-password{
             margin-top: 5px;
         }
