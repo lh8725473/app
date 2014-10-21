@@ -40,13 +40,13 @@
         <div class="col-sm-12">
           <div class="dropdown" is-open="permissionOpen">
             <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown">
-              {{selectedPermissionValue}}
+              {{selectedPermissionValue | translate}}
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
               <li role="presentation" ng-repeat="value in permission_value_list" ng-click = "selectedPermission(value)" tooltip-append-to-body="true" tooltip-placement="left" tooltip="{{value.t}}">
                 <a role="menuitem" tabindex="-1">
-                  {{value.v}}
+                  {{value.v | translate}}
                 </a>
               </li>
             </ul>

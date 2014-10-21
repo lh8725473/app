@@ -48,7 +48,7 @@ angular.module('App.Files').controller('App.Files.InviteTeamUsersController', [
       })
 
       $scope.selectedPermissionKey = "0111111"
-      $scope.selectedPermissionValue = "编辑者"
+      $scope.selectedPermissionValue = "PERMISSION_VALUE_2"
 
       //选择权限dropdown
       $scope.permissionOpen = false

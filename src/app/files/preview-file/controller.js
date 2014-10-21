@@ -122,7 +122,7 @@ angular.module('App.Files').controller('App.Files.PreviewFileController', [
           var userNameList = []
           $scope.userList = shareObj.list.users
           angular.forEach($scope.userList, function(user){
-            userNameList.push(user.user_name)
+            userNameList.push(user.real_name)
           })
           $scope.atOptions.data = userNameList
         })

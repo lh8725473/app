@@ -59,9 +59,25 @@
           button{
             text-align: left;
             span.caret{
-              margin-left: 250px;
+              float: right;/* IE */
+              margin-top: 8px;/* IE */
             }
-            
+
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+              span.caret {
+                float: right;/* Chrome 4 */
+                margin-top: 8px;/* Chrome 4 */
+                margin-left:0px;/* Chrome 4 */
+              }
+            }
+
+            @-moz-document url-prefix() {
+              span.caret {
+                float: right;/* Firefox 4 */
+                margin-top: -10px;/* Firefox 4 */
+                margin-left:0px;/* Firefox 4 */
+              }
+            }
           }
           .dropdown-menu{
               width: 100%;
@@ -77,7 +93,7 @@
           font-size: 12px;
           color: #666;
         }
-        
+
         .selectedItem{
             background: none repeat scroll 0 0 #eee;
             border: 1px solid #ccc;
@@ -93,7 +109,7 @@
         form{
             height: 100%;
             h5{
-              border-bottom: 1px solid #e5e5e5;  
+              border-bottom: 1px solid #e5e5e5;
             }
         }
         .select-invite{
@@ -115,7 +131,7 @@
                 padding: 5px;
             }
             .scroller{
-              overflow-x: hidden;  
+              overflow-x: hidden;
               overflow-y: hidden;
               bottom: 0;
               left: 0;
@@ -126,7 +142,7 @@
               padding-right: 5px;
               .group-name{
                   max-width: 90px;
-              }   
+              }
             }
              .arrows-img{
                 background: url("../../images/arrows.png") no-repeat scroll 0 -113px rgba(0, 0, 0, 0);
@@ -138,6 +154,6 @@
                 width: 15px;
              }
         }
-      
+
     }
 }
